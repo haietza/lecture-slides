@@ -1,0 +1,73 @@
+section.left {
+	text-align: left;
+}
+
+.title-slide .header.no-title {
+	display: none;
+}
+
+.title-slide h1 {
+	color: white;
+}
+
+.reveal .header, .reveal .footer {
+	position: absolute;
+	font-size: 0.5em;
+}
+
+.reveal .header {
+	top: 0.5em;
+	z-index: 100;
+}
+
+.reveal .header.left {
+	left: 1em;
+}
+
+.reveal .header.right {
+	right: 1em;
+}
+
+.reveal .footer {
+	bottom: 0.5em;
+	z-index: -100;
+}
+
+.reveal .footer.left {
+	left: 1em;
+}
+
+.reveal code {
+	line-height: 150%;
+}
+
+.reveal ul {
+	list-style: none !important;
+}
+
+.reveal .small {
+	font-size: 70% !important;
+}
+
+table.bordered {
+	border: 1px solid white !important;
+}
+
+table .fragment.current-fragment {
+	background-color: rgba(255, 255, 255, .1);
+}
+
+.float-right {
+	margin-left: 10px;
+	float: right;
+}
+
+.columns {
+	display: flex;
+	justify-content: space-between;
+}
+
+.one-column {
+	flex: 1;
+	margin: 10px;
+}

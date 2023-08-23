@@ -1,0 +1,359 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>CS3460</title>
+
+		<link rel="stylesheet" href="../reveal-js/dist/reset.css">
+		<link rel="stylesheet" href="../reveal-js/dist/reveal.css">
+		<link rel="stylesheet" href="../reveal-js/dist/theme/dracula.css">
+		<link rel="stylesheet" href="../layouts/common.css">
+		<link rel="stylesheet" href="../reveal-js/plugin/highlight/tokyo-night-dark.css">
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+				<div class="header left">
+					CS3460: Data Structures
+				</div>
+				<div class="header right no-title">
+					<em>Big O Notation</em>
+				</div>
+
+				<section data-state="title-slide">
+					<h1 class="r-fit-text">CS3460: Data Structures & Algorithms</h1>
+					<h2 class="r-fit-text">Measuring Runtimes: Big O / Asymptotic Notation</h2>
+				</section>
+
+				<section data-markdown data-auto-animate>
+					<textarea data-template>
+						### Measuring Runtimes
+						Why not use *wall-clock time*?
+						---
+						### Measuring Runtimes
+						- May not take *input size* into account
+						- May not take *resource allocation* into account
+						- May not take *hardware specs* into account
+						---
+						### Measuring Runtimes
+						Could do empirical performance testing.
+						```java
+						public static int linear_search(int[] array, int target)
+						{
+							for (int i = 0; i < array.length; i++)
+								if (array[i] == target) return i;
+							return -1;
+						}
+						```
+						---
+						### Measuring Runtimes
+						Could do empirical performance testing.
+						```java
+						public static int binary_search(int[] array, int target)
+						{
+							int lo = 0, hi = array.length - 1;
+							while (lo < hi)
+							{
+								int mid = lo + (hi - lo) / 2;
+								if (target < array[mid]) hi = mid - 1;
+								else if (target > array[mid]) lo = mid + 1;
+								else return mid;
+							}
+							return -1;
+						}
+						```
+					</textarea>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Measuring Runtimes</h3>
+					<p>Could do empirical performance testing.</p>
+					<img src="figures/big-o/empirical.svg">
+				</section>
+
+				<section data-auto-animate>
+					<h3>Measuring Runtimes</h3>
+					<p>Could do empirical performance testing.</p>
+					<ul>
+						<li>Different inputs make a huge difference</li>
+						<li>Do you want to measure <em>worst-case</em>? <em>Average case</em>?</li>
+					</ul>
+				</section>
+
+				<section data-auto-animate data-auto-animate-restart>
+					<h3>Asymptotic Notation</h3>
+					<ul>
+						<li><strong>Linear search</strong>: $O(n)$</li>
+						<li><strong>Binary search</strong>: $O(\lg n)$</li>
+					</ul>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Asymptotic Notation</h3>
+					<ul>
+						<li>What does $O(f(N))$ mean?</li>
+						<ul>
+							<li class="fragment">Runtime is exactly $f(n)$? <em class="fragment">No.</em></li>
+							<li class="fragment">Upper-bounded by $f(n)$? <em class="fragment">No.</em></li>
+							<li class="fragment">Upper-bounded by $c \times f(n)$? <em class="fragment">Close.</em></li>
+							<li class="fragment">Upper-bounded by $c \times f(n)$ as $n\to\infty$</li>
+						</ul>
+					</ul>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Asymptotic Notation</h3>
+					<ul>
+						<li>Provides an upper-bound on running time, ignoring <em>multiplicative factors</em>, 
+							<em>constant factors</em>, and <em>lower-order terms</em>.</li>
+						<li>Captures what really matters regarding algorithm performance: 
+							<em>How does worst-case performance scale with input size?</em></li>
+					</ul>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Asymptotic Notation</h3>
+					<ul>
+						<li>There's more than just Big O notation</li>
+						<ul>
+							<li class="fragment">$O(f(n))$ is <em>an upper-bound</em> (<em>&le;</em>)</li>
+							<li class="fragment">$\Omega(f(n))$ is <em>a lower-bound</em> (<em>&ge;</em>)</li>
+							<li class="fragment">$\Theta(f(n))$ is upper-bound <em>and</em> lower-bound (<em>=</em>)</li>
+						</ul>
+					</ul>
+				</section>
+
+				<section data-auto-animate data-auto-animate-restart>
+					<h3>Running Times</h3>
+					<p>Why do we almost always focus on <em>worst-case runtime</em>?</p>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Running Times</h3>
+					<table class="small">
+						<tbody>
+							<tr>
+								<td>Constant</td>
+								<td>$O(1)$</td>
+							</tr>
+							<tr>
+								<td>Logarithmic</td>
+								<td>$O(\lg n)$</td>
+							</tr>
+							<tr>
+								<td>Linear</td>
+								<td>$O(n)$</td>
+							</tr>
+							<tr>
+								<td>Polynomial</td>
+								<td>$O(n^2)$, $O(n^3)$, $O(n^{100})$, ...</td>
+							</tr>
+							<tr>
+								<td>Exponential</td>
+								<td>$O(2^n)$, $O(3^n)$, ...</td>
+							</tr>
+							<tr>
+								<td><em>Worse</em></td>
+								<td>$O(n!)$, $O(n^n)$, ...</td>
+							</tr>
+						</tbody>
+					</table>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Running Times</h3>
+					<ul>
+						<li>Why don't we write the <em>base</em> of the logarithm?</li>
+						<li class="fragment">Yes, but <em>why</em> don't they matter?</li>
+						<ul>
+							<li class="fragment">Converting between bases is just <em>multiplying by a constant</em> ($\lg_a n = \lg_a b \times \lg_b n$)</li>
+							<li class="fragment">Usually $\lg n$ means $\lg_2 n$</li>
+						</ul>
+					</ul>
+				</section>
+
+				<section data-auto-animate data-auto-animate-restart>
+					<h3>Fundamental Data Structures</h3>
+					<p>Arrays</p>
+					<img src="figures/big-o/ds-array.svg">
+					<p>Linked Lists</p>
+					<img src="figures/big-o/ds-linked-list.svg">
+				</section>
+
+				<section data-auto-animate>
+					<h3>Arrays</h3>
+					<img src="figures/big-o/ds-array.svg">
+					<pre class="java">
+						<code data-trim>
+							// In Java, arrays are dynamically allocated in contiguous
+							// memory. Arrays are Objects and take O(n) to allocate.
+							// Array contents are accessed with zero-indexing.
+							int[] a = new int[5];
+
+							// Valid indices for the above array are 0 through 4.
+							a[4] = 0;
+						</code>
+					</pre>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Fundamental Data Structures</h3>
+					<p>Arrays</p>
+					<img src="figures/big-o/ds-array.svg">
+					<p>Linked Lists</p>
+					<img src="figures/big-o/ds-linked-list.svg">
+				</section>
+
+				<section data-auto-animate>
+					<h3>Linked Lists</h3>
+					<img src="figures/big-o/ds-linked-list.svg">
+					<div class="columns">
+						<div class="one-column">
+							<pre class="java">
+								<code data-trim class="small">
+									public class LinkedList&lt;T&gt;
+									{
+										public class Node&lt;T&gt;
+										{
+											public Node&lt;T&gt; next;
+											public T data;
+										}
+	
+										public Node&lt;T&gt; head;
+									}
+								</code>
+							</pre>
+						</div>
+						<div class="one-column">
+							<p>There are <em>many variations</em> on how to setup linked lists: <em>additional pointers</em>, <em>doubly-linked</em> lists, and <em>dummy nodes</em></p>
+						</div>
+					</div>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Linked List Variations</h3>
+					<p><em>Doubly</em>-Linked Lists</p>
+					<img src="figures/big-o/list-var-doubly.svg">
+					<p><em>Dummy Nodes</em></p>
+					<img src="figures/big-o/list-var-dummy.svg">
+				</section>
+
+				<section data-auto-animate>
+					<h3>Array vs Linked List Performance</h3>
+					<img src="figures/big-o/ds-array.svg">
+					<ul>
+						<li>Retrieve or update any element: <em class="fragment">$O(1)$</em></li>
+						<li>Insert or remove from middle of list: <em class="fragment">$O(n)$</em></li>
+						<li>Insert or delete from ends of list: <em class="fragment">$O(1)$</em></li>
+					</ul>
+					<p class="small">Consider using a <em>circular</em> array to avoid overrunning array bounds</p>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Array vs Linked List Performance</h3>
+					<img src="figures/big-o/ds-linked-list.svg">
+					<ul>
+						<li>Seek to position in list: <em class="fragment">$O(n)$</em></li>
+						<li>then insert/delete element: <em class="fragment">$O(1)$</em></li>
+						<li>Insert or delete from ends: <em class="fragment">$O(1)$</em></li>
+					</ul>
+				</section>
+
+				<section data-auto-animate data-auto-animate-restart>
+					<h3>Stacks with Arrays</h3>
+					<img src="figures/big-o/array-stack.svg">
+					<div class="columns">
+						<div class="one-column">
+							<pre class="java fragment">
+								<code data-trim class="small">
+									public T pop()
+									{
+										return data[--top];
+									}
+								</code>
+							</pre>
+							<pre class="java fragment">
+								<code data-trim class="small">
+									public void push(T elem)
+									{
+										data[top++] = elem;
+									}
+								</code>
+							</pre>
+						</div>
+						<div class="one-column">
+							<pre class="java fragment">
+								<code data-trim class="small">
+									public T peek()
+									{
+										return data[top - 1];
+									}
+								</code>
+							</pre>
+						</div>
+					</div>
+				</section>
+
+				<section data-auto-animate data-auto-animate-restart>
+					<h3>Stacks with Linked Lists</h3>
+					<p>Which is better?</p>
+					<img src="figures/big-o/list-stack-1.svg">
+					<img src="figures/big-o/list-stack-2.svg">
+				</section>
+
+				<section data-auto-animate>
+					<h3>Stacks with Linked Lists</h3>
+					<img src="figures/big-o/list-stack-3.svg">
+					<div class="columns">
+						<div class="one-column">
+							<pre class="java fragment">
+								<code data-trim class="small">
+									public T pop()
+									{
+										T elem = head.data;
+										head = head.next;
+										return elem;
+									}
+								</code>
+							</pre>
+						</div>
+						<div class="one-column">
+							<pre class="java fragment">
+								<code data-trim class="small">
+									public void push(T elem)
+									{
+										head = new Node&lt;T&gt;(head, elem);
+									}
+								</code>
+							</pre>
+							<pre class="java fragment">
+								<code data-trim class="small">
+									public T peek()
+									{
+										return head.data;
+									}
+								</code>
+							</pre>
+						</div>
+					</div>
+				</section>
+			</div>
+		</div>
+
+		<script src="../reveal-js/dist/reveal.js"></script>
+		<script src="../reveal-js/plugin/math/math.js"></script>
+		<script src="../reveal-js/plugin/notes/notes.js"></script>
+		<script src="../reveal-js/plugin/markdown/markdown.js"></script>
+		<script src="../reveal-js/plugin/highlight/highlight.js"></script>
+		<script>
+			Reveal.initialize({
+				hash: true,
+				slideNumber: true,
+				transition: 'convex',
+				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes, RevealMath.KaTeX ],
+			});
+		</script>
+	</body>
+</html>

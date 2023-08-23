@@ -1,0 +1,319 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>CS3460 - Lecture 00 - Welcome</title>
+
+		<link rel="stylesheet" href="../reveal-js/dist/reset.css">
+		<link rel="stylesheet" href="../reveal-js/dist/reveal.css">
+		<link rel="stylesheet" href="../reveal-js/dist/theme/dracula.css">
+		<link rel="stylesheet" href="../layouts/common.css">
+		<link rel="stylesheet" href="../reveal-js/plugin/highlight/monokai.css">
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+				<div class="header left">
+					CS3460: Data Structures
+				</div>
+				<div class="header right no-title">
+					<em>Introduction & Course Overview</em>
+				</div>
+
+				<section data-state="title-slide">
+					<h1 class="r-fit-text">CS3460: Data Structures & Algorithms</h1>
+					<h2 class="r-fit-text">Introduction & Course Overview</h2>
+				</section>
+
+				<section class="left" data-markdown>
+					<textarea data-template>
+						### Instructor Information
+						- **Instructor:** Prof Chad Waters
+							- **Email:** waterscg@appstate.edu
+							- **Office:** 313 Anne Belk Hall
+							- **Office Hours:** MWF 12-1, MW 2:15-3
+							- *All course material will be delivered via AsULearn*
+						- **Course Meeting:** 317 Anne Belk Hall, MWF 11-12
+					</textarea>
+				</section>
+
+				<section class="left" data-markdown data-auto-animate>
+					<textarea data-template>
+						### Course Overview
+						- The goal of this course is to provide an *introduction to data structures and algorithms* in a *fun, fast-paced environment*
+						---
+						### Course Overview
+						- Together, we will learn
+							- *Elementary data structures* (such as arrays, linked lists, queues, and stacks)
+							- *Fundamental algorithmic processes* such as searching, selection, and sorting
+							- *Algorithmic analysis* using tools such as asymptotic notation, recurrence relations, and proof techniques
+						---
+						### Course Overview
+						- Together, we will learn
+							- Important data structures such as *hash tables, priority queues, and binary search trees*, including implementation and applications
+							- *Useful graph algorithms* to traverse a graph and compute a shortest path
+							- *Algorithm design techniques* using abstractions, and to *improve our practical coding skills*
+					</textarea>
+				</section>
+
+				<section data-markdown data-auto-animate>
+					<textarea data-template>
+						### Why Study Data Structures?
+						Data structures are at the core of *every part* of computing!
+
+						*Operating systems, compiler design, programming languages, networking, databases, graphics, and more!*
+						---
+						### Why Study Data Structures?
+						All of the easy problems are *solved*! Every field is making use of *data science* to solve their hard problems
+
+						*Science, engineering, finance, arts and humanities, commerce, health and wellness*
+
+						Learning to write *efficient* solutions is crucially important -- efficiency is everything!
+						---
+						### Why Study Data Structures?
+						Developing proficiency with data structures and algorithm design are one of the key things that separate a *computer scientist* from a *programmer*.
+						---
+						### Why Study Data Structures?
+						Algorithms and data structures, above all else, are *fun*!
+					</textarea>
+				</section>
+
+				<section data-markdown>
+					<textarea data-template>
+						### Why Talk About Algorithm Design?
+						An *algorithm* is a step-by-step process to solve a computational problem; a *data structure* is a tool used to store, organize, update, and retrieve data
+						
+						You cannot talk about one without the other!
+					</textarea>
+				</section>
+
+				<section class="left" data-markdown>
+					<textarea data-template>
+						### Programming &ne; Algorithm Design
+						- Both are valuable skills, but they are not the same!
+						- "*Computer Science is no more about computers than astronomy is about telescopes*," attributed to Dijkstra
+						- Programming and software engineering proficiency are important to the success of most programming projects and careers
+						- Problem-solving skills and programming skills are not the same, *but they do reinforce each other*!
+					</textarea>
+				</section>
+
+				<section class="left" data-markdown>
+					<textarea data-template>
+						### Course Details
+						- **Prerequisites**
+							- CS 2440, and Java programming experience
+							- *Enthusiasm*
+							- A willingness to *ask questions* and *get involved*!
+						- **Attendance**
+							- Attendance is considered *mandatory*. If a student is unable to attend for any reason, including (but not limited to) illness, they should arrange to get any notes from a classmate.
+					</textarea>
+				</section>
+
+				<section class="left" data-markdown>
+					<textarea data-template>
+						### Assignments & Grades
+						- **Assignments (50%):** Programming exercises that reinforce understanding of course material
+						- **Midterm (25%):** Programming exam conducted online, two or more problems
+						- **Final Exam (25%):** Programming exam conducted online, three or more problems
+						---
+						### Assignments & Grades
+						- *Course is not graded on an absolute scale*. Letter grade distribution will be decided based on numeric grade distribution
+					</textarea>
+				</section>
+
+				<section class="left" data-markdown data-auto-animate>
+					<textarea data-template>
+						### Programming Assignments
+						- *Problem descriptions* will include background information and some implementation details
+						- Assignments will use *Java*. Your programs must be able to run on the student server, which is a *Linux environment*
+						- If you do your work anywhere else, be sure to test it on the student server before submitting
+						---
+						### Programming Assignments
+						- Programs will be graded via the following criteria:
+							1. *Effort* (2 points)
+							2. *Compilation, execution, and termination* (2 points)
+							3. *Correctness and efficiency* (remaining points)
+						- Each step of the grading process depends on it passing the previous one
+						---
+						### Programming Assignments
+						- **Late Policy:** Work will be accepted up to 24 hours late. Any work submitted after the deadline will receive a maximum score of *70%*
+						- Points may be deducted for producing *extraneous output* or not following *submission instructions*
+					</textarea>
+				</section>
+
+				<section class="left" data-markdown>
+					<textarea data-template>
+						### Academic Integrity
+						- Do not *cheat*, *copy*, or *plagiarize*
+						- You may consult online resources, but you should not be searching for specific solutions
+							- Do not post problems online
+							- *All submitted work is expected to be your own*
+						- If you are determined to have plagiarized or cheated, *you will receive an F for the course*
+						---
+						### Academic Integrity
+						- Collaboration is *encouraged*, but all submitted work should be your own!
+						- **Do**
+							- discuss problems with other students
+							- reinforce course material by studying together
+						- **Don't**
+							- copy solutions from others
+							- share solutions with others
+							- submit *anything you find online* as your own work
+					</textarea>
+				</section>
+
+				<section class="left" data-markdown>
+					<textarea data-template>
+						### How to Succeed in CS3460
+						- *Attend class* and *participate enthusiastically*
+						- *Study* and *reinforce* the material through repetition
+						- *Review* previous material before the next lecture
+						- Start working on assignments *early* to finish *early*!
+					</textarea>
+				</section>
+
+				<section class="left" data-markdown data-auto-animate>
+					<textarea data-template>
+						### A Good Algorithm (or Data Structure)
+						- Always terminates and produces a *"correct"* output
+							- Some algorithms give an answer that is *close enough*
+							- Some randomized algorithms *fail*, but with *vanishingly small probability*
+						---
+						### A Good Algorithm (or Data Structure)
+						- Makes *efficient use of resources*
+							- Usually we focus on *runtime* (time is our most precious resource!)
+							- Sometimes we care about *memory usage*, *processor allocation*, *power consumption*, or the use of other shared resources
+						---
+						### A Good Algorithm (or Data Structure)
+						- Is usually *simple*! The optimal solution is often
+							- *elegant*
+							- *easy to explain*
+							- simple to *analyze*
+							- simple to *implement*, *test*, and *debug*
+					</textarea>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Study: The Stable Marriage Problem</h3>
+					<p>Given <em>n</em> men and <em>n</em> women with preference lists, can we find a <em>stable marriage</em>?</p>
+					<img src="figures/stable-marriage/base.svg">
+				</section>
+
+				<section data-auto-animate>
+					<h3>Study: The Stable Marriage Problem</h3>
+					<p>A <em>stable marriage</em> is a matching that contains no <em>blocking pairs</em>.</p>
+					<img src="figures/stable-marriage/base.svg">
+				</section>
+
+				<section data-auto-animate>
+					<h3>Study: The Stable Marriage Problem</h3>
+					<p>A <em>blocking pair</em> is any man & woman who would <em>prefer to be with one another</em> than who they're currently paired with.</p>
+					<img src="figures/stable-marriage/wrong.svg">
+				</section>
+
+				<section class="left" data-markdown>
+					<textarea data-template>
+						### Study: The Stable Marriage Problem
+						- The stable marriage problem in the real world
+							- matching *students* to *dormitories*
+							- matching *medical students* to *hospital residencies*
+							- matching many *users* to few *servers*
+						- Countless interesting variations!
+					</textarea>
+				</section>
+
+				<section data-auto-animate>
+					<h3>A Stable Marriage Solution?</h3>
+					<p>A <em>blocking pair</em> is any man & woman who would <em>prefer to be with one another</em> than who they're currently paired with.</p>
+					<img data-id="figure" src="figures/stable-marriage/base.svg">
+				</section>
+
+				<section data-auto-animate>
+					<h3>A Stable Marriage Solution?</h3>
+					<p>$m_1$ proposes to $w_1$</p>
+					<img data-id="figure" src="figures/stable-marriage/01.svg">
+				</section>
+
+				<section data-auto-animate>
+					<h3>A Stable Marriage Solution?</h3>
+					<p>$w_1$ accepts $m_1$'s proposal. $m_2$ proposes to $w_4$</p>
+					<img data-id="figure" src="figures/stable-marriage/02.svg">
+				</section>
+
+				<section data-auto-animate>
+					<h3>A Stable Marriage Solution?</h3>
+					<p>$w_4$ accepts $m_2$'s proposal. $m_3$ proposes to $w_4$</p>
+					<img data-id="figure" src="figures/stable-marriage/03.svg">
+				</section>
+
+				<section data-auto-animate>
+					<h3>A Stable Marriage Solution?</h3>
+					<p>$w_4$ rejects $m_3$'s proposal. $m_3$ proposes to $w_3$</p>
+					<img data-id="figure" src="figures/stable-marriage/04.svg">
+				</section>
+
+				<section data-auto-animate>
+					<h3>A Stable Marriage Solution?</h3>
+					<p>$w_3$ accepts $m_2$'s proposal. $m_4$ proposes to $w_4$</p>
+					<img data-id="figure" src="figures/stable-marriage/05.svg">
+				</section>
+
+				<section data-auto-animate>
+					<h3>A Stable Marriage Solution?</h3>
+					<p>$w_4$ accepts $m_4$'s proposal, breaking with $m_2$. $m_2$ proposes to $w_2$</p>
+					<img data-id="figure" src="figures/stable-marriage/06.svg">
+				</section>
+
+				<section data-auto-animate>
+					<h3>A Stable Marriage Solution?</h3>
+					<p>$w_2$ accepts $m_2$'s proposal, creating a stable marriage</p>
+					<img data-id="figure" src="figures/stable-marriage/07.svg">
+				</section>
+
+				<section data-auto-animate>
+					<h3>A Stable Marriage Solution?</h3>
+					<img data-id="figure" src="figures/stable-marriage/07.svg" style="width: 70%">
+					<p>(1) Does this algorithm always <em>terminate</em>?</p>
+				</section>
+
+				<section data-auto-animate>
+					<h3>A Stable Marriage Solution?</h3>
+					<img data-id="figure" src="figures/stable-marriage/07.svg" style="width: 70%">
+					<p>(2) Is it guaranteed to produce a <em>stable marriage</em>?</p>
+				</section>
+
+				<section data-auto-animate>
+					<h3>A Stable Marriage Solution?</h3>
+					<img data-id="figure" src="figures/stable-marriage/07.svg" style="width: 70%">
+					<p>This algorithm is called the <em>Gale-Shapely algorithm</em>.</p>
+				</section>
+
+				<section class="left" data-markdown>
+					<textarea data-template>
+						### The Gale-Shapely Algorithm
+						- Always finds a *stable matching*
+						- Always terminates. (How would you prove this?)
+						- *Order of proposals* doesn't matter
+						- Optimal for men, sub-optimal for women
+					</textarea>
+				</section>
+			</div>
+		</div>
+
+		<script src="../reveal-js/dist/reveal.js"></script>
+		<script src="../reveal-js/plugin/math/math.js"></script>
+		<script src="../reveal-js/plugin/notes/notes.js"></script>
+		<script src="../reveal-js/plugin/markdown/markdown.js"></script>
+		<script src="../reveal-js/plugin/highlight/highlight.js"></script>
+		<script>
+			Reveal.initialize({
+				hash: true,
+				slideNumber: true,
+				transition: 'convex',
+				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes, RevealMath.KaTeX ],
+			});
+		</script>
+	</body>
+</html>
