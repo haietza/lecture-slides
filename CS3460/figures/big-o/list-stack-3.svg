@@ -27,11 +27,11 @@
      inkscape:deskcolor="#505050"
      inkscape:document-units="mm"
      inkscape:zoom="0.73139029"
-     inkscape:cx="170.90738"
+     inkscape:cx="56.741251"
      inkscape:cy="480.59156"
      inkscape:window-width="1920"
-     inkscape:window-height="1017"
-     inkscape:window-x="-8"
+     inkscape:window-height="1009"
+     inkscape:window-x="1912"
      inkscape:window-y="-8"
      inkscape:window-maximized="1"
      inkscape:current-layer="layer1" />
@@ -167,44 +167,16 @@
         </g>
       </g>
     </g>
-    <g
-       id="path1-7-3">
-      <path
-         style="color:#000000;fill:#ffffff;fill-rule:evenodd;-inkscape-stroke:none"
-         d="m 34.447266,12.419922 -0.0039,0.955078 12.705078,0.05664 0.0059,-0.955078 z"
-         id="path6" />
-      <g
-         id="g2">
-        <g
-           id="path3">
-          <path
-             style="color:#000000;fill:#ffffff;fill-rule:evenodd;-inkscape-stroke:none"
-             d="m 49.903795,12.966353 -4.136629,2.366604 0.02124,-4.769952 z"
-             id="path4" />
-          <path
-             style="color:#000000;fill:#ffffff;fill-rule:evenodd;-inkscape-stroke:none"
-             d="m 45.472656,10.009766 -0.02539,5.873047 5.091796,-2.914063 -0.474609,-0.277344 z m 0.63086,1.105468 3.166015,1.847657 -3.18164,1.820312 z"
-             id="path5" />
-        </g>
-      </g>
-    </g>
     <text
        xml:space="preserve"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:8.46667px;font-family:'Ink Free';-inkscape-font-specification:'Ink Free';fill:none;stroke:#ffffff;stroke-width:0.954;stroke-dasharray:none"
-       x="21.505602"
+       x="51.505604"
        y="28.039515"
        id="text2-8"><tspan
          sodipodi:role="line"
          id="tspan2-2"
          style="fill:none;stroke:#ffffff;stroke-width:0.954"
-         x="21.505602"
+         x="51.505604"
          y="28.039515">top</tspan></text>
-    <rect
-       style="fill:#808080;stroke:#ffffff;stroke-width:1"
-       id="rect2"
-       width="15"
-       height="15"
-       x="20.500219"
-       y="5.9750061" />
   </g>
 </svg>

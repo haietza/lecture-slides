@@ -10,7 +10,7 @@
 		<link rel="stylesheet" href="../reveal-js/dist/reveal.css">
 		<link rel="stylesheet" href="../reveal-js/dist/theme/dracula.css">
 		<link rel="stylesheet" href="../layouts/common.css">
-		<link rel="stylesheet" href="../reveal-js/plugin/highlight/tokyo-night-dark.css">
+		<link rel="stylesheet" href="../layouts/tokyo-night-dark.css">
 	</head>
 	<body>
 		<div class="reveal">
@@ -241,6 +241,13 @@
 				</section>
 
 				<section data-auto-animate>
+					<h3>A Linked List Conundrum</h3>
+					<img src="figures/big-o/list-blank-null.svg">
+					<img src="figures/big-o/list-blank-loop.svg">
+					<p>How can we tell the difference between these two possibilities? <span class="small">(This used to be a common interview question)</span></p>
+				</section>
+
+				<section data-auto-animate>
 					<h3>Array vs Linked List Performance</h3>
 					<img src="figures/big-o/ds-array.svg">
 					<ul>
@@ -305,7 +312,12 @@
 
 				<section data-auto-animate>
 					<h3>Stacks with Linked Lists</h3>
-					<img src="figures/big-o/list-stack-3.svg">
+					<img src="figures/big-o/list-stack-3.svg" data-id="figure">
+				</section>
+
+				<section data-auto-animate>
+					<h3>Stacks with Linked Lists</h3>
+					<img src="figures/big-o/list-stack-4.svg" data-id="figure">
 					<div class="columns">
 						<div class="one-column">
 							<pre class="java fragment">
@@ -333,6 +345,66 @@
 									public T peek()
 									{
 										return head.data;
+									}
+								</code>
+							</pre>
+						</div>
+					</div>
+				</section>
+
+				<section data-auto-animate data-auto-animate-restart>
+					<h3>Queues with Arrays</h3>
+					<img src="figures/big-o/array-queue.svg" data-id="figure">
+					<div class="columns">
+						<div class="one-column">
+							<pre class="java fragment">
+								<code data-trim class="small">
+									public void enqueue(T elem)
+									{
+										data[front++] = elem;
+									}
+								</code>
+							</pre>
+						</div>
+						<div class="one-column">
+							<pre class="java fragment">
+								<code data-trim class="small">
+									public T dequeue()
+									{
+										T elem = data[0];
+										for (int i = 1; i <= front; i++)
+											data[i - 1] = data[i];
+										return elem;
+									}
+								</code>
+							</pre>
+						</div>
+					</div>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Queues with Arrays</h3>
+					<img src="figures/big-o/array-queue-circular.svg" data-id="figure">
+					<div class="columns">
+						<div class="one-column">
+							<pre class="java fragment">
+								<code data-trim class="small">
+									public void enqueue(T elem)
+									{
+										data[front++] = elem;
+										front %= data.length;
+									}
+								</code>
+							</pre>
+						</div>
+						<div class="one-column">
+							<pre class="java fragment">
+								<code data-trim class="small">
+									public T dequeue()
+									{
+										T elem = data[back++];
+										back %= data.length;
+										return elem;
 									}
 								</code>
 							</pre>

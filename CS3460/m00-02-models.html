@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>CS3460</title>
+
+		<link rel="stylesheet" href="../reveal-js/dist/reset.css">
+		<link rel="stylesheet" href="../reveal-js/dist/reveal.css">
+		<link rel="stylesheet" href="../reveal-js/dist/theme/dracula.css">
+		<link rel="stylesheet" href="../layouts/common.css">
+		<link rel="stylesheet" href="../layouts/tokyo-night-dark.css">
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+				<div class="header left">
+					CS3460: Data Structures
+				</div>
+				<div class="header right no-title">
+					<em>Models of Computation</em>
+				</div>
+
+				<section data-state="title-slide">
+					<h1 class="r-fit-text">CS3460: Data Structures & Algorithms</h1>
+					<h2 class="r-fit-text">Understanding Models of Computation</h2>
+				</section>
+
+				<section data-markdown data-auto-animate class="left">
+					<textarea data-template>
+						### Models of Computation
+						- What are the *primitive operations* available to our algorithm?
+						- How realistic should this model be?
+						---
+						### Turing Machine
+						- A Turing machine is a model defined by an *infinite length tape* containing input, a *head* that can read from or write to whichever cell of the input tape it is located above, and a *state register* to track the current state
+						---
+						### Random Access Machine (RAM)
+						- In the RAM model, instructions are executed *sequentially*.
+						- Memory is an array of words, any individual memory location accessible in *constant time*.
+						- Arithmetic operations like addition, subtraction, multiplication, division, remainder, and comparison are all constant time operations.
+						---
+						### Random Access Machine (RAM)
+						- Is this a realistic model of computation?
+						---
+						### Random Access Machine (RAM)
+						- In the real world, *memory access* takes substantially longer than *arithmetic operations*
+						- Does not take *caching* into consideration
+						---
+						### Comparison Model
+						- Only allowed to make *pairwise comparisons*
+						- Data is a "*black box*," and defines its own *comparison operations*
+						- Why choose such a restrictive model?
+							- RAM model seems much more powerful!
+					</textarea>
+				</section>
+
+				<section data-markdown data-auto-animate>
+					<textarea data-template>
+						### Abstraction in Expressing Algorithms
+						- **Example:** Given a sorted array of $n$ integers, does there exist two integers that add to a target value $t$?
+						
+						Notes:
+						point out binary search does not need to be re-explained
+						---
+						### Abstraction in Expressing Algorithms
+						![](figures/stable-marriage/07.svg)
+						
+						Notes:
+						what data structure do we use to store unmatched men?
+						more efficient for women to store preference lists keyed on man id rather than an ordered list
+					</textarea>
+				</section>
+			</div>
+		</div>
+
+		<script src="../reveal-js/dist/reveal.js"></script>
+		<script src="../reveal-js/plugin/math/math.js"></script>
+		<script src="../reveal-js/plugin/notes/notes.js"></script>
+		<script src="../reveal-js/plugin/markdown/markdown.js"></script>
+		<script src="../reveal-js/plugin/highlight/highlight.js"></script>
+		<script>
+			Reveal.initialize({
+				hash: true,
+				slideNumber: true,
+				transition: 'convex',
+				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes, RevealMath.KaTeX ],
+			});
+		</script>
+	</body>
+</html>
