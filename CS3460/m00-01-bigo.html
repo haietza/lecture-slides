@@ -361,7 +361,7 @@
 								<code data-trim class="small">
 									public void enqueue(T elem)
 									{
-										data[front++] = elem;
+										data[back++] = elem;
 									}
 								</code>
 							</pre>
@@ -372,8 +372,9 @@
 									public T dequeue()
 									{
 										T elem = data[0];
-										for (int i = 1; i <= front; i++)
+										for (int i = 1; i <= back; i++)
 											data[i - 1] = data[i];
+										back -= 1;
 										return elem;
 									}
 								</code>
@@ -391,8 +392,8 @@
 								<code data-trim class="small">
 									public void enqueue(T elem)
 									{
-										data[front++] = elem;
-										front %= data.length;
+										data[back++] = elem;
+										back %= data.length;
 									}
 								</code>
 							</pre>
@@ -402,8 +403,8 @@
 								<code data-trim class="small">
 									public T dequeue()
 									{
-										T elem = data[back++];
-										back %= data.length;
+										T elem = data[front++];
+										front %= data.length;
 										return elem;
 									}
 								</code>

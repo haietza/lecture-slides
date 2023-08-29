@@ -117,14 +117,14 @@
     <text
        xml:space="preserve"
        style="font-size:8.46667px;fill:#808080;stroke:#ffffff;stroke-width:1;stroke-dasharray:none"
-       x="100.94627"
+       x="102.53379"
        y="45.035961"
        id="text2"><tspan
          sodipodi:role="line"
          id="tspan2"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:8.46667px;font-family:'Ink Free';-inkscape-font-specification:'Ink Free';stroke-width:1"
-         x="100.94627"
-         y="45.035961">front</tspan></text>
+         x="102.53379"
+         y="45.035961">back</tspan></text>
     <g
        id="path2-9"
        transform="translate(-59.981196,0.19235432)">
@@ -154,13 +154,13 @@
     <text
        xml:space="preserve"
        style="font-size:8.46667px;fill:#808080;stroke:#ffffff;stroke-width:1;stroke-dasharray:none"
-       x="42.552551"
+       x="41.494217"
        y="45.228317"
        id="text2-4"><tspan
          sodipodi:role="line"
          id="tspan2-8"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:8.46667px;font-family:'Ink Free';-inkscape-font-specification:'Ink Free';stroke-width:1"
-         x="42.552551"
-         y="45.228317">back</tspan></text>
+         x="41.494217"
+         y="45.228317">front</tspan></text>
   </g>
 </svg>
