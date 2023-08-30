@@ -56,14 +56,27 @@
 					</textarea>
 				</section>
 
+				<section data-auto-animate>
+					<h3>Abstraction in Expressing Algorithms</h3>
+					<ul class="small">
+						<li><strong>Problem:</strong> Given a sorted array of $n$ integers, does there exist two integers that add to a target value $t$?</li>
+						<li class="fragment"><strong>Naive Solution:</strong> For every pair of elements, check if sum to $t$</li>
+						<ul>
+							<li class="fragment">There are $n \choose 2$ pairs <span class="fragment">$\rightarrow \Theta(n^2)$</span></li>
+						</ul>
+						<li class="fragment"><strong>Better Solution:</strong> Since the array is sorted, for each element $A_i$, we can binary search the array for the matching element, $t - A_i$</li>
+						<ul>
+							<li class="fragment"><strong>Analysis:</strong> Doing at most $n$ binary searches, this takes $O(n \lg n)$</li>
+						</ul>
+					</ul>
+
+					<aside class="notes">
+						point out binary search does not need to be re-explained
+					</aside>
+				</section>
+
 				<section data-markdown data-auto-animate>
 					<textarea data-template>
-						### Abstraction in Expressing Algorithms
-						- **Example:** Given a sorted array of $n$ integers, does there exist two integers that add to a target value $t$?
-						
-						Notes:
-						point out binary search does not need to be re-explained
-						---
 						### Abstraction in Expressing Algorithms
 						![](figures/stable-marriage/07.svg)
 						
