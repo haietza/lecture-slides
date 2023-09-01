@@ -268,6 +268,58 @@
 					</ul>
 				</section>
 
+				<section data-auto-animate>
+					<h3>Abstract Data Types (ADTs)</h3>
+					<div class="columns small">
+						<div class="one-column">
+							<ul>
+								<li>A <strong>specification</strong> of a data structure is a list of the operations it needs to support</li>
+								<li>This will end up being the public interface for the implementation of the data structure</li>
+							</ul>
+						</div>
+						<div class="one-column">
+							<ul>
+								<li>An <strong>implementation</strong> is a concrete representation of the data structure that fulfills the 
+									requirements of the specification, either <em>logically</em> or <em>in code</em></li>
+							</ul>
+						</div>
+					</div>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Example ADT: Dynamic Sequence</h3>
+					<div class="columns small">
+						<div class="one-column">
+							<h3>Specification</h3>
+							<ul>
+								<li><code>insert(x,i)</code> - insert the object $x$ at position $i$ in the sequence.</li>
+								<li><code>remove(i)</code> - remove the object at position $i$.</li>
+								<li><code>access(i)</code> - access the object at position $i$.</li>
+								<li><code>modify(i,v)</code> - update the object position $i$ to the value $v$.</li>
+							</ul>
+						</div>
+						<div class="one-column fragment">
+							<h3>Implementation</h3>
+							<ul>
+								<li>How do we implement this?</li>
+							</ul>
+						</div>
+					</div>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Applications of Sequences</h3>
+					<ul>
+						<li class="fragment"><em>Email</em> inbox, contacts, chats, and calendar</li>
+						<li class="fragment"><em>Social media</em> posts, comments, and notifications</li>
+						<li class="fragment">Your <em>Java</em> code and bytecode</li>
+						<li class="fragment"><em>Web</em> URLs and bookmarks</li>
+						<li class="fragment"><em>Media files</em>, images, audio, videos</li>
+						<li class="fragment"><em>Finance:</em> bank transactions, stock market</li>
+						<li class="fragment"><em>Biology:</em> genomic sequences, EKG data, EEG data</li>
+					</ul>
+				</section>
+
 				<section data-auto-animate data-auto-animate-restart>
 					<h3>Stacks with Arrays</h3>
 					<img src="figures/big-o/array-stack.svg">
