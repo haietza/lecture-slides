@@ -1,0 +1,376 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>CS3460</title>
+
+		<link rel="stylesheet" href="../reveal-js/dist/reset.css">
+		<link rel="stylesheet" href="../reveal-js/dist/reveal.css">
+		<link rel="stylesheet" href="../reveal-js/dist/theme/dracula.css">
+		<link rel="stylesheet" href="../layouts/common.css">
+		<link rel="stylesheet" href="../reveal-js/plugin/highlight/monokai.css">
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+				<div class="header left">
+					CS3460: Data Structures
+				</div>
+				<div class="header right no-title">
+					<em>Stacks & Queues</em>
+				</div>
+
+				<section data-state="title-slide">
+					<h1 class="r-fit-text">CS3460: Data Structures & Algorithms</h1>
+					<h2 class="r-fit-text">Stacks & Queues</h2>
+				</section>
+
+				<section data-auto-animate data-auto-animate-restart>
+					<h3>Stacks</h3>
+					<div class="columns small">
+						<div class="one-column">
+							<h3>Specification</h3>
+							<ul>
+								<li><code>push(x)</code> - insert the object $x$ onto the stack</li>
+								<li><code>pop()</code> - remove and return object on top of stack</li>
+								<hr>
+								<li>Last-in, first-out (<em>LIFO</em>)</li>
+								<li>Operations only happen on one end of the data structure</li>
+							</ul>
+						</div>
+						<div class="one-column fragment">
+							<h3>Implementation</h3>
+							<img src="figures/stacks-queues/array-stack.svg">
+							<p>Arrays</p>
+							<img src="figures/stacks-queues/list-stack-2.svg">
+							<p>Linked Lists</p>
+						</div>
+					</div>
+				</section>
+
+				<section data-auto-animate data-auto-animate-restart>
+					<h3>Stacks with Arrays</h3>
+					<img src="figures/stacks-queues/array-stack.svg">
+					<div class="columns">
+						<div class="one-column">
+							<pre class="java fragment">
+								<code data-trim class="small">
+									public T pop()
+									{
+										return data[--top];
+									}
+								</code>
+							</pre>
+							<pre class="java fragment">
+								<code data-trim class="small">
+									public void push(T elem)
+									{
+										data[top++] = elem;
+									}
+								</code>
+							</pre>
+						</div>
+						<div class="one-column">
+							<pre class="java fragment">
+								<code data-trim class="small">
+									public T peek()
+									{
+										return data[top - 1];
+									}
+								</code>
+							</pre>
+						</div>
+					</div>
+				</section>
+
+				<section data-auto-animate data-auto-animate-restart>
+					<h3>Stacks with Linked Lists</h3>
+					<p>Which is better?</p>
+					<img src="figures/stacks-queues/list-stack-1.svg">
+					<img src="figures/stacks-queues/list-stack-2.svg">
+				</section>
+
+				<section data-auto-animate>
+					<h3>Stacks with Linked Lists</h3>
+					<img src="figures/stacks-queues/list-stack-3.svg" data-id="figure">
+				</section>
+
+				<section data-auto-animate>
+					<h3>Stacks with Linked Lists</h3>
+					<img src="figures/stacks-queues/list-stack-4.svg" data-id="figure">
+					<div class="columns">
+						<div class="one-column">
+							<pre class="java fragment">
+								<code data-trim class="small">
+									public T pop()
+									{
+										T elem = head.data;
+										head = head.next;
+										return elem;
+									}
+								</code>
+							</pre>
+						</div>
+						<div class="one-column">
+							<pre class="java fragment">
+								<code data-trim class="small">
+									public void push(T elem)
+									{
+										head = new Node&lt;T&gt;(head, elem);
+									}
+								</code>
+							</pre>
+							<pre class="java fragment">
+								<code data-trim class="small">
+									public T peek()
+									{
+										return head.data;
+									}
+								</code>
+							</pre>
+						</div>
+					</div>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Stacks (Parsing)</h3>
+					<ul>
+						<li>Balancing brackets</li>
+						<ul>
+							<li class="fragment">Check if brackets are balanced/matching</li>
+							<li class="fragment">On open bracket, push onto stack</li>
+							<li class="fragment">On close bracket, pop and check for match</li>
+						</ul>
+					</ul>
+					<p><code>[ 5 + 7 * ( 3 / 2 ) - 1 ] * 2</code></p>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Stacks (Parsing)</h3>
+					<ul>
+						<li>Parsing component of a compiler</li>
+						<ul>
+							<li class="fragment">Recursive-descent parsers</li>
+							<li class="fragment">Shift-reduce parsers</li>
+							<li class="fragment">Simple precedence parsers</li>
+						</ul>
+					</ul>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Stacks (Arithmetic)</h3>
+					<ul>
+						<li>Infix expressions - operand <em>operator</em> operand</li>
+						<ul>
+							<li><code>[ 5 + 7 * ( 6 / 2 ) - 1 ] * 2</code></li>
+						</ul>
+						<li>Postfix expressions - operand operand <em>operator</em></li>
+						<ul>
+							<li><code>5 7 6 2 / * + 1 - 2 *</code></li>
+						</ul>
+					</ul>
+				</section>
+
+				<section data-auto-animate data-auto-animate-restart>
+					<h3>Stacks (Parsing Postfix)</h3>
+					<code>5 7 6 2 / * + 1 - 2 *</code>
+					<div class="columns">
+						<div class="one-column small">	
+							<ul class="fragment">
+								<li>keep a stack of <em>operands</em></li>
+								<li>parse tokens from left to right</li>
+								<li>operators <em>pop</em> two operands, <em>push</em> result back onto stack</li>
+								<li>a balanced expression will result in one value remaining on the stack</li>
+							</ul>
+						</div>
+						<div class="one-column">
+							
+						</div>
+					</div>
+				</section>
+
+				<section data-auto-animate data-auto-animate-restart>
+					<h3>Stacks (Parsing Infix)</h3>
+					<code>[ 5 + 7 * ( 6 / 2 ) - 1 ] * 2</code>
+					<div class="columns">
+						<div class="one-column small">	
+							<ul class="fragment">
+								<li>keep a stack of <em>operators</em></li>
+								<li>parse tokens from left to right</li>
+								<li>write operands directly to output</li>
+								<li>operators pop entries off stack based on precedence rules</li>
+								<li>resulting output is in <em>postfix notation</em></li>
+							</ul>
+						</div>
+						<div class="one-column">
+							
+						</div>
+					</div>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Stacks (Reversing)</h3>
+					<ul>
+						<li>Stacks can easily reverse a sequence</li>
+						<ul>
+							<li class="fragment">Pushing values from sequence onto stack</li>
+							<li class="fragment">Popping from the stack will reverse the input</li>
+						</ul>
+						<li class="fragment">Testing for a palindrome - "<em>never odd or even</em>"</li>
+						<li class="fragment">Reverse a linked list</li>
+					</ul>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Stacks (Reversing)</h3>
+					<pre class="java" data-id="snippet">
+						<code data-trim data-line-numbers>
+							while (num &gt; 0)
+							{
+								int bit = num % 2;
+								num = num / 2;
+								System.out.print(bit);
+							}
+						</code>
+					</pre>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Stacks (Reversing)</h3>
+					<pre class="java" data-id="snippet">
+						<code data-trim data-line-numbers>
+							Stack&lt;Integer&gt; s = new Stack&lt;Integer&gt;();
+							while (num &gt; 0)
+							{
+								int bit = num % 2;
+								num = num / 2;
+								// System.out.print(bit);
+								s.push(bit);
+							}
+
+							while (!s.empty())
+								System.out.print(s.pop());
+						</code>
+					</pre>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Stacks (Recursion)</h3>
+					<p>Program state is stored on a stack</p>
+					<pre class="java">
+						<code data-trim data-line-numbers>
+							private static void mystery(int num)
+							{
+								if (num <= 0) return;
+								System.out.println(num);
+								mystery(num-1);
+								System.out.println(num);
+							}
+						</code>
+					</pre>
+					<p>Where's tail call optimization?</p>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Stacks (Recursion)</h3>
+					<ul>
+						<li>Functional programming languages use recursion</li>
+						<li><code>car</code> - first element of sequence</li>
+						<li><code>cdr</code> - rest of sequence</li>
+					</ul>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Stacks (Other Applications)</h3>
+					<ul>
+						<li>Browsing a directory structure</li>
+						<li class="fragment">Undo/Redo buttons in software</li>
+						<li class="fragment">Back/Forward buttons in browsers</li>
+						<li class="fragment">Advanced algorithms like depth first search, graph and tree traversals, recursive backtracking, network algorithms, etc</li>
+					</ul>
+				</section>
+
+				<section data-auto-animate data-background-interactive 
+					data-background-iframe="https://www.youtube.com/embed/OWGCqfa3lcE?autoplay=1&start=421">
+				</section>
+
+				<section data-auto-animate data-auto-animate-restart>
+					<h3>Queues with Arrays</h3>
+					<img src="figures/stacks-queues/array-queue.svg" data-id="figure">
+					<div class="columns">
+						<div class="one-column">
+							<pre class="java fragment">
+								<code data-trim class="small">
+									public void enqueue(T elem)
+									{
+										data[back++] = elem;
+									}
+								</code>
+							</pre>
+						</div>
+						<div class="one-column">
+							<pre class="java fragment">
+								<code data-trim class="small">
+									public T dequeue()
+									{
+										T elem = data[0];
+										for (int i = 1; i <= back; i++)
+											data[i - 1] = data[i];
+										back -= 1;
+										return elem;
+									}
+								</code>
+							</pre>
+						</div>
+					</div>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Queues with Arrays</h3>
+					<img src="figures/stacks-queues/array-queue-circular.svg" data-id="figure">
+					<div class="columns">
+						<div class="one-column">
+							<pre class="java fragment">
+								<code data-trim class="small">
+									public void enqueue(T elem)
+									{
+										data[back++] = elem;
+										back %= data.length;
+									}
+								</code>
+							</pre>
+						</div>
+						<div class="one-column">
+							<pre class="java fragment">
+								<code data-trim class="small">
+									public T dequeue()
+									{
+										T elem = data[front++];
+										front %= data.length;
+										return elem;
+									}
+								</code>
+							</pre>
+						</div>
+					</div>
+				</section>
+			</div>
+		</div>
+
+		<script src="../reveal-js/dist/reveal.js"></script>
+		<script src="../reveal-js/plugin/math/math.js"></script>
+		<script src="../reveal-js/plugin/notes/notes.js"></script>
+		<script src="../reveal-js/plugin/markdown/markdown.js"></script>
+		<script src="../reveal-js/plugin/highlight/highlight.js"></script>
+		<script>
+			Reveal.initialize({
+				hash: true,
+				slideNumber: true,
+				transition: 'convex',
+				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes, RevealMath.KaTeX ],
+			});
+		</script>
+	</body>
+</html>
