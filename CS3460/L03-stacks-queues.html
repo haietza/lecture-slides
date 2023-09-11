@@ -297,6 +297,29 @@
 				</section>
 
 				<section data-auto-animate data-auto-animate-restart>
+					<h3>Queues</h3>
+					<div class="columns small">
+						<div class="one-column">
+							<h3>Specification</h3>
+							<ul>
+								<li><code>enqueue(x)</code> - insert the object $x$ into the queue</li>
+								<li><code>dequeue()</code> - remove and return object on top of stack</li>
+								<hr>
+								<li>First-in, first-out (<em>FIFO</em>)</li>
+								<li>Insertions and deletions happen at opposite ends of the dynamic sequence</li>
+							</ul>
+						</div>
+						<div class="one-column fragment">
+							<h3>Implementation</h3>
+							<img src="figures/stacks-queues/array-queue.svg">
+							<p>Arrays</p>
+							<img src="figures/big-o/ds-linked-list.svg">
+							<p>Linked Lists</p>
+						</div>
+					</div>
+				</section>
+
+				<section data-auto-animate data-auto-animate-restart>
 					<h3>Queues with Arrays</h3>
 					<img src="figures/stacks-queues/array-queue.svg" data-id="figure">
 					<div class="columns">
@@ -355,6 +378,52 @@
 							</pre>
 						</div>
 					</div>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Queues (Scheduling)</h3>
+					<ul>
+						<li class="fragment"><em>CPU</em> and <em>disk scheduling</em></li>
+						<li class="fragment">Queueing jobs or requests</li>
+						<ul>
+							<li class="fragment">webserver, printer, download manager, etc</li>
+						</ul>
+						<li class="fragment">Songs or videos in a <em>playlist</em></li>
+						<li class="fragment">Queues = Pipelines</li>
+						<ul>
+							<li class="fragment"><strong>Amazon</strong>: orders</li>
+							<li class="fragment"><strong>Netflix</strong>: packets in the video buffer</li>
+							<li class="fragment"><strong>Banking</strong>: pending transactions</li>
+							<li class="fragment"><strong>Hospital</strong>: patient wait list</li>
+						</ul>
+					</ul>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Queues (Simulations)</h3>
+					<ul>
+						<li class="fragment">Simulations are a good way to study complex processes and behavior</li>
+						<li class="fragment">Very effective way to observe and analyze physical and biological processes</li>
+						<li class="fragment"><em>Time-based simulations</em> observe what happens at regular, frequent intervals</li>
+						<li class="fragment"><em>Event-based simulations</em> place all key events into a queue and execute them in order</li>
+					</ul>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Queues (Producer-Consumer)</h3>
+					<ul>
+						<li class="fragment"><strong>Producer-Consumer problem</strong>: One process produces while another process consumes</li>
+						<li class="fragment">Instructions to device drivers</li>
+						<li class="fragment">Async communication between processes/threads</li>
+						<li class="fragment">Online mulitplayer netcode (delay vs rollback)</li>
+						<li class="fragment">I/O and file streams, handling interrupts</li>
+						<li class="fragment">Pipes connecting programs and processes</li>
+					</ul>
+					<pre class="bash fragment">
+						<code data-trim>
+							cat file | grep target | wc -l
+						</code>
+					</pre>
 				</section>
 			</div>
 		</div>
