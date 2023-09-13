@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>CS3460</title>
+
+		<link rel="stylesheet" href="../reveal-js/dist/reset.css">
+		<link rel="stylesheet" href="../reveal-js/dist/reveal.css">
+		<link rel="stylesheet" href="../reveal-js/dist/theme/dracula.css">
+		<link rel="stylesheet" href="../layouts/common.css">
+		<link rel="stylesheet" href="../reveal-js/plugin/highlight/monokai.css">
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+				<div class="header left">
+					CS3460: Data Structures
+				</div>
+				<div class="header right no-title">
+					<em>Hash Tables</em>
+				</div>
+
+				<section data-state="title-slide">
+					<h1 class="r-fit-text">CS3460: Data Structures & Algorithms</h1>
+					<h2 class="r-fit-text">Hash Tables</h2>
+				</section>
+
+				<section data-auto-animate data-auto-animate-restart>
+					<h3>Sets / Dictionaries</h3>
+					<div class="columns small">
+						<div class="one-column">
+							<h3>Specification</h3>
+							<ul>
+								<li class="fragment"><code>insert(k)</code> - insert the key $k$ into the set</li>
+								<li class="fragment"><code>remove(k)</code> - remove the key $k$ from the set</li>
+								<li class="fragment"><code>find(k)</code> - find where key $k$ is located in the set</li>
+							</ul>
+						</div>
+						<div class="one-column">
+							<h3>Implementation</h3>
+							<img src="figures/common/array-unsorted.svg">
+							<img src="figures/common/array-sorted.svg">
+							<img src="figures/common/list-unsorted.svg">
+							<img src="figures/common/list-sorted.svg">
+						</div>
+					</div>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Sets / Dictionaries</h3>
+					<table class="small">
+						<thead>
+							<tr>
+								<td><code>find(k)</code></td>
+								<td><code>insert(k)</code></td>
+								<td><code>remove(k)</code></td>
+								<td class="no-border"></td>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td class="fragment">$O(n)$</td>
+								<td class="fragment">$O(1)$ <span class="small">+ find</span></td>
+								<td class="fragment">$O(1)$ <span class="small">+ find</span></td>
+								<td class="no-border">unsorted array</td>
+							</tr>
+							<tr>
+								<td class="fragment">$O(\lg n)$</td>
+								<td class="fragment">$O(n)$</td>
+								<td class="fragment">$O(n)$</td>
+								<td class="no-border">sorted array</td>
+							</tr>
+							<tr>
+								<td class="fragment">$O(n)$</td>
+								<td class="fragment">$O(1)$</td>
+								<td class="fragment">$O(1)$ <span class="small">+ find</span></td>
+								<td class="no-border">unsorted linked list</td>
+							</tr>
+							<tr>
+								<td class="fragment">$O(n)$</td>
+								<td class="fragment">$O(1)$ <span class="small">+ find</span></td>
+								<td class="fragment">$O(1)$ <span class="small">+ find</span></td>
+								<td class="no-border">sorted linked list</td>
+							</tr>
+							<tr class="fragment">
+								<td>$O(1)$*</td>
+								<td>$O(1)$*</td>
+								<td>$O(1)$*</td>
+								<td class="no-border">hash tables</td>
+							</tr>
+						</tbody>
+					</table>
+					<p class="fragment small float-right"><span class="small">* subject to some expected or amortized qualifiers</span></p>
+				</section>
+
+				<section data-auto-animate>
+					<img src="figures/hashing/direct-access-0.svg" data-id="figure">
+				</section>
+
+				<section data-auto-animate>
+					<h3>Direct Access Table - Attempt 1</h3>
+					<img src="figures/hashing/direct-access-1.svg" data-id="figure">
+					<ul>
+						<li class="fragment">Maintain a large <em>array</em> of booleans (or pointers)</li>
+						<li class="fragment">Key $k$ will be stored at location <code class="fragment">A[k]</code></li>
+						<li class="fragment">What is the runtime of <code>insert(k)</code>, <code>remove(k)</code>, and <code>find(k)</code>? <span class="fragment">$O(1)$</span> <em class="fragment">worst-case</em></li>
+					</ul>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Direct Access Table - Attempt 1</h3>
+					<img src="figures/hashing/direct-access-1.svg" data-id="figure">
+					<h4>Drawbacks</h4>
+					<ul>
+						<li class="fragment"><em>Space</em>, and as a corollary initialization time</li>
+						<li class="fragment">How do we store strings? Images? Videos?</li>
+					</ul>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Hash Tables</h3>
+					<img src="figures/hashing/hash-table-0.svg" data-id="figure">
+					<ul>
+						<li class="fragment">Maintain an array of size $m$</li>
+						<li class="fragment">Decide $h()$, a <em>hash function</em></li>
+						<li class="fragment">Key $k$ is stored at index $h(k)$</li>
+						<li class="fragment"><strong>Example:</strong> <code>h(k) = (2971*k + 101923) % m</code></li>
+					</ul>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Hash Tables</h3>
+					<img src="figures/hashing/hash-table-collision.svg" data-id="figure">
+					<ul>
+						<li>What happens when $h(k_1) = h(k_2)$?</li>
+						<li class="fragment">This is known as a <strong>collision</strong></li>
+						<li class="fragment">This is inevitable as a larger set gets mapped to a smaller set <span class="fragment">according to the <em>Pigeonhole Principle</em></span></li>
+					</ul>
+				</section>
+
+				<section data-auto-animate data-auto-animate-restart>
+					<h3>Collision Resolution - Chaining</h3>
+					<img src="figures/hashing/hash-table-chaining.svg" data-id="figure" width="70%">
+				</section>
+			</div>
+		</div>
+
+		<script src="../reveal-js/dist/reveal.js"></script>
+		<script src="../reveal-js/plugin/math/math.js"></script>
+		<script src="../reveal-js/plugin/notes/notes.js"></script>
+		<script src="../reveal-js/plugin/markdown/markdown.js"></script>
+		<script src="../reveal-js/plugin/highlight/highlight.js"></script>
+		<script>
+			Reveal.initialize({
+				hash: true,
+				slideNumber: true,
+				transition: 'convex',
+				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes, RevealMath.KaTeX ],
+			});
+		</script>
+	</body>
+</html>

@@ -53,13 +53,18 @@ table.bordered {
 	border: 1px solid white !important;
 }
 
-table .fragment.current-fragment {
+/*table .fragment.current-fragment {
 	background-color: rgba(255, 255, 255, .1);
-}
+}*/
 
 .float-right {
 	margin-left: 10px;
 	float: right;
+}
+
+.float-left {
+	margin-right: 10px;
+	float: left;
 }
 
 .columns {
@@ -70,4 +75,12 @@ table .fragment.current-fragment {
 .one-column {
 	flex: 1;
 	margin: 10px;
+}
+
+.no-margin {
+	margin: 0 !important;
+}
+
+.no-border {
+	border: 0 !important;
 }
