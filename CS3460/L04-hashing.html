@@ -144,6 +144,110 @@
 					<h3>Collision Resolution - Chaining</h3>
 					<img src="figures/hashing/hash-table-chaining.svg" data-id="figure" width="70%">
 				</section>
+
+				<section data-auto-animate>
+					<h3>Collision Resolution - Chaining</h3>
+					<img src="figures/hashing/hash-table-chaining.svg" data-id="figure" width="40%" class="float-right">
+					<ul class="small" style="display: block">
+						<li>Each cell is the head of a linked list containing all elements colliding on that cell.</li>
+						<li class="fragment"><code>find(k)</code>: 
+							<span class="fragment">search the correct linked list</span>
+							<span class="fragment"> - runtime depends on distribution of keys</span>
+						</li>
+						<li class="fragment"><code>insert(k)</code>: 
+							<span class="fragment">insert at the head of the correct linked list</span>
+							<span class="fragment"> - $O(1)$</span>
+						</li>
+						<li class="fragment"><code>remove(k)</code>: 
+							<span class="fragment">remove from the correct linked list</span>
+							<span class="fragment"> - $O(1)$ + find</span>
+						</li>
+					</ul>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Collision Resolution - Chaining</h3>
+					<img src="figures/hashing/hash-table-chaining.svg" data-id="figure" width="40%" class="float-right">
+					<ul class="small" style="display: block">
+						<li>Performance is good if keys are spread <em>uniformly</em> across table cells</li>
+						<li class="fragment">Hashing $n$ keys into a table of size $m$, on average, produces lists of size <span class="fragment">$n/m$.</span> <span class="fragment">If $m = O(n)$, then the length of each individual list is</span> <span class="fragment">$O(1)$</span> <span class="fragment">in expectation.</span></li>
+						<li class="fragment"><strong>Universal hashing</strong> gives a $O(1)$ <em>expected</em> guarantee for <code>find(k)</code></li>
+					</ul>
+				</section>
+
+				<section data-auto-animate data-auto-animate-restart>
+					<h3>Collision Resolution - Probing</h3>
+					<img src="figures/hashing/hash-table-probing-0.svg" data-id="figure" width="70%">
+				</section>
+
+				<section data-auto-animate>
+					<h3>Collision Resolution - Probing</h3>
+					<ul>
+						<li>In the case of collision, we scan along a <em>probe sequence</em>.</li>
+						<li class="fragment"><code>insert(k)</code>: start at $h(k)$, keep scanning until we find an empty slot</li>
+						<li class="fragment"><code>find(k)</code>: start at $h(k)$, scan the probe sequence until we find the element or reach an empty slot</li>
+					</ul>
+					<img src="figures/hashing/hash-table-probing-0.svg" data-id="figure" width="60%">
+				</section>
+
+				<section data-auto-animate>
+					<h3>Collision Resolution - Probing</h3>
+					<ul>
+						<li>Performance is generally good, as long as</li>
+						<ul>
+							<li class="fragment">the table is <em>slightly larger</em> than $n$</li>
+							<li class="fragment">the <em>hash function</em> spreads keys unpredictably</li>
+						</ul>
+					</ul>
+					<img src="figures/hashing/hash-table-probing-0.svg" data-id="figure" width="60%">
+				</section>
+
+				<section data-auto-animate>
+					<h3>Collision Resolution - Probing</h3>
+					<img src="figures/hashing/hash-table-probing-0.svg" data-id="figure">
+				</section>
+
+				<section data-auto-animate>
+					<h3>Collision Resolution - Probing</h3>
+					<img src="figures/hashing/hash-table-probing-1.svg">
+				</section>
+
+				<section data-auto-animate>
+					<h3>Collision Resolution - Probing</h3>
+					<img src="figures/hashing/hash-table-probing-2.svg" data-id="figure">
+					<p><code>insert(1)</code> is complete, now let's <code>remove(2)</code></p>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Collision Resolution - Probing</h3>
+					<img src="figures/hashing/hash-table-probing-3.svg" data-id="figure">
+				</section>
+
+				<section data-auto-animate>
+					<h3>Collision Resolution - Probing</h3>
+					<img src="figures/hashing/hash-table-probing-4.svg" data-id="figure">
+					<p><code>remove(k)</code>: need to mark the location of the removed element with a <em>tombstone</em></p>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Collision Resolution - Probing</h3>
+					<ul class="small">
+						<li class="fragment"><code>insert(k)</code>: <span class="fragment">Try to store key $k$ in $i = h(k)$ (if unoccupied). Scan along the probe sequence as long as $h(k)$ is greater to or equal to that of the current element. Once we reach an empty spot, or an element with a larger hash value, store it, and, if necessary, displace the element at that location.</span></li>
+						<li class="fragment"><code>find(k)</code>: <span class="fragment">Scan along the probe sequence until we either find the element, find an empty spot, or find an element with a larger hash value.</span></li>
+						<li class="fragment"><code>remove(k)</code>: <span class="fragment">Perform <code>find(k)</code>, and after removing the element, adjust elements toward the left to fill the gaps</span></li>
+					</ul>
+					<img src="figures/hashing/hash-table-probing-5.svg" data-id="figure">
+				</section>
+
+				<section data-auto-animate>
+					<h3>Collision Resolution - Probing</h3>
+					<ul>
+						<li>All operations take $O(1)$ time, as long as the table is large enough (slightly larger than $n$), and we use a good hash function that spreads values out</li>
+						<li class="fragment">Our choice of <em>probe sequence</em> matters too!</li>
+						<li class="fragment">Great <em>cache performance</em> (compared to chaining)</li>
+					</ul>
+					<img src="figures/hashing/hash-table-probing-5.svg" data-id="figure">
+				</section>
 			</div>
 		</div>
 
