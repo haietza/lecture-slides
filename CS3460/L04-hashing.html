@@ -248,6 +248,83 @@
 					</ul>
 					<img src="figures/hashing/hash-table-probing-5.svg" data-id="figure">
 				</section>
+
+				<section data-auto-animate>
+					<h3>Probe Sequences</h3>
+					<ul>
+						<li><strong>Linear probing:</strong> <span class="fragment">start at $h(k)$, continue to adjacent cells $h(k)+1, h(k)+2, h(k)+3, \dots$</span></li>
+						<li class="fragment">Great <em>cache locality</em>, very sensitive to <em>unevenly distributed</em> hash functions, constant <em>expected</em> runtimes for all operations, depending on load.</li>
+						<li class="fragment">Can be shown that with constant load factor, clusters have a maximum size of $O(\lg n)$ <em>with high probability</em>.</li>
+					</ul>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Probe Sequences</h3>
+					<ul>
+						<li><strong>Quadratic probing:</strong> <span class="fragment">start at $h(k)$, add successive values of a quadratic polynomial</span></li>
+						<li class="fragment">e.g., $h(k)+1^2, h(k)+2^2, h(k)+3^2, \dots$</li>
+						<li class="fragment">Slightly worse <em>cache locality</em>, but better addresses clustering problems</li>
+						<li class="fragment">Must carefully choose a quadratic that visits <em>every possible location</em> (Table size $m \in \mathbb{P}$ can help)</li>
+					</ul>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Probe Sequences</h3>
+					<ul>
+						<li><strong>Double hashing:</strong> <span class="fragment">start at $h_1(k)$, add successive multiples of a second hash function $h_2(k)$</span></li>
+						<li class="fragment">Certain properties must be true of the relationship between $h_1(k)$, $h_2(k)$, and $m$</li>
+						<li class="fragment">$h_1(k)$ and $h_2(k)$ must be <em>pairwise independent</em>, and all values of $h_2(k)$ must be <em>coprime</em> with $m$</li>
+					</ul>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Choosing a Good Hash Function</h3>
+					<ul>
+						<li class="fragment">Choose a completely <em>random</em> hash function?</li>
+						<li class="fragment">Choose a completely <em>deterministic</em> hash function?</li>
+						<li class="fragment">Our hash function should be <em>consistent</em>, yet <em>unpredictable</em></li>
+					</ul>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Choosing a Good Hash Function</h3>
+					<ul class="float-right info-box small">
+						<li>$n$ = number of elements</li>
+						<li>$m$ = table size</li>
+						<li>$k$ = hashable key</li>
+						<li>$C$ = maximum key value</li>
+						<li>$a, b$ = random values</li>
+					</ul>
+					<ul style="display: block" class="small">
+						<li class="fragment">$h(k) = k \mod m$</li>
+						<ul>
+							<li class="fragment">known as <em>modular hash</em></li>
+						</ul>
+						<li class="fragment">$h(k) = \lfloor mk/C \rfloor$</li>
+						<li class="fragment">$h(k) = (ak) \mod m$</li>
+						<li class="fragment">$h(k) = \lfloor m(ka - \lfloor ka \rfloor) \rfloor$</li>
+						<ul>
+							<li class="fragment">known as <em>multiplicative hash</em>, $0 < a < 1$</li>
+						</ul>
+						<li class="fragment">$h(k) = (ak + b) \mod m$</li>
+						<li class="fragment">$h(k) = ((ak + b) \mod p) \mod m$</li>
+						<ul>
+							<li class="fragment">$p$ must be prime or <em>coprime</em> with $m$</li>
+							<li class="fragment"><em>universal hash</em>, guarantees $O(1)$ expected time for <code>find(k)</code></li>
+						</ul>
+					</ul>
+				</section>
+
+				<section data-auto-animate>
+					<h3>What Next?</h3>
+					<ul>
+						<li class="fragment">How do we choose <em>initial size</em> of hash table?</li>
+						<li class="fragment">What do we do if we <em>run out of space</em>?</li>
+						<li class="fragment">How do we hash <em>complex objects</em> (strings, files)?</li>
+						<li class="fragment">Alternative collision resolution: <strong>Cuckoo hashing</strong></li>
+						<li class="fragment">Applications of hashing <em>outside of data structures</em></li>
+					</ul>
+				</section>
 			</div>
 		</div>
 

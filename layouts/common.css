@@ -84,3 +84,15 @@ table.bordered {
 .no-border {
 	border: 0 !important;
 }
+
+.info-box {
+	border: 1px solid white;
+	background: #442255;
+	color: white;
+	padding: 20px;
+	margin: 20px;
+}
+
+ul.info-box li::before {
+	content: "" !important;
+}
