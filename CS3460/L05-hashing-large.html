@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>CS3460</title>
+
+		<link rel="stylesheet" href="../reveal-js/dist/reset.css">
+		<link rel="stylesheet" href="../reveal-js/dist/reveal.css">
+		<link rel="stylesheet" href="../reveal-js/dist/theme/dracula.css">
+		<link rel="stylesheet" href="../layouts/common.css">
+		<link rel="stylesheet" href="../reveal-js/plugin/highlight/monokai.css">
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+				<div class="header left">
+					CS3460: Data Structures
+				</div>
+				<div class="header right no-title">
+					<em>Hashing Large Objects</em>
+				</div>
+
+				<section data-state="title-slide">
+					<h1 class="r-fit-text">CS3460: Data Structures & Algorithms</h1>
+					<h2 class="r-fit-text">Hashing Large Objects</h2>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Review</h3>
+					<ul class="small">
+						<li><strong>Hash tables</strong> implement a dictionary/set, and support <code>find(k)</code>, <code>insert(k)</code>, and <code>remove(k)</code></li>
+						<ul>
+							<li><code>insert(k)</code> and <code>remove(k)</code> take $O(1)$ amortized time (due to <em>rebalancing</em>)</li>
+							<li>With <em>universal hashing</em>, <code>find(k)</code> takes $O(1)$ expected time.</li>
+						</ul>
+						<li class="fragment">The previous methods focus on storing <em>integers</em>.</li>
+						<li class="fragment">How do we store more complicated data types?</li>
+						<ul>
+							<li class="fragment">Typically, <em>pointers</em> to <em>objects</em>.</li>
+						</ul>
+					</ul>
+				</section>
+
+				<section data-auto-animate>
+					<h3>All Data Types are Arrays</h3>
+					<ul class="small">
+						<li>Any data type can be <em>serialized</em> (represented as a sequence of integers).</li>
+						<ul>
+							<li class="fragment"><strong>Strings</strong> are just sequences of ASCII values.</li>
+							<li class="fragment"><strong>Files</strong> are just sequences of bytes.</li>
+							<li class="fragment"><strong>Multi-dimensional arrays</strong> can be "flattened" into one dimension.</li>
+							<li class="fragment"><strong>Images</strong> are 2D arrays of RGB pixel values.</li>
+							<li class="fragment"><strong>Audio</strong> is an array of amplitudes sampled from an analog signal.</li>
+							<li class="fragment"><strong>Video</strong> is a container for images (frames), often with audio.</li>
+						</ul>
+						<li class="fragment">So, <em>how do we hash arrays?</em></li>
+					</ul>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Hashing Arrays</h3>
+					<ul>
+						<li>How do we hash an <em>array</em> $A$ to an <em>integer</em> in the range $[0 \dots m-1]$?</li>
+						<li class="fragment">First idea:</li>
+						<ul>
+							<li class="fragment"><code>h(A[]) = (A[0] + A[1] + A[2] + A[3] + &hellip; + A[n-1]) mod m</code></li>
+							<li class="fragment">Very <em>structured</em> - Collisions will happen frequently among <em>"similar"</em> arrays</li>
+						</ul>
+					</ul>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Polynomial Hash Functions</h3>
+					<ul class="small">
+						<li>What if we instead think of <code>A[]</code> as the <em>coefficients of a polynomial</em>?</li>
+						<ul>
+							<li class="fragment"><code>h(A[]) = p(x) = (A[0] * x<sup>n-1</sup> + A[1] * x<sup>n-2</sup> + <br/>&hellip; + A[n-2] * x + A[n-1]) mod m</code></li>
+						</ul>
+						<li class="fragment">To evaluate <code>h(A[])</code>, evaluate <code>p(x)</code> at a randomly chosen <code>x</code>.</li>
+						<li class="fragment">How do we evaluate this <em>quickly</em>? <span class="fragment"><strong>Horner's rule</strong></span></li>
+					</ul>
+					<pre class="fragment java">
+						<code data-trim>
+							int; // pre-decide a random x
+							int hash = 0;
+							for (int i = 0; i < n; i++)
+								hash = (hash * x + A[i]) % m;
+						</code>
+					</pre>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Uses for Hashing</h3>
+					<ul class="small">
+						<li class="fragment"><strong>Consider:</strong> By hashing a file down to a small integer <em>"fingerprint"</em>, we can:</li>
+						<ul>
+							<li class="fragment"><em>Compare</em> (approximately) two files extremely quickly</li>
+							<li class="fragment">Compare files in different locations with <em>minimal communication</em></li>
+							<li class="fragment">Detect tampering in important files (i.e., <em>checksums</em>)</li>
+							<li class="fragment">Ensure <em>integrity of file transfer</em> by sharing the checksum separately.</li>
+						</ul>
+					</ul>
+				</section>
+
+				<section data-auto-animate>
+					<h3>What About Collisions?</h3>
+					<ul class="small">
+						<li class="fragment">Suppose we hash our object to a 128-bit integer using polynomial hashing</li>
+						<li class="fragment">What is the probability two <em>different</em> arrays <code>A[]</code> and <code>B[]</code> result in the same hash? What is the probability <code>h(A[]) == h(B[])</code>?</li>
+						<ul class="fragment">
+							<li><code>p<sub>A</sub>(x) = A[0]x<sup>n-1</sup> + A[1]x<sup>n-2</sup> + &hellip; + A[n-2]x + A[n-1]</code></li>
+							<li><code>p<sub>B</sub>(x) = B[0]x<sup>n-1</sup> + B[1]x<sup>n-2</sup> + &hellip; + B[n-2]x + B[n-1]</code></li>
+						</ul>
+						<li class="fragment">We get a collision if we choose an <code>x</code> such that <code>p<sub>A</sub>(x) == p<sub>B</sub>(x)</code> mod $m$</li>
+						<li class="fragment">How many <em>unlucky</em> values of <code>x</code> can there be?</li>
+					</ul>
+				</section>
+
+				<section data-auto-animate>
+					<h3>What About Collisions?</h3>
+					<img src="figures/hashing/poly-1.svg"
+						class="float-right" width="30%">
+					<ul style="display: block" class="small">
+						<li><em>Two</em> lines (first-degree polynomials) can agree at most at <em>one</em> point</li>
+						<li class="fragment" data-fragment-index="1"><code>p<sub>A</sub>(x) = A[0]x + A[1]</code></li>
+						<li class="fragment" data-fragment-index="1"><code>p<sub>B</sub>(x) = B[0]x + B[1]</code></li>
+						<li class="fragment">Alternatively, two points uniquely describe a line.</li>
+					</ul>
+				</section>
+
+				<section data-auto-animate>
+					<h3>What About Collisions?</h3>
+					<img src="figures/hashing/poly-2.svg"
+						class="float-right" width="30%">
+					<ul style="display: block" class="small">
+						<li><em>Two</em> quadratics (second-degree polynomials) can agree at most at <em>two</em> points</li>
+						<li class="fragment" data-fragment-index="1"><code>p<sub>A</sub>(x) = A[0]x<sup>2</sup> + A[1]x + A[2]</code></li>
+						<li class="fragment" data-fragment-index="1"><code>p<sub>B</sub>(x) = B[0]x<sup>2</sup> + B[1]x + B[2]</code></li>
+						<li class="fragment">Alternatively, three points uniquely describe a quadratic.</li>
+						<li class="fragment">Generally, two $(n-1)$ degree polynomials can only agree in at most $(n-1)$ points<span class="fragment">, <em>even if we do arithmetic modulo a prime</em></span></li>
+					</ul>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Collisions are Extremely Rare!</h3>
+					<ul class="small">
+						<li>We get a collision if we choose an <code>x</code> such that <code>p<sub>A</sub>(x) == p<sub>B</sub>(x)</code> mod $m$</li>
+						<li>How many <em>unlucky</em> values of <code>x</code> can there be?</li>
+						<ul>
+							<li class="fragment">If $m$ is prime, there are at most $n-1$ values for <code>x</code> that will cause a collision.</li>
+							<li class="fragment">Given $m \approx 2^{128}$, the probability of choosing a bad <code>x</code> from <code>0...m-1</code> is $n/2^{128}$, which is <em>extremely small</em> even for large arrays</li>
+						</ul>
+					</ul>
+				</section>
+			</div>
+		</div>
+
+		<script src="../reveal-js/dist/reveal.js"></script>
+		<script src="../reveal-js/plugin/math/math.js"></script>
+		<script src="../reveal-js/plugin/notes/notes.js"></script>
+		<script src="../reveal-js/plugin/markdown/markdown.js"></script>
+		<script src="../reveal-js/plugin/highlight/highlight.js"></script>
+		<script>
+			Reveal.initialize({
+				hash: true,
+				slideNumber: true,
+				transition: 'convex',
+				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes, RevealMath.KaTeX ],
+			});
+		</script>
+	</body>
+</html>

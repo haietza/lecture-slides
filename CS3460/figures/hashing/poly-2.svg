@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="92.526779mm"
+   height="64.768028mm"
+   viewBox="0 0 92.526779 64.768028"
+   version="1.1"
+   id="svg1"
+   sodipodi:docname="poly-2.svg"
+   inkscape:version="1.3 (0e150ed6c4, 2023-07-21)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview1"
+     pagecolor="#505050"
+     bordercolor="#eeeeee"
+     borderopacity="1"
+     inkscape:showpageshadow="0"
+     inkscape:pageopacity="0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#505050"
+     inkscape:document-units="mm"
+     inkscape:zoom="1.4485269"
+     inkscape:cx="6.2132086"
+     inkscape:cy="272.34564"
+     inkscape:window-width="1920"
+     inkscape:window-height="1009"
+     inkscape:window-x="1912"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1" />
+  <defs
+     id="defs1" />
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(-22.849277,-9.6012708)">
+    <path
+       style="fill:none;fill-opacity:0;stroke:#ff9955;stroke-width:1.21254;stroke-opacity:1"
+       d="M 31.377626,13.071953 C 78.832631,150.79582 104.85634,11.277505 105.73109,9.9316695"
+       id="path4" />
+    <path
+       style="fill:none;fill-opacity:0;stroke:#ff9955;stroke-width:1.21254;stroke-opacity:1"
+       d="M 23.28622,29.670597 C 71.615972,79.915135 95.671504,51.203969 114.91593,28.77337"
+       id="path5" />
+    <circle
+       style="fill:none;fill-opacity:0;stroke:#ffffff;stroke-width:1;stroke-opacity:1"
+       id="path3"
+       cx="46.290337"
+       cy="49.294796"
+       r="2.0092251" />
+    <circle
+       style="fill:none;fill-opacity:0;stroke:#ffffff;stroke-width:1;stroke-opacity:1"
+       id="circle5"
+       cx="93.233139"
+       cy="49.842766"
+       r="2.0092251" />
+  </g>
+</svg>
