@@ -83,12 +83,17 @@
 					</ul>
 					<pre class="fragment java">
 						<code data-trim>
-							int; // pre-decide a random x
+							int x = 17; // pre-decide a random x
 							int hash = 0;
 							for (int i = 0; i < n; i++)
 								hash = (hash * x + A[i]) % m;
 						</code>
 					</pre>
+
+					<aside class="notes">
+						Calculating large powers of x would be unreasonable.
+						The value of Horner's rule is not for speed, but for ease of calculation.
+					</aside>
 				</section>
 
 				<section data-auto-animate>
@@ -154,7 +159,54 @@
 						</ul>
 					</ul>
 				</section>
+
+				<section data-auto-animate>
+					<h3>Secret Sharing</h3>
+					<ul>
+						<li>Can I distribute a <em>secret number</em> among $n$ students in class, such that:</li>
+						<ol>
+							<li class="fragment">Any <strong>one</strong> student knows <em>nothing</em> about the secret.</li>
+							<li class="fragment">Any <strong>two</strong> students can discover the secret.</li>
+						</ol>
+						<li class="fragment"><strong>Easy solution:</strong> Make the secret the <em>y-intercept</em> of a line, give each student one point on the line.</li>
+						<li class="fragment">What if we want to require 3+ students to work together to determine the secret? <span class="fragment">Use <em>a quadratic</em>.</span></li>
+					</ul>
+				</section>
+
+				<section data-auto-animate>
+					<h3>The Birthday Paradox</h3>
+					<ul class="small">
+						<li>How many people do you need to assemble before there is a <em>reasonable chance</em> (for example, 50%) that two people <em>share a birthday</em>? <span class="fragment">Only <strong>23</strong></span></li>
+						<li class="fragment">In general, if there are $n$ "<em>birthdays</em>," the answer is approximately $\sqrt{n}$</li>
+						<li class="fragment">With a hash table of size $n$, we start seeing <em>collisions</em> after $\sqrt{n}$ inserts.</li>
+						<li class="fragment"><strong>Example:</strong> Estimating the number of fish in a pond.</li>
+						<ul>
+							<li class="fragment">Randomly draw fish from a pond. <em>Mark them</em> and <em>throw them back</em>.</li>
+							<li class="fragment">How many fish do we expect to catch before seeing a <em>marked fish</em>? <span class="fragment">$\sqrt{n}$</span></li>
+						</ul>
+						<li class="fragment">What size does a hash table need to be so that there are unlikely to be any collisions? <span class="fragment">$n^2$</span></li>
+					</ul>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Hashing in Security</h3>
+					<ul class="small">
+						<li>We can detect tampering in <em>data</em> (a file, a message, etc) if we also store a <em>hash</em> of that data.</li>
+						<li class="fragment">Specifically, if we use a <em>cryptographic hash function</em> (e.g., MD5, SHA1), which is designed to be <em>hard to invert</em>.</li>
+						<li class="fragment">Difficult to change the data while keeping the same hash!</li>
+						<ul>
+							<li class="fragment">How many guess do I expect to need to generate a key that <em>collides</em> with another known key (assuming output is a 128-bit integer)? <span class="fragment">$2^{64}$</span></li>
+						</ul>
+						<li class="fragment">If we store passwords as <em>hashes</em>, instead of "in the clear" (<em>plaintext</em>), can we still log in?</li>
+					</ul>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Hashing in Security</h3>
+					<img src="figures/hashing/shattered.png" width="80%">
+				</section>
 			</div>
+		</div>
 		</div>
 
 		<script src="../reveal-js/dist/reveal.js"></script>
