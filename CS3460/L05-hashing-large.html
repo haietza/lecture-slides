@@ -205,6 +205,53 @@
 					<h3>Hashing in Security</h3>
 					<img src="figures/hashing/shattered.png" width="80%">
 				</section>
+
+				<section data-auto-animate>
+					<h3>Detecting Infinite Loops</h3>
+					<ul>
+						<li>We can use <em>hashing</em> to detect infinite loops in programs; <span class="fragment">but first, consider the following:</span></li>
+					</ul>
+					<img src="figures/common/linked-list-loop.svg" class="fragment" 
+						data-id="link-loop" width="55%">
+				</section>
+
+				<section data-auto-animate>
+					<h3>Detecting Infinite Loops</h3>
+					<img src="figures/common/linked-list-loop.svg" 
+						data-id="link-loop" width="55%">
+					<ul class="small">
+						<li><strong>Goal:</strong> Figure out which of the two cases is occurring.</li>
+						<li class="fragment"><strong>Restrictions:</strong></li>
+						<ol>
+							<li class="fragment">Cannot modify the list.</li>
+							<li class="fragment">Cannot use a "large" amount of extra memory, $o(n)$</li>
+						</ol>
+						<li class="fragment"><strong>Solution:</strong> fast pointer + slow pointer</li>
+						<ul>
+							<li class="fragment">Send one pointer at double speed, see if the fast pointer catches up with the slow pointer</li>
+						</ul>
+					</ul>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Detecting Infinite Loops</h3>
+					<ul class="small">
+						<li>What does this have to do with <em>detecting infinite loops</em>?</li>
+						<li class="fragment">What happens to <em>program memory</em> during an infinite loop?</li>
+						<li class="fragment">We need to identify <em>reoccurring states</em> for our program memory.</li>
+						<li class="fragment"><strong>Idea:</strong> we can <em>hash</em> the heap to get a fingerprint of our current state.</li>
+						<ul>
+							<li class="fragment">Now we are looking for 
+								<span class="fragment"><em>collisions</em> with previous states.</span></li>
+						</ul>
+					</ul>
+
+					<aside class="notes">
+						This requires O(n) memory to do.
+						We can improve on this with slow pointer + fast pointer.
+							Run the program twice, one at double speed. Check if the states match.
+					</aside>
+				</section>
 			</div>
 		</div>
 		</div>
