@@ -1,0 +1,180 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>CS3460</title>
+
+		<link rel="stylesheet" href="../reveal-js/dist/reset.css">
+		<link rel="stylesheet" href="../reveal-js/dist/reveal.css">
+		<link rel="stylesheet" href="../reveal-js/dist/theme/dracula.css">
+		<link rel="stylesheet" href="../layouts/common.css">
+		<link rel="stylesheet" href="../reveal-js/plugin/highlight/monokai.css">
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+				<div class="header left">
+					CS3460: Data Structures
+				</div>
+				<div class="header right no-title">
+					<em>More Hashing</em>
+				</div>
+
+				<section data-state="title-slide">
+					<h1 class="r-fit-text">CS3460: Data Structures & Algorithms</h1>
+					<h2 class="r-fit-text">More Hashing</h2>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Hashing - So Far...</h3>
+					<ul>
+						<li>Hash functions</li>
+						<ul>
+							<li>Modular hashing, Multiplicative hashing</li>
+							<li><em>Universal hashing</em> - $O(1)$ expected guarantee</li>
+						</ul>
+						<li>Hash tables</li>
+						<ul>
+							<li>Supports operations <em>insert</em>, <em>remove</em>, and <em>find</em>.</li>
+							<li>Resolving collisions with <em>chaining</em> and <em>probing</em>.</li>
+						</ul>
+						<li>Hashing large objects</li>
+						<ul>
+							<li>Polynomial hash functions</li>
+						</ul>
+					</ul>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Maps</h3>
+					<div class="columns small">
+						<div class="one-column">
+							<h3>Specification</h3>
+							<ul>
+								<li><code>put(key, value)</code> - add or update <em>key-value</em> pair</li>
+								<li><code>get(key)</code> - get <em>value</em> associated with <em>key</em></li>
+								<hr>
+								<li>optionally, <code>delete(key)</code> and <code>contains(key)</code></li>
+							</ul>
+						</div>
+						<div class="one-column fragment">
+							<h3>Implementation</h3>
+							<img src="figures/hashing/hash-map-example.svg" data-id="figure">
+						</div>
+					</div>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Maps</h3>
+					<div class="columns small">
+						<div class="one-column">
+							<img src="figures/hashing/hash-map-example.svg" data-id="figure">
+						</div>
+						<div class="one-column">
+							<ul>
+								<li><em>Search</em> for large records based on a key.</li>
+								<li class="fragment">A key that uniquely identifies a record is called a <em>primary key</em>.</li>
+								<li class="fragment">Records are stored outside of the hash table, follow <em>pointer</em> to find record.</li>
+								<li class="fragment">How do we search for records organized by another key? <span class="fragment"><em>Build another hash table</em>.</span></li>
+							</ul>
+						</div>
+					</div>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Collisions</h3>
+					<ul>
+						<li>Are collisions always a bad thing?</li>
+						<li class="fragment">We can use collisions to solve interesting problems!</li>
+					</ul>
+				</section>
+
+				<section data-auto-animate>
+					<img src="figures/hashing/jumble.png" width="50%" data-id="jumble">
+				</section>
+
+				<section data-auto-animate>
+					<h3>Exploiting Collisions</h3>
+					<div class="columns small">
+						<div class="one-column">
+							<ul>
+								<li>Given a dictionary of English words, how do we unscramble these words?</li>
+								<li class="fragment">How do we <em>brute force</em> this solution?</li>
+								<li class="fragment">Can we design a solution that takes advantage of <em>hash collisions</em>? How can we transform our input?</li>
+								<li class="fragment"><strong>Consider:</strong> convert words into a histogram of letter frequency</li>
+							</ul>
+						</div>
+						<div class="one-column">
+							<img src="figures/hashing/jumble.png" data-id="jumble" width="65%">
+						</div>
+					</div>
+				</section>
+
+				<section data-auto-animate>
+					<p class="small"><em data-id="question">"GPS, give me all restaurants within 10 miles of my current location."</em></p>
+					<img src="figures/hashing/boone-normal.svg" data-id="boone">
+				</section>
+
+				<section data-auto-animate>
+					<h3>Exploiting Collisions</h3>
+					<div class="columns small">
+						<div class="one-column">
+							<p>What is the brute force approach to solving this problem?</p>
+						</div>
+						<div class="one-column">
+							<img src="figures/hashing/boone-normal.svg" data-id="boone">
+						</div>
+					</div>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Exploiting Collisions</h3>
+					<div class="columns small">
+						<div class="one-column">
+							<ul>
+								<li><strong>Step 1:</strong> Subdivide space by "<em>hashing</em>" (discretizing) all points to an appropriate cell in a 2D array.</li>
+								<li class="fragment">What if the array is only <em>sparsely-filled</em>? Can we represent this in a <em>space-efficient</em> manner?</li>
+								<li class="fragment">Hash the <em>grid cells</em> themselves!</li>
+							</ul>
+						</div>
+						<div class="one-column">
+							<img src="figures/hashing/boone-spatial.svg" data-id="boone">
+						</div>
+					</div>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Exploiting Collisions</h3>
+					<div class="columns small">
+						<div class="one-column">
+							<img src="figures/hashing/boone-spatial.svg" data-id="boone">
+						</div>
+						<div class="one-column">
+							<ul>
+								<li><strong>Step 2:</strong> How do we find all restaurants in a 10 mile radius?</li>
+								<li class="fragment">If each "bucket" is 10 miles across, we can reduce the number of comparisons needed.</li>
+								<li class="fragment">Compare all the points in each bucket <span class="fragment">and <em>neighboring buckets</em>.</span></li>
+							</ul>
+						</div>
+					</div>
+				</section>
+			</div>
+		</div>
+
+		<script src="../reveal-js/dist/reveal.js"></script>
+		<script src="../reveal-js/plugin/math/math.js"></script>
+		<script src="../reveal-js/plugin/notes/notes.js"></script>
+		<script src="../reveal-js/plugin/markdown/markdown.js"></script>
+		<script src="../reveal-js/plugin/highlight/highlight.js"></script>
+		<script>
+			Reveal.initialize({
+				hash: true,
+				slideNumber: true,
+				transition: 'convex',
+				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes, RevealMath.KaTeX ],
+			});
+		</script>
+	</body>
+</html>
