@@ -96,3 +96,15 @@ table.bordered {
 ul.info-box li::before {
 	content: "" !important;
 }
+
+.exclamation
+{
+	color: black;
+	background: rgb(100%, 100%, 60%);
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%) rotate(-20deg);
+	padding: 20px;
+	width: 90%;
+}

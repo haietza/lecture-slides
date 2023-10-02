@@ -1,0 +1,235 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>CS3460</title>
+
+		<link rel="stylesheet" href="../reveal-js/dist/reset.css">
+		<link rel="stylesheet" href="../reveal-js/dist/reveal.css">
+		<link rel="stylesheet" href="../reveal-js/dist/theme/dracula.css">
+		<link rel="stylesheet" href="../layouts/common.css">
+		<link rel="stylesheet" href="../reveal-js/plugin/highlight/monokai.css">
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+				<div class="header left">
+					CS3460: Data Structures
+				</div>
+				<div class="header right no-title">
+					<em>Binary Search Trees</em>
+				</div>
+
+				<section data-state="title-slide">
+					<h1 class="r-fit-text">CS3460: Data Structures & Algorithms</h1>
+					<h2 class="r-fit-text">Binary Search Trees</h2>
+				</section>
+
+				<section data-auto-animate data-auto-animate-restart>
+					<h3>Sets / Dictionaries</h3>
+					<ul>
+						<li><code>insert(k)</code> - insert the key $k$ into the set</li>
+						<li><code>remove(k)</code> - remove the key $k$ from the set</li>
+						<li><code>find(k)</code> - find where key $k$ is located in the set</li>
+					</ul>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Sets / Dictionaries</h3>
+					<table class="small">
+						<thead>
+							<tr>
+								<td><code>find(k)</code></td>
+								<td><code>insert(k)</code></td>
+								<td><code>remove(k)</code></td>
+								<td class="no-border"></td>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td>$O(n)$</td>
+								<td>$O(1)$ <span class="small">+ find</span></td>
+								<td>$O(1)$ <span class="small">+ find</span></td>
+								<td class="no-border">unsorted array</td>
+							</tr>
+							<tr>
+								<td>$O(\lg n)$</td>
+								<td>$O(n)$</td>
+								<td>$O(n)$</td>
+								<td class="no-border">sorted array</td>
+							</tr>
+							<tr>
+								<td>$O(n)$</td>
+								<td>$O(1)$</td>
+								<td>$O(1)$ <span class="small">+ find</span></td>
+								<td class="no-border">unsorted linked list</td>
+							</tr>
+							<tr>
+								<td>$O(n)$</td>
+								<td>$O(1)$ <span class="small">+ find</span></td>
+								<td>$O(1)$ <span class="small">+ find</span></td>
+								<td class="no-border">sorted linked list</td>
+							</tr>
+							<tr>
+								<td>$O(1)$*</td>
+								<td>$O(1)$*</td>
+								<td>$O(1)$*</td>
+								<td class="no-border">hash tables</td>
+							</tr>
+							<tr class="fragment">
+								<td>$O(\lg n)$</td>
+								<td>$O(\lg n)$</td>
+								<td>$O(\lg n)$</td>
+								<td class="no-border">binary search trees</td>
+							</tr>
+						</tbody>
+					</table>
+					<p class="small float-right"><span class="small">* subject to some expected or amortized qualifiers</span></p>
+					<div class="exclamation fragment">
+						Binary search trees are much more than just dictionary data structures!
+					</div>
+				</section>
+
+				<section data-auto-animate data-auto-animate-restart>
+					<h3>Binary Search Trees</h3>
+					<ul>
+						<li>A <strong>tree</strong> is a hierarchical, node-based data structure, where each node points to some number of <em>children</em>.</li>
+						<li>A <strong>binary tree</strong> is a tree where each node has at most <em>two children</em> (binary = 2).</li>
+						<ul>
+							<li class="fragment">One could think of a <em>linked list</em> as a <em>unary tree</em>!</li>
+						</ul>
+					</ul>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Binary Search Trees</h3>
+					<div class="columns">
+						<div class="one-column">
+							<ul>
+								<li>The <strong>binary search tree</strong> property requires that the key of any node being <em>greater than</em> all nodes in its <em>left subtree</em>, and <em>less than</em> all nodes in its <em>right subtree</em>.</li>
+							</ul>
+						</div>
+						<div class="one-column">
+							<img src="figures/trees/bst-property.svg">
+						</div>
+					</div>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Binary Search Trees</h3>
+					<div class="columns">
+						<div class="one-column">
+							<img src="figures/trees/bst-property.svg">
+						</div>
+						<div class="one-column">
+							<ul>
+								<li>The <em>runtime</em> of BST operations depends on the <strong>height</strong> of the tree.</li>
+								<li class="fragment">If the tree is <em>balanced</em>, all operations should take $O(\lg n)$, because the height is $O(\lg n)$.</li>
+							</ul>
+						</div>
+					</div>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Binary Search Trees</h3>
+					<img src="figures/trees/bst-example.svg" data-id="bst-example">
+				</section>
+
+				<section data-auto-animate>
+					<h3>Binary Search Trees</h3>
+					<div class="columns">
+						<div class="one-column">
+							<img src="figures/trees/bst-example.svg" data-id="bst-example">
+						</div>
+						<div class="one-column">
+							<pre class="java">
+								<code data-trim data-line-numbers="|5-6|4">
+									public class Node
+									{
+										private int key;
+										private Node parent;
+										private Node left;
+										private Node right;
+										// ...
+									}
+								</code>
+							</pre>
+						</div>
+					</div>
+				</section>
+
+				<section data-auto-animate data-auto-animate-restart>
+					<h3>BSTs as Maps</h3>
+					<div class="columns">
+						<div class="one-column">
+							<img src="figures/trees/bst-map-example.svg">
+						</div>
+						<div class="one-column">
+							<pre class="java">
+								<code data-trim data-line-numbers="3-4">
+									public class Node
+									{
+										private String key;
+										private int value;
+										private Node parent;
+										private Node left;
+										private Node right;
+										// ...
+									}
+								</code>
+							</pre>
+						</div>
+					</div>
+				</section>
+
+				<section data-auto-animate data-auto-animate-restart>
+					<h3>Fundamental Operations</h3>
+					<p>Most operations can be defined <em>recursively</em> to run in $O(h)$ time, where $h$ is the height of the tree.</p>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Fundamental Operations</h3>
+					<pre class="python fragment">
+						<code data-trim>
+							find(tree, key):
+								if tree == null then return False
+								if key <  tree.key then return find(tree.left, key)
+								if key >  tree.key then return find(tree.right, key)
+								if key == tree.key then return True
+						</code>
+					</pre>
+					<pre class="python fragment">
+						<code data-trim>
+							insert(tree, key):
+								if tree == null then return new Node(key)
+								if key <  tree.key then tree.left = insert(tree.left, key)
+								if key >  tree.key then tree.right = insert(tree.right, key)
+								if key == tree.key then return tree
+						</code>
+					</pre>
+				</section>
+
+				<section data-auto-animate data-auto-animate-restart>
+					<h3>Tree Traversals</h3>
+					<p>We can enumerate the contents of a size $n$ <em>binary search tree</em> in only $O(n)$ time using an <strong>in-order traversal</strong>.</p>
+				</section>
+			</div>
+		</div>
+
+		<script src="../reveal-js/dist/reveal.js"></script>
+		<script src="../reveal-js/plugin/math/math.js"></script>
+		<script src="../reveal-js/plugin/notes/notes.js"></script>
+		<script src="../reveal-js/plugin/markdown/markdown.js"></script>
+		<script src="../reveal-js/plugin/highlight/highlight.js"></script>
+		<script>
+			Reveal.initialize({
+				hash: true,
+				slideNumber: true,
+				transition: 'convex',
+				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes, RevealMath.KaTeX ],
+			});
+		</script>
+	</body>
+</html>
