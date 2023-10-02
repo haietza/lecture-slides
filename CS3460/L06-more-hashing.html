@@ -47,7 +47,7 @@
 					</ul>
 				</section>
 
-				<section data-auto-animate>
+				<section data-auto-animate data-auto-animate-restart>
 					<h3>Maps</h3>
 					<div class="columns small">
 						<div class="one-column">
@@ -70,12 +70,75 @@
 					<h3>Maps</h3>
 					<div class="columns small">
 						<div class="one-column">
+							<ul>
+								<li>We can augment the elements in a hash table with <em>additional information</em>.</li>
+								<li class="fragment" data-fragment-index="2"><strong>Example:</strong> Find the most frequently occurring word in a text file.</li>
+								<li class="fragment"><strong>Solution:</strong> Store each string in a hash table, augmented with an integer count.</li>
+								<li class="fragment">We can think of this hash table as a "<em>mapping</em>" from strings to ints.</li>
+							</ul>
+						</div>
+						<div class="one-column">
+							<pre class="text fragment" data-fragment-index="2">
+								<code data-trim>
+									when
+									mr
+									bilbo
+									baggins
+									of
+									bag
+									end
+									announced
+									that
+									he
+									would
+									shortly
+									be
+									celebrating
+									his
+									...
+								</code>
+							</pre>
+						</div>
+					</div>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Maps</h3>
+					<ul>
+						<li>Hash-based <strong>map data structures</strong> are supported in many languages (e.g., Perl, Python, Javascript) using simple <em>array indexing notation</em>.</li>
+					</ul>
+					<div class="columns">
+						<div class="one-column">
+							<pre class="python fragment">
+								<code data-trim>
+									xid = 101192168
+									students[xid] = "John"
+								</code>
+							</pre>
+						</div>
+						<div class="one-column">
+							<pre class="python fragment">
+								<code data-trim>
+									grade["John"] = 100
+								</code>
+							</pre>
+						</div>
+					</div>
+					<ul>
+						<li class="fragment">These look like arrays, but they're actually <em>hash tables</em>!</li>
+					</ul>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Maps</h3>
+					<div class="columns small">
+						<div class="one-column">
 							<img src="figures/hashing/hash-map-example.svg" data-id="figure">
 						</div>
 						<div class="one-column">
 							<ul>
-								<li><em>Search</em> for large records based on a key.</li>
-								<li class="fragment">A key that uniquely identifies a record is called a <em>primary key</em>.</li>
+								<li>We can <em>search</em> for large records based on a key.</li>
+								<li class="fragment">A key that uniquely identifies a record is called a <strong>primary key</strong>.</li>
 								<li class="fragment">Records are stored outside of the hash table, follow <em>pointer</em> to find record.</li>
 								<li class="fragment">How do we search for records organized by another key? <span class="fragment"><em>Build another hash table</em>.</span></li>
 							</ul>
@@ -83,15 +146,13 @@
 					</div>
 				</section>
 
-				<section data-auto-animate>
+				<section data-auto-animate data-auto-animate-restart>
 					<h3>Collisions</h3>
-					<ul>
-						<li>Are collisions always a bad thing?</li>
-						<li class="fragment">We can use collisions to solve interesting problems!</li>
-					</ul>
+					<p>Are collisions always a bad thing?</p>
+					<p class="fragment">We can use collisions to solve interesting problems!</p>
 				</section>
 
-				<section data-auto-animate>
+				<section data-auto-animate data-auto-animate-restart>
 					<img src="figures/hashing/jumble.png" width="50%" data-id="jumble">
 				</section>
 
@@ -112,7 +173,7 @@
 					</div>
 				</section>
 
-				<section data-auto-animate>
+				<section data-auto-animate data-auto-animate-restart>
 					<p class="small"><em data-id="question">"GPS, give me all restaurants within 10 miles of my current location."</em></p>
 					<img src="figures/hashing/boone-normal.svg" data-id="boone">
 				</section>
