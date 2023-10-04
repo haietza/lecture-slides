@@ -108,7 +108,7 @@
 					<div class="columns">
 						<div class="one-column">
 							<ul>
-								<li>The <strong>binary search tree</strong> property requires that the key of any node being <em>greater than</em> all nodes in its <em>left subtree</em>, and <em>less than</em> all nodes in its <em>right subtree</em>.</li>
+								<li>The <strong>binary search tree</strong> property requires that the key of any node be <em>greater than</em> all nodes in its <em>left subtree</em>, and <em>less than</em> all nodes in its <em>right subtree</em>.</li>
 							</ul>
 						</div>
 						<div class="one-column">
@@ -162,16 +162,22 @@
 
 				<section data-auto-animate data-auto-animate-restart>
 					<h3>BSTs as Maps</h3>
+					<p class="small">A <em>histogram</em> of word lengths for each word in the <em>Gettysburg Address</em></p>
+					<img src="figures/trees/bst-map-example.svg" data-id="map-example">
+				</section>
+
+				<section data-auto-animate>
+					<h3>BSTs as Maps</h3>
 					<div class="columns">
 						<div class="one-column">
-							<img src="figures/trees/bst-map-example.svg">
+							<img src="figures/trees/bst-map-example.svg" data-id="map-example">
 						</div>
 						<div class="one-column">
 							<pre class="java">
 								<code data-trim data-line-numbers="3-4">
 									public class Node
 									{
-										private String key;
+										private int key;
 										private int value;
 										private Node parent;
 										private Node left;
@@ -193,7 +199,7 @@
 					<h3>Fundamental Operations</h3>
 					<pre class="python fragment">
 						<code data-trim>
-							find(tree, key):
+							def find(tree, key):
 								if tree == null then return False
 								if key <  tree.key then return find(tree.left, key)
 								if key >  tree.key then return find(tree.right, key)
@@ -202,18 +208,54 @@
 					</pre>
 					<pre class="python fragment">
 						<code data-trim>
-							insert(tree, key):
+							def insert(tree, key):
 								if tree == null then return new Node(key)
-								if key <  tree.key then tree.left = insert(tree.left, key)
-								if key >  tree.key then tree.right = insert(tree.right, key)
-								if key == tree.key then return tree
+								if key < tree.key then tree.left = insert(tree.left, key)
+								                  else tree.right = insert(tree.right, key)
+								return tree
 						</code>
 					</pre>
 				</section>
 
 				<section data-auto-animate data-auto-animate-restart>
 					<h3>Tree Traversals</h3>
-					<p>We can enumerate the contents of a size $n$ <em>binary search tree</em> in only $O(n)$ time using an <strong>in-order traversal</strong>.</p>
+					<p class="small">We can enumerate the contents of a size $n$ <em>binary search tree</em> in only $O(n)$ time using an 
+						<strong>in-order traversal</strong>. <span class="fragment">How is this $O(n)$?</span></p>
+					<div class="columns">
+						<div class="one-column">
+							<img src="figures/trees/bst-example.svg">
+						</div>
+						<div class="one-column">
+							<pre class="python">
+								<code data-trim>
+									def inorder(tree):
+										if tree == null then return
+										inorder(tree.left)
+										print tree.key
+										inorder(tree.right)
+								</code>
+							</pre>
+						</div>
+					</div>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Tree Traversals</h3>
+					<ul class="small">
+						<li>Other common tree traversal types:</li>
+						<ul>
+							<li><strong>Pre-order:</strong> root > left > right</li>
+							<li><strong>Post-order:</strong> left > right > root</li>
+							<li><strong>Euler tour:</strong> root > left > root > right > root</li>
+						</ul>
+					</ul>
+					<img src="figures/trees/euler-tour.svg" width="50%" data-id="euler-tour">
+				</section>
+
+				<section data-auto-animate>
+					<h3>Tree Traversals</h3>
+					<p class="small">Write the contents of this tree in order of its <em>Eulerian tour</em></p>
+					<img src="figures/trees/euler-tour.svg" width="75%" data-id="euler-tour">
 				</section>
 			</div>
 		</div>
