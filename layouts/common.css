@@ -41,6 +41,10 @@ section.left {
 	line-height: 150%;
 }
 
+.reveal code {
+	overflow-y: hidden !important;
+}
+
 .reveal ul {
 	list-style: none !important;
 }

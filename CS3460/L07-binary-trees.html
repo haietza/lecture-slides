@@ -257,6 +257,360 @@
 					<p class="small">Write the contents of this tree in order of its <em>Eulerian tour</em></p>
 					<img src="figures/trees/euler-tour.svg" width="75%" data-id="euler-tour">
 				</section>
+
+				<section data-auto-animate data-auto-animate-restart>
+					<h3>Sorting with a BST</h3>
+					<ul class="small">
+						<li>An inorder traversal prints the BST in <em>sorted order</em>, in $O(n)$ time.</li>
+						<li class="fragment">Therefore, we can sort with a BST by:</li>
+						<ol>
+							<li class="fragment">Inserting $n$ elements in $O(n \lg n)$* time.</li>
+							<li class="fragment">Doing an inorder traversal in $O(n)$ time.</li>
+						</ol>
+						<li class="fragment">We can think of the BST as making the sorting process dynamic.</li>
+						<li class="fragment">Later, we will see the similarities between BSTs and quicksort!</li>
+					</ul>
+
+					<aside class="notes">
+						Only O(n lg n) if the BST is kept balanced
+					</aside>
+				</section>
+
+				<section data-auto-animate data-auto-animate-restart>
+					<h3>Minimum and Maximum</h3>
+					<ul class="small">
+						<li>We can find the minimum or maximum in a BST quickly and easily.</li>
+						<li class="fragment"><strong>minimum:</strong> Start at the root and walk down the <em>left</em> spine.</li>
+						<li class="fragment">Symmetric for <strong>maximum</strong>.</li>
+					</ul>
+					<img src="figures/trees/bst-minimum.svg" class="fragment">
+				</section>
+
+				<section data-auto-animate data-auto-animate-restart>
+					<h3>Predecessor and Successor</h3>
+					<ul class="small">
+						<li>The <code>pred(e)</code> operation takes a reference to a node in a BST and locates the element that would come before $e$ in an in-order traversal.</li>
+					</ul>
+					<div class="fragment">
+						<img src="figures/trees/bst-pred-below.svg" width="30%">
+						<p class="small">If $e$ has a left child, the predecessor is <code>max(e.left)</code>.</p>
+					</div>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Predecessor and Successor</h3>
+					<ul class="small">
+						<li>The <code>pred(e)</code> operation takes a reference to a node in a BST and locates the element that would come before $e$ in an in-order traversal.</li>
+					</ul>
+					<div class="columns">
+						<div class="one-column">
+							<img src="figures/trees/bst-pred-above.svg" width="50%">
+						</div>
+						<div class="one-column">
+							<p class="small">If $e$ has no left child, the predecessor is the first <em>left ancestor</em> as we walk from $e$ to the root.</p>
+							<p class="small fragment">Each of the <code>pred(e)</code> cases is symmetric with <code>succ(e)</code>.</p>
+						</div>
+					</div>
+				</section>
+
+				<section data-auto-animate data-auto-animate-restart>
+					<h3>Inexact Search</h3>
+					<ul class="small">
+						<li>Even if key $k$ isn't present in the BST, the <code>find(T,k)</code> search path lands on an element close to $k$. 
+							Therefore, in addition to <code>pred(e)</code> and <code>succ(e)</code> that take pointers to elements, we could implement:</li>
+						<ul>
+							<li class="fragment"><code>pred(k)</code> - find the element with the largest key $\le k$</li>
+							<li class="fragment"><code>succ(k)</code> - find the element with the smallest key $\ge k$</li>
+						</ul>
+						<li class="fragment">Both operations take $O(h)$, which is $O(\lg n)$ if the tree is <em>balanced</em>.</li>
+						<li class="fragment">This is one of the reasons why the BST is so powerful.</li>
+						<ul>
+							<li class="fragment">Other dictionary data structures do not support <code>pred</code> or <code>succ</code>.</li>
+							<li class="fragment">Other dictionary data structures cannot perform inexact search.</li>
+						</ul>
+					</ul>
+				</section>
+	
+				<section data-auto-animate data-auto-animate-restart>
+					<h3>Paging Through Nearby Elements</h3>
+					<ul class="small">
+						<li>Starting from element $e$, we can use <code>pred(e)</code> or <code>succ(e)</code> to find elements near $e$ very quickly.</li>
+						<li>Can answer <strong>range queries</strong>: output all elements whose keys $\in [a, b]$.</li>
+						<ul>
+							<li>Start at <code>e = succ(a)</code>, repeatedly call <code>succ(e)</code> until we reach $b$.</li>
+							<li>Running time is $O(k + \lg n)$, where $k$ is the number of elements written as output.</li>
+						</ul>
+					</ul>
+				</section>
+
+				<section data-auto-animate data-auto-animate-restart>
+					<h3>Deletion</h3>
+					<div class="columns">
+						<div class="one-column">
+							<img src="figures/trees/bst-delete-0.svg">
+							<p class="small">If $e$ is a leaf, remove it. Update parent's corresponding child to <code>null</code>.</p>
+						</div>
+						<div class="one-column">
+							<img src="figures/trees/bst-delete-1.svg">
+							<p class="small">If $e$ has one child, swap $e$ with its child and remove.</p>
+						</div>
+					</div>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Deletion</h3>
+					<div class="columns">
+						<div class="one-column">
+							<img src="figures/trees/bst-delete-2.svg">
+						</div>
+						<div class="one-column">
+							<ul class="small">
+								<li>If $e$ has two children, first swap with either <code>pred(e)</code> or <code>succ(e)</code>, then apply one of the previous cases.</li>
+								<li class="fragment">What if <code>pred(e)</code> or <code>succ(e)</code> themselves have two children?
+									<em class="fragment">That isn't possible.</em></li>
+								<li class="fragment">Swapping with <code>pred(e)</code> or <code>succ(e)</code> does not change the in-order traversal.</li>
+							</ul>
+						</div>
+					</div>
+				</section>
+
+				<section data-auto-animate data-auto-animate-restart>
+					<h3>Splits & Joins</h3>
+					<ul class="small">
+						<li><code>split(T,k)</code> - Split the tree $T$ on key $k$ into two trees $L$ and $R$, such that $L$ contains all keys $\le k$ and $R$ contains all keys $\gt k$.</li>
+						<li><code>join(L,R)</code> - Given trees $L$ and $R$ in which all keys in $L$ are smaller than all keys in $R$, join into a single tree.</li>
+					</ul>
+					<img src="figures/trees/bst-split-join.svg">
+				</section>
+
+				<section data-auto-animate>
+					<h3>Splits & Joins</h3>
+					<ul class="small">
+						<li><code>split(T,k)</code> - Split the tree $T$ on key $k$ into two trees $L$ and $R$, such that $L$ contains all keys $\le k$ and $R$ contains all keys $\gt k$.</li>
+					</ul>
+					<div class="columns">
+						<div class="one-column small">
+							<pre class="python" data-id="split-anim">
+								<code data-trim data-line-numbers>
+									def split(T, k):
+										if T == null then L = R = null
+										else if k == T.key then
+											R = T.right
+											T.right = null
+											L = T
+										return L, R
+								</code>
+							</pre>
+						</div>
+						<div class="one-column">
+							<img src="figures/trees/bst-split-root.svg">
+						</div>
+					</div>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Splits & Joins</h3>
+					<ul class="small">
+						<li><code>split(T,k)</code> - Split the tree $T$ on key $k$ into two trees $L$ and $R$, such that $L$ contains all keys $\le k$ and $R$ contains all keys $\gt k$.</li>
+					</ul>
+					<div class="columns">
+						<div class="one-column small">
+							<pre class="python" data-id="split-anim">
+								<code data-trim data-line-numbers>
+									def split(T, k):
+										if T == null then L = R = null
+										else if k == T.key then
+											R = T.right
+											T.right = null
+											L = T
+										else if k < T.key then
+											L, R1 = split(T.left, k)
+											T.left = R1
+											R = T
+										return L, R
+								</code>
+							</pre>
+						</div>
+						<div class="one-column">
+							<img src="figures/trees/bst-split-left.svg">
+						</div>
+					</div>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Splits & Joins</h3>
+					<ul class="small">
+						<li><code>split(T,k)</code> - Split the tree $T$ on key $k$ into two trees $L$ and $R$, such that $L$ contains all keys $\le k$ and $R$ contains all keys $\gt k$.</li>
+					</ul>
+					<div class="columns">
+						<div class="one-column small">
+							<pre class="python" data-id="split-anim">
+								<code data-trim data-line-numbers>
+									def split(T, k):
+										if T == null then L = R = null
+										else if k == T.key then
+											R = T.right
+											T.right = null
+											L = T
+										else if k < T.key then
+											L, R1 = split(T.left, k)
+											T.left = R1
+											R = T
+										else if k > T.key then
+											L1, R = split(T.right, k)
+											T.right = L1
+											L = T
+										return L, R
+								</code>
+							</pre>
+						</div>
+						<div class="one-column">
+							<img src="figures/trees/bst-split-right.svg">
+						</div>
+					</div>
+				</section>
+
+				<section data-auto-animate data-auto-animate-restart>
+					<h3>Splits & Joins</h3>
+					<ul class="small">
+						<li><code>join(L,R)</code> - Given trees $L$ and $R$ in which all keys in $L$ are smaller than all keys in $R$, join into a single tree.</li>
+					</ul><div class="columns">
+						<div class="one-column">
+							<img src="figures/trees/bst-joins.svg" width="70%">
+						</div>
+						<div class="one-column small">
+							<pre class="python" data-id="split-anim">
+								<code data-trim data-line-numbers>
+									def join(L, R):
+										if L is null then return R
+										if R is null then return L
+										
+										# randomly choose left or right
+										if left:
+											L.right = join(L.right, R)
+											return L
+										if right:
+											R.left = join(L, R.left)
+											return R
+								</code>
+							</pre>
+							<p class="small fragment">
+								How can we use this to implement <code>delete(e)</code>?
+								<span class="fragment">Replace $e$ with the <code>join</code> of its two subtrees!</span>
+							</p>
+						</div>
+					</div>
+				</section>
+
+				<section data-auto-animate data-auto-animate-restart>
+					<h3>Augmenting with Subtree Sizes</h3>
+					<ul class="small">
+						<li>Augmenting each node with its subtree size provides support for two additional useful operations:</li>
+						<ul>
+							<li><code>select(k)</code> - return a pointer to the k<sup>th</sup> largest element in the tree.</li>
+							<li><code>rank(e)</code> - return the number of elements with keys $\le$ <code>e.key</code>, which is the index of $e$ in an in-order traversal.</li>
+						</ul>
+					</ul>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Augmenting with Subtree Sizes</h3>
+					<div class="columns">
+						<div class="one-column">
+							<p class="small">The element of rank $k$ in a set is called the <em>kth order statistic</em> of the set.</p>
+							<p class="small">Accordingly, the CLRS textbook calls a binary search tree augmented in this way an <em>order statistic tree</em>.</p>
+						</div>
+						<div class="one-column">
+							<img src="figures/common/clrs.jpg" width="60%">
+						</div>
+					</div>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Select and Rank</h3>
+					<img src="figures/trees/bst-rank.svg" width="20%"
+						style="margin-left: 70px"
+						class="float-right fragment" data-fragment-index="2">
+					<div style="display: block;">
+						<pre class="python fragment" data-fragment-index="1">
+							<code data-trim>
+								def select(T, k):
+									r = size(T.left) + 1 # rank of the root
+									if k < r then return select(T.left , k)
+									if k > r then return select(T.right, k-r)
+									return T       
+							</code>
+						</pre>
+						<p class="small fragment" data-fragment-index="2">
+							To calculate the <code>rank(e)</code>, add up the <em>left parents</em> and their <em>left subtrees</em> as you walk from $e$ up to the root (the keys of all these elements should be less than $e$'s).
+						</p>
+					</div>
+				</section>
+
+				<section data-auto-animate data-auto-animate-restart>
+					<h3>Dynamic Sequences</h3>
+					<ul class="small">
+						<li>Consider encoding a sequence of $n$ elements in a linked list or an array.</li>
+						<ul>
+							<li>Can <em>insert</em>/<em>delete</em> at the endpoints in $O(1)$ time.</li>
+							<li>But <em>insert</em>/<em>delete</em> in the middle of the sequence takes $O(n)$ worst-case.</li>
+						</ul>
+						<li class="fragment">Using a balanced BST augmented with subtree sizes, we can perform all of the following operations:</li>
+						<ul>
+							<li class="fragment"><em>Insert</em>/<em>delete</em> anywhere in the sequence in $O(\lg n)$ time.</li>
+							<li class="fragment"><em>Access</em>/<em>modify</em> any element based on its index in the sequence in $O(\lg n)$ time.</li>
+						</ul>
+					</ul>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Dynamic Sequences</h3>
+					<div class="columns">
+						<div class="one-column">
+							<img src="figures/trees/dseq-property.svg">
+						</div>
+						<div class="one-column">
+							<p class="small">The "<strong>binary search tree property</strong>" is slightly different when we use the BST to encode a sequence $A[1..n]$.</p>
+							<p class="small fragment">Elements no longer have keys, so the <em>find</em> operation is no longer meaningful. Rather, we rely on <em>select</em> to access elements based on their index within the sequence.</p>
+						</div>
+					</div>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Dynamic Sequences</h3>
+					<p><strong>Sequence:</strong> <code>3141592653589</code></p>
+					<img src="figures/trees/dseq-example.svg" width="60%">
+				</section>
+
+				<section data-auto-animate>
+					<h3>Dynamic Sequences</h3>
+					<pre class="python fragment">
+						<code data-trim>
+							def insert(T, v, i):
+								if T == null then return new Node(v)
+								r = size(T.left) + 1 # rank of the root
+								if i <= r then T.left = insert(T.left, v, i)
+								else T.right = insert(T.right, v, i-r)
+								return T
+						</code>
+					</pre>
+					<ul class="small">
+						<li><code>access(i)</code> or <code>modify(v,i)</code> - interact with i<sup>th</sup> element.</li>
+						<li><code>delete(i)</code> - access the i<sup>th</sup> element using select, and replace with the join of its left and right subtrees.</li>
+						<li>All operations take only $O(\lg n)$ time <em>if the tree is balanced</em>!</li>
+					</ul>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Dynamic Sequences</h3>
+					<ul class="small">
+						<li>An in-order traversal of the tree prints the contents of our sequence in order, and <code>succ</code> and <code>pred</code> allow us to move between successive elements (<em>almost like we would in a linked list!</em>)</li>
+						<li>You might think of a BST as a structure whose fundamental purpose is <em>encoding an arbitrary sequence</em> from left to right.</li>
+						<ul>
+							<li>In the case of a <em>set/dictionary</em>, this sequence just happens to be the sorted ordering of the elements we are storing.</li>
+						</ul>
+					</ul>
+				</section>
 			</div>
 		</div>
 
