@@ -267,14 +267,31 @@
 							<li class="fragment">Inserting $n$ elements in $O(n \lg n)$* time.</li>
 							<li class="fragment">Doing an inorder traversal in $O(n)$ time.</li>
 						</ol>
-						<li class="fragment">We can think of the BST as a "dynamization" of the sorting process.</li>
-						<li class="fragment">Later, we will see the similarities between BSTs and quicksort!</li>
+						<li class="fragment">We can think of the BST as a "<em>dynamization</em>" of the sorting process.</li>
+						<li class="fragment">The operation of building a BST looks exactly <em>like running quicksort</em>!</li>
 					</ul>
 
 					<aside class="notes">
 						Dynamization - meaning that it allows for further updates after the fact
 						Only O(n lg n) if the BST is kept balanced
 					</aside>
+				</section>
+
+				<section data-auto-animate data-auto-animate-restart>
+					<h3>Quicksort &sim; BST Construction</h3>
+					<div class="columns">
+						<div class="one-column">
+							<ul class="small">
+								<li>There is a direct analogue between <em>running quicksort</em> and the process of <em>building a binary search tree</em>.</li>
+								<li>It is easy to see why they have the same running times!</li>
+								<li class="fragment"><strong>Randomized quicksort</strong> is analogous to building a binary search tree by inserting <em>in random order</em>.</li>
+								<li class="fragment">The difference is we can <em>add new elements to the BST later</em>!</li>
+							</ul>
+						</div>
+						<div class="one-column">
+							<img src="figures/trees/quicksort-bst.svg">
+						</div>
+					</div>
 				</section>
 
 				<section data-auto-animate data-auto-animate-restart>
