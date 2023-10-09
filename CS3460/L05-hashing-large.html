@@ -43,7 +43,7 @@
 					</ul>
 				</section>
 
-				<section data-auto-animate>
+				<section data-auto-animate data-auto-animate-restart>
 					<h3>All Data Types are Arrays</h3>
 					<ul class="small">
 						<li>Any data type can be <em>serialized</em> (represented as a sequence of integers).</li>
@@ -59,7 +59,7 @@
 					</ul>
 				</section>
 
-				<section data-auto-animate>
+				<section data-auto-animate data-auto-animate-restart>
 					<h3>Hashing Arrays</h3>
 					<ul>
 						<li>How do we hash an <em>array</em> $A$ to an <em>integer</em> in the range $[0 \dots m-1]$?</li>
@@ -71,7 +71,7 @@
 					</ul>
 				</section>
 
-				<section data-auto-animate>
+				<section data-auto-animate data-auto-animate-restart>
 					<h3>Polynomial Hash Functions</h3>
 					<ul class="small">
 						<li>What if we instead think of <code>A[]</code> as the <em>coefficients of a polynomial</em>?</li>
@@ -96,7 +96,7 @@
 					</aside>
 				</section>
 
-				<section data-auto-animate>
+				<section data-auto-animate data-auto-animate-restart>
 					<h3>Uses for Hashing</h3>
 					<ul class="small">
 						<li class="fragment"><strong>Consider:</strong> By hashing a file down to a small integer <em>"fingerprint"</em>, we can:</li>
@@ -109,7 +109,7 @@
 					</ul>
 				</section>
 
-				<section data-auto-animate>
+				<section data-auto-animate data-auto-animate-restart>
 					<h3>What About Collisions?</h3>
 					<ul class="small">
 						<li class="fragment">Suppose we hash our object to a 128-bit integer using polynomial hashing</li>
@@ -148,7 +148,7 @@
 					</ul>
 				</section>
 
-				<section data-auto-animate>
+				<section data-auto-animate data-auto-animate-restart>
 					<h3>Collisions are Extremely Rare!</h3>
 					<ul class="small">
 						<li>We get a collision if we choose an <code>x</code> such that <code>p<sub>A</sub>(x) == p<sub>B</sub>(x)</code> mod $m$</li>
@@ -160,7 +160,7 @@
 					</ul>
 				</section>
 
-				<section data-auto-animate>
+				<section data-auto-animate data-auto-animate-restart>
 					<h3>Secret Sharing</h3>
 					<ul>
 						<li>Can I distribute a <em>secret number</em> among $n$ students in class, such that:</li>
@@ -173,7 +173,7 @@
 					</ul>
 				</section>
 
-				<section data-auto-animate>
+				<section data-auto-animate data-auto-animate-restart>
 					<h3>The Birthday Paradox</h3>
 					<ul class="small">
 						<li>How many people do you need to assemble before there is a <em>reasonable chance</em> (for example, 50%) that two people <em>share a birthday</em>? <span class="fragment">Only <strong>23</strong></span></li>
@@ -188,7 +188,90 @@
 					</ul>
 				</section>
 
+				<section data-auto-animate data-auto-animate-restart>
+					<h3>String Matching</h3>
+					<ul class="small">
+						<li><strong>Input:</strong></li>
+						<ul>
+							<li>Text $T$ of length $n$ ($n$ is <em>very large</em>)</li>
+							<li>Pattern $P$ (typically much shorter)</li>
+						</ul>
+						<li>String matching is a <em>"classical"</em> algorithm with many applications:</li>
+						<ul>
+							<li>Searching the <em>human genome</em> ($n \approx$ 3 billion)</li>
+							<li>Searching the <em>large documents</em> (e.g., word processing)</li>
+							<li>Searching <em>collections of documents</em> (e.g., the internet)</li>
+						</ul>
+					</ul>
+				</section>
+
 				<section data-auto-animate>
+					<h3>String Matching</h3>
+					<ul>
+						<li>T = <code><span class="sliding-window" data-id="window">&nbsp;&nbsp;&nbsp;</span>ACGTGATACTGCTATATACATCGATATGCTCA</code></li>
+						<li>P = <code>ATA</code></li>
+					</ul>
+				</section>
+
+				<section data-auto-animate>
+					<h3>String Matching</h3>
+					<ul>
+						<li>T = <code>ACGTG<span class="sliding-window good" data-id="window">&nbsp;&nbsp;&nbsp;</span>ATACTGCTATATACATCGATATGCTCA</code></li>
+						<li>P = <code>ATA</code></li>
+					</ul>
+				</section>
+
+				<section data-auto-animate>
+					<h3>String Matching</h3>
+					<ul>
+						<li>T = <code>ACGTGATACTGCT<span class="sliding-window good" data-id="window">&nbsp;&nbsp;&nbsp;</span>ATATACATCGATATGCTCA</code></li>
+						<li>P = <code>ATA</code></li>
+					</ul>
+				</section>
+
+				<section data-auto-animate>
+					<h3>String Matching</h3>
+					<ul>
+						<li>T = <code>ACGTGATACTGCTAT<span class="sliding-window good" data-id="window">&nbsp;&nbsp;&nbsp;</span>ATACATCGATATGCTCA</code></li>
+						<li>P = <code>ATA</code></li>
+					</ul>
+				</section>
+
+				<section data-auto-animate>
+					<h3>String Matching</h3>
+					<ul>
+						<li>T = <code>ACGTGATACTGCTATATACATCG<span class="sliding-window good" data-id="window">&nbsp;&nbsp;&nbsp;</span>ATATGCTCA</code></li>
+						<li>P = <code>ATA</code></li>
+					</ul>
+				</section>
+
+				<section data-auto-animate>
+					<h3>String Matching</h3>
+					<ul>
+						<li>T = <code>ACGTGATACTGCTATATACATCGATATGC<span class="sliding-window" data-id="window">&nbsp;&nbsp;&nbsp;</span>TCA</code></li>
+						<li>P = <code>ATA</code></li>
+					</ul>
+				</section>
+
+				<section data-auto-animate>
+					<h3>String Matching</h3>
+					<p>T = <code>ACGT<span class="sliding-window">&nbsp;&nbsp;&nbsp;</span>GATACTGCTATATACATCGATATGCTCA</code></p>
+					<p>T = <code>ACGTG<span class="sliding-window good">&nbsp;&nbsp;&nbsp;</span>ATACTGCTATATACATCGATATGCTCA</code></p>
+					<ul class="small">
+						<li>Can we update the polynomial hash without recomputing it from scratch?</li>
+						<li class="fragment">We can update the hash in <em>$O(1)$ time</em>!</li>
+					</ul>
+					<div class="small fragment">
+						\[
+						\begin{align*}
+						p_i(x)     & = & A_0 & + & A_1 x & + & A_2 x^2 & + & \dots & + & A_{n-1} x^{n-1} &   & \\
+						p_{i+1}(x) & = &     &   & A_1   & + & A_2 x   & + & \dots & + & A_{n-1} x^{n-2} & + & A_{n} x^{n-1} 
+						\end{align*}
+						\]
+					</div>
+				</section>
+
+				<section data-auto-animate data-auto-animate-restart>
 					<h3>Hashing in Security</h3>
 					<ul class="small">
 						<li>We can detect tampering in <em>data</em> (a file, a message, etc) if we also store a <em>hash</em> of that data.</li>
@@ -206,7 +289,7 @@
 					<img src="figures/hashing/shattered.png" width="80%">
 				</section>
 
-				<section data-auto-animate>
+				<section data-auto-animate data-auto-animate-restart>
 					<h3>Detecting Infinite Loops</h3>
 					<ul>
 						<li>We can use <em>hashing</em> to detect infinite loops in programs; <span class="fragment">but first, consider the following:</span></li>
