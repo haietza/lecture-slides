@@ -76,13 +76,13 @@
 								<td>$O(1)$*</td>
 								<td>$O(1)$*</td>
 								<td>$O(1)$*</td>
-								<td class="no-border">hash tables</td>
+								<td class="no-border">(universal) hash tables</td>
 							</tr>
 							<tr class="fragment">
 								<td>$O(\lg n)$</td>
 								<td>$O(\lg n)$</td>
 								<td>$O(\lg n)$</td>
-								<td class="no-border">binary search trees</td>
+								<td class="no-border">(balanced) binary search trees</td>
 							</tr>
 						</tbody>
 					</table>
@@ -267,13 +267,19 @@
 							<li class="fragment">Inserting $n$ elements in $O(n \lg n)$* time.</li>
 							<li class="fragment">Doing an inorder traversal in $O(n)$ time.</li>
 						</ol>
-						<li class="fragment">We can think of the BST as making the sorting process dynamic.</li>
+						<li class="fragment">We can think of the BST as a "dynamization" of the sorting process.</li>
 						<li class="fragment">Later, we will see the similarities between BSTs and quicksort!</li>
 					</ul>
 
 					<aside class="notes">
+						Dynamization - meaning that it allows for further updates after the fact
 						Only O(n lg n) if the BST is kept balanced
 					</aside>
+				</section>
+
+				<section data-auto-animate data-auto-animate-restart>
+					<h3>BSTs in Practice</h3>
+					<p><strong>Uniq (again)</strong></p>
 				</section>
 
 				<section data-auto-animate data-auto-animate-restart>
@@ -291,8 +297,16 @@
 					<ul class="small">
 						<li>The <code>pred(e)</code> operation takes a reference to a node in a BST and locates the element that would come before $e$ in an in-order traversal.</li>
 					</ul>
-					<div class="fragment">
-						<img src="figures/trees/bst-pred-below.svg" width="30%">
+					<img src="figures/trees/bst-example.svg">
+				</section>
+
+				<section data-auto-animate>
+					<h3>Predecessor and Successor</h3>
+					<ul class="small">
+						<li>The <code>pred(e)</code> operation takes a reference to a node in a BST and locates the element that would come before $e$ in an in-order traversal.</li>
+					</ul>
+					<div>
+						<img src="figures/trees/bst-pred-below.svg" width="25%">
 						<p class="small">If $e$ has a left child, the predecessor is <code>max(e.left)</code>.</p>
 					</div>
 				</section>
@@ -306,17 +320,22 @@
 						<div class="one-column">
 							<img src="figures/trees/bst-pred-above.svg" width="50%">
 						</div>
-						<div class="one-column">
-							<p class="small">If $e$ has no left child, the predecessor is the first <em>left ancestor</em> as we walk from $e$ to the root.</p>
-							<p class="small fragment">Each of the <code>pred(e)</code> cases is symmetric with <code>succ(e)</code>.</p>
+						<div class="one-column small">
+							<p>If $e$ has no left child, the predecessor is the first <em>left ancestor</em> as we walk from $e$ to the root.</p>
+							<p class="fragment">Each of the <code>pred(e)</code> cases is symmetric with <code>succ(e)</code>.</p>
 						</div>
 					</div>
+
+					<aside class="notes">
+						The symmetry recontextualizes the two cases.
+						Case #1 for pred(e) is really Case #2 for succ(e), and vice versa.
+					</aside>
 				</section>
 
 				<section data-auto-animate data-auto-animate-restart>
 					<h3>Inexact Search</h3>
 					<ul class="small">
-						<li>Even if key $k$ isn't present in the BST, the <code>find(T,k)</code> search path lands on an element close to $k$. 
+						<li class="fragment">Even if key $k$ isn't present in the BST, the <code>find(T,k)</code> search path lands on an element close to $k$. 
 							Therefore, in addition to <code>pred(e)</code> and <code>succ(e)</code> that take pointers to elements, we could implement:</li>
 						<ul>
 							<li class="fragment"><code>pred(k)</code> - find the element with the largest key $\le k$</li>
@@ -528,8 +547,7 @@
 
 				<section data-auto-animate>
 					<h3>Select and Rank</h3>
-					<img src="figures/trees/bst-rank.svg" width="20%"
-						style="margin-left: 70px"
+					<img src="figures/trees/bst-rank.svg" width="20%" style="margin-left: 70px"
 						class="float-right fragment" data-fragment-index="2">
 					<div style="display: block;">
 						<pre class="python fragment" data-fragment-index="1">
@@ -538,7 +556,7 @@
 									r = size(T.left) + 1 # rank of the root
 									if k < r then return select(T.left , k)
 									if k > r then return select(T.right, k-r)
-									return T       
+									return T
 							</code>
 						</pre>
 						<p class="small fragment" data-fragment-index="2">

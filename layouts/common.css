@@ -112,3 +112,18 @@ ul.info-box li::before {
 	padding: 20px;
 	width: 90%;
 }
+
+.sliding-window
+{
+	position: absolute;
+	border: 1px solid white !important;
+	background: #FFFFFF10;
+	color: white;
+}
+
+.sliding-window.good
+{
+	border: 1px solid #80FF80 !important;
+	background: #00FF0060;
+	color: white;
+}
