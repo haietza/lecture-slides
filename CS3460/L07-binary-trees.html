@@ -510,7 +510,8 @@
 					<h3>Splits & Joins</h3>
 					<ul class="small">
 						<li><code>join(L,R)</code> - Given trees $L$ and $R$ in which all keys in $L$ are smaller than all keys in $R$, join into a single tree.</li>
-					</ul><div class="columns">
+					</ul>
+					<div class="columns">
 						<div class="one-column">
 							<img src="figures/trees/bst-joins.svg" width="70%">
 						</div>
@@ -521,7 +522,7 @@
 										if L is null then return R
 										if R is null then return L
 										
-										# randomly choose left or right
+										# choose to recurse left or right
 										if left:
 											L.right = join(L.right, R)
 											return L
@@ -540,13 +541,25 @@
 
 				<section data-auto-animate data-auto-animate-restart>
 					<h3>Augmenting with Subtree Sizes</h3>
-					<ul class="small">
-						<li>Augmenting each node with its subtree size provides support for two additional useful operations:</li>
-						<ul>
-							<li><code>select(k)</code> - return a pointer to the k<sup>th</sup> largest element in the tree.</li>
-							<li><code>rank(e)</code> - return the number of elements with keys $\le$ <code>e.key</code>, which is the index of $e$ in an in-order traversal.</li>
-						</ul>
-					</ul>
+					<img src="figures/trees/bst-subtree-sizes.svg" data-id="size-fig">
+				</section>
+
+				<section data-auto-animate>
+					<h3>Augmenting with Subtree Sizes</h3>
+					<div class="columns">
+						<div class="one-column">
+							<ul class="small">
+								<li>Augmenting each node with its subtree size provides support for two additional useful operations:</li>
+								<ul>
+									<li><code>select(k)</code> - return a pointer to the k<sup>th</sup> largest element in the tree.</li>
+									<li><code>rank(e)</code> - return the number of elements with keys $\le$ <code>e.key</code>, which is the index of $e$ in an in-order traversal.</li>
+								</ul>
+							</ul>
+						</div>
+						<div class="one-column">
+							<img src="figures/trees/bst-subtree-sizes.svg" data-id="size-fig">
+						</div>
+					</div>
 				</section>
 
 				<section data-auto-animate>
