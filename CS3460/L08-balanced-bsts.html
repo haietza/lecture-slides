@@ -1,0 +1,200 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>CS3460</title>
+
+		<link rel="stylesheet" href="../reveal-js/dist/reset.css">
+		<link rel="stylesheet" href="../reveal-js/dist/reveal.css">
+		<link rel="stylesheet" href="../reveal-js/dist/theme/dracula.css">
+		<link rel="stylesheet" href="../layouts/common.css">
+		<link rel="stylesheet" href="../reveal-js/plugin/highlight/monokai.css">
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+				<div class="header left">
+					CS3460: Data Structures
+				</div>
+				<div class="header right no-title">
+					<em>Balanced Binary Search Trees</em>
+				</div>
+
+				<section data-state="title-slide">
+					<h1 class="r-fit-text">CS3460: Data Structures & Algorithms</h1>
+					<h2 class="r-fit-text">Balanced Binary Search Trees</h2>
+				</section>
+
+				<section data-auto-animate data-auto-animate-restart>
+					<h3>Balancing a BST</h3>
+					<ul class="small">
+						<li>Operations of a BST runs only run efficiently if we keep them balanced.</li>
+						<li>There are many ways to modify <code>insert</code> and <code>delete</code> to maintain balance.</li>
+						<ul>
+							<li class="fragment"><strong>Worst-case:</strong> keep height $h = O(\lg n)$ at all times <em>guaranteed</em></li>
+							<ul class="fragment">
+								<li>AVL trees, BB[$\alpha$] trees, red-black trees, B-trees</li>
+							</ul>
+							<li class="fragment"><strong>Randomized:</strong> $h = O(\lg n)$ <em>in expectation</em> or <em>with high probability</em></li>
+							<ul class="fragment">
+								<li>Randomly balanced BSTs, treaps</li>
+							</ul>
+							<li class="fragment"><strong>Amortized:</strong> any sequence of $k$ BST operations take $O(k \lg n)$ time</li>
+							<ul class="fragment">
+								<li>Splay trees, "batch" re-balancing methods</li>
+							</ul>
+						</ul>
+						<li class="fragment">Almost all balancing mechanisms are built using <em>rotations</em></li>
+					</ul>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Rotations</h3>
+					<img src="figures/balancing/rotation.svg" width="70%">
+					<ul class="small">
+						<li>Almost all balancing mechanisms are built using <em>rotations</em></li>
+						<li class="fragment">Rotations always happen <em>along an edge</em> (i.e., a pair of nodes)</li>
+						<li class="fragment">Each rotation only takes $O(1)$ time <em class="fragment">including node augmentations!</em></li>
+					</ul>
+				</section>
+
+				<section data-auto-animate data-auto-animate-restart>
+					<h3>The "Height-Balanced" Property</h3>
+					<ul class="small">
+						<li class="fragment">A binary tree is <em>height-balanced</em> if:</li>
+						<ul class="fragment">
+							<li>its left and right subtrees differ in height by at most 1, and</li>
+							<li>its left and right subtrees are themselves height-balanced</li>
+						</ul>
+						<li class="fragment">Can show that <em>height-balanced</em> $\implies$ <em>balanced</em></li>
+						<li class="fragment">If the number of elements $n$ is at least exponentially correlated with the height $h$ of the tree, then the height of the tree is at most $O(\lg n)$.</li>
+						<ul>
+							<li class="fragment">Simply put, if $2^{h} \le n$, then <span class="fragment">$h \le \lg n$</span></li>
+						</ul>
+					</ul>
+				</section>
+
+				<section data-auto-animate>
+					<h3>The "Height-Balanced" Property</h3>
+					<ul class="small">
+						<li>If the number of elements $n$ is at least exponentially correlated with the height $h$ of the tree, then the height of the tree is at most $O(\lg n)$.</li>
+						<ul>
+							<li>Simply put, if $2^{h} \le n$, then <span>$h \le \lg n$</span></li>
+						</ul>
+						<li class="fragment"><strong>Claim:</strong> A height-balanced tree of height $h$ contains $n \ge F_h$, where the h<sup>th</sup> Fibonacci number $F_h = \Theta(\Phi^{h})$, given $\Phi = (1 + \sqrt{5}) / 2$. Therefore, an $n$-element height-balanced tree can have a height of $O(\lg n)$</li>
+						<li class="fragment">Quick <em>proof by induction</em>:</li>
+						<ul class="fragment">
+							<li>Consider any arbitrary height-balanced tree of height $h$. 
+								Suppose WLOG its left subtree is tallest. By induction, its left subtree contains 
+								$\ge F_{h-1}$ elements and its right contains $\ge F_{h-2}$ elements. 
+								Total number of elements is $\ge 1 + F_{h-1} + F_{h-2} = 1 + F_{h}$. 
+								What about base cases?</li>
+						</ul>
+					</ul>
+				</section>
+
+				<section data-auto-animate>
+					<h3>AVL Trees</h3>
+					<ul class="small">
+						<li>An <strong>AVL tree</strong> is a height-balanced tree where every node is augmented with <em>subtree height</em> (not subtree size, but still easily updated after a rotation)</li>
+						<li class="fragment">Described in "<em>An algorithm for the organization of information</em>," a paper by Georgy <strong>A</strong>del'son-<strong>V</strong>el'skiĭ and Evgenii <strong>L</strong>andis '62</li>
+						<li class="fragment">After each insertion or deletion, we can restore the height-balance by performing $O(\lg n)$ rotations</li>
+					</ul>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Restoring Height Balance after Insert</h3>
+					<ul class="small">
+						<li>After an <code>insert</code>, walk back up the insertion path and <em>update subtree heights</em> (How?)</li>
+						<li>Stop at the first node $z$ at which we encounter a height-balance violation (a height imbalance of exactly 2)</li>
+					</ul>
+					<img src="figures/balancing/height-imbalance-insert.svg" width="55%">
+				</section>
+
+				<section data-auto-animate>
+					<h3>Restoring Height Balance after Insert</h3>
+					<img src="figures/balancing/height-imbalance-insert.svg" width="55%">
+					<ul class="small">
+						<li>Using 1 or 2 rotations, we can rebalance the tree at $z$.</li>
+						<li>The height of $z$'s subtree will decrease by 1, returning to its original value, so there is no need to continue visiting the path above $z$.</li>
+					</ul>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Restoring Height Balance after Insert</h3>
+					<ul class="small">
+						<li>Suppose we have an imbalance at node $z$ due to an insertion that makes the left subtree of $z$ too tall (without loss of generality).</li>
+						<li><strong>Easy case:</strong> Insertion into subtree $A$ makes it too tall: <span class="fragment" data-fragment-index="2">rotate <em>edge(z, x)</em></span></li>
+					</ul>
+					<div class="r-stack">
+						<img src="figures/balancing/balance-rotation-A1.svg" width="75%" class="fragment" data-fragment-index="1">
+						<img src="figures/balancing/balance-rotation-A2.svg" width="75%" class="fragment" data-fragment-index="2">
+					</div>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Restoring Height Balance after Insert</h3>
+					<img src="figures/balancing/balance-rotation-B.svg" width="70%">
+					<ul class="small">
+						<li><strong>Harder case:</strong> Subtree B too tall. There are two possible subcases.</li>
+						<li class="fragment">In both cases, a left rotation around <em>edge(x, y)</em> brings us back to the previous case, with $A$ being the taller subtree.</li>
+						<li class="fragment">This requires <em>two total rotations</em> to correct.</li>
+					</ul>
+				</section>
+
+				<section data-auto-animate>
+					<h3>AVL Trees: Restoring Height Balance after Insert & Delete</h3>
+					<ul class="small">
+						<li><em>insert(k)</em></li>
+						<ul>
+							<li class="fragment">Insert $k$ like usual at the leaves.</li>
+							<li class="fragment">Walk back up insertion path, updating subtree heights at each node.</li>
+							<li class="fragment">If a height imbalance is found, perform 1 or 2 rotations to fix.</li>
+							<li class="fragment">Can stop after the first imbalance. Tree is balanced.</li>
+						</ul>
+						<li class="fragment"><em>delete(k)</em></li>
+						<ul>
+							<li class="fragment">Delete $k$ like usual.</li>
+							<li class="fragment">Walk back up deletion path, updating subtree heights at each node.</li>
+							<li class="fragment">If a height imbalance is found, perform 1 or 2 rotations to fix.</li>
+							<li class="fragment">Continue along entire deletion path. Performs $O(\lg n)$ rotations.</li>
+						</ul>
+					</ul>
+				</section>
+
+				<section data-auto-animate data-auto-animate-restart>
+					<h3>Bounded-Balanced or BB[$\alpha$] Trees</h3>
+					<ul class="small">
+						<li class="fragment">An $n$-element binary tree is <em>$\alpha$-balanced</em> if:</li>
+						<ul class="fragment">
+							<li>its left and right subtrees each contain $\ge \alpha n$ elements, and</li>
+							<li>its left and right subtrees are themselves $\alpha$-balanced.</li>
+						</ul>
+						<li class="fragment">For any $\alpha < 1/2$, an $\alpha$-balanced tree with $n$ elements has height $O(\lg n)$</li>
+						<ul>
+							<li class="fragment"><strong>Simple proof:</strong> Walk down the tree starting at the root. The number of elements in our current subtree shrinks to $\le (1 - \alpha)$ times its original value in each step, so less than $\lg_{1-\alpha} n$ steps possible.</li>
+						</ul>
+						<li class="fragment">Similar to the AVL tree, we can restore the $\alpha$-balance property after insertion or deletion using at most $O(\lg n)$ rotations (if $\alpha < 1 - \sqrt{2} / 2 \approx 0.293$). Further details omitted here.</li>
+						
+					</ul>
+				</section>
+			</div>
+		</div>
+
+		<script src="../reveal-js/dist/reveal.js"></script>
+		<script src="../reveal-js/plugin/math/math.js"></script>
+		<script src="../reveal-js/plugin/notes/notes.js"></script>
+		<script src="../reveal-js/plugin/markdown/markdown.js"></script>
+		<script src="../reveal-js/plugin/highlight/highlight.js"></script>
+		<script>
+			Reveal.initialize({
+				hash: true,
+				slideNumber: true,
+				transition: 'convex',
+				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes, RevealMath.KaTeX ],
+			});
+		</script>
+	</body>
+</html>
