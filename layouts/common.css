@@ -78,6 +78,11 @@ table.bordered {
 	margin: 10px;
 }
 
+.two-columns {
+	flex: 2;
+	margin: 10px;
+}
+
 .no-margin {
 	margin: 0 !important;
 }

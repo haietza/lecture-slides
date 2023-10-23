@@ -177,7 +177,134 @@
 							<li class="fragment"><strong>Simple proof:</strong> Walk down the tree starting at the root. The number of elements in our current subtree shrinks to $\le (1 - \alpha)$ times its original value in each step, so less than $\lg_{1-\alpha} n$ steps possible.</li>
 						</ul>
 						<li class="fragment">Similar to the AVL tree, we can restore the $\alpha$-balance property after insertion or deletion using at most $O(\lg n)$ rotations (if $\alpha < 1 - \sqrt{2} / 2 \approx 0.293$). Further details omitted here.</li>
-						
+					</ul>
+				</section>
+
+				<section data-auto-animate data-auto-animate-restart>
+					<h3>Red-Black Trees</h3>
+					<img src="figures/balancing/red-black-example.svg" width="40%">
+					<ul class="small">
+						<li>A <strong>red-black tree</strong> is a binary tree that maintains the following invariants:</li>
+						<ol>
+							<li class="fragment">Each node is colored either <em>red</em> or <em>black</em>.</li>
+							<li class="fragment">Each element is stored as <em>an internal node</em> in the tree by attaching "dummy" <em>black</em> nodes as leaf nodes.</li>
+							<li class="fragment">A red node can only have black children.</li>
+							<li class="fragment">Every root-leaf path contains the same number of black elements (called the node's <strong>black height</strong>).</li>
+						</ol>
+					</ul>
+				</section>
+
+				<section data-auto-animate>
+					<h3>The "Red-Black" Property</h3>
+					<ul>
+						<li><strong>Claim:</strong> A red-black tree of <em>black height</em> $h$ contains $\ge 2^h$ elements, therefore the height $h$ can be at most $O(\lg n)$.</li>
+						<li>Relatively easy proof by induction on the black height of the tree. <em>Left as an exercise for you...</em></li>
+						<li>The height of a red-black tree is at most twice the black height of its root node, since every red node must have black children.</li>
+					</ul>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Maintaining Red-Black Property after Insert</h3>
+					<ul class="small">
+						<li>Insert a new element $e$ like normal, colored red (replace a leaf, new node has two dummy black nodes as children). <em class="fragment">Will this change the black height?</em></li>
+						<li class="fragment">What if <code>parent(e)</code> is black? <span class="fragment"><em>Wonderful!</em> No violations of the red-black property. Our work is done.</span></li>
+					</ul>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Maintaining Red-Black Property after Insert</h3>
+					<ul class="small">
+						<li>Let's assume <code>parent(e)</code> is red, which violates Rule #3.</li>
+						<li class="fragment">If <code>uncle(e)</code> is also red, then we can recolor and push the violation up in the tree.</li>
+					</ul>
+					<img src="figures/balancing/rb-uncle-red.svg" class="fragment">
+				</section>
+
+				<section data-auto-animate>
+					<h3>Maintaining Red-Black Property after Insert</h3>
+					<ul class="small">
+						<li>But what if <code>parent(e)</code> is red, but <code>uncle(e)</code> is black?</li>
+						<li><em>Obviously</em>, if $e$ is not a left child of <code>parent(e)</code>, fix that by rotating along the edge between $e$ and <code>parent(e).</code></li>
+					</ul>
+					<img src="figures/balancing/rb-uncle-black-1.svg">
+				</section>
+
+				<section data-auto-animate>
+					<h3>Maintaining Red-Black Property after Insert</h3>
+					<ul class="small">
+						<li>But what if <code>parent(e)</code> is red, but <code>uncle(e)</code> is black?</li>
+						<li>Finally, simply do a <em>right rotation</em> between <code>parent(e)</code> and <code>parent(parent(e))</code> and recolor. <em>Et voila!</em></li>
+					</ul>
+					<img src="figures/balancing/rb-uncle-black-2.svg">
+				</section>
+
+				<section data-auto-animate>
+					<h3>Maintaining Red-Black Property</h3>
+					<ul class="small">
+						<li>Since our tree is balanced, it takes $O(\lg n)$ extra time to insert a new element, and potentially $O(\lg n)$ work recoloring the tree.</li>
+						<li class="fragment">Deletion involves even more special cases than insertion, but still only takes $O(\lg n)$ extra time (<em>details omitted</em>).</li>
+						<li class="fragment">Many messy cases is the price we pay for maintaining balance at all times to keep all operations $O(\lg n)$ worst-case. <span class="fragment"></li>
+					</ul>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Why Bother with Red-Black Trees?</h3>
+					<div class="columns">
+						<div class="one-column">
+							<img src="figures/common/clrs.jpg">
+						</div>
+						<div class="two-columns">
+							<ul class="small">
+								<li class="fragment" data-fragment-index="1">Blame <em>Cormen, Leiserson, Rivest, Stein</em>!</li>
+								<li class="fragment">Red-black trees show up in many places.</li>
+								<ul class="fragment">
+									<li><strong>Java</strong></li>
+									<ul>
+										<li>TreeMap, TreeSet, HashMap (<em>How?</em>)</li>
+									</ul>
+									<li><strong>C++ STL</strong></li>
+									<ul>
+										<li>map, multimap, multiset</li>
+									</ul>
+									<li><strong>GNU/Linux</strong></li>
+									<ul>
+										<li>CFS scheduler, <code>linux/rbtree.h</code></li>
+									</ul>
+								</ul>
+								<li class="fragment">Extra property: <em>$O(1)$ amortized writes</em></li>
+							</ul>
+						</div>
+					</div>
+				</section>
+
+				<section data-auto-animate data-auto-animate-restart>
+					<h3>Randomly-Built Binary Search Trees</h3>
+					<ul class="small">
+						<li><strong>Interesting property:</strong> Building a BST of $n$ elements inserted in <em>random order</em> keeps the tree balanced <em>with high probability</em> (a stronger claim than "<em>in expectation</em>").</li>
+						<ul>
+							<li class="fragment">Same number of comparisons as randomized quicksort.</li>
+							<li class="fragment">Each <code>insert</code> operation takes <em>$O(\lg n)$ whp</em> &mdash; this means there is a vanishingly small probability that <code>insert</code> fails to run in $O(\lg n)$ time.</li>
+						</ul>
+						<li class="fragment">Additionally:</li>
+						<ul class="fragment">
+							<li>Each element will have a <strong>depth</strong> of <em>$O(\lg n)$ whp</em></li>
+							<li>The entire tree will have <strong>height</strong> <em>$O(\lg n)$ whp</em></li>
+							<li>The entire tree will take <strong>time</strong> <em>$O(n \lg n)$ whp</em> to build</li>
+						</ul>
+					</ul>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Maintaining Randomness</h3>
+					<ul class="small">
+						<li>If we build a binary search tree at random on $n$ elements, then <em>with high probability</em> it will be balanced.</li>
+						<li class="fragment">Further calls to <code>insert</code> and <code>delete</code> might unbalance the tree.</li>
+						<li class="fragment">Remarkably, we can fix it by doing some <em>carefully chosen random rotations</em> after each <code>insert</code> and <code>delete</code> so the tree is always "freshly randomized".</li>
+						<ul>
+							<li class="fragment">That is to say, as if the tree had just been randomly built from scratch.</li>
+							<li class="fragment"><strong>Even more precisely:</strong> within each subtree, each element is equally likely to be at the root.</li>
+						</ul>
+						<li class="fragment">This gives us a simple randomized mechanism for keeping a BST balanced with high probability.</li>
 					</ul>
 				</section>
 			</div>
