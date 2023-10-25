@@ -278,7 +278,7 @@
 				</section>
 
 				<section data-auto-animate data-auto-animate-restart>
-					<h3>Randomly-Built Binary Search Trees</h3>
+					<h3>Randomly-Balanced Binary Search Trees</h3>
 					<ul class="small">
 						<li><strong>Interesting property:</strong> Building a BST of $n$ elements inserted in <em>random order</em> keeps the tree balanced <em>with high probability</em> (a stronger claim than "<em>in expectation</em>").</li>
 						<ul>
@@ -295,7 +295,7 @@
 				</section>
 
 				<section data-auto-animate>
-					<h3>Maintaining Randomness</h3>
+					<h3>Randomly-Balanced Binary Search Tree</h3>
 					<ul class="small">
 						<li>If we build a binary search tree at random on $n$ elements, then <em>with high probability</em> it will be balanced.</li>
 						<li class="fragment">Further calls to <code>insert</code> and <code>delete</code> might unbalance the tree.</li>
@@ -305,6 +305,26 @@
 							<li class="fragment"><strong>Even more precisely:</strong> within each subtree, each element is equally likely to be at the root.</li>
 						</ul>
 						<li class="fragment">This gives us a simple randomized mechanism for keeping a BST balanced with high probability.</li>
+					</ul>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Randomly-Balanced Binary Search Tree</h3>
+					<ul class="small">
+						<li><strong>insert(e)</strong> (into a $(n-1)$-element tree):</li>
+						<ul>
+							<li class="fragment">With probability $1/n$, insert $e$ at the root by</li>
+							<ol>
+								<li class="fragment">either insert as normal, then <em>rotate</em> up to the root,</li>
+								<li class="fragment">or use the <em>split</em> operation</li>
+							</ol>
+							<li class="fragment">Otherwise (with probability $1-1/n$), recursively insert into the left or right subtree of the root, depending on the value.</li>
+						</ul>
+						<li class="fragment"><strong>delete(e):</strong> replace $e$ with a randomized join of $e$'s subtrees L and R.</li>
+						<ul class="fragment">
+							<li>With probability $|L|/(|L|+|R|)$, <code>join(L.right, R)</code>, return L</li>
+							<li>With probability $|R|/(|L|+|R|)$, <code>join(L, R.left)</code>, return R</li>
+						</ul>
 					</ul>
 				</section>
 			</div>
