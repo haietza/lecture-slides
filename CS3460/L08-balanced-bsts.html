@@ -364,23 +364,25 @@
 					<h3>B-Trees</h3>
 					<ul class="small">
 						<li><strong>Insertion</strong> into a leaf node might overfill the node ($n \ge 2B$).</li>
-						<li class="fragment">If overfull, split the leaf and donate its <em>median element</em> to the parent.</li>
-						<li class="fragment">This might overfill the parent, causing the splits to cascade up the tree.</li>
-						<li class="fragment">Extra element could potentially be donated to a sibling, if possible...</li>
+						<li class="fragment" data-fragment-index="1">If overfull, split the leaf and donate its <em>median element</em> to the parent.</li>
+						<li class="fragment" data-fragment-index="2">This might overfill the parent, causing the splits to cascade up the tree.</li>
+						<li class="fragment" data-fragment-index="3">Extra element could potentially be donated to a sibling, if possible...</li>
 					</ul>
-					<img src="figures/balancing/btree-insert.svg" width="80%" class="fragment">
+					<img src="figures/balancing/btree-insert.svg" width="80%"
+						class="fragment" data-fragment-index="1">
 				</section>
 
 				<section data-auto-animate>
 					<h3>B-Trees</h3>
 					<ul class="small">
 						<li><strong>Deletion</strong> from a node might result in too few elements ($n < B-1$).</li>
-						<li class="fragment">Try to fix this by borrowing an element from a sibling (via rotation).</li>
-						<li class="fragment">When could this fail? <em>Siblings too small ($B-1$ elements)</em></li>
-						<li class="fragment">In that case, join with a sibling (need to steal an element from parent)</li>
-						<li class="fragment">This might give parent too few elements, repeat next level up.</li>
+						<li class="fragment" data-fragment-index="1">Try to fix this by borrowing an element from a sibling (via rotation).</li>
+						<li class="fragment" data-fragment-index="2">When could this fail? <em>Siblings too small ($B-1$ elements)</em></li>
+						<li class="fragment" data-fragment-index="3">In that case, join with a sibling (need to steal an element from parent)</li>
+						<li class="fragment" data-fragment-index="4">This might give parent too few elements, repeat next level up.</li>
 					</ul>
-					<img src="figures/balancing/btree-delete.svg" width="80%" class="fragment">
+					<img src="figures/balancing/btree-delete.svg" width="80%"
+						class="fragment" data-fragment-index="3">
 				</section>
 
 				<section data-auto-animate>
