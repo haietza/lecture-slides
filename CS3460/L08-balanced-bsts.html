@@ -311,6 +311,7 @@
 						<li>All leaves of a B-Tree have the same depth, so the height is $O(\lg_B n)$.</li>
 						<li class="fragment">All operations on a B-Tree (<em>insert</em>, <em>delete</em>, <em>find</em>, <em>pred</em>, <em>succ</em>, <em>min</em>, <em>max</em>, <em>rank</em>, <em>select</em>) can be easily implemented in $O(B \lg_B n)$ time.</li>
 					</ul>
+					<img src="figures/balancing/btree-example.svg">
 				</section>
 
 				<section data-auto-animate>
@@ -356,6 +357,7 @@
 						<li>Rotations are how elements get donated to or borrowed from a sibling.</li>
 						<li>Rotations can be implemented in $O(1)$ time &mdash; but $O(B)$ is fine.</li>
 					</ul>
+					<img src="figures/balancing/btree-rotation.svg" width="100%">
 				</section>
 
 				<section data-auto-animate>
@@ -366,6 +368,7 @@
 						<li class="fragment">This might overfill the parent, causing the splits to cascade up the tree.</li>
 						<li class="fragment">Extra element could potentially be donated to a sibling, if possible...</li>
 					</ul>
+					<img src="figures/balancing/btree-insert.svg" width="80%" class="fragment">
 				</section>
 
 				<section data-auto-animate>
@@ -377,6 +380,7 @@
 						<li class="fragment">In that case, join with a sibling (need to steal an element from parent)</li>
 						<li class="fragment">This might give parent too few elements, repeat next level up.</li>
 					</ul>
+					<img src="figures/balancing/btree-delete.svg" width="80%" class="fragment">
 				</section>
 
 				<section data-auto-animate>
