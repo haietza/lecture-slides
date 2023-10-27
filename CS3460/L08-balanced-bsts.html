@@ -278,6 +278,131 @@
 				</section>
 
 				<section data-auto-animate data-auto-animate-restart>
+					<h3>B-Trees</h3>
+					<ul>
+						<li><strong>B-Trees</strong> don't belong in this slide deck because <em>they aren't binary trees</em>.</li>
+						<li class="fragment">Balancing a B-Tree is a simple process with fewer special cases than a <em>red-black tree</em>.</li>
+						<li class="fragment">One of the main problems with tree data structures a low <em>cache hit ratio</em>. B-Trees have significantly better <em>cache locality</em>.</li>
+						<li class="fragment">This makes them ideal for storage systems like <em>databases</em> and <em>file systems</em>.</li>
+					</ul>
+				</section>
+
+				<section data-auto-animate>
+					<h3>B-Trees</h3>
+					<ul>
+						<li>Each node in a <strong>binary tree</strong> stores $1$ key and each non-leaf node has $1 \dots 2$ children.</li>
+						<li>In a <strong>B-Tree</strong>, each node stores $B-1 \dots 2B-1$ keys and has $B \dots 2B$ children.</li>
+					</ul>
+					<img src="figures/balancing/btree-node.svg" width="60%">
+				</section>
+
+				<section data-auto-animate>
+					<h3>B-Trees</h3>
+					<img src="figures/balancing/btree-node.svg" width="60%">
+					<ul>
+						<li>The root is special &mdash; it has no lower limits. It could store a single key, if needed.</li>
+						<li><em>$B=2$</em> is a common special case called a <strong>2-3-4 tree</strong>, since each node would have 2, 3, or 4 children.</li>
+					</ul>
+				</section>
+
+				<section data-auto-animate>
+					<h3>B-Trees</h3>
+					<ul class="small">
+						<li>All leaves of a B-Tree have the same depth, so the height is $O(\lg_B n)$.</li>
+						<li class="fragment">All operations on a B-Tree (<em>insert</em>, <em>delete</em>, <em>find</em>, <em>pred</em>, <em>succ</em>, <em>min</em>, <em>max</em>, <em>rank</em>, <em>select</em>) can be easily implemented in $O(B \lg_B n)$ time.</li>
+					</ul>
+				</section>
+
+				<section data-auto-animate>
+					<h3>B-Trees</h3>
+					<img src="figures/balancing/btree-find.svg" width="60%">
+					<ul class="small">
+						<li><strong>find(k):</strong> Scan the root node sequentially to find the appropriate child pointer, then recursively search this child subtree.</li>
+						<ul>
+							<li class="fragment">The runtime of this is <em class="fragment">$O(B \lg_B n)$ worst case</em></li>
+							<li class="fragment">Assuming $B=O(1)$, this is $O(\lg n)$</li>
+						</ul>
+					</ul>
+				</section>
+
+				<section data-auto-animate>
+					<h3>B-Trees</h3>
+					<ul class="small">
+						<li>Easy to implement <em>pred</em>, <em>succ</em>, <em>min</em>, and <em>max</em> all in $O(B \lg_B n)$ time.</li>
+						<li class="fragment">Can support <code>pred(e)</code> / <code>succ(e)</code> and <code>pred(k)</code> / <code>succ(k)</code></li>
+						<ul>
+							<li class="fragment">Inexact search + paging through nearby results = <em>range queries</em></li>
+						</ul>
+						<li class="fragment">If we augment nodes in a B-Tree with <em>subtree sizes</em>, we can also support <em>rank</em> and <em>select</em> in $O(B \lg_B n)$ time.</li>
+					</ul>
+				</section>
+
+				<section data-auto-animate>
+					<h3>B-Trees</h3>
+					<ul class="small">
+						<li>Insertions and deletions always take place in <em>leaf nodes</em>.</li>
+						<li class="fragment">To ensure we delete from a leaf node, we may need to swap first with our predecessor or successor.</li>
+						<ul>
+							<li class="fragment">This is just like with a BST when we delete a node with two children</li>
+						</ul>
+						<li class="fragment"><strong>One problem:</strong> <span class="fragment">insertion might make a node <em>too large</em>, or deletion might make a node <em>too small</em>!</span></li>
+					</ul>
+				</section>
+
+				<section data-auto-animate>
+					<h3>B-Trees</h3>
+					<ul class="small">
+						<li>You thought you were free from rotations, but we can <em>rotate</em> in a B-Tree!</li>
+						<li>Rotations are how elements get donated to or borrowed from a sibling.</li>
+						<li>Rotations can be implemented in $O(1)$ time &mdash; but $O(B)$ is fine.</li>
+					</ul>
+				</section>
+
+				<section data-auto-animate>
+					<h3>B-Trees</h3>
+					<ul class="small">
+						<li><strong>Insertion</strong> into a leaf node might overfill the node ($n \ge 2B$).</li>
+						<li class="fragment">If overfull, split the leaf and donate its <em>median element</em> to the parent.</li>
+						<li class="fragment">This might overfill the parent, causing the splits to cascade up the tree.</li>
+						<li class="fragment">Extra element could potentially be donated to a sibling, if possible...</li>
+					</ul>
+				</section>
+
+				<section data-auto-animate>
+					<h3>B-Trees</h3>
+					<ul class="small">
+						<li><strong>Deletion</strong> from a node might result in too few elements ($n < B-1$).</li>
+						<li class="fragment">Try to fix this by borrowing an element from a sibling (via rotation).</li>
+						<li class="fragment">When could this fail? <em>Siblings too small ($B-1$ elements)</em></li>
+						<li class="fragment">In that case, join with a sibling (need to steal an element from parent)</li>
+						<li class="fragment">This might give parent too few elements, repeat next level up.</li>
+					</ul>
+				</section>
+
+				<section data-auto-animate>
+					<h3>B-Trees - Summary</h3>
+					<ul class="small">
+						<li>Insert and delete both take $O(B \lg_B n)$ total time.</li>
+						<ul>
+							<li>We can easily preserve simple augmented data like subtree heights or sizes during the process.</li>
+						</ul>
+						<li>Insert might result in a chain of splits that propagates up the tree.</li>
+						<ul>
+							<li>If the root is split, this is the only case where a B-Tree can increase in height.</li>
+						</ul>
+						<li>Delete might result in a chain of joins that propagates up the tree.</li>
+						<ul>
+							<li>If the root is consumed by joining its two children, this is only case where a B-Tree can decrease in height.</li>
+						</ul>
+					</ul>
+				</section>
+
+				<section data-auto-animate>
+					<h3>B-Trees</h3>
+					<p><strong>Interesting bit of trivia:</strong> a 2-3-4 tree (a B-Tree with $B=2$) is essentially equivalent to a red-black tree!</p>
+				</section>
+
+				<section data-auto-animate data-auto-animate-restart>
 					<h3>Randomly-Balanced Binary Search Trees</h3>
 					<ul class="small">
 						<li><strong>Interesting property:</strong> Building a BST of $n$ elements inserted in <em>random order</em> keeps the tree balanced <em>with high probability</em> (a stronger claim than "<em>in expectation</em>").</li>
