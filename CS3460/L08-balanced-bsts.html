@@ -377,12 +377,13 @@
 					<ul class="small">
 						<li><strong>Deletion</strong> from a node might result in too few elements ($n < B-1$).</li>
 						<li class="fragment" data-fragment-index="1">Try to fix this by borrowing an element from a sibling (via rotation).</li>
-						<li class="fragment" data-fragment-index="2">When could this fail? <em>Siblings too small ($B-1$ elements)</em></li>
-						<li class="fragment" data-fragment-index="3">In that case, join with a sibling (need to steal an element from parent)</li>
-						<li class="fragment" data-fragment-index="4">This might give parent too few elements, repeat next level up.</li>
+						<li class="fragment" data-fragment-index="2">When could this fail? 
+							<em class="fragment" data-fragment-index="3">Siblings too small ($B-1$ elements)</em></li>
+						<li class="fragment" data-fragment-index="4">In that case, join with a sibling (need to steal an element from parent)</li>
+						<li class="fragment" data-fragment-index="5">This might give parent too few elements, repeat next level up.</li>
 					</ul>
 					<img src="figures/balancing/btree-delete.svg" width="80%"
-						class="fragment" data-fragment-index="3">
+						class="fragment" data-fragment-index="4">
 				</section>
 
 				<section data-auto-animate>
