@@ -1,0 +1,226 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>CS3460</title>
+
+		<link rel="stylesheet" href="../reveal-js/dist/reset.css">
+		<link rel="stylesheet" href="../reveal-js/dist/reveal.css">
+		<link rel="stylesheet" href="../reveal-js/dist/theme/dracula.css">
+		<link rel="stylesheet" href="../layouts/common.css">
+		<link rel="stylesheet" href="../reveal-js/plugin/highlight/monokai.css">
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+				<div class="header left">
+					CS3460: Data Structures
+				</div>
+				<div class="header right no-title">
+					<em>Priority Queues</em>
+				</div>
+
+				<section data-state="title-slide">
+					<h1 class="r-fit-text">CS3460: Data Structures & Algorithms</h1>
+					<h2 class="r-fit-text">Priority Queues</h2>
+				</section>
+
+				<section data-auto-animate data-auto-animate-restart>
+					<h3>Review</h3>
+					<div class="columns">
+						<div class="one-column small">
+							<ul>
+								<li><strong>Abstract Data Types</strong></li>
+								<ul>
+									<li>Sequences</li>
+									<li>Stacks & Queues</li>
+									<li>Sets & Dictionaries</li>
+									<li>Maps</li>
+									<li class="fragment" data-fragment-index="1">Priority Queues</li>
+								</ul>
+							</ul>
+						</div>
+						<div class="one-column small">
+							<ul>
+								<li><strong>Implementations (Concrete)</strong></li>
+								<ul>
+									<li>Arrays</li>
+									<li>Linked Lists</li>
+									<li>Hash Tables</li>
+									<li>Binary Search Trees</li>
+									<li class="fragment" data-fragment-index="1">Binary Heap</li>
+								</ul>
+							</ul>
+						</div>
+					</div>
+				</section>
+
+				<section data-auto-animate data-auto-animate-restart>
+					<h3>Priority Queues</h3>
+					<ul class="small">
+						<li>In a simple <strong>queue</strong>, the order of elements is maintained (FIFO)</li>
+						<li class="fragment">In a <strong>priority queue</strong>, the element with highest priority (usually defined as having the <em>lowest</em> key) is the first to be removed</li>
+						<li class="fragment">Many use cases:</li>
+						<ul>
+							<li class="fragment"><em>Scheduling</em> &mdash; Manage a set of tasks, where you always perform the highest-priority or highest-urgency task next.</li>
+							<li class="fragment"><em>Sorting</em> &mdash; Insert $n$ elements into a priority queue and they can be removed in sorted order.</li>
+							<li class="fragment">More sophisticated <em>algorithms</em>, such as Dijkstra's shortest path algorithm, use priority queues.</li>
+						</ul>
+					</ul>
+				</section>
+
+				<section data-auto-animate data-auto-animate-restart>
+					<h3>Priority Queue Operations</h3>
+					<ul class="small">
+						<li>All priority queues support:</li>
+						<ul class="fragment">
+							<li><em>insert(e, k)</em>: insert a new element $e$ with key $k$</li>
+							<li><em>remove-min</em>: remove and return the element with the minimum key</li>
+						</ul>
+						<li class="fragment">In practice (thanks to Dijkstra's algorithm), many support:</li>
+						<ul>
+							<li class="fragment"><em>decrease-key(e, &Delta;k)</em>: given a pointer to element $e$, reduce $e$'s key by $\Delta k$</li>
+						</ul>
+						<li class="fragment">Some priority queues also support:</li>
+						<ul>
+							<li class="fragment"><em>increase-key(e, &Delta;k)</em>: increase $e$'s key by $\Delta k$</li>
+							<li class="fragment"><em>delete(e)</em>: remove $e$ from the priority queue</li>
+							<li class="fragment"><em>find-min</em>: return a pointer to the element with the minimum key</li>
+						</ul>
+					</ul>
+				</section>
+
+				<section data-auto-animate data-auto-animate-restart>
+					<h3>Redundancy Among Operations</h3>
+					<ul class="small">
+						<li>How can we implement <em>increase-key</em> and <em>decrease-key</em>?</li>
+						<ul class="fragment">
+							<li><em>delete</em> the node and re-<em>insert</em> with a new key</li>
+						</ul>
+						<li>How can we implement <em>delete</em>?</li>
+						<ul class="fragment">
+							<li><em>decrease-key</em> to $-\infty$, then <em>remove-min</em></li>
+						</ul>
+						<li>How can we implement <em>remove-min</em>?</li>
+						<ul class="fragment">
+							<li><em>find-min</em>, then <em>delete</em> the found node</li>
+						</ul>
+						<li>How can we implement <em>find-min</em>?</li>
+						<ul class="fragment">
+							<li><em>remove-min</em> to find the minimum, then re-<em>insert</em> the node</li>
+						</ul>
+					</ul>
+				</section>
+
+				<section data-auto-animate data-auto-animate-restart>
+					<h3>Priority Queue Implementations</h3>
+					<ul class="small">
+						<li>There are a variety of simple ways to implement the <em>priority queue</em> abstract data type as a <em>concrete data structure</em>:</li>
+					</ul>
+					<table class="small">
+						<thead>
+							<tr>
+								<td class="no-border"></td>
+								<td><em>insert(e, k)</em></td>
+								<td><em>remove-min</em></td>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td class="no-border">unsorted array or linked list</td>
+								<td class="fragment">$O(1)$</td>
+								<td class="fragment">$O(n)$</td>
+							</tr>
+							<tr>
+								<td class="no-border">sorted array or linked list</td>
+								<td class="fragment">$O(n)$</td>
+								<td class="fragment">$O(1)$</td>
+							</tr>
+							<tr>
+								<td class="no-border">balanced binary search tree</td>
+								<td class="fragment">$O(\lg n)$</td>
+								<td class="fragment">$O(\lg n)$</td>
+							</tr>
+							<tr class="fragment">
+								<td class="no-border"><strong>binary heap</strong></td>
+								<td>$O(\lg n)$</td>
+								<td>$O(\lg n)$</td>
+							</tr>
+						</tbody>
+					</table>
+				</section>
+
+				<section data-auto-animate data-auto-animate-restart>
+					<h3>The Binary Heap</h3>
+					<ul class="small">
+						<li>A <strong>binary heap</strong> is an almost-complete binary tree that satisfies the <em>heap property</em>: for each element $e$, key(parent(e)) &le; key(e)</li>
+						<ul>
+							<li class="fragment">This means that the minimum element always resides at the root</li>
+						</ul>
+						<li class="fragment">All levels full except the last, which is filled from left to right</li>
+						<ul>
+							<li class="fragment">That means we don't need a typical <em>node-based</em> structure!</li>
+						</ul>
+					</ul>
+				</section>
+
+				<section data-auto-animate>
+					<h3>The Binary Heap</h3>
+					<ul class="small">
+						<li>Instead, we can store elements in an array $A[0 \dots n-1]$</li>
+						<li class="fragment">Surprisingly easy to move around this array in a tree-like fashion!</li>
+						<ul>
+							<li class="fragment"><em>parent(i)</em> = $\lfloor (i-1)/2 \rfloor$</li>
+							<li class="fragment"><em>left-child(i)</em> = $2i + 1$ ; <em>right-child(i)</em> = $2i + 2$</li>
+						</ul>
+					</ul>
+					<img src="figures/prio-queue/binary-heap-example.svg" width="80%">
+				</section>
+
+				<section data-auto-animate data-auto-animate-restart>
+					<h3>Heap Operations</h3>
+					<ul class="small">
+						<li>All binary heap operations are built from two fundamental operations</li>
+						<ul>
+							<li class="fragment"><em>sift-up(i)</em> (or <em>up-heap</em>): repeatedly swap element $A[i]$ with its parent as long as $A[i]$ violates the heap property with respect to its parent</li>
+							<li class="fragment"><em>sift-down(i)</em> (or <em>heapify</em>): as long as $A[i]$ violates the heap property with one of its children, swap $A[i]$ with its smallest child</li>
+						</ul>
+						<li class="fragment">Both run in $O(\lg n)$ since the height of an $n$-element heap is $O(\lg n)$</li>
+					</ul>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Heap Operations</h3>
+					<ul class="small">
+						<li>Now the remaining operations are easy to define in terms of <em>sift-up</em> and <em>sift-down</em></li>
+						<ul class="fragment">
+							<li><em>insert</em>: <span class="fragment">place new element at $A[n+1]$, then <em>sift-up(n+1)</em></span></li>
+							<li><em>remove-min</em>: <span class="fragment">swap $A[n]$ and $A[1]$, then <em>sift-down(1)</em></span></li>
+							<li><em>decrease-key(i, &Delta;k)</em>: <span class="fragment">decrease $A[i]$ by $\Delta k$, then <em>sift-up(i)</em></span></li>
+							<li><em>increase-key(i, &Delta;k)</em>: <span class="fragment">increase $A[i]$ by $\Delta k$, then <em>sift-down(i)</em></span></li>
+							<li><em>delete(i)</em>: <span class="fragment">swap $A[i]$ with $A[n]$, remove, <em>sift-up(i)</em>, <em>sift-down(i)</em></span></li>
+						</ul>
+						<li class="fragment">All of these clearly run in $O(\lg n)$ time</li>
+						<li class="fragment"><strong>More generally</strong>: modify the heap, then fix any violation of the heap property with one or two calls to <em>sift-up</em> or <em>sift-down</em></li>
+					</ul>
+				</section>
+			</div>
+		</div>
+
+		<script src="../reveal-js/dist/reveal.js"></script>
+		<script src="../reveal-js/plugin/math/math.js"></script>
+		<script src="../reveal-js/plugin/notes/notes.js"></script>
+		<script src="../reveal-js/plugin/markdown/markdown.js"></script>
+		<script src="../reveal-js/plugin/highlight/highlight.js"></script>
+		<script>
+			Reveal.initialize({
+				hash: true,
+				slideNumber: true,
+				transition: 'convex',
+				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes, RevealMath.KaTeX ],
+			});
+		</script>
+	</body>
+</html>
