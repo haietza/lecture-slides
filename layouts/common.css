@@ -50,6 +50,10 @@ section.left {
 	font-size: 70% !important;
 }
 
+.reveal .xsmall {
+	font-size: 60% !important;
+}
+
 table.bordered {
 	border: 1px solid white !important;
 }
@@ -113,6 +117,12 @@ ul.info-box li::before {
 	transform: translate(-50%, -50%) rotate(-20deg);
 	padding: 20px;
 	width: 90%;
+}
+
+.exclamation strong, .exclamation em
+{
+	color: var(--r-heading-color);
+	-webkit-text-stroke: 1px black;
 }
 
 .sliding-window

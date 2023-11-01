@@ -205,6 +205,188 @@
 						<li class="fragment">All of these clearly run in $O(\lg n)$ time</li>
 						<li class="fragment"><strong>More generally</strong>: modify the heap, then fix any violation of the heap property with one or two calls to <em>sift-up</em> or <em>sift-down</em></li>
 					</ul>
+					<div class="exclamation fragment">
+						<p><strong>Caveat:</strong> you can't find elements easily in a heap (unless it's the min)</p>
+					</div>
+				</section>
+
+				<section data-auto-animate data-auto-animate-restart>
+					<h3>Building a Binary Heap</h3>
+					<ul class="small">
+						<li>We could build a binary heap in $O(n \lg n)$ time using $n$ calls to <em>insert</em>.</li>
+						<li class="fragment">Another way to build a heap: start with our $n$ elements in an array $A[1 \dots n]$ (with no particular ordering), then call <em>sift-down(i)</em> for each $i$ from $n$ to $1$.</li>
+						<ul>
+							<li class="fragment"><strong>Remarkable fact #1:</strong> This will build a valid heap!</li>
+							<li class="fragment"><strong>Remarkable fact #2:</strong> This only takes $O(n)$ time!</li>
+						</ul>
+					</ul>
+				</section>
+
+				<section data-auto-animate data-auto-animate-restart>
+					<h3>Bottom-Up Heap Construction</h3>
+					<ul class="small">
+						<li>The key property of <em>sift-down</em> is that it fixes an isolated violation of the heap property at the root. 
+							Using <strong>induction</strong>, it is easy to prove that a "bottom-up" construction yields a valid heap.</li>
+					</ul>
+					<img src="figures/prio-queue/bottom-up.svg">
+				</section>
+
+				<section data-auto-animate>
+					<h3>Bottom-Up Heap Construction</h3>
+					<ul class="small">
+						<li>To analyze the runtime of this construction, note the following:</li>
+						<ul>
+							<li class="fragment">At most <strong>$n/2$</strong> elements reside at the bottom level of the heap. No work needs to be done to them.</li>
+							<li class="fragment">At most <strong>$n/4$</strong> elements reside at the 2<sup>nd</sup> lowest level of the heap. Only <strong>1</strong> unit of work done to them by <em>sift-down</em>.</li>
+							<li class="fragment">At most <strong>$n/8$</strong> elements reside at the 3<sup>rd</sup> lowest level of the heap. Only <strong>2</strong> units of work done to them by <em>sift-down</em>.</li>
+						</ul>
+						<li class="fragment">So total time $\le T = (n/4) + 2(n/8) + 3(n/16) + \dots$</li>
+						<ul>
+							<li class="fragment">Carrying this sum to infinity gives us an upper bound.</li>
+						</ul>
+						<li class="fragment"><strong>Claim:</strong> $T = O(n)$</li>
+					</ul>
+				</section>
+
+				<section data-auto-animate>
+					<h3>"Shifting" Technique for Summation</h3>
+					<div class="xsmall">
+					\[
+					\begin{align*}
+					  & T   & = & (n/4) & + & 2(n/8) & + & 3(n/16) & + & 4(n/32) & + & \dots \\
+					-~& T/2 & = &       &   & (n/8) & + & 2(n/16) & + & 3(n/32) & + & \dots \\
+					\hline
+					  & T/2 & = & (n/4) & + & (n/8) & + & (n/16) & + & (n/32) & + & \dots \\
+					\end{align*}
+					\]
+					</div>
+					<p class="fragment"><strong>repeating this process...</strong></p>
+					<div class="xsmall fragment">
+					\[
+					\begin{align*}
+					  & T   & = & (n/2) & + & (n/4) & + & (n/8) & + & (n/16) & + & \dots \\
+					-~& T/2 & = &       &   & (n/4) & + & (n/8) & + & (n/16) & + & \dots \\
+					\hline
+					  & T/2 & = & (n/2) \\
+					\therefore~~ & T & = & n \\
+					\end{align*}
+					\]
+					</div>
+				</section>
+
+				<section data-auto-animate data-auto-animate-restart>
+					<h3>Heapsort</h3>
+					<ul class="small">
+						<li>Any priority queue can be used to sort.</li>
+						<ul>
+							<li class="fragment">Just use $n$ <em>insert</em>s followed by $n$ <em>remove-min</em>s.</li>
+						</ul>
+						<li class="fragment">The binary heap gives us a nice way to sort in $O(n \lg n)$ time &mdash; <strong>heapsort</strong>:</li>
+						<ul>
+							<li class="fragment">Start with an array $A[1 \dots n]$ of elements to sort.</li>
+							<li class="fragment">Build a heap (bottom-up) on $A$ in $O(n)$ time.</li>
+							<li class="fragment">Call <em>remove-min</em> $n$ times in $O(n \lg n)$.</li>
+							<li class="fragment">Result will be reverse-sorted <span class="fragment">(<em>unless we used a max-heap</em>).</span></li>
+						</ul>
+						<li class="fragment">Heapsort compares favorably to...</li>
+						<ul>
+							<li class="fragment"><strong>mergesort</strong>, because heapsort runs <em>in-place</em>.</li>
+							<li class="fragment"><strong>randomized quicksort</strong>, because heapsort is <em>deterministic</em>.</li>
+						</ul>
+					</ul>
+				</section>
+
+				<section data-auto-animate data-auto-animate-restart>
+					<h3>Mergeable Heaps</h3>
+					<ul class="small">
+						<li>A <strong>mergeable heap</strong> (sometimes called a "meldable heap") supports all fundamental priority queue operations as well as:</li>
+						<ul>
+							<li><em>merge(a, b)</em>: merge heaps $a$ and $b$ into a single heap, destructively</li>
+						</ul>
+						<li class="fragment">The <em>binary heap</em> doesn't support <em>merge</em> any faster than $O(n)$ time.</li>
+						<li class="fragment">Why are we interested in mergeable heaps?</li>
+						<ul>
+							<li class="fragment">Elegant data structure design is worth studying on its own!</li>
+							<li class="fragment">Mergeable heaps are the first step along the road to more powerful priority queues, such as <em>binomial heaps</em>, <em>pairing heaps</em>, <em>skew heaps</em>, <em>leftist heaps</em>, and <em>Fibonacci heaps</em></li>
+						</ul>
+					</ul>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Heap-Ordered Trees</h3>
+					<ul class="small">
+						<li>Suppose we store our priority queue in a heap-ordered binary tree.</li>
+						<ul>
+							<li>Not necessarily "almost complete" though, so we can't embed it as efficiently into an array like with the binary heap</li>
+							<li>Each node maintains a pointer to its parent, left child, and right child</li>
+							<li>The tree is not necessarily balanced. It could conceivably be nothing more than a single sorted path.</li>
+						</ul>
+					</ul>
+				</section>
+
+				<section data-auto-animate>
+					<h3>🎶All You Need is Merge🎶</h3>
+					<ul class="small">
+						<li>If we had a way to <em>merge</em> two heap-ordered trees in $O(\lg n)$ time, then we could implement 
+							all priority queue operations in $O(\lg n)$ time!</li>
+						<ul>
+							<li class="fragment"><em>insert</em>: <span class="fragment">merge with a new 1-element tree</span></li>
+							<li class="fragment"><em>remove-min</em>: <span class="fragment">replace root with merge of left and right subtrees</span></li>
+							<li class="fragment"><em>decrease-key(e, &Delta;k)</em>: <span class="fragment">detach $e$ and its subtree, adjust key, then merge it back into the root</span></li>
+							<li class="fragment"><em>delete(e)</em>: <span class="fragment">first <em>decrease-key</em> to $-\infty$, then <em>remove-min</em></span></li>
+							<li class="fragment"><em>increase-key(e, &Delta;k)</em>: <span class="fragment">use <em>delete</em> + <em>insert</em></span></li>
+						</ul>
+					</ul>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Recursively Merging<br />Two Heap-Ordered Trees</h3>
+					<ul class="small">
+						<li>Take two heap-ordered trees $a$ and $b$, where $a$ has the smaller root.</li>
+						<li class="fragment" data-fragment-index="1">Therefore, clearly $a$'s root must become the root of the merged tree.</li>
+						<li class="fragment" data-fragment-index="2">Recursively merge $b$ into either the left or right subtree of $a$.</li>
+					</ul>
+					<div class="r-stack" width="60%">
+						<img src="figures/prio-queue/heap-merge-1.svg" class="fragment fade-out" data-fragment-index="2">
+						<img src="figures/prio-queue/heap-merge-2.svg" class="fragment" data-fragment-index="2">
+					</div>
+				</section>
+
+				<section data-auto-animate data-auto-animate-restart>
+					<h3>Priority Queue Application:<br />Huffman Coding</h3>
+					<ul class="small">
+						<li>Given the text: <strong>this is an example of a huffman tree</strong></li>
+						<li>The text contains 36 characters, which is <em>36 x 8 = 288 bits</em></li>
+						<li>Using Huffman coding, we can get this down to <em>195 bits</em>.</li>
+						<li>This is the first step toward more robust data compression algorithms like Limpel-Ziv (LZ77, LZ78, LZW) encoding.</li>
+					</ul>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Priority Queue Application:<br />Huffman Coding</h3>
+					<ul class="small">
+						<li>Text: <strong>this is an example of a huffman tree</strong></li>
+						<li class="fragment"><strong>Step 1:</strong> Build a table of letter frequencies.</li>
+						<li class="fragment"><strong>Step 2:</strong> Build a priority queue using frequencies as the key.</li>
+						<li class="fragment"><strong>Step 3:</strong> While there is more than 1 element in the queue, create a tree by</li>
+						<ul>
+							<li class="fragment"><em>remove-min</em> the two smallest values from the queue, create a node that joins them with a sum of their frequencies, and insert it back into the priority queue.</li>
+						</ul>
+						<li class="fragment"><strong>Step 4:</strong> Label the tree with left edges as 0 and right edges as 1. Encode each character as the path to it from the root.</li>
+					</ul>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Priority Queue Application:<br />Huffman Coding</h3>
+					<ul class="small">
+						<li>Given the text: <strong>this is an example of a huffman tree</strong></li>
+						<li>The text contains 36 characters, which is <em>36 x 8 = 288 bits</em></li>
+						<li>Using Huffman coding, we can get this down to <em>195 bits</em>.</li>
+						<li>This is the first step toward more robust data compression algorithms like Limpel-Ziv (LZ77, LZ78, LZW) encoding.</li>
+						<li class="fragment">Encrypted text: <strong>01101011...</strong></li>
+						<li class="fragment"><strong>Caveat:</strong> Tree required for decoding, and this can take a lot of space!</li>
+						<li class="fragment"><em>How do we decode?</em> <span class="fragment">Walk down the tree from the root based on the 0/1 bits until we reach a leaf, then print the character and repeat from the root.</span></li>
+					</ul>
 				</section>
 			</div>
 		</div>
