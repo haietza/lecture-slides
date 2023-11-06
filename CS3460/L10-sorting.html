@@ -1,0 +1,271 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>CS3460</title>
+
+		<link rel="stylesheet" href="../reveal-js/dist/reset.css">
+		<link rel="stylesheet" href="../reveal-js/dist/reveal.css">
+		<link rel="stylesheet" href="../reveal-js/dist/theme/dracula.css">
+		<link rel="stylesheet" href="../layouts/common.css">
+		<link rel="stylesheet" href="../reveal-js/plugin/highlight/monokai.css">
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+				<div class="header left">
+					CS3460: Data Structures
+				</div>
+				<div class="header right no-title">
+					<em>Sorting</em>
+				</div>
+
+				<section data-state="title-slide">
+					<h1 class="r-fit-text">CS3460: Data Structures & Algorithms</h1>
+					<h2 class="r-fit-text">Sorting Algorithms</h2>
+				</section>
+
+				<section data-auto-animate data-auto-animate-restart>
+					<h3>Sorting</h3>
+					<div class="r-stack float-right">
+						<img src="figures/sorting/histo-unsorted.svg" class="fragment fade-out" data-fragment-index="1">
+						<img src="figures/sorting/histo-sorted.svg" class="fragment" data-fragment-index="1">
+					</div>
+					<ul class="small" style="display: block;">
+						<li>Given a sequence, permute the elements <span class="fragment" data-fragment-index="1">so that they are in <em>monotonically non-decreasing</em> order.</span></li>
+						<li class="fragment" data-fragment-index="2">This is a nice way to study a variety of algorithm design techniques.</li>
+						<li class="fragment" data-fragment-index="3"><strong>Applications:</strong></li>
+						<ul>
+							<li class="fragment" data-fragment-index="4">Binary search, median finding, selection, order statistics</li>
+							<li class="fragment" data-fragment-index="5">Element uniqueness, grouping elements, closest pairs</li>
+							<li class="fragment" data-fragment-index="6">Graph algorithms, computing matchings, shortest paths, spanning trees</li>
+							<li class="fragment" data-fragment-index="7">Machine learning classification, recommendation, data compression</li>
+						</ul>
+					</ul>
+				</section>
+
+				<section data-auto-animate data-auto-animate-restart>
+					<h3>Bubble Sort - Iterative Refinement</h3>
+					<div class="r-stack float-right">
+						<img src="figures/sorting/bubble-00.svg" class="fragment fade-out" data-fragment-index="1">
+						<img src="figures/sorting/bubble-01.svg" class="fragment current-visible" data-fragment-index="1">
+						<img src="figures/sorting/bubble-02.svg" class="fragment current-visible" data-fragment-index="2">
+						<img src="figures/sorting/bubble-03.svg" class="fragment current-visible" data-fragment-index="3">
+						<img src="figures/sorting/bubble-04.svg" class="fragment current-visible" data-fragment-index="4">
+						<img src="figures/sorting/bubble-05.svg" class="fragment current-visible" data-fragment-index="5">
+						<img src="figures/sorting/bubble-06.svg" class="fragment current-visible" data-fragment-index="6">
+						<img src="figures/sorting/bubble-07.svg" class="fragment current-visible" data-fragment-index="7">
+						<img src="figures/sorting/bubble-08.svg" class="fragment current-visible" data-fragment-index="8">
+						<img src="figures/sorting/bubble-09.svg" class="fragment current-visible" data-fragment-index="9">
+						<img src="figures/sorting/bubble-10.svg" class="fragment current-visible" data-fragment-index="10">
+						<img src="figures/sorting/bubble-11.svg" class="fragment current-visible" data-fragment-index="11">
+						<img src="figures/sorting/bubble-12.svg" class="fragment current-visible" data-fragment-index="12">
+						<img src="figures/sorting/bubble-13.svg" class="fragment current-visible" data-fragment-index="13">
+						<img src="figures/sorting/bubble-14.svg" class="fragment current-visible" data-fragment-index="14">
+						<img src="figures/sorting/bubble-15.svg" class="fragment current-visible" data-fragment-index="15">
+						<img src="figures/sorting/bubble-16.svg" class="fragment current-visible" data-fragment-index="16">
+						<img src="figures/sorting/bubble-17.svg" class="fragment current-visible" data-fragment-index="17">
+						<img src="figures/sorting/bubble-18.svg" class="fragment" data-fragment-index="18">
+					</div>
+					<ul class="small" style="display: block;">
+						<li>Repeatedly scan the array, swapping out of order pairs of consecutive elements.</li>
+						<li>Runs in $O(n^2)$ time.</li>
+						<li>Bubble sort is <strong>stable</strong> (relative order of equal elements is preserved between the input and output), 
+							and <strong>in-place</strong> (uses strictly less than $n$ extra space).</li>
+					</ul>
+
+					<aside class="notes">
+						Nailing down a definition of in-place is tricky. Strictly, only a constant amount of space is allowed,
+						but this is very limiting because it prevents recursion (the program stack is still space allocation),
+						and even indexing a length-n array requires O(lg n) bits -- yes, it is that rigorous!
+
+						Therefore, we usually allow anything o(n) -- strictly less than linear.
+					</aside>
+				</section>
+
+				<section data-auto-animate data-auto-animate-restart>
+					<h3>Selection Sort</h3>
+					<div class="r-stack float-right">
+						<img src="figures/sorting/selection-00.svg" class="fragment fade-out" data-fragment-index="1">
+						<img src="figures/sorting/selection-01.svg" class="fragment current-visible" data-fragment-index="1">
+						<img src="figures/sorting/selection-02.svg" class="fragment current-visible" data-fragment-index="2">
+						<img src="figures/sorting/selection-03.svg" class="fragment current-visible" data-fragment-index="3">
+						<img src="figures/sorting/selection-04.svg" class="fragment current-visible" data-fragment-index="4">
+						<img src="figures/sorting/selection-05.svg" class="fragment current-visible" data-fragment-index="5">
+						<img src="figures/sorting/selection-06.svg" class="fragment current-visible" data-fragment-index="6">
+						<img src="figures/sorting/selection-07.svg" class="fragment current-visible" data-fragment-index="7">
+						<img src="figures/sorting/selection-08.svg" class="fragment current-visible" data-fragment-index="8">
+						<img src="figures/sorting/selection-09.svg" class="fragment current-visible" data-fragment-index="9">
+						<img src="figures/sorting/selection-10.svg" class="fragment current-visible" data-fragment-index="10">
+						<img src="figures/sorting/selection-11.svg" class="fragment current-visible" data-fragment-index="11">
+						<img src="figures/sorting/selection-12.svg" class="fragment current-visible" data-fragment-index="12">
+						<img src="figures/sorting/selection-13.svg" class="fragment current-visible" data-fragment-index="13">
+						<img src="figures/sorting/selection-14.svg" class="fragment current-visible" data-fragment-index="14">
+						<img src="figures/sorting/selection-15.svg" class="fragment current-visible" data-fragment-index="15">
+						<img src="figures/sorting/selection-16.svg" class="fragment current-visible" data-fragment-index="16">
+						<img src="figures/sorting/selection-17.svg" class="fragment current-visible" data-fragment-index="17">
+						<img src="figures/sorting/selection-18.svg" class="fragment current-visible" data-fragment-index="18">
+						<img src="figures/sorting/selection-19.svg" class="fragment current-visible" data-fragment-index="19">
+						<img src="figures/sorting/selection-20.svg" class="fragment" data-fragment-index="20">
+					</div>
+					<ul class="small" style="display: block;">
+						<li>Select the smallest element from the unsorted suffix of the array, swap it into its correct position, and repeat.</li>
+						<li>Runs in $O(n^2)$ time.</li>
+						<li>Selection sort is certainly <strong>in-place</strong>, but because it swaps non-adjacent elements, it is not <strong>stable</strong>.</li>
+					</ul>
+				</section>
+
+				<section data-auto-animate data-auto-animate-restart>
+					<h3>Insertion Sort - Incremental Construction</h3>
+					<div class="r-stack float-right">
+						<img src="figures/sorting/insertion-00.svg" class="fragment fade-out" data-fragment-index="1">
+						<img src="figures/sorting/insertion-01.svg" class="fragment current-visible" data-fragment-index="1">
+						<img src="figures/sorting/insertion-02.svg" class="fragment current-visible" data-fragment-index="2">
+						<img src="figures/sorting/insertion-03.svg" class="fragment current-visible" data-fragment-index="3">
+						<img src="figures/sorting/insertion-04.svg" class="fragment current-visible" data-fragment-index="4">
+						<img src="figures/sorting/insertion-05.svg" class="fragment current-visible" data-fragment-index="5">
+						<img src="figures/sorting/insertion-06.svg" class="fragment current-visible" data-fragment-index="6">
+						<img src="figures/sorting/insertion-07.svg" class="fragment current-visible" data-fragment-index="7">
+						<img src="figures/sorting/insertion-08.svg" class="fragment current-visible" data-fragment-index="8">
+						<img src="figures/sorting/insertion-09.svg" class="fragment current-visible" data-fragment-index="9">
+						<img src="figures/sorting/insertion-10.svg" class="fragment current-visible" data-fragment-index="10">
+						<img src="figures/sorting/insertion-11.svg" class="fragment current-visible" data-fragment-index="11">
+						<img src="figures/sorting/insertion-12.svg" class="fragment current-visible" data-fragment-index="12">
+						<img src="figures/sorting/insertion-13.svg" class="fragment current-visible" data-fragment-index="13">
+						<img src="figures/sorting/insertion-14.svg" class="fragment current-visible" data-fragment-index="14">
+						<img src="figures/sorting/insertion-15.svg" class="fragment current-visible" data-fragment-index="15">
+						<img src="figures/sorting/insertion-16.svg" class="fragment current-visible" data-fragment-index="16">
+						<img src="figures/sorting/insertion-17.svg" class="fragment current-visible" data-fragment-index="17">
+						<img src="figures/sorting/insertion-18.svg" class="fragment current-visible" data-fragment-index="18">
+						<img src="figures/sorting/insertion-19.svg" class="fragment current-visible" data-fragment-index="19">
+						<img src="figures/sorting/insertion-20.svg" class="fragment current-visible" data-fragment-index="20">
+						<img src="figures/sorting/insertion-21.svg" class="fragment current-visible" data-fragment-index="21">
+						<img src="figures/sorting/insertion-22.svg" class="fragment current-visible" data-fragment-index="22">
+						<img src="figures/sorting/insertion-23.svg" class="fragment current-visible" data-fragment-index="23">
+						<img src="figures/sorting/insertion-24.svg" class="fragment current-visible" data-fragment-index="24">
+						<img src="figures/sorting/insertion-25.svg" class="fragment current-visible" data-fragment-index="25">
+						<img src="figures/sorting/insertion-26.svg" class="fragment current-visible" data-fragment-index="26">
+						<img src="figures/sorting/insertion-27.svg" class="fragment current-visible" data-fragment-index="27">
+						<img src="figures/sorting/insertion-28.svg" class="fragment current-visible" data-fragment-index="28">
+						<img src="figures/sorting/insertion-29.svg" class="fragment current-visible" data-fragment-index="29">
+						<img src="figures/sorting/insertion-30.svg" class="fragment current-visible" data-fragment-index="30">
+						<img src="figures/sorting/insertion-31.svg" class="fragment current-visible" data-fragment-index="31">
+						<img src="figures/sorting/insertion-32.svg" class="fragment current-visible" data-fragment-index="32">
+						<img src="figures/sorting/insertion-33.svg" class="fragment current-visible" data-fragment-index="33">
+						<img src="figures/sorting/insertion-34.svg" class="fragment current-visible" data-fragment-index="34">
+						<img src="figures/sorting/insertion-35.svg" class="fragment current-visible" data-fragment-index="35">
+						<img src="figures/sorting/insertion-36.svg" class="fragment current-visible" data-fragment-index="36">
+						<img src="figures/sorting/insertion-37.svg" class="fragment" data-fragment-index="37">
+					</div>
+					<ul class="small" style="display: block;">
+						<li>In each iteration, enlarge the sorted prefix of the array by one element.</li>
+						<li>Runs in $\Theta(n+k)$ time, where $k$ is the number of <em>inversions</em>, worst case $O(n^2)$.</li>
+						<li>If the input is <em>nearly sorted</em>, the number of inversions is small and insertion sort runs in linear time!</li>
+						<li>Each swap reduces the <em>inversion count</em> by $1$.</li>
+						<li>Insertion sort is <strong>stable</strong> and <strong>in-place</strong>.</li>
+					</ul>
+				</section>
+
+				<section data-auto-animate data-auto-animate-restart>
+					<h3>Mergesort - Divide and Conquer</h3>
+					<div class="r-stack float-right">
+						<img src="figures/sorting/merge-00.svg" class="fragment fade-out" data-fragment-index="1">
+						<img src="figures/sorting/merge-01.svg" class="fragment current-visible" data-fragment-index="1">
+						<img src="figures/sorting/merge-02.svg" class="fragment" data-fragment-index="2">
+					</div>
+					<ul class="small" style="display: block;">
+						<li>Given a sequence, 
+							<span class="fragment" data-fragment-index="1">recursively sort the left and right halves of the array,</span> 
+							<span class="fragment" data-fragment-index="2">then <em>merge</em> the two resulting sorted subarrays into one (in linear time).</span></li>
+						<li class="fragment" data-fragment-index="3">Runs in $O(n \lg n)$.</li>
+						<li class="fragment" data-fragment-index="4">Can prove correctness inductively on the length of the subarrays.</li>
+						<li class="fragment" data-fragment-index="5">Mergesort is <strong>stable</strong>, but not <strong>in-place</strong>, because an additional $O(n)$ space needed for merge.</li>
+					</ul>
+				</section>
+
+				<section data-auto-animate>
+					<div class="columns">
+						<div class="two-columns">
+							<h3>Mergesort Analysis</h3>
+							<ul class="small">
+								<li>Think from the perspective of a single element.</li>
+								<li class="fragment">It takes $\Theta(n)$ time to merge two lists of combined length $n$.</li>
+								<li class="fragment">From that element's perspective, $O(1)$ work was done to them.</li>
+								<li class="fragment">For a particular element, the total work done to it is equal to the number of merges it participates in.</li>
+								<li class="fragment">It only takes $O(\lg n)$ merges due to successive halving.</li>
+								<li class="fragment">Therefore, it takes $O(n \lg n)$ work overall.</li>
+							</ul>
+						</div>
+						<div class="one-column">
+							<img src="figures/sorting/merge-00.svg">
+							<img src="figures/sorting/merge-01.svg">
+							<img src="figures/sorting/merge-02.svg">
+						</div>
+					</div>
+				</section>
+
+				<section data-auto-animate data-auto-animate-restart>
+					<h3>Quicksort - Divide and Conquer</h3>
+					<div class="r-stack float-left">
+						<img src="figures/sorting/quick-00.svg" class="fragment fade-out" data-fragment-index="1">
+						<img src="figures/sorting/quick-01.svg" class="fragment current-visible" data-fragment-index="1">
+						<img src="figures/sorting/quick-02.svg" class="fragment" data-fragment-index="2">
+					</div>
+					<ul class="small" style="display: block;">
+						<li>Given a sequence, 
+							<span class="fragment" data-fragment-index="1"><em>partition</em> the array based on a <em>pivot</em> element (in linear time),</span> 
+							<span class="fragment" data-fragment-index="2">then recursively sort the left and right subarrays.</span></li>
+						<li class="fragment" data-fragment-index="3">How do we partition in linear time?</li>
+						<li class="fragment" data-fragment-index="4">Runs in $O(n \lg n)$.</li>
+						<li class="fragment" data-fragment-index="5">Can prove correctness inductively on the length of the subarrays.</li>
+						<li class="fragment" data-fragment-index="6">Quicksort is <strong>in-place</strong>, but not <strong>stable</strong>, because our partition swaps non-adjacent elements.</li>
+					</ul>
+				</section>
+
+				<section data-auto-animate>
+					<div class="columns">
+						<div class="one-column">
+							<img src="figures/sorting/quick-00.svg">
+							<img src="figures/sorting/quick-01.svg">
+							<img src="figures/sorting/quick-02.svg">
+						</div>
+						<div class="two-columns">
+							<h3>Quicksort Variants</h3>
+							<ul class="xsmall">
+								<li>Running time of quicksort depends entirely on good partitions, which depend on the choice of pivot.</li>
+								<li class="fragment"><strong>Simple Quicksort:</strong> choose pivots using a simple deterministic rule, such as first element, last element, middle element.</li>
+								<ul>
+									<li class="fragment">$\Theta(n \lg n)$ if "lucky," worst case $\Theta(n^2)$.</li>
+								</ul>
+								<li class="fragment"><strong>Deterministic Quicksort:</strong> pivot on the median element, which we can find in $\Theta(n)$ time with <em>quickselect</em>.</li>
+								<ul>
+									<li class="fragment">$\Theta(n \lg n)$, but not great performance in practice.</li>
+								</ul>
+								<li class="fragment"><strong>Randomized Quicksort:</strong> choose pivot at random.</li>
+								<ul>
+									<li class="fragment">$\Theta(n \lg n)$ with high probability, and very good performance in practice (competitive with mergesort).</li>
+								</ul>
+							</ul>
+						</div>
+					</div>
+				</section>
+			</div>
+		</div>
+
+		<script src="../reveal-js/dist/reveal.js"></script>
+		<script src="../reveal-js/plugin/math/math.js"></script>
+		<script src="../reveal-js/plugin/notes/notes.js"></script>
+		<script src="../reveal-js/plugin/markdown/markdown.js"></script>
+		<script src="../reveal-js/plugin/highlight/highlight.js"></script>
+		<script>
+			Reveal.initialize({
+				hash: true,
+				slideNumber: true,
+				transition: 'convex',
+				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes, RevealMath.KaTeX ],
+			});
+		</script>
+	</body>
+</html>
