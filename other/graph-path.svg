@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:xlink="http://www.w3.org/1999/xlink" baseProfile="full" height="240" version="1.1" width="390">
+  <defs>
+    <style type="text/css"><![CDATA[
+	.node {
+		fill: #ffb86c;
+		stroke: white;
+		stroke-width: 2;
+	}
+	.edge {
+		stroke: white;
+		stroke-width: 2;
+	}
+	]]></style>
+  </defs>
+  <line class="edge" x1="345" x2="245" y1="45" y2="45"/>
+  <line class="edge" x1="45" x2="145" y1="120" y2="195"/>
+  <line class="edge" x1="245" x2="345" y1="195" y2="195"/>
+  <line class="edge" x1="145" x2="245" y1="195" y2="195"/>
+  <line class="edge" x1="145" x2="45" y1="45" y2="120"/>
+  <line class="edge" x1="245" x2="145" y1="45" y2="45"/>
+  <circle class="node" cx="345" cy="45" r="40"/>
+  <circle class="node" cx="145" cy="45" r="40"/>
+  <circle class="node" cx="45" cy="120" r="40"/>
+  <circle class="node" cx="245" cy="45" r="40"/>
+  <circle class="node" cx="145" cy="195" r="40"/>
+  <circle class="node" cx="245" cy="195" r="40"/>
+  <circle class="node" cx="345" cy="195" r="40"/>
+</svg>

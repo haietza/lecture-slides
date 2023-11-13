@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>CS3460</title>
+
+		<link rel="stylesheet" href="../reveal-js/dist/reset.css">
+		<link rel="stylesheet" href="../reveal-js/dist/reveal.css">
+		<link rel="stylesheet" href="../reveal-js/dist/theme/dracula.css">
+		<link rel="stylesheet" href="../layouts/common.css">
+		<link rel="stylesheet" href="../reveal-js/plugin/highlight/monokai.css">
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+				<div class="header left">
+					CS3460: Data Structures
+				</div>
+				<div class="header right no-title">
+					<em>Graphs & Connectivity</em>
+				</div>
+
+				<section data-state="title-slide">
+					<h1 class="r-fit-text">CS3460: Data Structures & Algorithms</h1>
+					<h2 class="r-fit-text">Graphs & Connectivity</h2>
+				</section>
+
+				<section data-auto-animate data-auto-animate-restart>
+					<h3>Graphs (Networks)</h3>
+					<ul class="small">
+						<li>A <strong>graph</strong> is a collection of <em>nodes</em> (aka, vertices) and <em>edges</em>. Each edge joins a pair of vertices.</li>
+						<li class="fragment">Graphs can be <em>directed</em> or <em>undirected</em> (). By default, "graph" usually means "undirected graph."</li>
+						<li class="fragment">Graphs are very common data structures because they are extremely useful at modeling a wide range of problems and applications.</li>
+					</ul>
+				</section>
+
+				<section data-auto-animate data-auto-animate-restart>
+					<h3>Graph Examples</h3>
+					<img src="figures/graphs/graph-zachary.svg">
+
+					<aside class="notes">
+						examples include social networks, road networks, the internet
+					</aside>
+				</section>
+
+				<section data-auto-animate data-auto-animate-restart>
+					<h3>Graph Topology</h3>
+					<p>There are many special types of graphs. The following are examples of <em>special cases</em> we might encounter:</p>
+					<div class="columns">
+						<div class="one-column">
+							<img src="figures/graphs/graph-path.svg" width="60%">
+							<p class="small"><em>Path</em> ($P_n$)</p>
+						</div>
+						<div class="one-column">
+							<img src="figures/graphs/graph-cycle.svg" width="60%">
+							<p class="small"><em>Cycle</em> ($C_n$)</p>
+						</div>
+					</div>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Graph Topology</h3>
+					<p>There are many special types of graphs. The following are examples of <em>special cases</em> we might encounter:</p>
+					<div class="columns">
+						<div class="one-column">
+							<img src="figures/graphs/graph-complete.svg" width="50%">
+							<p class="small"><em>Complete</em> graph ($K_n$)</p>
+						</div>
+						<div class="one-column">
+							<img src="figures/graphs/graph-planar.svg" width="70%">
+							<p class="small"><em>Planar</em> graph</p>
+						</div>
+					</div>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Graph Topology</h3>
+					<p>There are many special types of graphs. The following are examples of <em>special cases</em> we might encounter:</p>
+					<img src="figures/graphs/graph-bipartite.svg" width="20%">
+					<p class="small"><em>Bipartite</em> graph (a <em>complete</em> bipartite graph is denoted $K_{m,n}$)</p>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Graph Terminology</h3>
+					<ul class="small">
+						<li>A <strong>walk</strong> is a series of nodes connected by edges.</li>
+						<ul>
+							<li>We can think of a walk as a sequence of edges.</li>
+							<li>Commonly interested in <em>directed walks in a digraph</em>.</li>
+						</ul>
+						<li>A <strong>path</strong> is a "simple" walk (visits no nodes twice).</li>
+					</ul>
+				</section>
+			</div>
+		</div>
+
+		<script src="../reveal-js/dist/reveal.js"></script>
+		<script src="../reveal-js/plugin/math/math.js"></script>
+		<script src="../reveal-js/plugin/notes/notes.js"></script>
+		<script src="../reveal-js/plugin/markdown/markdown.js"></script>
+		<script src="../reveal-js/plugin/highlight/highlight.js"></script>
+		<script>
+			Reveal.initialize({
+				hash: true,
+				slideNumber: true,
+				transition: 'convex',
+				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes, RevealMath.KaTeX ],
+			});
+		</script>
+	</body>
+</html>
