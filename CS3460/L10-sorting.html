@@ -160,10 +160,10 @@
 						<img src="figures/sorting/insertion-37.svg" class="fragment" data-fragment-index="37">
 					</div>
 					<ul class="small" style="display: block;">
-						<li>In each iteration, enlarge the sorted prefix of the array by one element.</li>
+						<li>In each iteration, enlarge the sorted prefix of the array by one element. Introduce the first element of the unsorted suffix by swapping it to the left until it is in place with respect to the sorted prefix.</li>
 						<li>Runs in $\Theta(n+k)$ time, where $k$ is the number of <em>inversions</em>, worst case $O(n^2)$.</li>
-						<li>If the input is <em>nearly sorted</em>, the number of inversions is small and insertion sort runs in linear time!</li>
 						<li>Each swap reduces the <em>inversion count</em> by $1$.</li>
+						<li>If the input is <em>nearly sorted</em>, the number of inversions is small and insertion sort runs in linear time!</li>
 						<li>Insertion sort is <strong>stable</strong> and <strong>in-place</strong>.</li>
 					</ul>
 				</section>
@@ -259,6 +259,7 @@
 		<script src="../reveal-js/plugin/notes/notes.js"></script>
 		<script src="../reveal-js/plugin/markdown/markdown.js"></script>
 		<script src="../reveal-js/plugin/highlight/highlight.js"></script>
+		
 		<script>
 			Reveal.initialize({
 				hash: true,
