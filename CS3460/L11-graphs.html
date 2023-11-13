@@ -30,8 +30,8 @@
 				<section data-auto-animate data-auto-animate-restart>
 					<h3>Graphs (Networks)</h3>
 					<ul class="small">
-						<li>A <strong>graph</strong> is a collection of <em>nodes</em> (aka, vertices) and <em>edges</em>. Each edge joins a pair of vertices.</li>
-						<li class="fragment">Graphs can be <em>directed</em> or <em>undirected</em> (). By default, "graph" usually means "undirected graph."</li>
+						<li>A <strong>graph</strong> is a collection of <em>nodes</em> (aka, vertices) and <em>edges</em>. Each edge joins a pair of vertices. Nodes and edges can have weights/costs.</li>
+						<li class="fragment">Graphs can be <em>directed</em> or <em>undirected</em>, referring to whether or not the edges have a direction. By default, "graph" usually means "undirected graph."</li>
 						<li class="fragment">Graphs are very common data structures because they are extremely useful at modeling a wide range of problems and applications.</li>
 					</ul>
 				</section>
@@ -82,15 +82,51 @@
 					<p class="small"><em>Bipartite</em> graph (a <em>complete</em> bipartite graph is denoted $K_{m,n}$)</p>
 				</section>
 
-				<section data-auto-animate>
+				<section data-auto-animate data-auto-animate-restart>
 					<h3>Graph Terminology</h3>
 					<ul class="small">
 						<li>A <strong>walk</strong> is a series of nodes connected by edges.</li>
 						<ul>
-							<li>We can think of a walk as a sequence of edges.</li>
-							<li>Commonly interested in <em>directed walks in a digraph</em>.</li>
+							<li class="fragment">We can think of a walk as a sequence of edges.</li>
+							<li class="fragment">Commonly interested in <em>directed walks in a digraph</em>.</li>
 						</ul>
-						<li>A <strong>path</strong> is a "simple" walk (visits no nodes twice).</li>
+						<li class="fragment">A <strong>path</strong> is a "simple" walk (visits no nodes twice).</li>
+						<li class="fragment">A <strong>cycle</strong> is a path that starts and ends at the same node.</li>
+						<li class="fragment">A <strong>connected component</strong> is a set of nodes that are joined by paths.</li>
+						<li class="fragment">In a digraph, a <strong>strongly connected component</strong> is a set of nodes for which all pairs of nodes $i,j$ in that set have a path leading from $i$ to $j$ and from $j$ to $i$.</li>
+					</ul>
+				</section>
+
+				<section data-auto-animate data-auto-animate-restart>
+					<h3>Some Classical Graph Problems</h3>
+					<ul class="small">
+						<li><strong>Shortest Paths:</strong> Find the shortest path between two nodes in a graph.</li>
+						<ul>
+							<li class="fragment">We can also find the shortest path between one node and all other nodes [referred to as <em>single-source shortest path</em>].</li>
+							<li class="fragment">We can also find the shortest path between all pairs of nodes [referred to as <em>all-pairs shortest path</em>].</li>
+						</ul>
+						<li class="fragment"><strong>Minimum Spanning Trees:</strong> Find a min-cost subset of edges that connects all nodes.</li>
+						<li class="fragment"><strong>Matchings:</strong> Pair up as many nodes as possible, or pair all nodes at minimum total cost.</li>
+						<li class="fragment"><strong>Flow / Routing:</strong> Route a maximum amount of some commodity through a capacitated network, possibly at minimum total cost.</li>
+					</ul>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Minimum Spanning Tree</h3>
+					<img src="figures/graphs/graph-minspantree.svg" data-id="minspantree">
+				</section>
+
+				<section data-auto-animate>
+					<h3>Minimum Spanning Tree</h3>
+					<img src="figures/graphs/graph-minspantree2.svg" data-id="minspantree">
+				</section>
+
+				<section data-auto-animate data-auto-animate-restart>
+					<h3>Network Analysis / Data Mining</h3>
+					<ul class="small">
+						<li><strong>Similarity / Connectivity:</strong> How similar are nodes $x$ and $y$ if edges connect directly-related elements?</li>
+						<li><strong>Clustering:</strong> Does a graph break naturally into several large "clusters"?</li>
+						<li><strong>Centrality:</strong> Find nodes that are well-connected with all other nodes.</li>
 					</ul>
 				</section>
 			</div>

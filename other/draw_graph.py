@@ -20,6 +20,7 @@ class GraphEdge:
 	src: GraphNode
 	dst: GraphNode
 	directed: bool = False
+	cost: typing.Any = None
 	classes: set[str] = dataclasses.field(default_factory=set)
 
 	def __eq__(self, other):
@@ -58,6 +59,9 @@ class Graph:
 			edge = d.line(adj(e.src.pos), adj(e.dst.pos))
 			edge.attribs['class'] = ' '.join(['edge'] + list(e.classes))
 			d.add(edge)
+
+			if e.cost is not None:
+				pass
 
 		for n in self.nodes:
 			node = d.circle(adj(n.pos), n.size)
