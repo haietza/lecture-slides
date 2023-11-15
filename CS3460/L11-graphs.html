@@ -99,26 +99,68 @@
 
 				<section data-auto-animate data-auto-animate-restart>
 					<h3>Some Classical Graph Problems</h3>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Shortest Paths</h3>
 					<ul class="small">
-						<li><strong>Shortest Paths:</strong> Find the shortest path between two nodes in a graph.</li>
+						<li><strong>Problem:</strong> Find the shortest path between two nodes in a graph.</li>
 						<ul>
 							<li class="fragment">We can also find the shortest path between one node and all other nodes [referred to as <em>single-source shortest path</em>].</li>
 							<li class="fragment">We can also find the shortest path between all pairs of nodes [referred to as <em>all-pairs shortest path</em>].</li>
 						</ul>
-						<li class="fragment"><strong>Minimum Spanning Trees:</strong> Find a min-cost subset of edges that connects all nodes.</li>
-						<li class="fragment"><strong>Matchings:</strong> Pair up as many nodes as possible, or pair all nodes at minimum total cost.</li>
-						<li class="fragment"><strong>Flow / Routing:</strong> Route a maximum amount of some commodity through a capacitated network, possibly at minimum total cost.</li>
 					</ul>
 				</section>
 
 				<section data-auto-animate>
-					<h3>Minimum Spanning Tree</h3>
+					<h3>Minimum Spanning Trees</h3>
+					<ul class="small">
+						<li><strong>Problem:</strong> Find a min-cost subset of edges that connects all nodes.</li>
+					</ul>
 					<img src="figures/graphs/graph-minspantree.svg" data-id="minspantree">
 				</section>
 
 				<section data-auto-animate>
-					<h3>Minimum Spanning Tree</h3>
+					<h3>Minimum Spanning Trees</h3>
+					<ul class="small">
+						<li><strong>Problem:</strong> Find a min-cost subset of edges that connects all nodes.</li>
+					</ul>
 					<img src="figures/graphs/graph-minspantree2.svg" data-id="minspantree">
+				</section>
+
+				<section data-auto-animate>
+					<h3>Matchings</h3>
+					<div class="columns">
+						<div class="one-column">
+							<ul class="small">
+								<li><strong>Problem:</strong> Pair up as many nodes as possible, or pair all nodes at minimum total cost.</li>
+							</ul>
+						</div>
+						<div class="one-column">
+							<img src="figures/graphs/graph-bipartite.svg" data-id="matching">
+						</div>
+					</div>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Matchings</h3>
+					<div class="columns">
+						<div class="one-column">
+							<ul class="small">
+								<li><strong>Problem:</strong> Pair up as many nodes as possible, or pair all nodes at minimum total cost.</li>
+							</ul>
+						</div>
+						<div class="one-column">
+							<img src="figures/graphs/graph-bipartite-matching.svg" data-id="matching">
+						</div>
+					</div>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Flow / Routing</h3>
+					<ul class="small">
+						<li><strong>Problem:</strong> Route a maximum amount of some commodity through a capacitated network, possibly at minimum total cost.</li>
+					</ul>
 				</section>
 
 				<section data-auto-animate data-auto-animate-restart>
@@ -127,6 +169,175 @@
 						<li><strong>Similarity / Connectivity:</strong> How similar are nodes $x$ and $y$ if edges connect directly-related elements?</li>
 						<li><strong>Clustering:</strong> Does a graph break naturally into several large "clusters"?</li>
 						<li><strong>Centrality:</strong> Find nodes that are well-connected with all other nodes.</li>
+					</ul>
+				</section>
+
+				<section data-auto-animate data-auto-animate-restart>
+					<h3>Network Analysis / Data Mining</h3>
+					<ul class="small">
+						<li><strong>Similarity / Connectivity:</strong> How similar are nodes $x$ and $y$ if edges connect directly-related elements?</li>
+						<li><strong>Clustering:</strong> Does a graph break naturally into several large "clusters"?</li>
+						<li><strong>Centrality:</strong> Find nodes that are well-connected with all other nodes.</li>
+					</ul>
+				</section>
+
+				<section data-auto-animate data-auto-animate-restart>
+					<h3>Graph Representations</h3>
+					<p>An <strong>adjacency matrix</strong> (ideal for <em>dense</em> graphs)</p>
+					<div class="columns">
+						<div class="two-columns">
+							<img src="figures/graphs/repr-example-1.svg" width="80%">
+						</div>
+						<div class="one-column">
+							<pre>
+								<code data-trim>
+									    1 2 3 4
+									  +--------
+									1 | 0 1 0 0
+									2 | 0 0 1 0
+									3 | 1 0 0 1
+									4 | 0 0 1 0
+								</code>
+							</pre>
+						</div>
+					</div>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Graph Representations</h3>
+					<p>An <strong>adjacency list</strong> (ideal for <em>sparse</em> graphs)</p>
+					<div class="columns">
+						<div class="two-columns">
+							<img src="figures/graphs/repr-example-2.svg" width="60%">
+						</div>
+						<div class="one-column">
+							<pre>
+								<code data-trim>
+									1: 2 3
+									2: 1 3 4
+									3: 1 2 4 5
+									4: 2 3 5
+									5: 3 4
+								</code>
+							</pre>
+							<p class="small">Unless otherwise stated, we will assume our graphs are represented using adjacency lists.</p>
+						</div>
+					</div>
+				</section>
+
+				<section data-auto-animate data-auto-animate-restart>
+					<h3>Simple Connectivity Questions</h3>
+					<ul class="small">
+						<li>Some of the most fundamental graph questions related to <em>connectivity</em>:</li>
+						<ul>
+							<li class="fragment">Are nodes $i$ and $j$ connected by some path?</li>
+							<li class="fragment">If so, determine such a path.</li>
+							<li class="fragment">In a digraph, is there a directed path from $i$ to $j$?</li>
+							<li class="fragment">Does a (directed) graph have a (directed) cycle?</li>
+							<li class="fragment">Partition a graph into its connected components.</li>
+							<li class="fragment">Partition a digraph into its strongly connected components.</li>
+						</ul>
+					</ul>
+					<div class="fragment exclamation">We can answer all of these questions in $O(n)$ using <strong>depth-first search</strong>.</div>
+				</section>
+
+				<section data-auto-animate data-auto-animate-restart>
+					<h3>Depth-First Search (DFS)</h3>
+					<pre>
+						<code data-trim>
+							dfs_visit(i):
+								visited[i] = True
+								for each j such that (i,j) is an edge:
+									if visited[j] is False:
+										predecessor[j] = i
+										dfs_visit(j)
+						</code>
+					</pre>
+					<pre>
+						<code data-trim>
+							full_dfs():
+								for each i: predecessor[i] = null, visited[i] = False
+								for each i: if visited[i] is False: dfs_visit(i)
+						</code>
+					</pre>
+					<ul class="small">
+						<li>Works in directed and undirected graphs.</li>
+						<li><em>full_dfs()</em> takes $O(m + n)$ &mdash; spends $O(1)$ on each node and edge</li>
+					</ul>
+				</section>
+
+				<section data-auto-animate data-auto-animate-restart>
+					<h3>Depth-First Search (DFS)</h3>
+					<ul class="small">
+						<li><em>full_dfs()</em> gives us an easy way to partition an undirected graph into its connected components.</li>
+						<li class="fragment">The predecessor pointers define what is called a <strong>depth-first search tree</strong>.</li>
+						<li class="fragment">To find a path from $i$ to $j$ (if such a path exists):</li>
+						<ol>
+							<li class="fragment">Initialize predecessor and visited values for all nodes.</li>
+							<li class="fragment">Call <em>dfs_visit(i)</em>.</li>
+							<li class="fragment">Follow predecessor pointers backwards from $j$ to $i$</li>
+						</ol>
+						<li class="fragment">How could we use this to find a path between any two nodes with only one call to <em>full_dfs()</em>?</li>
+					</ul>
+				</section>
+
+				<section data-auto-animate data-auto-animate-restart>
+					<h3>Topological Sorting</h3>
+					<ul class="small">
+						<li>A common type of graph is the <strong>Directed Acyclic Graph</strong> (DAG).</li>
+						<ul>
+							<li class="fragment">As the name implies, this is a digraph that contains no cycles.</li>
+							<li class="fragment">Often used to model systems with precedence constraints.</li>
+						</ul>
+						<li class="fragment">Topological sorting is the process of ordering the nodes of a DAG so that all edges point in a consistent direction. <span class="fragment">You can think of this as "flattening" the DAG into a sequence that satisfies the precedence constraints.</span></li>
+					</ul>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Topological Sorting</h3>
+					<ul class="small">
+						<li>There are several ways to topologically sort in <em>$O(m + n)$</em> time:</li>
+						<ul>
+							<li class="fragment">Find a node with <em>no incoming edges</em>. Add it next to the ordering, remove it from our graph, and repeat.</li>
+							<li class="fragment">If we ever find that every node has an incoming edge, then our graph <em>must contain a cycle</em> (this gives un an alternate way of performing <em>cycle detection</em>).</li>
+						</ul>
+						<li class="fragment">Depth-first search gives us another very simple topological sorting algorithm.</li>
+					</ul>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Topological Sorting</h3>
+					<pre>
+						<code data-trim data-line-numbers="3,8">
+							dfs_visit(i):
+								visited[i] = True
+								d[i] = current_time; increment current_time
+								for each j such that (i,j) is an edge:
+									if visited[j] is False:
+										predecessor[j] = i
+										dfs_visit(j)
+								f[i] = current_time; increment current_time
+						</code>
+					</pre>
+					<ul class="small">
+						<li>Associate each node with a <em>discovery time</em> and a <em>finishing time</em>.</li>
+						<li class="fragment">To topologically sort a DAG, just perform <em>full_dfs()</em> and then output the nodes in reverse order of finishing times.</li>
+						<ul>
+							<li class="fragment">Either output each node as soon as it is "finished," or sort the nodes by their finishing times (in linear time with counting sort) after the fact.</li>
+						</ul>
+					</ul>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Topological Sorting</h3>
+					<ul class="small">
+						<li><strong>Claim:</strong>In a DAG with an edge from node $i$ to node $j$, $f(i) > f(j)$.</li>
+						<li class="fragment"><strong>Proof:</strong> Consider two cases:</li>
+						<ol class="fragment">
+							<li><em>full_dfs()</em> visits $i$ first.</li>
+							<li><em>full_dfs()</em> visits $j$ first.</li>
+						</ol>
+						<li class="fragment">In both cases, we have $f(i) > f(j)$ as long as our graph contains no directed cycles (which it doesn't, since it is a DAG!)</li>
 					</ul>
 				</section>
 			</div>
