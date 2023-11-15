@@ -2,6 +2,7 @@ import svgwrite
 import draw_graph as dg
 import math
 import random
+import networkx
 
 def base_drawing(filename, size=(200,200)):
 	d = svgwrite.Drawing(filename, size=size)
@@ -14,6 +15,10 @@ def base_drawing(filename, size=(200,200)):
 	.edge {
 		stroke: white;
 		stroke-width: 2;
+	}
+	.edge.highlight {
+		stroke: #ff7f2a;
+		stroke-width: 10;
 	}
 	""")
 	return d
@@ -57,17 +62,41 @@ d.save(pretty=True)
 ### BIPARTITE
 g1 = [dg.GraphNode((50, 50+100*i)) for i in range(5)]
 g2 = [dg.GraphNode((350, 50+100*i)) for i in range(5)]
+nodes = [None, g1, g2]
 
 graph = dg.Graph()
 for n in g1 + g2:
 	graph.nodes.add(n)
 
-for n in g1: graph.edges.add(dg.GraphEdge(n, random.choice(g2)))
-for n in g2: graph.edges.add(dg.GraphEdge(random.choice(g1), n))
+G = networkx.Graph()
+for ai,an in enumerate(g1):
+	bi,bn = random.choice(list(enumerate(g2)))
+	graph.edges.add(dg.GraphEdge(an,bn))
+	G.add_edge(10+ai, 20+bi)
+
+for bi,bn in enumerate(g2):
+	ai,an = random.choice(list(enumerate(g1)))
+	graph.edges.add(dg.GraphEdge(an,bn))
+	G.add_edge(10+ai, 20+bi)
+
 while len(graph.edges) < 10:
-	graph.edges.add(dg.GraphEdge(random.choice(g1), random.choice(g2)))
+	ai,an = random.choice(list(enumerate(g1)))
+	bi,bn = random.choice(list(enumerate(g2)))
+	graph.edges.add(dg.GraphEdge(an, bn))
+	G.add_edge(10+ai, 20+bi)
 
 d = base_drawing('graph-bipartite.svg', size=graph.size())
+graph.draw(d, 0, 0)
+d.save(pretty=True)
+
+for ai,bi in networkx.matching.maximal_matching(G):
+	an = nodes[ai//10][ai % 10]
+	bn = nodes[bi//10][bi % 10]
+	for edge in graph.edges:
+		if {edge.src, edge.dst} == {an, bn}:
+			edge.classes.add('highlight')
+
+d = base_drawing('graph-bipartite-matching.svg', size=graph.size())
 graph.draw(d, 0, 0)
 d.save(pretty=True)
 

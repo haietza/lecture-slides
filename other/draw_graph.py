@@ -3,14 +3,14 @@ import typing
 import svgwrite
 import math
 
-NODE_SIZE = 40
+NODE_SIZE = 20
 
 @dataclasses.dataclass
 class GraphNode:
-	pos: tuple[int, int]
+	pos: tuple
 	content: typing.Any = None
 	size: int = NODE_SIZE
-	classes: set[str] = dataclasses.field(default_factory=set)
+	classes: set = dataclasses.field(default_factory=set)
 
 	def __hash__(self):
 		return hash(id(self))
@@ -21,7 +21,7 @@ class GraphEdge:
 	dst: GraphNode
 	directed: bool = False
 	cost: typing.Any = None
-	classes: set[str] = dataclasses.field(default_factory=set)
+	classes: set = dataclasses.field(default_factory=set)
 
 	def __eq__(self, other):
 		if self.directed != other.directed:
@@ -39,8 +39,8 @@ class GraphEdge:
 		
 @dataclasses.dataclass
 class Graph:
-	nodes: set[GraphNode] = dataclasses.field(default_factory=set)
-	edges: set[GraphEdge] = dataclasses.field(default_factory=set)
+	nodes: set = dataclasses.field(default_factory=set)
+	edges: set = dataclasses.field(default_factory=set)
 
 	def size(self):
 		return (
@@ -49,6 +49,11 @@ class Graph:
 		)
 
 	def draw(self, d, x, y):
+		arrow = d.marker(size=(4,3), markerUnits='strokeWidth')
+		arrow.viewbox(0, 0, 10, 10)
+		arrow.add(d.path(d="M 0 0 L 10 5 L 0 10 z", fill='white'))
+		d.defs.add(arrow)
+
 		dx = min(n.pos[0] - n.size for n in self.nodes) - (x+5)
 		dy = min(n.pos[1] - n.size for n in self.nodes) - (y+5)
 		def adj(pt):
@@ -58,6 +63,8 @@ class Graph:
 		for e in self.edges:
 			edge = d.line(adj(e.src.pos), adj(e.dst.pos))
 			edge.attribs['class'] = ' '.join(['edge'] + list(e.classes))
+			if e.directed:
+				edge.set_markers((None, None, arrow))
 			d.add(edge)
 
 			if e.cost is not None:
