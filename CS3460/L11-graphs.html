@@ -351,6 +351,13 @@
 						</ol>
 						<li class="fragment">In both cases, we have $f(i) > f(j)$ as long as our graph contains no directed cycles (which it doesn't, since it is a DAG!)</li>
 					</ul>
+
+					<aside class="notes">
+						1) if i is visited first, all of j has to be processed and j will finish
+							before we return to i to finish it. finishing time of i will be larger
+						2) if j is visited first, j will be finished long before we encounter i,
+							giving i a later discovery AND finishing time
+					</aside>
 				</section>
 			</div>
 		</div>
