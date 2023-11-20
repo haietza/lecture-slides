@@ -596,6 +596,23 @@
 						Tighten all edges leaving node $2$.</p>
 					<p class="small">All nodes are locked. <strong>We are done!</strong></p>
 				</section>
+
+				<section data-auto-animate>
+					<h3>Dijkstra's Algorithm</h3>
+					<ul class="small">
+						<li>Just like <em>breadth-first search</em>, Dijkstra visits all nodes in increasing order of distance from the source, and visits each node exactly once.</li>
+						<li class="fragment">Think of Dijkstra as maintaining two sets:</li>
+						<ul class="fragment">
+							<li>Set <em>$S$</em> of visited nodes that are "permanently" labeled (correctly).</li>
+							<li>Set <em>$T$</em> of remaining nodes that are temporarily labeled (whose cost labels are just upper bounds).</li>
+						</ul>
+						<li class="fragment">Every iteration moves the node from <em>$T$</em> with the minimum label to <em>$S$</em>.</li>
+						<li class="fragment"><strong>Claim:</strong> when we visit node $i$, $c[i]$ is the shortest path cost from $s$ to $i$.</li>
+						<ul>
+							<li class="fragment"><strong>Proof by contradiction:</strong> Suppose $c[i]$ is not correctly labeled. Then there is a shorter path from a node in $T$, which is a contradiction since we are visiting $i$.</li>
+						</ul>
+					</ul>
+				</section>
 			</div>
 		</div>
 
