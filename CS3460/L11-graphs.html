@@ -386,7 +386,215 @@
 
 				<section data-auto-animate data-auto-animate-restart>
 					<h3>Single-Source Shortest Paths</h3>
-					
+					<ul class="small">
+						<li>There are several easy cases that we can solve in linear time:</li>
+						<ul>
+							<li>Unweighted graphs: use <strong>breadth-first search</strong></li>
+							<li>Directed acyclic graphs (DAGs): use <strong>dynamic programming</strong></li>
+						</ul>
+						<li><em>Non-negative</em> edge costs: use <strong>Dijkstra's algorithm</strong></li>
+						<li>Some negative edge costs: use <strong>Bellman-Ford algorithm</strong></li>
+					</ul>
+				</section>
+
+				<section data-auto-animate data-auto-animate-restart>
+					<h3>Breadth-First Search (BFS)</h3>
+					<ul class="small">
+						<li><em>Recall</em> that <strong>depth-first search (DFS)</strong> dives as deeply as possible into a graph until it can't go any further, then branches upon backtracking.</li>
+						<li class="fragment">By contrast, a <strong>breadth-first search</strong> starting at some source node $s$ will visit $s$, then all nodes one step away from $s$, then all nodes two steps away from $s$, and so on until all nodes are reached.</li>
+						<ul>
+							<li class="fragment">Like DFS, we can also use BFS to <em>find connected components</em> or answer "find a path from $i$ to $j$" queries.</li>
+							<li class="fragment">Unlike DFS, breadth-first search finds a path from $i$ to $j$ <em>having the fewest edges</em>.</li>
+						</ul>
+					</ul>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Breadth-First Search (BFS)</h3>
+					<pre>
+						<code data-trim data-line-numbers>
+							bfs(s):
+								for all nodes i:
+									pred[i] = null
+									dist[i] = +inf
+								Q = {s}
+								dist[s] = 0
+								while Q is nonempty:
+									i = Q.remove()
+									for all nodes j for which (i,j) is an edge:
+										pred[j] = i
+										dist[j] = dist[i] + 1
+										Q.add(j)
+						</code>
+					</pre>
+					<p class="small fragment">If $Q$ is replaced with a stack instead of a FIFO queue,<br/>this is just <strong>depth-first search</strong>!</p>
+				</section>
+
+				<section data-auto-animate data-auto-animate-restart>
+					<h3>Edges with Negative Cost</h3>
+					<ul class="small">
+						<li>If negative-cost edges exist:</li>
+						<ul>
+							<li>We need to use the $O(mn)$ <strong>Bellman-Ford algorithm</strong>.</li>
+							<li class="fragment">If there are <em>negative-cost cycles</em> present, there is no "shortest path."</li>
+							<ul>
+								<li class="fragment">Bellman-Ford can detect negative cycles, fortunately.</li>
+							</ul>
+							<li class="fragment">If the graph is undirected, a negative-cost edge is a negative-cost cycle.</li>
+						</ul>
+						<li class="fragment"><em>Longest path</em> problems can be easily converted to shortest path by negating the edge lengths, so positive-cost cycles are problematic.</li>
+						<li class="fragment">Longest path problems are rarely tractable, since almost every graph has a positive-cost cycle. <span class="fragment"><em>Except DAGs, of course...</em></span></li>
+					</ul>
+				</section>
+
+				<section data-auto-animate data-auto-animate-restart>
+					<h3>Initializing Cost Labels</h3>
+					<img src="figures/graphs/dijkstra.svg" width="65%" class="float-right">
+					<ul class="small" style="display:block;">
+						<li>Initially, all nodes have cost labels of $+\infty$, except the source, which has cost label $0$.</li>
+						<li>The goal is to improve the cost labels of all the nodes so they reflect the cost of a shortest path.</li>
+					</ul>
+				</section>
+
+				<section data-auto-animate data-auto-animate-restart>
+					<h3>Updating Cost Labels</h3>
+					<ul class="small">
+						<li>Shortest path costs satisfy the triangle inequality.</li>
+						<ul>
+							<li class="fragment" data-fragment-index="1">$c[i] + \text{cost}(i, j) \ge c[j]$ for all edges $i,j$</li>
+						</ul>
+					</ul>
+					<div class="r-stack">
+						<img src="figures/graphs/triangle-0.svg" width="75%"
+							class="fragment fade-out" data-fragment-index="1">
+						<img src="figures/graphs/triangle-1.svg" width="75%"
+							class="fragment" data-fragment-index="1" data-id="triangle">
+					</div>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Updating Cost Labels</h3>
+					<div class="columns">
+						<div class="one-column">
+							<p class="small">If this is violated for some edge $(i,j)$, we can improve (<em>tighten</em>) the cost label of node $j$</p>
+						</div>
+						<div class="one-column">
+							<pre>
+								<code data-trim data-line-numbers>
+									tighten(i,j): // aka relax(i,j)
+										if c[i] + cost(i,j) < c[j]:
+											c[j] = c[i] + cost(i,j)
+											pred[j] = i
+								</code>
+							</pre>
+						</div>
+					</div>
+					<img src="figures/graphs/triangle-1.svg" width="75%" data-id="triangle">
+				</section>
+
+				<section data-auto-animate data-auto-animate-restart>
+					<h3>The Bellman-Ford Algorithm</h3>
+					<pre>
+						<code data-trim data-line-numbers>
+							bellman_ford():
+								for all nodes i: c[i] = +inf
+								c[s] = 0
+								repeat n-1 times:
+									tighten(i,j) for every edge i,j
+								if c[i] + cost(i,j) < c[j] for any edge i,j:
+									output "negative-cost cycle detected"
+						</code>
+					</pre>
+					<ul class="small">
+						<li class="fragment">No more linear time &mdash; Bellman-Ford runs in $O(mn)$ time ☹️</li>
+						<li class="fragment">Computes <strong>single-source shortest paths</strong> in the presence of <em>negative edge costs</em>, and can <em>detect negative cycles</em>. <span class="fragment">🙂</span></li>
+						<li class="fragment">Proof of runtime by induction: after $k$ iterations of the main loop, each label $c[j]$ reflects the cost of the <em>shortest $k$-hop path from $s$ to $j$</em>.</li>
+					</ul>
+				</section>
+
+				<section data-auto-animate data-auto-animate-restart>
+					<h3>Dijkstra's Algorithm</h3>
+					<pre>
+						<code data-trim data-line-numbers>
+							dijkstra():
+								for all nodes i: c[i] = +inf
+								c[s] = 0
+								Q = priority_queue(c)
+								while Q is nonempty:
+									i = Q.remove_min() // c[i] is locked
+									tighten(i,j) for all nodes j such that (i,j) is an edge
+						</code>
+					</pre>
+					<ul class="small">
+						<li class="fragment">Only works if edge costs are non-negative. Why?</li>
+						<li class="fragment">Running time depends on <em>priority queue operations</em>:</li>
+						<ul>
+							<li class="fragment"><em>$n$ inserts</em>, <em>$n$ remove-mins</em>, and at most <em>$m$ decrease-keys</em></li>
+						</ul>
+						<li class="fragment">Using a <strong>binary heap</strong>, all these operations run in $O(\lg n)$ time, so $O(m \lg n)$.</li>
+					</ul>
+				</section>
+
+				<section data-auto-animate data-auto-animate-restart>
+					<h3>Dijkstra's Algorithm</h3>
+					<img src="figures/graphs/dijkstra-0.svg" width="65%" class="float-right" data-id="dijkstra">
+					<p><strong>Step 1</strong></p>
+					<p class="small">Initialize all nodes have cost labels of $+\infty$, except the source, which has cost label $0$.</p>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Dijkstra's Algorithm</h3>
+					<img src="figures/graphs/dijkstra-1.svg" width="65%" class="float-right" data-id="dijkstra">
+					<p><strong>Step 2</strong></p>
+					<p class="small">Examine the source node <strong>$s$</strong>, 
+						which will lock the value of node $s$ in permanently. 
+						Tighten all edges leaving node $s$.</p>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Dijkstra's Algorithm</h3>
+					<img src="figures/graphs/dijkstra-2.svg" width="65%" class="float-right" data-id="dijkstra">
+					<p><strong>Step 3</strong></p>
+					<p class="small">Examine node <strong>$3$</strong>, 
+						which will lock the value of node $3$ in permanently. 
+						Tighten all edges leaving node $3$.</p>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Dijkstra's Algorithm</h3>
+					<img src="figures/graphs/dijkstra-3.svg" width="65%" class="float-right" data-id="dijkstra">
+					<p><strong>Step 4</strong></p>
+					<p class="small">Examine node <strong>$1$</strong>, 
+						which will lock the value of node $1$ in permanently. 
+						Tighten all edges leaving node $1$.</p>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Dijkstra's Algorithm</h3>
+					<img src="figures/graphs/dijkstra-4.svg" width="65%" class="float-right" data-id="dijkstra">
+					<p><strong>Step 5</strong></p>
+					<p class="small">Examine node <strong>$4$</strong>, 
+						which will lock the value of node $4$ in permanently. 
+						Tighten all edges leaving node $4$.</p>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Dijkstra's Algorithm</h3>
+					<img src="figures/graphs/dijkstra-5.svg" width="65%" class="float-right" data-id="dijkstra">
+					<p><strong>Step 6</strong></p>
+					<p class="small">Examine node <strong>$5$</strong>, 
+						which will lock the value of node $5$ in permanently. 
+						There are no outgoing edges from node $5$.</p>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Dijkstra's Algorithm</h3>
+					<img src="figures/graphs/dijkstra-6.svg" width="65%" class="float-right" data-id="dijkstra">
+					<p><strong>Step 7</strong></p>
+					<p class="small">Examine node <strong>$2$</strong>, 
+						which will lock the value of node $2$ in permanently. 
+						Tighten all edges leaving node $2$.</p>
+					<p class="small">All nodes are locked. <strong>We are done!</strong></p>
 				</section>
 			</div>
 		</div>
