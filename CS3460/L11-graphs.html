@@ -613,6 +613,55 @@
 						</ul>
 					</ul>
 				</section>
+
+				<section data-auto-animate>
+					<h3>Dijkstra's Algorithm</h3>
+					<table class="small">
+						<thead>
+							<tr>
+								<td class="no-border"></td>
+								<td><em>remove-min</em><br/>$O(n)$ times</td>
+								<td><em>decrease-key</em><br/>$O(m)$ times</td>
+								<td>total runtime</td>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td class="no-border">unsorted array</td>
+								<td class="fragment">$O(n)$</td>
+								<td class="fragment">$O(1)$</td>
+								<td class="fragment">$O(n^2)$</td>
+							</tr>
+							<tr>
+								<td class="no-border">binary heap</td>
+								<td class="fragment">$O(\lg n)$</td>
+								<td class="fragment">$O(\lg n)$</td>
+								<td class="fragment">$O(m \lg n)$</td>
+							</tr>
+							<tr>
+								<td class="no-border">fibonacci heap</td>
+								<td class="fragment">$O(\lg n)$</td>
+								<td class="fragment">$O(1)$ amortized</td>
+								<td class="fragment">$O(m + n \lg n)$</td>
+							</tr>
+						</tbody>
+					</table>
+					<ul class="small">
+						<li class="fragment"><strong>Which is best?</strong> <span class="fragment">The unsorted array is better for a <em>dense graph</em>, and the binary heap is better for a <em>sparse graph</em>.</span></li>
+						<li class="fragment">The Fibonacci heap bound is at least as good as both other bounds in any graph! <span class="fragment"><em>Sadly, the Fibonacci heap is so complicated that it is rarely faster in practice.</em></span></li>
+					</ul>
+				</section>
+
+				<section data-auto-animate data-auto-animate-restart>
+					<h3>Formulating Shortest Path Problems</h3>
+					<p><strong>(Change the Problem, Not the Algorithm)</strong></p>
+					<ul class="small">
+						<li class="fragment">In a road network, suppose right turns can be made instantly, but left turns take 1 extra unit of time.</li>
+						<li class="fragment">Suppose we have N jobs to complete. Each job has a duration and possible prerequisite jobs. Working in parallel, <em>what is the fastest we can complete all the jobs?</em></li>
+						<li class="fragment">Suppose some roads charge a $1 toll. <em>How do we find a shortest path if we can pay at most $3 overall?</em></li>
+						<li class="fragment">What is <em>the second-shortest s-t path in a graph?</em></li>
+					</ul>
+				</section>
 			</div>
 		</div>
 
