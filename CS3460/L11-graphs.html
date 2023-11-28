@@ -661,6 +661,18 @@
 						<li class="fragment">Suppose some roads charge a $1 toll. <em>How do we find a shortest path if we can pay at most $3 overall?</em></li>
 						<li class="fragment">What is <em>the second-shortest s-t path in a graph?</em></li>
 					</ul>
+
+					<aside class="notes">
+						1) turn each node into a "supernode" that encodes the turning cost (each node becomes 8 nodes)
+						2) graph is a DAG, add source node and sink node, compute longest path
+						3) make 4 copies of the graph, where each toll road moves you to the next copy of the graph
+						   add a dummy sink node with all sink nodes pointing to it (to account for fewer toll roads)
+						4) compute the shortest path SP in the graph G0
+						   make a copy of G0, call it G1. connect all nodes in G0 to G1 such that an edge in G0(i->j)
+						   is present G0(i)->G1(j), but *don't include* the edges present along the shortest path SP.
+						   compute a shortest path from G0's source to G1's sink. a shortest path will be required to
+						   take at least one edge that isn't present in G0's shortest path. this will be 2nd best
+					</aside>
 				</section>
 			</div>
 		</div>
