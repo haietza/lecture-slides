@@ -674,6 +674,21 @@
 						   take at least one edge that isn't present in G0's shortest path. this will be 2nd best
 					</aside>
 				</section>
+
+				<section data-auto-animate>
+					<h3>Formulating Shortest Path Problems</h3>
+					<ul class="small">
+						<li><strong>Let's make change!</strong></li>
+						<li>You are given $n$ different coin denominations (for example, 1&cent;, 6&cent;, 10&cent;, etc)</li>
+						<li>What is the minimum number of coins to make exactly <em>C</em> cents of change?</li>
+					</ul>
+
+					<aside class="notes">
+						build a graph with nodes having values 0-C,
+						add edges with no weight or 1-cost connecting each node x to node x+c_0, x+c_1, x+c_2, ...
+						run DFS (DFS best, but any shortest path algorithm) to compute shortest path from 0 to C
+					</aside>
+				</section>
 			</div>
 		</div>
 
