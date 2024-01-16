@@ -107,6 +107,10 @@ ul.info-box li::before {
 	content: "" !important;
 }
 
+.spread {
+	line-height: 200%;
+}
+
 .exclamation
 {
 	color: black;
