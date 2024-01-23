@@ -111,6 +111,16 @@ ul.info-box li::before {
 	line-height: 200%;
 }
 
+.problem-text {
+	border: 1px solid white;
+	padding: 20px;
+	text-align: justify;
+}
+
+figcaption {
+	font-size: 50%;
+}
+
 .exclamation
 {
 	color: black;
