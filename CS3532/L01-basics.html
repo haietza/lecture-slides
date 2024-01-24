@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>CS3532 - Lecture 01 - Basic Skills</title>
+
+		<link rel="stylesheet" href="../reveal-js/dist/reset.css">
+		<link rel="stylesheet" href="../reveal-js/dist/reveal.css">
+		<link rel="stylesheet" href="../reveal-js/dist/theme/dracula.css">
+		<link rel="stylesheet" href="../layouts/common.css">
+		<link rel="stylesheet" href="../reveal-js/plugin/highlight/monokai.css">
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+				<div class="header left">
+					CS3460: Competitive Programming
+				</div>
+				<div class="header right no-title">
+					<em>Basic Skills</em>
+				</div>
+
+				<section data-state="title-slide">
+					<h1 class="r-fit-text">CS3460: Competitive Programming</h1>
+					<h2 class="r-fit-text">Basic Skills</h2>
+				</section>
+
+				<section data-auto-animate data-auto-animate-restart>
+					<h3>Evaluating Contest Problems</h3>
+					<ul>
+						<li>How do we decide which problems to work on?</li>
+						<li class="fragment">As a team, split up the problems, read them, and <em>triage</em> the problems</li>
+						<ul class="fragment">
+							<li><strong>(A)</strong> solved before, and can solve it again quickly</li>
+							<li><strong>(B)</strong> solved before, and can solve it again slowly</li>
+							<li><strong>(C)</strong> seen before, and believe can solve it</li>
+							<li><strong>(D)</strong> seen before, and unsure how to solve it</li>
+							<li><strong>(E)</strong> never seen this before</li>
+						</ul>
+					</ul>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Evaluating Contest Problems</h3>
+					<ul>
+						<li>Learn to reverse engineer input sizes!</li>
+						<li class="fragment">Assume that a modern computer can do $\sim 10^8$ operations in <strong>one second</strong> <em>(the time limit for a problem in many contests)</em></li>
+					</ul>
+				</section>
+
+				<section data-auto-animate data-auto-animate-restart>
+					<h4>What Does Your Input Size Say About You?</h4>
+					<table class="small">
+						<tbody>
+							<tr>
+								<td class="fragment">$n \le 100M$</td>
+								<td class="fragment"><em>$O(n)$ or better</em></td>
+								<td class="fragment">Input sizes rarely exceed $n = 1M$ (I/O)</td>
+							</tr>
+							<tr>
+								<td class="fragment">$n \le 10M$</td>
+								<td class="fragment"><em>$O(n \lg \lg n)$</em></td>
+								<td class="fragment">i.e., Sieve of Eratosthenes</td>
+							</tr>
+							<tr>
+								<td class="fragment">$n \le 4.5M$</td>
+								<td class="fragment"><em>$O(n \lg n)$</em></td>
+								<td class="fragment">i.e., Merge Sort, Quick Sort</td>
+							</tr>
+							<tr>
+								<td class="fragment">$n \le 10K$</td>
+								<td class="fragment"><em>$O(n^2)$</em></td>
+								<td class="fragment">i.e., Bubble/Selection/Insertion Sort</td>
+							</tr>
+							<tr>
+								<td class="fragment">$n \le 2.5K$</td>
+								<td class="fragment"><em>$O(n^2 \lg n)$</em></td>
+								<td class="fragment">i.e., loop + Binary Search Tree</td>
+							</tr>
+							<tr>
+								<td class="fragment">$n \le 450$</td>
+								<td class="fragment"><em>$O(n^3)$</em></td>
+								<td class="fragment">i.e., Floyd-Warshall (all pairs shortest path)</td>
+							</tr>
+							<tr>
+								<td class="fragment">$n \le 100$</td>
+								<td class="fragment"><em>$O(n^4)$</em></td>
+								<td class="fragment">i.e., 3d dynamic programming + loop</td>
+							</tr>
+							<tr>
+								<td class="fragment">$n \le 26$</td>
+								<td class="fragment"><em>$O(2^n)$</em></td>
+								<td class="fragment">i.e., all subsets with $O(1)$ work per</td>
+							</tr>
+							<tr>
+								<td class="fragment">$n \le 10$</td>
+								<td class="fragment"><em>$O(n!)$, $O(n^6)$</em></td>
+								<td class="fragment">i.e., enumerating permutations</td>
+							</tr>
+						</tbody>
+					</table>
+				</section>
+
+				<section data-auto-animate>
+					<ul class="small">
+						<li>Given a set $S$ of $n$ points scattered on the 2d plane ($2 \le n \le 5~000$), find two points $x,y \in S$ with the greatest Euclidean distance.</li>
+						<ul>
+							<li class="fragment">What if $n \le 200K$? You may assume that the points are <em>randomly scattered</em> on the 2d plane. <span class="fragment">We can build a convex hull in $O(n \lg n)$.</span></li>
+							<li class="fragment">What if the points are no longer randomly scattered?</li>
+						</ul>
+					</ul>
+				</section>
+
+				<section data-auto-animate data-auto-animate-restart>
+					<h3>Learn to Use Your Language Features</h3>
+					<ul class="small">
+						<li>Efficient input handling matters</li>
+						<ul>
+							<li>Even in C++, <code>scanf()</code> is usually faster than <code>std::cin</code></li>
+							<li>In Java, <code>BufferedReader.readLine()</code> can sometimes be faster than <code>Scanner.nextLine()</code></li>
+						</ul>
+						<li>Learn to use what is available. For instance, did you know that Java provides a BigInteger class via <code>java.math.BigInteger</code>?</li>
+					</ul>
+				</section>
+			</div>
+		</div>
+
+		<script src="../reveal-js/dist/reveal.js"></script>
+		<script src="../reveal-js/plugin/math/math.js"></script>
+		<script src="../reveal-js/plugin/notes/notes.js"></script>
+		<script src="../reveal-js/plugin/markdown/markdown.js"></script>
+		<script src="../reveal-js/plugin/highlight/highlight.js"></script>
+		<script>
+			Reveal.initialize({
+				hash: true,
+				slideNumber: true,
+				transition: 'convex',
+				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes, RevealMath.KaTeX ],
+			});
+		</script>
+	</body>
+</html>
