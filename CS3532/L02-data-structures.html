@@ -1,0 +1,306 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>CS3532 - Lecture 02 - Data Structures</title>
+
+		<link rel="stylesheet" href="../reveal-js/dist/reset.css">
+		<link rel="stylesheet" href="../reveal-js/dist/reveal.css">
+		<link rel="stylesheet" href="../reveal-js/dist/theme/dracula.css">
+		<link rel="stylesheet" href="../layouts/common.css">
+		<link rel="stylesheet" href="../reveal-js/plugin/highlight/monokai.css">
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+				<div class="header left">
+					CS3460: Competitive Programming
+				</div>
+				<div class="header right no-title">
+					<em>Data Structures</em>
+				</div>
+
+				<section data-state="title-slide">
+					<h1 class="r-fit-text">CS3460: Competitive Programming</h1>
+					<h2 class="r-fit-text">Data Structures</h2>
+				</section>
+
+				<section data-auto-animate data-auto-animate-restart>
+					<h3>Built-in Data Structures</h3>
+					<ul>
+						<li>A lot of data structures are either already available in your language of choice, or are easily reproduced using built-in tools.</li>
+						<li class="fragment">Proficiency with several languages can make it easier to use whichever one offers the best tools</li>
+						<li class="fragment">For the purpose of competitive programming, we don't necessarily need to know how these data structures work, just <em>which</em> is the correct one for the task and <em>how</em> to use it.</li>
+					</ul>
+				</section>
+
+				<section data-auto-animate data-auto-animate-restart>
+					<h3>Linear Data Structures</h3>
+					<ul>
+						<li>Elements form a <em>linear sequence</em> (i.e., internally ordered from left to right, top to bottom, etc).</li>
+						<li class="fragment">These data structures are crucial for problems of every difficulty level!</li>
+					</ul>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Fixed-Size Arrays</h3>
+					<div class="small info-box">
+						<ul>
+							<li>Native support in C/C++/Java</li>
+							<li>No support for fixed-size array in Python</li>
+						</ul>
+					</div>
+					<ul>
+						<li class="fragment">Most commonly used data structure.</li>
+						<li class="fragment">Any time that <em>homogenous</em> data needs to be stored sequentially and <em>indexed</em>, a <strong>fixed-size array</strong> is the correct choice.</li>
+						<li class="fragment">All problems give bounds on input sizes, so it is safe to over-allocate to accomodate all test cases.</li>
+					</ul>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Resizeable Arrays</h3>
+					<div class="small info-box">
+						<ul>
+							<li>C++ STL <code>std::vector</code>, Python <code>list</code></li>
+							<li>Java <code>java.util.ArrayList</code></li>
+						</ul>
+					</div>
+					<ul>
+						<li class="fragment">Useful when the size of the array is not known at compile-time. Designed to handle <em>dynamic resizing</em> at runtime.</li>
+						<li class="fragment">Don't be fooled by varying input sizes! Native arrays will provide better runtime when possible.</li>
+					</ul>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Sorting</h3>
+					<p><em>"Sort first, ask questions later"</em></p>
+					<ul>
+						<li class="fragment"><strong>$O(n^2)$ sorting algorithms</strong> like bubble sort, selection sort, and insertion sort are often too slow.</li>
+						<li class="fragment"><strong>$O(n \lg n)$ sorting algorithms</strong> like quick sort and merge sort are often better choices.</li>
+					</ul>
+					<div class="fragment current-visible exclamation">Don't implement your own sorting algorithms! (unless you have no other choice)</div>
+					<div class="small info-box fragment">
+						<ul>
+							<li>C++ STL <code>std::sort()</code> takes an optional comparator function</li>
+							<li>Java <code>java.util.Arrays</code> provides <code>Arrays.sort()</code></li>
+							<li>Python <code>list.sort()</code> takes an optional named argument <code>key</code></li>
+						</ul>
+					</div>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Sorting</h3>
+					<img src="../CS3460/figures/sorting/selection-09.svg" class="float-right">
+					<ul style="display: block;">
+						<li>In the comparison model, we cannot sort faster than $O(n \lg n)$ <span class="small">(can we prove this?)</span></li>
+						<li>In the RAM model, we can use algorithms such as <em>counting sort</em>, <em>bucket sort</em>, or <em>radix sort</em> to sort in $O(n)$ time.</li>
+					</ul>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Search</h3>
+					<ul>
+						<li>What if we are searching for a value in an unsorted array? <span class="fragment">Use <em>sequential search</em> in $O(n)$</span></li>
+						<li class="fragment">What if we are searching for a value in a sorted array? <span class="fragment">Use <em>binary search</em> in $O(\lg n)$</span></li>
+						<li class="fragment">What if we don't care about the order of the values? <span class="fragment">Use a <em>hash table</em>, $O(1)$* lookup</span></li>
+					</ul>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Big Integers</h3>
+					<div class="small info-box">
+						<ul>
+							<li>No C/C++ support for integers larger than <code>uint64_t</code></li>
+							<li>Java <code>java.math.BigInteger</code></li>
+							<li>Python <code>int</code> (native support)</li>
+						</ul>
+					</div>
+					<ul>
+						<li>BigInteger is an option when you need support for extremely large values, but slower than similar operations on 32/64 bit integers.</li>
+						<li>Avoid if possible. BigInteger is rarely required to solve problems, so consider alternate approaches.</li>
+					</ul>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Linked Lists</h3>
+					<div class="small info-box">
+						<ul>
+							<li>C++ STL <code>std::list</code></li>
+							<li>Java <code>java.util.LinkedList</code></li>
+							<li>No native support in Python, can be easily built with dataclasses</li>
+						</ul>
+					</div>
+					<ul>
+						<li class="fragment">Asymptotically attractive, but often to be avoided in competitive programming, due to slow access.</li>
+						<li class="fragment">Pointer operations can be tricky to implement (and debug) in a contest environment.</li>
+					</ul>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Stacks</h3>
+					<div class="small info-box">
+						<ul>
+							<li>C++ STL <code>std::stack</code></li>
+							<li>Java <code>java.util.Stack</code> (class)</li>
+							<li>Python <code>list</code> provides stack operations</li>
+						</ul>
+					</div>
+					<ul>
+						<li>Restricted list structure, <em>last-in, first-out</em></li>
+						<li class="fragment">Not often useful alone, but plays a role in other algorithms, such as balancing brackets or computing strongly-connected components in a graph.</li>
+					</ul>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Queues</h3>
+					<div class="small info-box">
+						<ul>
+							<li>C++ STL <code>std::queue</code></li>
+							<li>Java <code>java.util.Queue</code> (interface), implemented by <code>List</code> types</li>
+							<li>Python <code>list</code> provides queue operations</li>
+						</ul>
+					</div>
+					<ul>
+						<li>Restricted list structure, <em>first-in, first-out</em></li>
+						<li class="fragment">Used in breadth-first search or in certain types of simulations requiring a work queue.</li>
+					</ul>
+				</section>
+
+				<section data-auto-animate data-auto-animate-restart>
+					<h3>Non-Linear Data Structures</h3>
+					<ul>
+						<li>Elements do not form a <em>linear sequence</em>, and instead are ordered in such a way to make updates and queries more efficient.</li>
+						<li>For instance, data structures ordered by a priority mechanism or providing key-value mappings.</li>
+					</ul>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Priority Queue (Binary Heap)</h3>
+					<div class="small info-box">
+						<ul>
+							<li>C++ STL <code>std::priority_queue</code></li>
+							<li>Java <code>java.util.PriorityQueue</code></li>
+							<li>Python <code>heapq</code></li>
+						</ul>
+					</div>
+					<ul>
+						<li>Values are associated with a priority that can be increased or decreased, and the data structure can be queried to report or remove the element with the highest priority.</li>
+					</ul>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Priority Queue (Binary Heap)</h3>
+					<ul>
+						<li><em>Heapsort</em> is a common $O(n \lg n)$ sort algorithm (add elements to heap, remove elements in sorted order)</li>
+						<li class="fragment">Most commonly used in <em>Dijkstra's shortest path algorithm</em> for graphs.</li>
+					</ul>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Hash Table</h3>
+					<div class="small info-box">
+						<ul>
+							<li>C++ STL <code>std::unordered_set</code>, <code>std::unordered_map</code></li>
+							<li>Java <code>java.util.HashSet</code>, <code>HashMap</code>, <code>HashTable</code></li>
+							<li>Python <code>set</code>, <code>dict</code></li>
+						</ul>
+					</div>
+					<ul>
+						<li class="fragment">Supports extremely fast (<em>$O(1)$ expected</em>) insert, access, update, and removal.</li>
+						<li class="fragment">Only if what we want is <em>exact search</em>. Hash tables don't support inexact search in general. <span class="small fragment">(but can we?)</span></li>
+					</ul>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Balanced Binary Search Tree</h3>
+					<div class="small info-box">
+						<ul>
+							<li>C++ STL <code>std::set</code>, <code>std::map</code></li>
+							<li>Java <code>java.util.TreeSet</code>, <code>java.util.TreeMap</code></li>
+							<li>No native support in Python, might be difficult to build</li>
+						</ul>
+					</div>
+					<ul>
+						<li>Great for inexact search. Finding an element (or where an element should be) gives you information about neighboring elements.</li>
+						<li><strong>Order Statistics Tree</strong>: <code>rank(e)</code> and <code>select(k)</code> both run in $O(\lg n)$.</li>
+					</ul>
+				</section>
+
+				<section data-auto-animate data-auto-animate-restart>
+					<h3>Graphs</h3>
+					<ul>
+						<li>A graph is defined $G = (V, E)$, where $V$ is a set of vertices, and $E$ is a set of edges connecting pairs of vertices.</li>
+						<li>No native support in any language.</li>
+					</ul>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Graphs</h3>
+					<p>An <strong>adjacency matrix</strong> (ideal for <em>dense</em> graphs)</p>
+					<div class="columns">
+						<div class="two-columns">
+							<img src="../CS3460/figures/graphs/repr-example-1.svg" width="80%">
+						</div>
+						<div class="one-column">
+							<pre>
+								<code data-trim>
+									    1 2 3 4
+									  +--------
+									1 | 0 1 0 0
+									2 | 0 0 1 0
+									3 | 1 0 0 1
+									4 | 0 0 1 0
+								</code>
+							</pre>
+						</div>
+					</div>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Graphs</h3>
+					<p>An <strong>adjacency list</strong> (ideal for <em>sparse</em> graphs)</p>
+					<div class="columns">
+						<div class="two-columns">
+							<img src="../CS3460/figures/graphs/repr-example-2.svg" width="60%">
+						</div>
+						<div class="one-column">
+							<pre>
+								<code data-trim>
+									1: 2 3
+									2: 1 3 4
+									3: 1 2 4 5
+									4: 2 3 5
+									5: 3 4
+								</code>
+							</pre>
+						</div>
+					</div>
+				</section>
+
+				<section data-auto-animate data-auto-animate-restart>
+					<h3>Graphs</h3>
+					<ul>
+						<li>An adjacency matrix is just a 2D array of size $n \times n$, where $n = |V|$.</li>
+						<li>An adjacency list is usually a dynamic array of arrays, preferring to use resizeable arrays over fixed-size arrays.</li>
+					</ul>
+				</section>
+			</div>
+		</div>
+
+		<script src="../reveal-js/dist/reveal.js"></script>
+		<script src="../reveal-js/plugin/math/math.js"></script>
+		<script src="../reveal-js/plugin/notes/notes.js"></script>
+		<script src="../reveal-js/plugin/markdown/markdown.js"></script>
+		<script src="../reveal-js/plugin/highlight/highlight.js"></script>
+		<script>
+			Reveal.initialize({
+				hash: true,
+				slideNumber: true,
+				transition: 'convex',
+				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes, RevealMath.KaTeX ],
+			});
+		</script>
+	</body>
+</html>
