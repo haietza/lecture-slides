@@ -1,0 +1,226 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>CS3532 - Lecture 03 - Complete Search</title>
+
+		<link rel="stylesheet" href="../reveal-js/dist/reset.css">
+		<link rel="stylesheet" href="../reveal-js/dist/reveal.css">
+		<link rel="stylesheet" href="../reveal-js/dist/theme/dracula.css">
+		<link rel="stylesheet" href="../layouts/common.css">
+		<link rel="stylesheet" href="../reveal-js/plugin/highlight/monokai.css">
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+				<div class="header left">
+					CS3460: Competitive Programming
+				</div>
+				<div class="header right no-title">
+					<em>Complete Search</em>
+				</div>
+
+				<section data-state="title-slide">
+					<h1 class="r-fit-text">CS3460: Competitive Programming</h1>
+					<h2 class="r-fit-text">Complete Search</h2>
+					<p><em>Problem Solving Paradigms</em></p>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Problem Solving Paradigms</h3>
+					<ul class="small">
+						<li>Four common problem solving paradigms used in contests</li>
+						<ul>
+							<li><strong>Complete Search</strong> - also known as <em>brute force</em> or <em>(recursive) backtracking</em>. Search the entire problem space, usually with some bounding.</li>
+							<li><strong>Divide & Conquer</strong> - make a problem simpler by <em>dividing</em> it into smaller subproblems that are easier to solve, then <em>combine</em> their solutions</li>
+							<li><strong>Greedy</strong> - make a <em>locally optimal choice</em> at each step to hopefully lead to an optimal solution. Proving that a greedy solution exists is <em>hard!</em></li>
+							<li><strong>Dynamic Programming</strong> - most difficult; recursively solve problems with memoization. Similar to divide and conquer, but allows for <em>overlapping subproblems</em></li>
+						</ul>
+					</ul>
+				</section>
+
+				<section data-auto-animate data-auto-animate-restart>
+					<h3>Complete Search</h3>
+					<ul>
+						<li>The goal is to exhaustively traverse the entire search space to find the solution.</li>
+						<li>We can <em>prune</em> a search path (i.e., <em>terminate a path early</em>) if we have determined that it has no possibility of containing the solution.</li>
+						<li>A <em>bug-free</em> complete search should <em>never</em> produce the wrong answer.</li>
+					</ul>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Complete Search</h3>
+					<ul class="small">
+						<li>When do we use <strong>complete search</strong>?</li>
+						<ul>
+							<li><em>When no other option is available</em> &mdash; e.g., enumerating all permutations of the numbers 1-N unavoidably takes $\Omega(N!)$</li>
+							<li><em>When the input size is small</em> &mdash; a $O(n^3)$ search might be considered slow, but would be fine if you know the input is $N \le 100$</li>
+							<li><em>To reveal structure or verify a solution</em> &mdash; If complete search is easy to implement, run it on test cases locally.</li>
+						</ul>
+					</ul>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Complete Search</h3>
+					<ul>
+						<li>Some problems are only solveable with complete search &mdash; complete search isn't just for "easy" problems!</li>
+					</ul>
+				</section>
+
+				<section data-auto-animate data-auto-animate-restart>
+					<p class="small float-right"><em>(UVa 00725)</em></p>
+					<h3>Case Study: Division</h3>
+					<p class="small problem-text" data-id="problem-text">
+						Find and display all pairs of 5-digit numbers constructed from the digits 0 through 9, each used once each, such that the 
+						first number divided by the second is equal to an integer $2 \le N \le 79$. That is, <code>abcde/fghij = N</code>, where 
+						each letter represents a different digit. The first digit can be zero; e.g., for $N = 62$, valid answers include 
+						<code>79546/01283 = 62</code> and <code>94736/01283 = 62</code>.
+					</p>
+				</section>
+
+				<section data-auto-animate data-auto-animate-restart>
+					<p class="small float-right"><em>(UVa 11565)</em></p>
+					<h3>Case Study: Simple Equations</h3>
+					<p class="small problem-text" data-id="problem-text">
+						Given three integers $A, B, C$ ($1 \le A,B,C \le 10 000$), find three distinct integers $x,y,z$ such that $x+y+z = A$, 
+						$x \times y \times z = B$, $x^2 + y^2 + z^2 = C$.
+					</p>
+				</section>
+
+				<section data-auto-animate data-auto-animate-restart>
+					<p class="small float-right"><em>(UVa 00750)</em></p>
+					<h3>Case Study: 8-Queens</h3>
+					<p class="small problem-text" data-id="problem-text">
+						On a standard 8x8 chess board, it is possible to place eight queens on the board such that no two queens attack one
+						another. Determine all such possible arrangements, given one position $(a,b)$ that must contain a queen. Output all 
+						possibilities in lexicographic order. 
+					</p>
+				</section>
+
+				<section data-auto-animate>
+					<p class="small float-right"><em>(UVa 00750)</em></p>
+					<h3>Case Study: 8-Queens</h3>
+					<ul>
+						<li>One approach, <b>try every possible location</b>:</li>
+						<ul>
+							<li>Typically, all combinations of 8 cells from $8 \times 8 = 64$ possible locations, $\sim 4B$ possibilities.</li>
+							<li>One cell is already fixed, leaving a meager $_{63}C_7 \approx 550M$ combinations.</li>
+							<li><em>This is obviously not worth pursuing.</em></li>
+						</ul>
+					</ul>
+				</section>
+
+				<section data-auto-animate>
+					<p class="small float-right"><em>(UVa 00750)</em></p>
+					<h3>Case Study: 8-Queens</h3>
+					<ul>
+						<li>Each column can only be occupied by one queen, so we can <strong>allocate one queen per column</strong>.</li>
+						<li>Now there are only $8^8 \approx 17M$ possibilities. <em>This is probably still a bit too slow!</em></li>
+						<li>Since one queen is fixed, we can reduce this to $7^7 \approx 825 000$ which is fast enough for $N=8$.</li>
+					</ul>
+				</section>
+
+				<section data-auto-animate>
+					<p class="small float-right"><em>(UVa 00750)</em></p>
+					<h3>Case Study: 8-Queens</h3>
+					<ul>
+						<li>Following this same logic, <strong>no two queens can share a row</strong>.</li>
+						<li>This is equivalent to enumerating the permutations of the numbers 1 through 8, of which there are $8! \approx 40K$. <em>Definitely fast enough!</em></li>
+						<li>Can consider only the rows/columns not already occupied, $7! \approx 5000$, but <em>is this speedup necessary</em>?</li>
+					</ul>
+				</section>
+
+				<section data-auto-animate>
+					<p class="small float-right"><em>(UVa 00750)</em></p>
+					<h3>Case Study: 8-Queens</h3>
+					<ul>
+						<li>How could we speed this up further? (A faster solution supports a larger $N$, number of queens)</li>
+					</ul>
+
+					<aside class="notes">
+						- How can we take diagonals into account?
+						- Consider using a bitset to keep track of occupied rows, columns, and diagonals so that we don't have to search the partial solution.
+					</aside>
+				</section>
+
+				<section data-auto-animate data-auto-animate-restart>
+					<h3>Tips for Complete Search</h3>
+					<p><em>#1) Filtering vs Generating</em></p>
+					<ul>
+						<li>Programs that generate all candidate solutions and then choose the valid ones or remove the invalid ones are called <strong>filters</strong>.</li>
+						<li>Programs that gradually build a correct solution and immediately prunes any invalid states are called <strong>generators</strong>.</li>
+						<li>Generally, filters are easier to code, but run slower. Learn to identify when a filter is good enough!</li>
+					</ul>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Tips for Complete Search</h3>
+					<p><em>#2) Prune infeasible/inferior solutions early</em></p>
+					<ul>
+						<li>Occasionally we might enter a partial solution that will never beat the best solution we've seen.</li>
+						<li>The earlier you can prune a search path, the better.</li>
+						<li>Sometimes we can determine the <em>potential worth</em> of a partial solution, taking into account the remainder of the solution.</li>
+					</ul>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Tips for Complete Search</h3>
+					<p><em>#2) Prune infeasible/inferior solutions early</em></p>
+					<ul>
+						<li>Occasionally we might enter a partial solution that will never beat the best solution we've seen.</li>
+						<li>The earlier you can prune a search path, the better.</li>
+						<li>Sometimes we can determine the <em>potential worth</em> of a partial solution, taking into account the remainder of the solution.</li>
+					</ul>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Tips for Complete Search</h3>
+					<p><em>#3) Exploit symmetry</em></p>
+					<ul>
+						<li>Sometimes a solution might have symmetries that reduces the size of the search space.</li>
+						<li>For example, there are 92 different possible placements of $8$ queens on an $8 \times 8$ board.</li>
+						<li>However, most of these are redundant. There are only 12 unique solutions!</li>
+						<li>Finding symmetries is hard, so if it isn't necessary to reach the time limit, ignore this.</li>
+					</ul>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Tips for Complete Search</h3>
+					<p><em>#4) Pre-Computation / Pre-Calculation</em></p>
+					<ul>
+						<li>Rarely, you will be able to precompute all the solutions in advance.</li>
+						<li>For example, all solutions to the 8 queens problem can be stored in an array <code>int solutions[92][8]</code></li>
+						<li>Then, we can write a program to quickly print the correct permutations that satisfy the problem constraints.</li>
+					</ul>
+				</section>
+
+				<section data-auto-animate data-auto-animate-restart>
+					<h3>Signs of Complete Search</h3>
+					<ul class="small">
+						<li>Asks to print all answers; solution space can be as big as the search space.</li>
+						<li>Has suspiciously <em>small search space</em> (total operations $\le 100M$)</li>
+						<li>Has suspiciously <em>large time limit</em> with potential for search path pruning.</li>
+						<li>Problem constraints are simple enough to <em>permit pre-computation</em>.</li>
+						<li>Is <em>a known NP-hard/-complete problem</em> with no special properties.</li>
+					</ul>
+				</section>
+			</div>
+		</div>
+
+		<script src="../reveal-js/dist/reveal.js"></script>
+		<script src="../reveal-js/plugin/math/math.js"></script>
+		<script src="../reveal-js/plugin/notes/notes.js"></script>
+		<script src="../reveal-js/plugin/markdown/markdown.js"></script>
+		<script src="../reveal-js/plugin/highlight/highlight.js"></script>
+		<script>
+			Reveal.initialize({
+				hash: true,
+				slideNumber: true,
+				transition: 'convex',
+				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes, RevealMath.KaTeX ],
+			});
+		</script>
+	</body>
+</html>
