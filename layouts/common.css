@@ -54,6 +54,10 @@ section.left {
 	font-size: 60% !important;
 }
 
+.faded {
+	opacity: 25%;
+}
+
 table.bordered {
 	border: 1px solid white !important;
 }
