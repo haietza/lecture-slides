@@ -1,0 +1,248 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>CS3532 - Lecture 04 - Divide and Conquer</title>
+
+		<link rel="stylesheet" href="../reveal-js/dist/reset.css">
+		<link rel="stylesheet" href="../reveal-js/dist/reveal.css">
+		<link rel="stylesheet" href="../reveal-js/dist/theme/dracula.css">
+		<link rel="stylesheet" href="../layouts/common.css">
+		<link rel="stylesheet" href="../reveal-js/plugin/highlight/monokai.css">
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+				<div class="header left">
+					CS3460: Competitive Programming
+				</div>
+				<div class="header right no-title">
+					<em>Divide and Conquer</em>
+				</div>
+
+				<section data-state="title-slide">
+					<h1 class="r-fit-text">CS3460: Competitive Programming</h1>
+					<h2 class="r-fit-text">Divide and Conquer</h2>
+					<p><em>Problem Solving Paradigms</em></p>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Problem Solving Paradigms</h3>
+					<ul class="small">
+						<li>Four common problem solving paradigms used in contests</li>
+						<ul>
+							<li class="faded"><strong>Complete Search</strong> - also known as <em>brute force</em> or <em>(recursive) backtracking</em>. Search the entire problem space, usually with some bounding.</li>
+							<li><strong>Divide & Conquer</strong> - make a problem simpler by <em>dividing</em> it into smaller subproblems that are easier to solve, then <em>combine</em> their solutions</li>
+							<li class="faded"><strong>Greedy</strong> - make a <em>locally optimal choice</em> at each step to hopefully lead to an optimal solution. Proving that a greedy solution exists is <em>hard!</em></li>
+							<li class="faded"><strong>Dynamic Programming</strong> - most difficult; recursively solve problems with memoization. Similar to divide and conquer, but allows for <em>overlapping subproblems</em></li>
+						</ul>
+					</ul>
+				</section>
+
+				<section data-auto-animate data-auto-animate-restart>
+					<h3>Divide and Conquer</h3>
+					<ul>
+						<li>The goal is to simplify the problem by subdivision.</li>
+						<ol>
+							<li class="fragment">Divide the original problem into <em>sub-problems</em>; often by half, usually recursively</li>
+							<li class="fragment">Find solutions for each of these sub-problems</li>
+							<li class="fragment">Combine these solutions in some way in order to address the original problem</li>
+						</ol>
+					</ul>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Divide and Conquer</h3>
+					<ul>
+						<li>Examples of <strong>the D&C paradigm</strong>:</li>
+						<ul>
+							<li class="fragment">Many $O(n \lg n)$ sorting algorithms, such as <em>Merge Sort</em>, <em>Quick Sort</em>, <em>Heap Sort</em>, <em>Tree Sort</em></li>
+							<li class="fragment"><em>Binary Search</em> is usually considered to be D&C, though there is no combine step</li>
+							<li class="fragment">The way data is organized in a <em>Binary Heap</em>, <em>Binary Search Tree</em>, <em>Segment Tree</em>, and many other data structures</li>
+						</ul>
+					</ul>
+				</section>
+
+				<section data-auto-animate data-auto-animate-restart>
+					<h3>Binary Search</h3>
+					<ul>
+						<li><strong>Canonical usage</strong>:</li>
+						<ul>
+							<li class="fragment">Used for <em>inexact search</em> in a static, sorted array</li>
+							<li class="fragment">Check the middle of the range, if it is the target or there are no items remaining, <em>stop</em></li>
+							<li class="fragment"><em>Go left or right</em> based on middle element</li>
+						</ul>
+					</ul>
+					<div class="small info-box fragment">
+						<ul>
+							<li>C++ STL <code>std::lower_bound</code> or <code>std::upper_bound</code></li>
+							<li>Java <code>Collections.binarySearch</code></li>
+							<li>Python standard library has a <code>bisect</code> package</li>
+						</ul>
+					</div>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Binary Search</h3>
+					<ul>
+						<li>$O(\lg n)$ worst case performance</li>
+						<li>Consider: <strong>Interpolation Search</strong> in $O(\lg \lg n)$</li>
+						<li>Sometimes, the <em>concept</em> of a <em>static, sorted sequence</em> is all that is needed to apply the concept of <em>binary search</em>!</li>
+					</ul>
+				</section>
+
+				<section data-auto-animate data-auto-animate-restart>
+					<h3>Case Study: My Ancestor</h3>
+					<p class="small"><em>(Thailand ICPC National Contest 2009)</em></p>
+					<p class="small problem-text" data-id="problem-text">
+						Given a weighted (family) tree of up to $N \le 80K$ vertices with a special trait (vertex values are increasing from root to
+						leaves), find the ancestor vertex closest to the root from a starting vertex $v$ that has weight at least $P$. There are $Q \le 20K$
+						such offline queries.
+					</p>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Case Study: My Ancestor</h3>
+					<p class="small"><em>(Thailand ICPC National Contest 2009)</em></p>
+					<p class="small problem-text" data-id="problem-text">
+						Given a weighted (family) tree of up to $N \le 80K$ vertices with a special trait (vertex values are increasing from root to
+						leaves), find the ancestor vertex closest to the root from a starting vertex $v$ that has weight at least $P$. There are $Q \le 20K$
+						such offline queries.
+					</p>
+					<p class="small">
+						<strong>Naive approach:</strong> perform linear $O(N)$ scan per query. Starting from vertex $v$, walk up to find the first vertex
+						whose parent is too small to satisfy the criteria. There are $Q$ queries, for a runtime of $O(QN)$, and <em>TLE</em>.
+					</p>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Case Study: My Ancestor</h3>
+					<p class="small"><em>(Thailand ICPC National Contest 2009)</em></p>
+					<p class="small problem-text" data-id="problem-text">
+						Given a weighted (family) tree of up to $N \le 80K$ vertices with a special trait (vertex values are increasing from root to
+						leaves), find the ancestor vertex closest to the root from a starting vertex $v$ that has weight at least $P$. There are $Q \le 20K$
+						such offline queries.
+					</p>
+					<p class="small">
+						<strong>Better approach:</strong> store all $Q \le 20K$ queries (we do not have to answer them immediately). Traverse the tree
+						once using a <em>pre-order traversal</em> modified to keep track of the root to current vertex sequence. What property does this
+						sequence have?
+					</p>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Case Study: My Ancestor</h3>
+					<p class="small"><em>(Thailand ICPC National Contest 2009)</em></p>
+					<p class="small problem-text" data-id="problem-text">
+						Given a weighted (family) tree of up to $N \le 80K$ vertices with a special trait (vertex values are increasing from root to
+						leaves), find the ancestor vertex closest to the root from a starting vertex $v$ that has weight at least $P$. There are $Q \le 20K$
+						such offline queries.
+					</p>
+					<p class="small">
+						<strong>Better approach:</strong> binary search the root to current vertex paths because they are <em>sorted sequences</em>.
+						During the $O(N)$ pre-order traversal, when we find a queried vertex, obtain the correct ancestor vertex via binary search.
+						$O(Q)$ iteration to output results, for overall $O(N + Q \lg N)$, which is fast enough.
+					</p>
+				</section>
+
+				<section data-auto-animate data-auto-animate-restart>
+					<h3>Bisection Method</h3>
+					<ul>
+						<li>The same <em>binary search principle</em> can be used to find the root of a continuous function.</li>
+						<li>Given $a,b$ such that $f(a) \times f(b) < 0$, by the <em>intermediate value theorem</em>, there must be a root between $a$ and $b$.</li>
+					</ul>
+				</section>
+
+				<section data-auto-animate data-auto-animate-restart>
+					<h3>Case Study: Loan Repayment</h3>
+					<p class="small problem-text" data-id="problem-text">
+						You buy a car with a loan that you hope to repay in monthly installments of $d$ dollars for $m$ months. Suppose the value
+						of the car was originally $v$ dollars and the bank charges an interest rate of $i\%$ for any unpaid loan at the end of each month.
+						What is the amount of monthly installment $d$ that must be paid, given $m, v, i$? Note that the payment is made after the
+						interest has been calculated.
+					</p>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Case Study: Loan Repayment</h3>
+					<p class="small problem-text" data-id="problem-text">
+						You buy a car with a loan that you hope to repay in monthly installments of $d$ dollars for $m$ months. Suppose the value
+						of the car was originally $v$ dollars and the bank charges an interest rate of $i\%$ for any unpaid loan at the end of each month.
+						What is the amount of monthly installment $d$ that must be paid, given $m, v, i$? Note that the payment is made after the
+						interest has been calculated.
+					</p>
+					<p class="small">
+						<strong>One solution:</strong> choose $a,b$ values at the extremes and calculate the amount repaid at $x=\frac{a+b}{2}$. If $f(x)$
+						has the same sign as $f(a)$, repeat with $x,b$, otherwise with $a,x$, bisecting the search space.
+					</p>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Case Study: Loan Repayment</h3>
+					<p class="small">
+						<strong>One solution:</strong> choose $a,b$ values at the extremes and calculate the amount repaid at $x=\frac{a+b}{2}$. If $f(x)$
+						has the same sign as $f(a)$, repeat with $x,b$, otherwise with $a,x$, bisecting the search space.
+					</p>
+					<p>
+						<em>When do we stop this process?</em>
+					</p>
+				</section>
+
+				<section data-auto-animate data-auto-animate-restart>
+					<p class="small float-right"><em>(UVa 11935)</em></p>
+					<h3>Case Study: Through the Desert</h3>
+					<p class="small problem-text" data-id="problem-text">
+						You are an explorer crossing the desert. Your life depends on your jeep having enough fuel to make the journey. Compute the smallest
+						volume necessary. Your input is a series of events, including fuel consumption changes, leaks (which drain your fuel tank over time),
+						repairs (fixing leaks), and gas refills. 
+					</p>
+				</section>
+
+				<section data-auto-animate>
+					<p class="small float-right"><em>(UVa 11935)</em></p>
+					<h3>Case Study: Through the Desert</h3>
+					<p class="small problem-text" data-id="problem-text">
+						You are an explorer crossing the desert. Your life depends on your jeep having enough fuel to make the journey. Compute the smallest
+						volume necessary. Your input is a series of events, including fuel consumption changes, leaks (which drain your fuel tank over time),
+						repairs (fixing leaks), and gas refills. 
+					</p>
+					<ul class="small">
+						<li>The problem description tells us answers will be in the range from $0$ to $10000.000$, with up to three decimal places of precision.
+							This means there are over $10M$ possible answers! How can we solve this? <em class="fragment">Binary Search the Answer!</em></li>
+					</ul>
+
+					<aside class="notes">
+						- This can also be solved analytically
+						- What if we don't have a good upper/lower bound? Telescoping search
+							Repeated doubling to find an upper bound, then binary search back down
+					</aside>
+				</section>
+
+				<section data-auto-animate data-auto-animate-restart>
+					<h3>When to Use Divide & Conquer</h3>
+					<ul class="small">
+						<li>When a problem can be broken down into two or more <em>non-overlapping subproblems</em> that don't need to be re-evaluated repeatedly.</li>
+						<li>When finding the roots of a continuous function, use the <em>bisection method</em>.</li>
+						<li>When evaluating success is easy for given inputs, but the inputs themselves are unknown, just <em>binary search the answer</em>.</li>
+					</ul>
+				</section>
+			</div>
+		</div>
+
+		<script src="../reveal-js/dist/reveal.js"></script>
+		<script src="../reveal-js/plugin/math/math.js"></script>
+		<script src="../reveal-js/plugin/notes/notes.js"></script>
+		<script src="../reveal-js/plugin/markdown/markdown.js"></script>
+		<script src="../reveal-js/plugin/highlight/highlight.js"></script>
+		<script>
+			Reveal.initialize({
+				hash: true,
+				slideNumber: true,
+				transition: 'convex',
+				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes, RevealMath.KaTeX ],
+			});
+		</script>
+	</body>
+</html>
