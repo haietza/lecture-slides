@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>CS3532 - Lecture 05 - Greedy Algorithms</title>
+
+		<link rel="stylesheet" href="../reveal-js/dist/reset.css">
+		<link rel="stylesheet" href="../reveal-js/dist/reveal.css">
+		<link rel="stylesheet" href="../reveal-js/dist/theme/dracula.css">
+		<link rel="stylesheet" href="../layouts/common.css">
+		<link rel="stylesheet" href="../reveal-js/plugin/highlight/monokai.css">
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+				<div class="header left">
+					CS3460: Competitive Programming
+				</div>
+				<div class="header right no-title">
+					<em>Greedy Algorithms</em>
+				</div>
+
+				<section data-state="title-slide">
+					<h1 class="r-fit-text">CS3460: Competitive Programming</h1>
+					<h2 class="r-fit-text">Greedy Algorithms</h2>
+					<p><em>Problem Solving Paradigms</em></p>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Problem Solving Paradigms</h3>
+					<ul class="small">
+						<li>Four common problem solving paradigms used in contests</li>
+						<ul>
+							<li class="faded"><strong>Complete Search</strong> - also known as <em>brute force</em> or <em>(recursive) backtracking</em>. Search the entire problem space, usually with some bounding.</li>
+							<li class="faded"><strong>Divide & Conquer</strong> - make a problem simpler by <em>dividing</em> it into smaller subproblems that are easier to solve, then <em>combine</em> their solutions</li>
+							<li><strong>Greedy</strong> - make a <em>locally optimal choice</em> at each step to hopefully lead to an optimal solution. Proving that a greedy solution exists is <em>hard!</em></li>
+							<li class="faded"><strong>Dynamic Programming</strong> - most difficult; recursively solve problems with memoization. Similar to divide and conquer, but allows for <em>overlapping subproblems</em></li>
+						</ul>
+					</ul>
+				</section>
+
+				<section data-auto-animate data-auto-animate-restart>
+					<h3>Greedy Algorithms</h3>
+					<ul class="small">
+						<li>Solving problems by making the <em>locally-optimal choice</em> to attempt to reach a <em>globally-optimal solution</em>.</li>
+						<li class="fragment">Greedy algorithms <strong>don't always work!</strong> In order for a greedy algorithm to be viable, two properties have to be true:</li>
+						<ul>
+							<li class="fragment">Problem has <em>optimal sub-structures</em> &mdash; an optimal solution to the problem contains optimal solutions to sub-problems.</li>
+							<li class="fragment">Problem has the <em>greedy property</em> &mdash; if we make a choice that seems optimal locally and work forward, we reach the optimal solution. We never reconsider past decisions.</li>
+						</ul>
+						<li class="fragment">The greedy property is difficult to prove. In a contest, might not be worth proving.</li>
+					</ul>
+				</section>
+
+				<section data-auto-animate data-auto-animate-restart>
+					<h3>Case Study: Coin Change</h3>
+					<p class="small problem-text" data-id="problem-text">
+						Given a target amount $V$ cents and a list of denominations of $n$ coins, what is the minimum number of coins needed to represent $V$?
+						For example, given $n=4$, and coins $\{25, 10, 5, 1\}$, what is the minimum number of coins needed to represent $V=42$?
+					</p>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Case Study: Coin Change</h3>
+					<ul class="small">
+						<li>Can you come up with a greedy algorithm to solve this problem?</li>
+						<ul class="fragment">
+							<li>Select the largest coin which is not greater than the remaining amount.</li>
+						</ul>
+						<li class="fragment">Can we prove that this solution is viable?</li>
+						<ul>
+							<li class="fragment">
+								<em>Optimal sub-structures:</em> The solution for $V=42$ is $\{25, 10, 5, 1, 1\}$, which is an optimal 5-coin solution to the problem.
+								Optimal solutions to sub-problems exist within.
+							</li>
+							<ul>
+								<li class="fragment">For $V=17$, we use $\{10, 5, 1, 1\}$, part of the $V=42$ solution.</li>
+								<li class="fragment">For $V=7$, we use $\{5, 1, 1\}$, part of the $V=17$ solution.</li>
+							</ul>
+							<li class="fragment">
+								<em>Greedy property:</em> given every amount $V$, we can greedily subtract the largest coin not greater than $V$. It can be proven that
+								this will lead to an optimal solution for this set of coin denominations.
+							</li>
+						</ul>
+					</ul>
+				</section>
+
+				<section data-auto-animate data-auto-animate-restart>
+					<p class="small float-right"><em>(kattis - grass)</em></p>
+					<h3>Case Study: Watering Grass</h3>
+					<img src="https://open.kattis.com/problems/grass/file/statement/en/img-0001.jpg" class="float-right">
+					<p class="small problem-text" style="display: block;" data-id="problem-text">
+						$n$ sprinklers are installed in a horizontal strip of grass $l$ meters long and $w$ meters wide. 
+						Each sprinkler is installed at the horizontal center line of the strip. For each sprinkler we are given its position as 
+						the distance from the left end of the center line and its radius of operation.
+						What is the minimum number of sprinklers to turn on in order to water the entire strip of grass?
+					</p>
+				</section>
+
+				<section data-auto-animate data-auto-animate-restart>
+					<h3>Greedy Algorithms in Competitions</h3>
+					<ul class="small">
+						<li>With practice, you'll get used to recognizing problems for which a greedy algorithm could be viable.</li>
+						<li class="fragment">Greedy-solvable problems are often hiding behind disorganized input.</li>
+						<ul class="fragment">
+							<li><em>Sort first, ask questions later!</em></li>
+						</ul>
+						<li class="fragment">Proving a greedy algorithm correct is hard, and in some cases, it is more efficient to code a greedy algorithm solution <em>to see if it is accepted</em>.</li>
+						<li class="fragment">Greedy algorithms are more likely to earn a <strong>WA</strong> than a <strong>TLE</strong>.</li>
+						<li class="fragment">As a rule: if the input is small enough for complete search or dynamic programming, use those. They give optimal solutions 100% of the time. Only attempt to use greedy if input size is too large.</li>
+					</ul>
+				</section>
+			</div>
+		</div>
+
+		<script src="../reveal-js/dist/reveal.js"></script>
+		<script src="../reveal-js/plugin/math/math.js"></script>
+		<script src="../reveal-js/plugin/notes/notes.js"></script>
+		<script src="../reveal-js/plugin/markdown/markdown.js"></script>
+		<script src="../reveal-js/plugin/highlight/highlight.js"></script>
+		<script>
+			Reveal.initialize({
+				hash: true,
+				slideNumber: true,
+				transition: 'convex',
+				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes, RevealMath.KaTeX ],
+			});
+		</script>
+	</body>
+</html>
