@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>CS3532 - Lecture 06 - Dynamic Programming</title>
+
+		<link rel="stylesheet" href="../reveal-js/dist/reset.css">
+		<link rel="stylesheet" href="../reveal-js/dist/reveal.css">
+		<link rel="stylesheet" href="../reveal-js/dist/theme/dracula.css">
+		<link rel="stylesheet" href="../layouts/common.css">
+		<link rel="stylesheet" href="../reveal-js/plugin/highlight/monokai.css">
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+				<div class="header left">
+					CS3460: Competitive Programming
+				</div>
+				<div class="header right no-title">
+					<em>Dynamic Programming</em>
+				</div>
+
+				<section data-state="title-slide">
+					<h1 class="r-fit-text">CS3460: Competitive Programming</h1>
+					<h2 class="r-fit-text">Dynamic Programming</h2>
+					<p><em>Problem Solving Paradigms</em></p>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Problem Solving Paradigms</h3>
+					<ul class="small">
+						<li>Four common problem solving paradigms used in contests</li>
+						<ul>
+							<li class="faded"><strong>Complete Search</strong> - also known as <em>brute force</em> or <em>(recursive) backtracking</em>. Search the entire problem space, usually with some bounding.</li>
+							<li class="faded"><strong>Divide & Conquer</strong> - make a problem simpler by <em>dividing</em> it into smaller subproblems that are easier to solve, then <em>combine</em> their solutions</li>
+							<li class="faded"><strong>Greedy</strong> - make a <em>locally optimal choice</em> at each step to hopefully lead to an optimal solution. Proving that a greedy solution exists is <em>hard!</em></li>
+							<li><strong>Dynamic Programming</strong> - most difficult; recursively solve problems with memoization. Similar to divide and conquer, but allows for <em>overlapping subproblems</em></li>
+						</ul>
+					</ul>
+				</section>
+
+				<section data-auto-animate data-auto-animate-restart>
+					<h3>Dynamic Programming</h3>
+					<ul class="small">
+						<li><strong>Dynamic programming</strong> (DP) is a great general tool for designing elegant solutions to problems that would otherwise only be solveable via exhaustive search (<em>complete search</em>).</li>
+						<li>One way to think of it is as <em>careful brute force</em>. Solving problems with complete search typically yields exponential runtimes. For problems solveable with DP, we can often get that down to polytime.</li>
+						<li>Well-suited to optimization problems (<em>it's right in the name!</em>), like minimizing, maximizing, or counting the ways to do X.</li>
+					</ul>
+					<aside class="notes">
+						Careful brute force -
+							if brute force is whacking the problem with a hammer,
+							dynamic progress is carefully prying at the weak points with a crowbar
+					</aside>
+				</section>
+
+				<section data-auto-animate data-auto-animate-restart>
+					<h3>Example: Fibonacci</h3>
+					<div>
+						<pre class="python" data-id="memoize">
+							<code data-trim data-line-numbers>
+								def fib(n):
+									if n <= 2: f = 1
+									else: f = fib(n-1) + fib(n-2)
+									return f
+							</code>
+						</pre>
+					</div>
+					<ul class="small">
+						<li class="fragment">This is a <em>correct</em> algorithm. Is this a <em>good</em> algorithm?</li>
+						<li class="fragment">This runs in <strong>exponential time</strong>. Can we prove this?</li>
+						<li class="fragment">We can build a recurrence relation: \[
+							\begin{align*}
+							T(n) & = & T(n-1) + T(n-2) + \Theta(1) \\
+							\end{align*}
+							\]</li>
+						<li class="fragment">How do we improve it? <strong>memoization!</strong></li>
+					</ul>
+					<aside class="notes">
+						exponential via approximation of the fibonacci sequence
+						T(n) = T(n-1) + T(n-2) + \Theta(1)
+						     >= F_n -> \varphi^n
+
+						exponential via direct substitution
+						T(n) = T(n-1) + T(n-2) + \Theta(1)
+						     >= 2 T(n-2) + \Theta(1)
+							 = \Theta(2^{n/2})
+					</aside>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Example: Fibonacci</h3>
+					<div>
+						<pre class="python" data-id="memoize">
+							<code data-trim data-line-numbers="1,3,6">
+								memo = {}
+								def fib(n):
+									if n in memo: return memo[n]
+									if n <= 2: f = 1
+									else: f = fib(n-1) + fib(n-2)
+									memo[n] = f
+									return f
+							</code>
+						</pre>
+					</div>
+					<ul class="small">
+						<li class="fragment">Use a memo table to store solutions to previous subproblems. When that subproblem is encountered again, <em>don't recompute the solution</em>; just look it up (remember).</li>
+						<li class="fragment">Overall runtime: time = number of subproblems &times; time/subproblem</li>
+						<li class="fragment">Using <em>recursion + memoization</em> is an example of <strong>top-down</strong> DP construction.</li>
+					</ul>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Example: Fibonacci</h3>
+					<div>
+						<pre class="python" data-id="memoize">
+							<code data-trim data-line-numbers>
+								fib = {}
+								for n from 1 to N:
+									if n <= 2: f = 1
+									else: f = fib(n-1) + fib(n-2)
+									fib[n] = f
+								return fib[n]
+							</code>
+						</pre>
+					</div>
+					<ul class="small">
+						<li>This is, perhaps, the intuitive way of solving for $F_n$. It is doing the same thing, but from the smallest subproblem up to the largest: we call this <strong>bottom-up</strong> DP construction.</li>
+						<li class="fragment">This is a topological sort of the <em>subproblem dependency DAG</em> (directed acyclic graph). Often, that sorting is somewhat obvious.</li>
+					</ul>
+				</section>
+
+				<section data-auto-animate data-auto-animate-restart>
+					<h3>Example: Shortest Paths</h3>
+					<ul class="small">
+						<li>We want to find $\delta(s,v)~\forall~v$, the shortest path to every node $v$ from some source node $s$. This is known as the <strong>single-source shortest path</strong> problem.</li>
+						<li>How do we do it? <em class="fragment">Guess.</em> <span class="fragment">What does "guessing" mean in this context?</span> <em class="fragment">Try all of the possible guesses, and take the best one.</em></li>
+					</ul>
+					<div class="fragment">
+						\[
+						\begin{align*}
+						\delta(s,s) & = & 0 \\
+						\delta(s,v) & = & \min_{(u,v) \in E} [\delta(s,u) + w(u,v)]
+						\end{align*}
+						\]
+						<p class="small">We can <em>memoize</em> this<span class="fragment">?</span></p>
+					</div>
+					<aside class="notes">
+
+					</aside>
+				</section>
+
+				<section data-auto-animate data-auto-animate-restart>
+					<h3>Example: Shortest Paths</h3>
+					<ul class="small">
+						<li>This recursive formulation takes <em>infinite time</em> on graphs with cycles.</li>
+						<li>On DAGs: $O(V+E)$, but proving this takes a bit more work.</li>
+						<ul>
+							<li>Previously, we said <em>time = number of subproblems &times; time/subproblem</em>. This is really just a shorthand for saying runtime is the sum of time spent on each subproblem.</li>
+							<li>Each subproblem $\delta(s,v)$ takes time equal to the in-degree of $v$. <em>What is the sum of the in-degrees?</em></li>
+						</ul>
+						<li>The takeaway: <em>subproblem dependencies need to be acyclic</em>.</li>
+					</ul>
+					<aside class="notes">
+
+					</aside>
+				</section>
+			</div>
+		</div>
+
+		<script src="../reveal-js/dist/reveal.js"></script>
+		<script src="../reveal-js/plugin/math/math.js"></script>
+		<script src="../reveal-js/plugin/notes/notes.js"></script>
+		<script src="../reveal-js/plugin/markdown/markdown.js"></script>
+		<script src="../reveal-js/plugin/highlight/highlight.js"></script>
+		<script>
+			Reveal.initialize({
+				hash: true,
+				slideNumber: true,
+				transition: 'convex',
+				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes, RevealMath.KaTeX ],
+			});
+		</script>
+	</body>
+</html>
