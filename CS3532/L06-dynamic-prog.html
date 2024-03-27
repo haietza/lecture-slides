@@ -166,6 +166,129 @@
 
 					</aside>
 				</section>
+
+				<section data-auto-animate data-auto-animate-restart>
+					<p class="small float-right"><em>(UVa 11450)</em></p>
+					<h3>Case Study: Wedding Shopping</h3>
+					<p class="small problem-text" data-id="problem-text">
+						Given different options for each garment (e.g., 3 types of shirt, 2 types of belt, 4 types of shoe, ...) and a certain
+						limited budget, our task is to buy one of each of $C$ garment types, spending no more than a given budget $M$, while
+						maximizing the total amount spent.<br /><br />
+						Given $1 \le C \le 20$, $1 \le M \le 200$. For each garment type $g \in [1..C]$, you'll receive an integer $1 \le K \le 20$,
+						indicating the number options for garment $g$, followed by $K$ integers representing the price of each individual garment.
+						Print the maximum amount you are able to spend, or <code>"no solution"</code>.
+					</p>
+				</section>
+
+				<section data-auto-animate>
+					<p class="small float-right"><em>(UVa 11450)</em></p>
+					<h3>Case Study: Wedding Shopping</h3>
+					<ul class="small">
+						<li><strong>Complete Search</strong> - Pick the best option from <em>every possible configuration</em>.</li>
+						<li>Can build a recurrence (transitions) through the problem, given $g$, the current garment, and $b$ the budget remaining, to maximize the amount of money spent.</li>
+						<ul>
+							<li>If $b < 0$ (there is no budget remaining)</li>
+							<ul>
+								<li><code>find(g, b) = -inf</code> &rightarrow; there is no solution on this path</li>
+							</ul>
+							<li>If $g = C$ (this is the last garment)</li>
+							<ul>
+								<li><code>find(g, b) = M-b</code> &rightarrow; the amount we spent</li>
+							</ul>
+							<li>In general, $\forall ~m \in [1..k]$ for garment $g$</li>
+							<ul>
+								<li><code>find(g, b) = max([find(g+1, b-price[g][m]) for m ...])</code></li>
+							</ul>
+						</ul>
+						<li>Correct, but <em>incredibly slow</em>! ($20^{20}$ states to check)</li>
+					</ul>
+				</section>
+
+				<section data-auto-animate>
+					<p class="small float-right"><em>(UVa 11450)</em></p>
+					<h3>Case Study: Wedding Shopping</h3>
+					<ul class="small">
+						<li><strong>Divide and Conquer</strong> - We cannot use divide & conquer because the problem has <em>overlapping subproblems</em>.</li>
+					</ul>
+				</section>
+
+				<section data-auto-animate>
+					<p class="small float-right"><em>(UVa 11450)</em></p>
+					<h3>Case Study: Wedding Shopping</h3>
+					<ul class="small">
+						<li><strong>Greedy</strong> - What if we always take the <em>most expensive option</em> that is still within our budget?</li>
+						<li>This solution would be quite fast: rather than considering every possibility, greedily check the best option for all $C$ garments by checking the $K$ options, resulting in $O(CK)$ time.</li>
+							<p class="problem-text">
+								Test case with $M = 12, C = 3$:<br />
+								3 options for garment $g = 0$ &rightarrow; 6 4 8<br />
+								2 options for garment $g = 1$ &rightarrow; 5 10<br />
+								4 options for garment $g = 2$ &rightarrow; 1 5 3 5
+							</p>
+					</ul>
+				</section>
+
+				<section data-auto-animate>
+					<p class="small float-right"><em>(UVa 11450)</em></p>
+					<h3>Case Study: Wedding Shopping</h3>
+					<ul class="small">
+						<li><strong>Dynamic Programming</strong> - same as the Complete Search formulation, but memoize subproblem solutions.</li>
+						<li>Problem satifies requirements for dynamic programming:</li>
+						<ul>
+							<li><em>The problem has optimal substructures</em> - the solution for the subproblem is part of the solution to the larger problem. If we select correctly for garment $g$, subproblem solutions will be correct for the remaining garments and the reduced budget.</li>
+							<li><em>The problem has overlapping subproblems</em> - the number of states to consider is less than the previous $20^{20}$ because they overlap.</li>
+						</ul>
+						<li>There are multiple ways to reach a given state. How many total states can there be?</li>
+					</ul>
+				</section>
+
+				<section data-auto-animate>
+					<p class="small float-right"><em>(UVa 11450)</em></p>
+					<h3>Case Study: Wedding Shopping</h3>
+					<ul class="small">
+						<li>There are multiple ways to reach a given state. How many total states can there be?</li>
+						<li>There are only $20$ different garments that we are processing in order, and $201$ different values for the remaining budget $(0..200)$, meaning there are only $201 \times 20 = 4020$ distinct subproblems.</li>
+					</ul>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Max 1D Range Sum</h3>
+					<p class="small problem-text" data-id="problem-text">
+						Given an integer array $A$ containing $n \le 20K$ non-zero integers, determine the maximum subarray sum. In other words, find
+						the two indices $i, j$ such that the sum of all values between those two indices is maximized.
+					</p>
+					<aside class="notes">
+						complete search - for all i, for all j, add up the values between, O(n^3)
+						complete search - prefix sums, for all i, for all j, O(n^2)
+						dp - Kadane's algorithm, dp(i) is max that ends at i, add next term, reset to 0 if sum is negative
+					</aside>
+				</section>
+
+				<section data-auto-animate data-auto-animate-restart>
+					<h3>Longest Increasing Subsequence</h3>
+					<p class="small problem-text" data-id="problem-text">
+						Given a length-$n$ sequence of integers $A$, determine its longest increasing subsequence. Note that a subsequence is not required to be
+						contiguous. Example, $n = 8$, $A = \{-7, 10, 9, 2, 3, 8, 8, 1\}$, the longest increasing subsequence would be $\{-7, 2, 3, 8\}$ and has a 
+						length of 4.
+					</p>
+					<aside class="notes">
+						complete search - try all subsequences, O(2^n)
+						dp - LIS(i) is LIS ending at i, LIS(0) = 1, find max LIS(j) for j < i for which A[j] < A[i], LIS(i) = 1 + LIS(j)
+					</aside>
+				</section>
+
+				<section data-auto-animate data-auto-animate-restart>
+					<h3>Making Change</h3>
+					<p class="small problem-text" data-id="problem-text">
+						Given a target amount $V$ cents and a list of denominations of $n$ coins, what is the minimum number of coins needed to
+						represent $V$? Assume unlimited coin supply and $1 \le n \le 1000$; $1 \le V \le 10~000$.
+					</p>
+					<aside class="notes">
+						dp - change(V) where V is target amount remaining
+							change(0) = 0
+							change(< 0) = inf
+							change(v) = min(1 + change(v-c)) for all coin values c
+					</aside>
+				</section>
 			</div>
 		</div>
 
