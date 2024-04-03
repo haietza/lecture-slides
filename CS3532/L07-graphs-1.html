@@ -60,10 +60,32 @@
 
 				<section data-auto-animate>
 					<h3>Graph Representations</h3>
+					<p>An <strong>edge list</strong> (good for <em>sparse</em> graphs)</p>
+					<div class="columns">
+						<div class="two-columns">
+							<img src="../CS3460/figures/graphs/repr-example-2.svg" width="60%" data-id="example">
+						</div>
+						<div class="one-column">
+							<pre>
+								<code data-trim>
+									(1,2), (1,3), (2,1), 
+									(2,3), (2,4), (3,1), 
+									(3,2), (3,4), (3,5),
+									(4,2), (4,3), (4,5),
+									(5,3), (5,4)
+								</code>
+							</pre>
+							<p class="small">Good for algorithms that use all edges. Easy to represent edge weights.</p>
+						</div>
+					</div>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Graph Representations</h3>
 					<p>An <strong>adjacency list</strong> (ideal for <em>sparse</em> graphs)</p>
 					<div class="columns">
 						<div class="two-columns">
-							<img src="../CS3460/figures/graphs/repr-example-2.svg" width="60%">
+							<img src="../CS3460/figures/graphs/repr-example-2.svg" width="60%" data-id="example">
 						</div>
 						<div class="one-column">
 							<pre>
@@ -177,6 +199,33 @@
 						</code>
 					</pre>
 					<p class="small fragment">If $Q$ is replaced with a stack instead of a FIFO queue,<br/>this is just <strong>depth-first search</strong>!</p>
+				</section>
+
+				<section data-auto-animate data-auto-animate-restart>
+					<h3>Using BFS and DFS</h3>
+					<p>Simply, BFS and DFS answer general connectivity problems, and connectivity questions make for common contest problems.</p>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Using BFS and DFS</h3>
+					<ul class="small">
+						<li>How do we count connected components in a graph $G$?</li>
+						<ul class="fragment">
+							<li><em>Use full-dfs(), add 1 to a counter each time you start a new call to dfs(i).</em></li>
+						</ul>
+						<li class="fragment">You are given a grid. How do we flood fill? (Hint: grids are a type of <strong>implicit graph</strong>)</li>
+						<ul>
+							<li class="fragment"><em>Use full-dfs() with modified dfs(i), color every node visited in one pass of dfs(i) the same color, change color for each new call to dfs(i).</em></li>
+						</ul>
+						<li class="fragment">You are given a dependency graph $G$. How can you sort these to choose a valid ordering of tasks? (known as <strong>topological sorting</strong>)</li>
+						<ul>
+							<li class="fragment"><em>Use full-dfs(). Once dfs(i) is done recursively visiting the outgoing edges of node i, add i to the front of a list.</em></li>
+						</ul>
+						<li class="fragment">How do you determine whether a graph $G$ is bipartite?</li>
+						<ul>
+							<li class="fragment"><em>Run dfs(i), coloring nodes in alternating colors (represented by 0 and 1). If we encounter a node already colored incorrectly, not bipartite.</em></li>
+						</ul>
+					</ul>
 				</section>
 			</div>
 		</div>
