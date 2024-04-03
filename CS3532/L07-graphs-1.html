@@ -1,0 +1,198 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>CS3532 - Lecture 07 - Graphs I</title>
+
+		<link rel="stylesheet" href="../reveal-js/dist/reset.css">
+		<link rel="stylesheet" href="../reveal-js/dist/reveal.css">
+		<link rel="stylesheet" href="../reveal-js/dist/theme/dracula.css">
+		<link rel="stylesheet" href="../layouts/common.css">
+		<link rel="stylesheet" href="../reveal-js/plugin/highlight/monokai.css">
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+				<div class="header left">
+					CS3460: Competitive Programming
+				</div>
+				<div class="header right no-title">
+					<em>Graphs</em>
+				</div>
+
+				<section data-state="title-slide">
+					<h1 class="r-fit-text">CS3460: Competitive Programming</h1>
+					<h2 class="r-fit-text">Graphs I</h2>
+				</section>
+
+				<section data-auto-animate data-auto-animate-restart>
+					<h3>Graphs (Networks)</h3>
+					<ul class="small">
+						<li>A <strong>graph</strong> is a collection of <em>nodes</em> (aka, vertices) and <em>edges</em>. Each edge joins a pair of vertices. Nodes and edges can have weights/costs.</li>
+						<li class="fragment">Graphs can be <em>directed</em> or <em>undirected</em>, referring to whether or not the edges have a direction. By default, "graph" usually means "undirected graph."</li>
+						<li class="fragment">Graphs are very common data structures because they are extremely useful at modeling a wide range of problems and applications.</li>
+					</ul>
+				</section>
+
+				<section data-auto-animate data-auto-animate-restart>
+					<h3>Graph Representations</h3>
+					<p>An <strong>adjacency matrix</strong> (ideal for <em>dense</em> graphs)</p>
+					<div class="columns">
+						<div class="two-columns">
+							<img src="../CS3460/figures/graphs/repr-example-1.svg" width="80%">
+						</div>
+						<div class="one-column">
+							<pre>
+								<code data-trim>
+									    1 2 3 4
+									  +--------
+									1 | 0 1 0 0
+									2 | 0 0 1 0
+									3 | 1 0 0 1
+									4 | 0 0 1 0
+								</code>
+							</pre>
+						</div>
+					</div>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Graph Representations</h3>
+					<p>An <strong>adjacency list</strong> (ideal for <em>sparse</em> graphs)</p>
+					<div class="columns">
+						<div class="two-columns">
+							<img src="../CS3460/figures/graphs/repr-example-2.svg" width="60%">
+						</div>
+						<div class="one-column">
+							<pre>
+								<code data-trim>
+									1: 2 3
+									2: 1 3 4
+									3: 1 2 4 5
+									4: 2 3 5
+									5: 3 4
+								</code>
+							</pre>
+							<p class="small">Unless otherwise stated, we will assume our graphs are represented using adjacency lists.</p>
+						</div>
+					</div>
+				</section>
+
+				<section data-auto-animate data-auto-animate-restart>
+					<h3>Simple Connectivity Questions</h3>
+					<ul class="small">
+						<li>Some of the most fundamental graph questions related to <em>connectivity</em>:</li>
+						<ul>
+							<li class="fragment">Are nodes $i$ and $j$ connected by some path?</li>
+							<li class="fragment">If so, determine such a path.</li>
+							<li class="fragment">In a digraph, is there a directed path from $i$ to $j$?</li>
+							<li class="fragment">Does a (directed) graph have a (directed) cycle?</li>
+							<li class="fragment">Partition a graph into its connected components.</li>
+							<li class="fragment">Partition a digraph into its strongly connected components.</li>
+						</ul>
+					</ul>
+					<div class="fragment exclamation">We can answer all of these questions in $O(n)$ using <strong>depth-first search</strong>.</div>
+				</section>
+
+				<section data-auto-animate data-auto-animate-restart>
+					<h3>Depth-First Search (DFS)</h3>
+					<pre>
+						<code data-trim>
+							dfs_visit(i):
+								visited[i] = True
+								for each j such that (i,j) is an edge:
+									if visited[j] is False:
+										predecessor[j] = i
+										dfs_visit(j)
+						</code>
+					</pre>
+					<pre>
+						<code data-trim>
+							full_dfs():
+								for each i: predecessor[i] = null, visited[i] = False
+								for each i: if visited[i] is False: dfs_visit(i)
+						</code>
+					</pre>
+					<ul class="small">
+						<li>Works in directed and undirected graphs.</li>
+						<li><em>full_dfs()</em> takes $O(m + n)$ &mdash; spends $O(1)$ on each node and edge</li>
+					</ul>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Depth-First Search (DFS)</h3>
+					<img src="../CS3460/figures/graphs/dfs-before.svg" data-id="dfs">
+				</section>
+
+				<section data-auto-animate>
+					<h3>Depth-First Search (DFS)</h3>
+					<img src="../CS3460/figures/graphs/dfs-after.svg" data-id="dfs">
+				</section>
+
+				<section data-auto-animate>
+					<h3>Depth-First Search (DFS)</h3>
+					<ul class="small">
+						<li><em>full_dfs()</em> gives us an easy way to partition an undirected graph into its connected components.</li>
+						<li class="fragment">The predecessor pointers define what is called a <strong>depth-first search tree</strong>.</li>
+						<li class="fragment">To find a path from $i$ to $j$ (if such a path exists):</li>
+						<ol>
+							<li class="fragment">Initialize predecessor and visited values for all nodes.</li>
+							<li class="fragment">Call <em>dfs_visit(i)</em>.</li>
+							<li class="fragment">Follow predecessor pointers backwards from $j$ to $i$</li>
+						</ol>
+						<li class="fragment">How could we use this to find a path between any two nodes with only one call to <em>full_dfs()</em>?</li>
+					</ul>
+				</section>
+
+				<section data-auto-animate data-auto-animate-restart>
+					<h3>Breadth-First Search (BFS)</h3>
+					<ul class="small">
+						<li><strong>Depth-first search (DFS)</strong> dives as deeply as possible into a graph until it can't go any further, then branches upon backtracking.</li>
+						<li class="fragment">By contrast, a <strong>breadth-first search</strong> starting at some source node $s$ will visit $s$, then all nodes one step away from $s$, then all nodes two steps away from $s$, and so on until all nodes are reached.</li>
+						<ul>
+							<li class="fragment">Like DFS, we can also use BFS to <em>find connected components</em> or answer "find a path from $i$ to $j$" queries.</li>
+							<li class="fragment">Unlike DFS, breadth-first search finds a path from $i$ to $j$ <em>having the fewest edges</em>.</li>
+						</ul>
+					</ul>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Breadth-First Search (BFS)</h3>
+					<pre>
+						<code data-trim data-line-numbers>
+							bfs(s):
+								for all nodes i:
+									pred[i] = null
+									dist[i] = +inf
+								Q = {s}
+								dist[s] = 0
+								while Q is nonempty:
+									i = Q.remove()
+									for all nodes j for which (i,j) is an edge:
+										pred[j] = i
+										dist[j] = dist[i] + 1
+										Q.add(j)
+						</code>
+					</pre>
+					<p class="small fragment">If $Q$ is replaced with a stack instead of a FIFO queue,<br/>this is just <strong>depth-first search</strong>!</p>
+				</section>
+			</div>
+		</div>
+
+		<script src="../reveal-js/dist/reveal.js"></script>
+		<script src="../reveal-js/plugin/math/math.js"></script>
+		<script src="../reveal-js/plugin/notes/notes.js"></script>
+		<script src="../reveal-js/plugin/markdown/markdown.js"></script>
+		<script src="../reveal-js/plugin/highlight/highlight.js"></script>
+		<script>
+			Reveal.initialize({
+				hash: true,
+				slideNumber: true,
+				transition: 'convex',
+				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes, RevealMath.KaTeX ],
+			});
+		</script>
+	</body>
+</html>
