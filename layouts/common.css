@@ -43,9 +43,9 @@ section.left {
 	padding-left: 20px !important;
 }
 
-.reveal ul {
+/*.reveal ul {
 	list-style: none !important;
-}
+}*/
 
 .reveal .small {
 	font-size: 70% !important;
@@ -108,9 +108,9 @@ table.bordered {
 	margin: 20px;
 }
 
-ul.info-box li::before {
+/*ul.info-box li::before {
 	content: "" !important;
-}
+}*/
 
 .spread {
 	line-height: 200%;
