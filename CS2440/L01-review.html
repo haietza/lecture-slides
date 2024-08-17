@@ -1,0 +1,270 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>CS2440 - Lecture 01 - CS 1 Review</title>
+
+		<link rel="stylesheet" href="../reveal-js/dist/reset.css">
+		<link rel="stylesheet" href="../reveal-js/dist/reveal.css">
+		<link rel="stylesheet" href="../reveal-js/dist/theme/dracula.css">
+		<link rel="stylesheet" href="../layouts/common.css">
+		<link rel="stylesheet" href="../layouts/tokyo-night-dark.css">
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+				<div class="header left">
+					CS2440: Computer Science II
+				</div>
+				<div class="header right no-title">
+					<em>CS 1 Review</em>
+				</div>
+
+				<section data-state="title-slide">
+					<h1 class="r-fit-text">CS2440: Computer Science II</h1>
+					<h2 class="r-fit-text">CS 1 Review</h2>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Quick Review Topics</h3>
+					<ul>
+						<li>Enumerated types (<code>enums</code>)</li>
+						<li>Arrays, <code>ArrayList</code>, and 2D arrays</li>
+					</ul>
+				</section>
+
+				<section data-auto-animate data-auto-animate-restart>
+					<h3>Enumerated Types</h3>
+					<ul>
+						<li>An <em>enumerated type</em> (<code>enum</code>) is a data type made of a collection of pre-determined discrete, finite values.</li>
+						<li class="fragment">All possible values for this data type must be enumerated in its definition</li>
+						<li class="fragment">No additional values can be created at runtime</li>
+					</ul>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Enumerated Types</h3>
+					<ul>
+						<li><strong>Enumerated constants are not strings!</strong> (though they can be printed &mdash; they have a <code>toString()</code> method)</li>
+						<li class="fragment">An <code>enum</code> is a specialized class</li>
+						<li class="fragment">Enumerated constants are <code>Object</code>s</li>
+						<li class="fragment"><em>So why not just use strings instead?</em></li>
+					</ul>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Enumerated Types</h3>
+					<pre class="java">
+						<code data-trim>
+							// define an enumeration
+							enum Day
+							{
+								SUNDAY, MONDAY, TUESDAY, WEDNESDAY,
+								THURSDAY, FRIDAY, SATURDAY
+							}
+						</code>
+					</pre>
+					<pre class="java fragment">
+						<code data-trim>
+							// declare a variable of type Day
+							Day birthday;
+						</code>
+					</pre>
+					<pre class="java fragment">
+						<code data-trim>
+							// assign the value for Monday to a variable
+							Day today = Day.MONDAY;
+						</code>
+					</pre>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Enumerated Types</h3>
+					<p><strong>💡Try It:</strong> <em>Write an enum for commonly used colors</em></p>
+					<pre class="java fragment">
+						<code data-trim>
+							// define a color enumeration
+							enum Color
+							{
+								RED, ORANGE, YELLOW, GREEN,
+								BLUE, PURPLE, WHITE, BLACK
+							}
+						</code>
+					</pre>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Enumerated Types</h3>
+					<ul>
+						<li>Each value of an <code>enum</code> is a single object.</li>
+						<li class="fragment">Variables store references to those objects.</li>
+					</ul>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Enumerated Types</h3>
+					<ul>
+						<li><code>enum</code>s support <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Enum.html">many familiar methods</a>:</li>
+						<ul class="small">
+							<li class="fragment"><code>toString()</code> returns the name of the constant. <code>Day.MONDAY.toString()</code> returns <code>"MONDAY"</code></li>
+							<li class="fragment"><code>equals(...)</code> returns true if the provided argument is equal to the calling constant. <em class="fragment">Why might you not need to use the <code>equals()</code> method?</em> <em class="fragment">Why might it be better not to?</em></li>
+							<li class="fragment"><code>ordinal()</code> returns the 0-indexed position of the constant in the enum definition. <em class="fragment">What would <code>Day.TUESDAY.ordinal()</code> return?</em></li>
+							<li class="fragment"><code>compareTo(...)</code> returns an integer representing the relationship between the calling constant and the passed argument. <em class="fragment">For enums, usually <code>a.compareTo(b) == a.ordinal() - b.ordinal()</code></em></li>
+						</ul>
+					</ul>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Enumerated Types</h3>
+					<ul>
+						<li>The <code>values()</code> method returns an array that contains the enumerated constants in order</li>
+					</ul>
+					<div class="columns">
+						<div class="two-columns">
+							<pre class="java fragment">
+								<code data-trim>
+									// this is a for-each loop, remember?
+									for (Day d : Day.values())
+									{
+										System.out.println(d);
+									}
+								</code>
+							</pre>
+						</div>
+						<div class="one-column">
+							<pre class="fragment">
+								<code data-trim>
+									SUNDAY
+									MONDAY
+									TUESDAY
+									WEDNESDAY
+									THURSDAY
+									FRIDAY
+									SATURDAY
+								</code>
+							</pre>
+						</div>
+					</div>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Enumerated Types</h3>
+					<ul>
+						<li>Enumerated constants must <strong>always (!!!)</strong> be written with its <em>fully-qualified name</em>.</li>
+						<li>If an enum <code>Day</code> contains an enumerated constant <code>FRIDAY</code>, its <em>fully-qualified name</em> is <code>Day.FRIDAY</code></li>
+						<pre class="java fragment">
+							<code data-trim>
+								Day day = FRIDAY;       // incorrect!
+								Day day = Day.FRIDAY;   // correct
+							</code>
+						</pre>
+						<li class="fragment">Except in one situation... <em class="fragment"><code>switch</code> cases</em></li>
+					</ul>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Enumerated Types</h3>
+					<pre class="java">
+						<code data-trim>
+							switch (today)
+							{
+								case FRIDAY:
+									System.out.println("Almost the weekend!");
+									break;
+								case SATURDAY:
+								case SUNDAY:
+									System.out.println("It's the weekend!");
+									break;
+								default:
+									System.out.println("Today is " + today);
+							}
+						</code>
+					</pre>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Enumerated Types</h3>
+					<p><strong>💡Try It:</strong> <em>What will the following code print?</em></p>
+					<pre class="java">
+						<code data-trim>
+							// define a Month enumeration
+							enum Month
+							{
+								JANUARY, FEBRUARY, MARCH, APRIL, MAY, JUNE,
+								JULY, AUGUST, SEPTEMBER, OCTOBER, NOVEMBER, DECEMBER
+							}
+						</code>
+					</pre>
+					<pre class="java">
+						<code data-trim>
+							Month m = FEBRUARY;
+							System.out.println(FEBRUARY.ordinal());
+						</code>
+					</pre>
+					<p class="fragment">Nothing. This produces an error!</p>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Enumerated Types</h3>
+					<p><strong>💡Try It:</strong> <em>What will the following code print?</em></p>
+					<pre class="java">
+						<code data-trim>
+							// define a Month enumeration
+							enum Month
+							{
+								JANUARY, FEBRUARY, MARCH, APRIL, MAY, JUNE,
+								JULY, AUGUST, SEPTEMBER, OCTOBER, NOVEMBER, DECEMBER
+							}
+						</code>
+					</pre>
+					<pre class="java">
+						<code data-trim>
+							Month m = Month.FEBRUARY;
+							System.out.println(FEBRUARY.ordinal());
+						</code>
+					</pre>
+					<p class="fragment"><code>FEBRUARY</code> is at index 1</p>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Enumerated Types</h3>
+					<p><strong>💡Try It:</strong> <em>What will the following code print?</em></p>
+					<pre class="java">
+						<code data-trim>
+							// define a Month enumeration
+							enum Month
+							{
+								JANUARY, FEBRUARY, MARCH, APRIL, MAY, JUNE,
+								JULY, AUGUST, SEPTEMBER, OCTOBER, NOVEMBER, DECEMBER
+							}
+						</code>
+					</pre>
+					<pre class="java">
+						<code data-trim>
+							Month m1 = Month.MARCH;
+							Month m2 = Month.OCTOBER;
+							System.out.println(m1.compareTo(m2));
+						</code>
+					</pre>
+					<p class="fragment"><code>MARCH</code> is before <code>OCTOBER</code>, so the result is <em>negative</em></p>
+				</section>
+			</div>
+		</div>
+
+		<script src="../reveal-js/dist/reveal.js"></script>
+		<script src="../reveal-js/plugin/math/math.js"></script>
+		<script src="../reveal-js/plugin/notes/notes.js"></script>
+		<script src="../reveal-js/plugin/markdown/markdown.js"></script>
+		<script src="../reveal-js/plugin/highlight/highlight.js"></script>
+		<script>
+			Reveal.initialize({
+				hash: true,
+				slideNumber: true,
+				transition: 'convex',
+				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes, RevealMath.KaTeX ],
+			});
+		</script>
+	</body>
+</html>
