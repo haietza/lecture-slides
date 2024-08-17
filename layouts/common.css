@@ -37,9 +37,10 @@ section.left {
 	left: 1em;
 }
 
-.reveal code {
+.reveal pre code {
 	line-height: 150%;
 	overflow-y: hidden !important;
+	padding-left: 20px !important;
 }
 
 .reveal ul {
