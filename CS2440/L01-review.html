@@ -250,6 +250,61 @@
 					</pre>
 					<p class="fragment"><code>MARCH</code> is before <code>OCTOBER</code>, so the result is <em>negative</em></p>
 				</section>
+
+				<section data-auto-animate data-auto-animate-restart>
+					<h3>Arrays</h3>
+					<ul>
+						<li><em>Primitive variables</em> hold single (scalar) values</li>
+						<li>Arrays allow for <em>collections of like values</em> to be stored together, indexed by their position in the ordered sequence of the collection</li>
+					</ul>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Arrays</h3>
+					<pre class="java">
+						<code data-trim>
+							// an int is a primitive value
+							int x;
+
+							// an array of ints, indicated by square brackets, is an object
+							int[] numbers;
+
+							// creating an array uses the new keyword
+							numbers = new int[6]; // 6 is the "size declarator"
+						</code>
+					</pre>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Arrays</h3>
+					<ul>
+						<li>The size of an array must be <em>non-negative</em></li>
+						<li>The <strong>size declarator</strong> can be a <em>literal</em>, a <em>constant</em>, or a <em>variable</em></li>
+						<li>Once an array is created, it cannot be resized</li>
+					</ul>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Arrays</h3>
+					<p><strong>💡Try It:</strong> <em>Write code to create an array of doubles of length 1000 named <code>distances</code></em></p>
+					<pre class="java fragment">
+						<code data-trim>
+							double[] distances = new double[1000];
+						</code>
+					</pre>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Arrays</h3>
+					<ul>
+						<li>Arrays can be initialized with an <em>initialization list</em></li>
+						<pre class="java">
+							<code data-trim>
+								int[] numbers = {1, 2, 3, 4, 5};
+							</code>
+						</pre>
+					</ul>
+				</section>
 			</div>
 		</div>
 
