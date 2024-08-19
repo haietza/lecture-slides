@@ -305,6 +305,53 @@
 						</pre>
 					</ul>
 				</section>
+
+				<section data-auto-animate>
+					<h3>Arrays</h3>
+					<ul>
+						<li>Array contents are accessed with <em>a reference name</em> and <em>an index</em> written in square brackets</li>
+						<li class="fragment">Arrays are <em>zero-indexed</em> (first element at index 0)</li>
+						<li class="fragment">The length of the array <code>arr</code> can be accessed via the attribute <code>arr.length</code></li>
+					</ul>
+					<p class="fragment problem-text">
+						What is the index of the <em>last</em> element of a length-10 array? 
+						<span class="fragment">What if you don't know the array's length?</span>
+					</p>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Arrays</h3>
+					<ul>
+						<li>Remember that arrays are <code>Object</code>s, so we can't use the assignment operator (<code>=</code>) to copy.</li>
+					</ul>
+					<pre class="java">
+						<code data-trim>
+							int[] a = {1, 2, 3, 4, 5};
+							int[] b = a; // INCORRECT, this is a reference, not a copy
+
+							b[0] = 9;
+							System.out.println(a[0]); // prints 9
+
+							int[] c = a.clone();
+							int[] d = Arrays.copyOf(a, a.length); // several ways to copy
+						</code>
+					</pre>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Arrays</h3>
+					<ul>
+						<li>Arrays cannot be resized, but an array reference can be reassigned.</li>
+						<li>We can copy an array's contents into a larger array, and then change the array reference.</li>
+						<li>There are helper libraries in Java to make this easier.</li>
+					</ul>
+					<pre class="java">
+						<code data-trim>
+							int[] a = {1, 2, 3, 4, 5};
+							int[] b = Arrays.copyOf(a, 10); // java.util.Arrays is helpful here
+						</code>
+					</pre>
+				</section>
 			</div>
 		</div>
 
