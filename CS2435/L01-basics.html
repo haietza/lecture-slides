@@ -1,0 +1,307 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>CS2435</title>
+
+		<link rel="stylesheet" href="../reveal-js/dist/reset.css">
+		<link rel="stylesheet" href="../reveal-js/dist/reveal.css">
+		<link rel="stylesheet" href="../reveal-js/dist/theme/dracula.css">
+		<link rel="stylesheet" href="../layouts/common.css">
+		<link rel="stylesheet" href="../reveal-js/plugin/highlight/monokai.css">
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+				<div class="header left">
+					CS2435: Intro to Scientific Programming
+				</div>
+				<div class="header right no-title">
+					<em>Printing and Other Basics</em>
+				</div>
+
+				<section data-state="title-slide">
+					<h1 class="r-fit-text">CS2435: Intro to Scientific Programming</h1>
+					<h2 class="r-fit-text">Printing and Other Basics</h2>
+				</section>
+
+				<section data-auto-animate data-auto-animate-restart>
+					<h3>Parts of a Python Program</h3>
+					<ul>
+						<li>A Python program is written in a file with a <code>.py</code> extension</li>
+						<li>In most cases, you can run your program with <code>python programname.py</code></li>
+						<li>Python programs do not need to be <em>compiled</em>, but will check for errors when you run it</li>
+					</ul>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Parts of a Python Program</h3>
+					<pre class="python">
+						<code data-trim data-id="code" data-line-numbers>
+							# filename: hello.py
+
+							# This is a simple Python program
+							print("Hello, this is my first program")
+						</code>
+					</pre>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Parts of a Python Program</h3>
+					<pre class="python">
+						<code data-trim data-id="code" data-line-numbers="2">
+							# filename: hello.py
+
+							# This is a simple Python program
+							print("Hello, this is my first program")
+						</code>
+					</pre>
+					<p class="small"><strong>Line 2:</strong> This is a <em>blank line</em>. These can be added to space a program out and make it more readable.</p>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Parts of a Python Program</h3>
+					<pre class="python">
+						<code data-trim data-id="code" data-line-numbers="3">
+							# filename: hello.py
+
+							# This is a simple Python program
+							print("Hello, this is my first program")
+						</code>
+					</pre>
+					<p class="small"><strong>Line 3:</strong> This is a <em>comment</em>. Python ignores everything from <code>#</code> to the end of the line. They are not required, but they can help explain what is happening in the program.</p>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Parts of a Python Program</h3>
+					<pre class="python">
+						<code data-trim data-id="code" data-line-numbers="4">
+							# filename: hello.py
+
+							# This is a simple Python program
+							print("Hello, this is my first program")
+						</code>
+					</pre>
+					<p class="small"><strong>Line 4:</strong> This is a <em>print statement</em>. This is how you tell your program to display information on the screen.</p>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Parts of a Python Program</h3>
+					<ul>
+						<li>Python programs are <em>case-sensitive</em>. That means that there is a difference between <code>Print</code> and <code>print</code></li>
+						<li class="fragment">All programs must be stored in a file with a <code>.py</code> extension</li>
+						<li class="fragment">Comments are ignored by the compiler, but make code more readable</li>
+					</ul>
+				</section>
+
+				<section data-auto-animate data-auto-animate-restart>
+					<h3>Print Statements</h3>
+					<ul>
+						<li>We use the <code>print</code> statement to print data to the screen. This function is provided by Python</li>
+						<li class="fragment">The <code>print</code> stmt always adds a newline at the end</li>
+						<li class="fragment">The following examples show different types of data being printed. <em>We'll talk more about that</em></li>
+					</ul>
+					<pre class="python fragment">
+						<code data-trim>
+							print("Hello World") # prints: Hello World
+							print(42)            # prints: 42
+							print(1 + 2 + 3)     # prints: 6
+						</code>
+					</pre>
+				</section>
+
+				<section data-auto-animate data-auto-animate-restart>
+					<h3>Data Types</h3>
+					<ul>
+						<li>There are many types of data that Python can store:</li>
+					</ul>
+					<pre class="python">
+						<code data-trim>
+							print(type(42))            # &lt;class 'int'&gt;
+							print(type(3.141592))      # &lt;class 'float'&gt;
+							print(type("Hello World")) # &lt;class 'str'&gt;
+							print(type(True))          # &lt;class 'bool'&gt;
+							print(type(None))          # &lt;class 'NoneType'&gt;
+						</code>
+					</pre>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Data Types &mdash; <code>int</code> & <code>float</code></h3>
+					<ul>
+						<li>These are numeric types: <em>integers</em> and <em>floating-point</em> numbers (<em>decimals</em>)</li>
+						<li class="fragment"><code>int</code>s can only hold <em>whole numbers</em> (positive or negative), but have <em>perfect precision</em></li>
+						<li class="fragment">Unlike other languages, there is <em>no maximum value</em> that Python can hold in an integer</li>
+					</ul>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Data Types &mdash; <code>int</code> & <code>float</code></h3>
+					<ul>
+						<li><code>float</code>s can hold decimals, but may be subject to rounding errors, due to the way they are stored</li>
+						<li class="fragment"><code>float</code>s may be written in scientific notation</li>
+						<li class="fragment"><code>int</code>s and <code>float</code>s can be used <em>interchangeably</em>, but converting between types has its own rules</li>
+					</ul>
+					<pre class="python fragment">
+						<code data-trim>
+							print(1 + 2)     # prints: 3      - result is int
+							print(1 + 2.5)   # prints: 3.5    - result is float
+							print(0.1 + 0.2) # prints what?   - result is float
+							print(2e2)       # prints what?   - scientific notation
+						</code>
+					</pre>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Data Types &mdash; <code>str</code></h3>
+					<ul>
+						<li><code>str</code>s (<em>strings</em>) hold text data</li>
+						<li class="fragment">Strings can be <em>delimited</em> (started and ended) with double-quotes (<code>"</code>) or single-quotes (<code>'</code>)</li>
+					</ul>
+					<pre class="python fragment">
+						<code data-trim>
+							print("Hello World")       # prints: Hello World
+							print('Welcome to CS2435') # prints: Welcome to CS2435
+							
+							print("42")                # prints the string containing 42
+							                           # this is NOT the number 42
+						</code>
+					</pre>
+				</section>
+
+				<section data-auto-animate data-auto-animate-restart>
+					<h3>Variables</h3>
+					<ul>
+						<li><strong>Variables</strong> are <em>named</em> locations in memory where data can be stored</li>
+						<li class="fragment">The name of a variable is subject to <em>certain rules</em>:</li>
+						<ul>
+							<li class="fragment">Made of only <em>letters</em>, <em>numbers</em>, and <em>underscores</em></li>
+							<li class="fragment">First character <em>cannot be a number</em></li>
+							<li class="fragment">Identifiers <em>may not contain spaces</em></li>
+						</ul>
+					</ul>
+					<pre class="python fragment">
+						<code data-trim>
+							a = 42             # contains the integer 42
+							b = "Hello World"  # contains the string "Hello World"
+							c = "42"           # contains the string "42", not a number
+						</code>
+					</pre>
+				</section>
+
+				<section data-auto-animate data-auto-animate-restart>
+					<h3>More on Print Statements</h3>
+					<ul>
+						<li>Sometimes we want to print "<em>unprintable</em>" characters (don't be fooled by the name)</li>
+						<li>These are mostly for formatting purposes</li>
+					</ul>
+					<pre class="python fragment">
+						<code data-trim>
+							print("These are our top sellers:");
+							print("\t- Wine\n\t- Beer\n\t- Coffee");
+						</code>
+					</pre>
+					<p class="fragment">produces</p>
+					<pre class="text fragment">
+						<code data-trim>
+							These are our top sellers:
+							    - Wine
+							    - Beer
+							    - Coffee
+						</code>
+					</pre>
+				</section>
+
+				<section data-auto-animate>
+					<h3>More on Print Statements</h3>
+					<ul>
+						<li>Sometimes we want to <em>combine data</em> for printing</li>
+						<li><strong>Method #1:</strong> <code>print()</code> can take <em>multiple arguments</em></li>
+					</ul>
+					<pre class="python fragment">
+						<code data-trim>
+							dogs = 2
+							cats = 3
+							print("I have", dogs, "dogs and", cats, "cats")
+							# prints "I have 2 dogs and 3 cats"
+							# (note the added spaces)
+						</code>
+					</pre>
+				</section>
+
+				<section data-auto-animate>
+					<h3>More on Print Statements</h3>
+					<ul>
+						<li><strong>Method #2:</strong> String concatenation</li>
+					</ul>
+					<pre class="python fragment">
+						<code data-trim>
+							dogs = 2
+
+							# WRONG! this will produce an error. cannot add string and number
+							print("I have" + dogs + "dogs")
+
+							# better, but if we don't add spaces, this won't look right
+							print("I have" + str(dogs) + "dogs")
+
+							# correct. note the extra spaces that we typed manually
+							print("I have " + str(dogs) + " dogs")
+						</code>
+					</pre>
+				</section>
+
+				<section data-auto-animate>
+					<h3>More on Print Statements</h3>
+					<ul>
+						<li><strong>Method #3:</strong> Format strings</li>
+						<pre class="python fragment">
+							<code data-trim>
+								# format specifier "%d" is for integers
+								# % plugs values from right side into placeholders on the left
+								dogs = 2
+								print("I have %d dogs" % (dogs))
+
+								temp = 31.41592
+								print("The temperature is %8.2f C" % (temp))
+								# prints "The temperature is    31.42 F"
+							</code>
+						</pre>
+						<li>Format strings give a lot of <em>control</em> over the presentation of data</li>
+					</ul>
+				</section>
+
+				<section data-auto-animate data-auto-animate-restart>
+					<h3>Arithmetic Expressions</h3>
+					<ul>
+						<li>Values can be calculated by writing <em>arithmetic expressions</em>, combining variables and literals</li>
+						<li>All standard operators, plus a few unfamiliar ones, are supported</li>
+					</ul>
+					<pre class="python fragment">
+						<code data-trim>
+							a = 4
+							b = 5
+							c = 6
+							print(a + b * c) # prints: ???
+						</code>
+					</pre>
+				</section>
+			</div>
+		</div>
+
+		<script src="../reveal-js/dist/reveal.js"></script>
+		<script src="../reveal-js/plugin/math/math.js"></script>
+		<script src="../reveal-js/plugin/notes/notes.js"></script>
+		<script src="../reveal-js/plugin/markdown/markdown.js"></script>
+		<script src="../reveal-js/plugin/highlight/highlight.js"></script>
+		<script>
+			Reveal.initialize({
+				hash: true,
+				slideNumber: true,
+				transition: 'convex',
+				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes, RevealMath.KaTeX ],
+			});
+		</script>
+	</body>
+</html>

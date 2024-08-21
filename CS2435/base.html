@@ -15,19 +15,34 @@
 	<body>
 		<div class="reveal">
 			<div class="slides">
+				<div class="header left">
+					CS2435: Intro to Scientific Programming
+				</div>
+				<div class="header right no-title">
+					<em>Topic</em>
+				</div>
+
+				<section data-state="title-slide">
+					<h1 class="r-fit-text">CS2435: Intro to Scientific Programming</h1>
+					<h2 class="r-fit-text">Topic</h2>
+				</section>
+
 				<section>Slide 1</section>
 				<section>Slide 2</section>
 			</div>
 		</div>
 
 		<script src="../reveal-js/dist/reveal.js"></script>
+		<script src="../reveal-js/plugin/math/math.js"></script>
 		<script src="../reveal-js/plugin/notes/notes.js"></script>
 		<script src="../reveal-js/plugin/markdown/markdown.js"></script>
 		<script src="../reveal-js/plugin/highlight/highlight.js"></script>
 		<script>
 			Reveal.initialize({
 				hash: true,
-				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ],
+				slideNumber: true,
+				transition: 'convex',
+				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes, RevealMath.KaTeX ],
 			});
 		</script>
 	</body>
