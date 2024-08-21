@@ -200,7 +200,7 @@
 					<pre class="java">
 						<code data-trim>
 							Month m = FEBRUARY;
-							System.out.println(FEBRUARY.ordinal());
+							System.out.println(m.ordinal());
 						</code>
 					</pre>
 					<p class="fragment">Nothing. This produces an error!</p>
@@ -222,7 +222,7 @@
 					<pre class="java">
 						<code data-trim>
 							Month m = Month.FEBRUARY;
-							System.out.println(FEBRUARY.ordinal());
+							System.out.println(m.ordinal());
 						</code>
 					</pre>
 					<p class="fragment"><code>FEBRUARY</code> is at index 1</p>
@@ -279,8 +279,8 @@
 					<h3>Arrays</h3>
 					<ul>
 						<li>The size of an array must be <em>non-negative</em></li>
-						<li>The <strong>size declarator</strong> can be a <em>literal</em>, a <em>constant</em>, or a <em>variable</em></li>
-						<li>Once an array is created, it cannot be resized</li>
+						<li class="fragment">The <strong>size declarator</strong> can be a <em>literal</em>, a <em>constant</em>, or a <em>variable</em></li>
+						<li class="fragment">Once an array is created, it cannot be resized</li>
 					</ul>
 				</section>
 
@@ -342,13 +342,35 @@
 					<h3>Arrays</h3>
 					<ul>
 						<li>Arrays cannot be resized, but an array reference can be reassigned.</li>
-						<li>We can copy an array's contents into a larger array, and then change the array reference.</li>
-						<li>There are helper libraries in Java to make this easier.</li>
+						<li class="fragment">We can copy an array's contents into a larger array, and then change the array reference.</li>
+						<li class="fragment">There are helper libraries in Java to make this easier.</li>
 					</ul>
-					<pre class="java">
+					<pre class="java fragment">
 						<code data-trim>
 							int[] a = {1, 2, 3, 4, 5};
 							int[] b = Arrays.copyOf(a, 10); // java.util.Arrays is helpful here
+						</code>
+					</pre>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Arrays</h3>
+					<ul>
+						<li>Arrays are <code>Object</code>s, so when they are passed to a method, they are <em>passed by reference</em>. <em class="fragment">What does this mean?</em></li>
+					</ul>
+					<pre class="java fragment">
+						<code data-trim>
+							public static void showArray(int[] array)
+							{
+								for (int i = 0; i < array.length; i++)
+									System.out.print(array[i] + " ");
+							}
+						</code>
+					</pre>
+					<pre class="java fragment">
+						<code data-trim>
+							int[] arr = {1, 2, 3, 4, 5};
+							showArray(arr);
 						</code>
 					</pre>
 				</section>
