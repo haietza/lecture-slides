@@ -300,7 +300,7 @@
 						<li>Arrays can be initialized with an <em>initialization list</em></li>
 						<pre class="java">
 							<code data-trim>
-								int[] numbers = {1, 2, 3, 4, 5};
+								int[] numbers = new int[]{1, 2, 3, 4, 5};
 							</code>
 						</pre>
 					</ul>
@@ -326,7 +326,7 @@
 					</ul>
 					<pre class="java">
 						<code data-trim>
-							int[] a = {1, 2, 3, 4, 5};
+							int[] a = new int[]{1, 2, 3, 4, 5};
 							int[] b = a; // INCORRECT, this is a reference, not a copy
 
 							b[0] = 9;
@@ -347,7 +347,7 @@
 					</ul>
 					<pre class="java fragment">
 						<code data-trim>
-							int[] a = {1, 2, 3, 4, 5};
+							int[] a = new int[]{1, 2, 3, 4, 5};
 							int[] b = Arrays.copyOf(a, 10); // java.util.Arrays is helpful here
 						</code>
 					</pre>
@@ -369,8 +369,179 @@
 					</pre>
 					<pre class="java fragment">
 						<code data-trim>
-							int[] arr = {1, 2, 3, 4, 5};
+							int[] arr = new int[]{1, 2, 3, 4, 5};
 							showArray(arr);
+						</code>
+					</pre>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Arrays</h3>
+					<p><strong>💡Try It:</strong> <em>Write code to find the maximum value in an array</em></p>
+					<pre class="java fragment">
+						<code data-trim>
+							int[] numbers = new int[50];
+							// array contents are provided
+							
+							int max = numbers[0];
+							for (int i = 1; i < numbers.length; i++)
+								if (numbers[i] > max) max = numbers[i];
+						</code>
+					</pre>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Arrays</h3>
+					<p><strong>💡Try It:</strong> <em>Write code to sum the values in an array</em></p>
+					<pre class="java fragment">
+						<code data-trim>
+							int[] numbers = new int[50];
+							// array contents are provided
+							
+							int sum = 0; // why zero?
+							for (int i = 0; i < numbers.length; i++)
+								sum += numbers[i];
+						</code>
+					</pre>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Arrays</h3>
+					<p><strong>💡Try It:</strong> <em>Write code to average the values in an array</em></p>
+					<pre class="java fragment">
+						<code data-trim>
+							int[] numbers = new int[50];
+							// array contents are provided
+							
+							double sum = 0; // why is this a double?
+							for (int i = 0; i < numbers.length; i++)
+								sum += numbers[i];
+							double average = sum / numbers.length;
+						</code>
+					</pre>
+				</section>
+
+				<section data-auto-animate data-auto-animate-restart>
+					<h3><code>ArrayList</code></h3>
+					<ul>
+						<li>Similar to an array, <code>ArrayList</code>s store like objects</li>
+						<li>Unlike arrays, <code>ArrayList</code>s automatically resize to account for elements added or removed</li>
+					</ul>
+					<pre class="java">
+						<code data-trim>
+							// must be imported to be used
+							import java.util.ArrayList;
+						</code>
+					</pre>
+				</section>
+
+				<section data-auto-animate>
+					<h3><code>ArrayList</code></h3>
+					<pre class="java">
+						<code data-trim>
+							ArrayList&lt;String&gt; names = new ArrayList&lt;String&gt;();
+						</code>
+					</pre>
+					<ul>
+						<li><code>ArrayList</code>s are what we call "<em>generic</em>", meaning that we need to specify their type parameter between the angle brackets.</li>
+						<li>This <code>ArrayList</code> can hold only <code>String</code> objects</li>
+						<li class="fragment">This constraint is enforced at compile time, and trying to store anything else will cause an error to occur</li>
+					</ul>
+				</section>
+
+				<section data-auto-animate>
+					<h3><code>ArrayList</code></h3>
+					<pre class="java">
+						<code data-trim>
+							// to add an element to the ArrayList, we use add()
+							names.add("Alice");
+							names.add("Bob");
+
+							// to get the current size, we use size()
+							names.size(); // returns 2
+
+							// ArrayLists do not use square bracket notation
+							// to access a value from the ArrayList, we use get()
+							names.get(1) // returns Bob
+						</code>
+					</pre>
+				</section>
+
+				<section data-auto-animate>
+					<h3><code>ArrayList</code></h3>
+					<pre class="java">
+						<code data-trim>
+							names.add("Alice");
+							names.add("Bob");
+							names.add("Charlie");
+
+							// we can use the for-each loop to iterate over the array
+							for (String x : names)
+								System.out.println(x);
+
+							// or we can use a normal loop
+							for (int i = 0; i < names.size(); i++)
+								System.out.println(names.get(i));
+						</code>
+					</pre>
+				</section>
+
+				<section data-auto-animate>
+					<h3><code>ArrayList</code></h3>
+					<pre class="java">
+						<code data-trim>
+							// the toString() method does the right thing for ArrayList
+							System.out.println(names);
+							// prints: [ Alice, Bob, Charlie ]
+
+							// the remove() method can remove a specific item
+							names.remove(1); // removes the second item
+						</code>
+					</pre>
+				</section>
+
+				<section data-auto-animate>
+					<h3><code>ArrayList</code></h3>
+					<pre class="java">
+						<code data-trim>
+							// if you need to insert an element at a specific
+							// location, you can give an argument to add()
+							names.add(1, "David");
+
+							// if you want to replace an item, use set()
+							names.set(1, "Edgar");
+						</code>
+					</pre>
+				</section>
+
+				<section data-auto-animate>
+					<h3><code>ArrayList</code></h3>
+					<ul>
+						<li><code>ArrayList</code>s have a capacity, which is the number of elements it can hold <em>before resizing</em></li>
+						<li>The default capacity of an <code>ArrayList</code> is 10, but you can specify a different starting capacity</li>
+						<pre class="java">
+							<code data-trim>
+								ArrayList&lt;String&gt; names = new ArrayList&lt;String&gt;(100);
+							</code>
+						</pre>
+						<li class="fragment"><em>Why might you want to specify a different starting capacity?</em></li>
+					</ul>
+				</section>
+
+				<section data-auto-animate>
+					<h3><code>ArrayList</code></h3>
+					<ul>
+						<li><code>ArrayList</code>s are only allowed to hold <code>Object</code> types</li>
+						<li class="fragment"><em>But what if we want to store primitive values?</em></li>
+						<li class="fragment">This is why wrapper classes exist</li>
+					</ul>
+					<pre class="java fragment">
+						<code data-trim>
+							// this is ILLEGAL!
+							ArrayList&lt;int&gt; numbers = new ArrayList&lt;int&gt;();
+
+							// this works
+							ArrayList&lt;Integer&gt; numbers = new ArrayList&lt;Integer&gt;();
 						</code>
 					</pre>
 				</section>
