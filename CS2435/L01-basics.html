@@ -287,6 +287,48 @@
 						</code>
 					</pre>
 				</section>
+
+				<section data-auto-animate>
+					<h3>Arithmetic Expressions</h3>
+					<pre class="python">
+						<code data-trim>
+							print(a + b) # addition
+							print(a - b) # subtraction
+							print(a * b) # multiplication
+							print(a / b) # division
+							print(a // b) # integer division (integer result with no remainder)
+							print(a % b) # modulus (this gives just the remainder)
+							print(a ** b) # exponentiation
+						</code>
+					</pre>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Arithmetic Expressions</h3>
+					<ul>
+						<li>Be careful with <em>grouping</em>. Consider an equation like $$A = P \left(1 + \dfrac{r}{n}\right)^{nt}$$</li>
+					</ul>
+					<p class="fragment"><strong>💡Try It:</strong> <em>Write a Python expression, using the appropriate mathematical tools, to evaluate this common formula.</em></p>
+				</section>
+
+				<section data-auto-animate data-auto-animate-restart>
+					<h3>The <code>math</code> Library</h3>
+					<ul>
+						<li>We can import <em>other libraries</em> with <code>import</code></li>
+						<li>For now, we will focus on the <code>math</code> library</li>
+						<li>Provides many common (and uncommon) <a href="https://docs.python.org/3/library/math.html">mathematical functions and constants</a></li>
+					</ul>
+					<pre class="python">
+						<code data-trim>
+							import math
+
+							print(math.pi)             # 3.141592
+							print(math.log(2))         # computes natural log of 2 (ln 2)
+							print(math.sin(math.pi))
+							print(math.factorial(10))  # computes 10!
+						</code>
+					</pre>
+				</section>
 			</div>
 		</div>
 
