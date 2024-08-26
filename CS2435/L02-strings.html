@@ -1,0 +1,255 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>CS2435</title>
+
+		<link rel="stylesheet" href="../reveal-js/dist/reset.css">
+		<link rel="stylesheet" href="../reveal-js/dist/reveal.css">
+		<link rel="stylesheet" href="../reveal-js/dist/theme/dracula.css">
+		<link rel="stylesheet" href="../layouts/common.css">
+		<link rel="stylesheet" href="../reveal-js/plugin/highlight/monokai.css">
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+				<div class="header left">
+					CS2435: Intro to Scientific Programming
+				</div>
+				<div class="header right no-title">
+					<em>Strings and User Input</em>
+				</div>
+
+				<section data-state="title-slide">
+					<h1 class="r-fit-text">CS2435: Intro to Scientific Programming</h1>
+					<h2 class="r-fit-text">Strings and User Input</h2>
+				</section>
+
+				<section data-auto-animate data-auto-animate-restart>
+					<h3>Strings</h3>
+					<ul>
+						<li><code>str</code>s (<em>strings</em>) hold text data</li>
+						<li class="fragment">String literals are <em>delimited</em> (started and ended) with double-quotes (<code>"</code>) or single-quotes (<code>'</code>)</li>
+					</ul>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Strings</h3>
+					<ul>
+						<li>Each character is represented by a <em>numeric value</em></li>
+					</ul>
+					<pre class="text">
+						<code class="small">
+    0 NUL    16 DLE    32      48 0    64 @    80 P    96 `   112 p
+    1 SOH    17 DC1    33 !    49 1    65 A    81 Q    97 a   113 q
+    2 STX    18 DC2    34 "    50 2    66 B    82 R    98 b   114 r
+    3 ETX    19 DC3    35 #    51 3    67 C    83 S    99 c   115 s
+    4 EOT    20 DC4    36 $    52 4    68 D    84 T   100 d   116 t
+    5 ENQ    21 NAK    37 %    53 5    69 E    85 U   101 e   117 u
+    6 ACK    22 SYN    38 &    54 6    70 F    86 V   102 f   118 v
+    7 BEL    23 ETB    39 '    55 7    71 G    87 W   103 g   119 w
+    8 BS \b  24 CAN    40 (    56 8    72 H    88 X   104 h   120 x
+    9 HT \t  25 EM     41 )    57 9    73 I    89 Y   105 i   121 y
+   10 LF \n  26 SUB    42 *    58 :    74 J    90 Z   106 j   122 z
+   11 VT     27 ESC    43 +    59 ;    75 K    91 [   107 k   123 {
+   12 FF     28 FS     44 ,    60 <    76 L    92 \   108 l   124 |
+   13 CR \r  29 GS     45 -    61 =    77 M    93 ]   109 m   125 }
+   14 SO     30 RS     46 .    62 >    78 N    94 ^   110 n   126 ~
+   15 SI     31 US     47 /    63 ?    79 O    95 _   111 o   127 DEL
+						</code>
+					</pre>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Strings</h3>
+					<ul>
+						<li>Strings are <em>sequences</em> of <em>characters</em></li>
+						<li class="fragment">Interact with data using square bracket notation</li>
+						<li class="fragment">We refer to this method as "<em>indexing</em>" a sequence</li>
+						<li class="fragment">Sequences in Python start counting at zero</li>
+						<pre class="python fragment">
+							<code data-trim>
+								x = "abcdefg" # 7 letters
+								print(x[1])   # what will this print?
+								              # what is the index of the last character?
+							</code>
+						</pre>
+					</ul>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Strings</h3>
+					<ul>
+						<li>To determine the length of a string, use the <code>len()</code> function, which returns an integer</li>
+						<pre class="python">
+							<code data-trim>
+								x = "hello world" 
+								print(len(x)) # what will len(...) return?
+							</code>
+						</pre>
+					</ul>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Strings</h3>
+					<ul>
+						<li>If we want to access the last character of the string, we can use the <code>len()</code> function to help</li>
+						<pre class="python fragment">
+							<code data-trim>
+								x = "abcxyz" 
+								print(x[len(x)-1]) # len(x)-1 is the index of the last character
+							</code>
+						</pre>
+						<li class="fragment">Accessing values <em>at the end</em> of a sequence is so common that Python provides a <em>shorthand syntax</em> for it: <strong>negative indices</strong></li>
+						<pre class="python fragment">
+							<code data-trim>
+								x = "abcxyz" # -1 is the last element, -2 next to last, etc
+								print(x[-3]) # what does this print?
+							</code>
+						</pre>
+					</ul>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Strings</h3>
+					<ul>
+						<li>Another common operation is <strong>slicing</strong>, retrieving a substring from a string</li>
+						<li class="fragment"><em>This does not modify the original string!</em></li>
+						<li class="fragment">Basic slicing syntax: <code>x[start:end]</code> (<em>start</em> inclusive, <em>end</em> exclusive)</li>
+						<pre class="python fragment">
+							<code data-trim>
+								x = "the quick brown fox jumps over the lazy dog" 
+								print(x[4:9]) # this will print "quick"
+							</code>
+						</pre>
+						<li class="fragment">Negative indexing can be used with slicing</li>
+					</ul>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Strings</h3>
+					<ul>
+						<li>It is common, when slicing, to <em>start at the beginning</em> of the string or to <em>stop at the end</em> of the string</li>
+						<li class="fragment">Python does the "<em>smart</em>" thing if you omit either index in the slice</li>
+						<pre class="python fragment">
+							<code data-trim>
+								x = "the quick brown fox jumps over the lazy dog"
+								print(x[0:3]) # this prints "the", the first word
+								print(x[:3])  # so does this, first index omitted implies 0
+								
+								print(x[-3:len(x)]) # this prints "dog", the last word
+								print(x[-3:])       # so does this
+							</code>
+						</pre>
+					</ul>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Strings</h3>
+					<ul>
+						<li>There are many string methods</li>
+					</ul>
+					<pre class="python fragment">
+						<code data-trim>
+							x = "hello" + " world"   # + can concatenate strings
+							print(len(x))     # this prints 11, the length of the string
+							print(x.upper())  # converts the string to uppercase
+							
+							print('ell' in x) # returns True if substring in string
+							print(x.find("ell")) # where does substring appear in str
+						</code>
+					</pre>
+				</section>
+
+				<section data-auto-animate data-auto-animate-restart>
+					<h3>User Input</h3>
+					<ul>
+						<li>Programs can pause the program to wait for user input with the <code>input()</code> function</li>
+						<li class="fragment">You can provide <em>a prompt</em> as an optional argument</li>
+					</ul>
+					<pre class="python fragment">
+						<code data-trim>
+							x = input()  # the program will wait here until the user responds
+
+							# prompt the user for input again, this time with a proper prompt
+							# note the space at the end of the string
+							x = input("Please type your name: ")
+
+							# whatever the user types will be stored in the variable `x`
+						</code>
+					</pre>
+				</section>
+
+				<section data-auto-animate>
+					<h3>User Input</h3>
+					<ul>
+						<li>Be careful: <code>input()</code> returns a string</li>
+					</ul>
+					<pre class="python fragment">
+						<code data-trim>
+							x = input("Type a number: ")
+							print(x + 10)  # this is an error; x is a string
+						</code>
+					</pre>
+				</section>
+
+				<section data-auto-animate>
+					<h3>User Input</h3>
+					<ul>
+						<li>To fix this, <em>convert the type</em>!</li>
+					</ul>
+					<pre class="python fragment">
+						<code data-trim>
+							x = input("Type a number: ")
+							x = int(x)                          # can do this in two lines
+						</code>
+					</pre>
+					<pre class="python fragment">
+						<code data-trim>
+							x = int(input("Type a number: "))   # or just one
+						</code>
+					</pre>
+					<pre class="python fragment">
+						<code data-trim>
+							# don't think you need to convert every single value
+							# input() returns a string, no need to convert to string
+							x = str(input("Please type your name: ")) # wrong!
+						</code>
+					</pre>
+				</section>
+
+				<section data-auto-animate data-auto-animate-restart>
+					<h3>Strings</h3>
+					<p><strong>💡Try It:</strong> <em>Get a filename from a user via <code>input()</code> and print the file extension at the end</p>
+					<pre class="java fragment">
+						<code data-trim>
+							filename = input("Enter a filename: ")
+						</code>
+					</pre>
+					<pre class="java fragment">
+						<code data-trim>
+							i = filename.rfind(".")+1   # index of last period
+							print(filename[i:])
+						</code>
+					</pre>
+				</section>
+			</div>
+		</div>
+
+		<script src="../reveal-js/dist/reveal.js"></script>
+		<script src="../reveal-js/plugin/math/math.js"></script>
+		<script src="../reveal-js/plugin/notes/notes.js"></script>
+		<script src="../reveal-js/plugin/markdown/markdown.js"></script>
+		<script src="../reveal-js/plugin/highlight/highlight.js"></script>
+		<script>
+			Reveal.initialize({
+				hash: true,
+				slideNumber: true,
+				transition: 'convex',
+				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes, RevealMath.KaTeX ],
+			});
+		</script>
+	</body>
+</html>
