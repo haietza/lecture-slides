@@ -545,6 +545,298 @@
 						</code>
 					</pre>
 				</section>
+
+				<section data-auto-animate data-auto-animate-restart>
+					<h3>Arrays</h3>
+					<ul>
+						<li>Any type of data can be stored in an array as long as an array is made <em>of like types</em></li>
+						<li>For instance, we can create an array of <code>String</code>s:</li>
+					</ul>
+					<pre class="java">
+						<code data-trim>
+							String[] names = new String[]{ "Alice", "Bob", "Charlie" };
+						</code>
+					</pre>
+					<aside class="notes">
+						Array can be created with an initialization list.
+					</aside>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Arrays</h3>
+					<ul>
+						<li>Any type of data can be stored in an array as long as an array is made <em>of like types</em></li>
+						<li>For instance, we can create an array of <code>String</code>s:</li>
+					</ul>
+					<pre class="java">
+						<code data-trim>
+							String[] names = new String[3];
+						</code>
+					</pre>
+					<pre class="java fragment">
+						<code data-trim>
+							names[0] = "Alice";
+							names[1] = "Bob";
+							names[2] = "Charlie";
+						</code>
+					</pre>
+					<p class="fragment"><em>❓ What is stored in the cells of the array before being assigned a String?</em></p>
+					<aside class="notes">
+						Array can be created empty and then values can be added afterwards.
+					</aside>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Arrays</h3>
+					<ul>
+						<li>Arrays can <em>store</em> primitives or object types</li>
+						<li>Arrays <em>are</em> object types</li>
+						<li class="fragment">As a result... <strong class="fragment">arrays can store arrays</strong></li>
+					</ul>
+					<pre class="java fragment">
+						<code data-trim>
+							// create a 2d array with 3 rows and 4 columns
+							int[][] matrix = new int[3][4];
+
+							//    [ 0 ][ 0 ][ 0 ][ 0 ]
+							//    [ 0 ][ 0 ][ 0 ][ 0 ]
+							//    [ 0 ][ 0 ][ 0 ][ 0 ]
+						</code>
+					</pre>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Arrays</h3>
+					<pre class="java">
+						<code data-trim>
+							// create a 2d array with 3 rows and 4 columns
+							int[][] matrix = new int[3][4];
+
+							// | matrix[0][0] | matrix[0][1] | matrix[0][2] | matrix[0][3] |
+							// | matrix[1][0] | matrix[1][1] | matrix[1][2] | matrix[1][3] |
+							// | matrix[2][0] | matrix[2][1] | matrix[2][2] | matrix[2][3] |
+						</code>
+					</pre>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Arrays</h3>
+					<ul>
+						<li>Nested loops can be used to access a 2d array <em>in row-major order</em></li>
+					</ul>
+					<pre class="java">
+						<code data-trim>
+							int[][] matrix = new int[4][5];
+
+							for (int i = 0; i < matrix.length; i++)
+							{
+								for (int j = 0; j < matrix[i].length; j++)
+									System.out.print(matrix[i][j] + " ");
+								System.out.println()
+							}
+						</code>
+					</pre>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Arrays</h3>
+					<ul>
+						<li>Nested loops can also traverse a 2d array <em>in column-major order</em></li>
+					</ul>
+					<pre class="java">
+						<code data-trim>
+							int[][] matrix = new int[4][5];
+
+							// checking the number of columns this way might be tricky
+							for (int i = 0; i < matrix[0].length; i++)
+								for (int j = 0; j < matrix.length; j++)
+									System.out.println(matrix[j][i]);
+						</code>
+					</pre>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Arrays</h3>
+					<ul>
+						<li>If we are only accessing the contents of an array, we can use <em>for-each loops</em></li>
+					</ul>
+					<pre class="java">
+						<code data-trim>
+							int[][] matrix = new int[4][5];
+
+							for (int[] row : matrix)
+							{
+								for (int val : row)
+									System.out.print(val + " ");
+								System.out.println()
+							}
+						</code>
+					</pre>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Arrays</h3>
+					<ul>
+						<li>If we want to make changes to the array, we have to be much more careful using a <em>for-each loop</em></li>
+					</ul>
+					<div class="columns">
+						<div class="one-column">
+							<pre class="java">
+								<code data-trim>
+									int[][] m = new int[4][5];
+									int x = 0;
+		
+									// this will *NOT* work
+									for (int[] row : m)
+										for (int val : row)
+											val = x++;
+								</code>
+							</pre>
+						</div>
+						<div class="one-column">
+							<pre class="java">
+								<code data-trim>
+									int[][] m = new int[4][5];
+									int x = 0;
+		
+									// this will work
+									for (int[] row : m)
+										for (int i = 0; i < 5; i++)
+											row[i] = x++;
+								</code>
+							</pre>
+						</div>
+					</div>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Arrays</h3>
+					<ul>
+						<li>2d arrays can be initialized using <em>nested initialization lists</em></li>
+					</ul>
+					<pre class="java">
+						<code data-trim>
+							int[][] numbers = {
+								{1, 2, 3}, // you can write these on separate lines
+								{4, 5, 6}, // if you feel that it makes them more readable
+								{7, 8, 9}
+							};
+						</code>
+					</pre>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Arrays</h3>
+					<ul>
+						<li>2d arrays are just <em>arrays of arrays</em>, they are not handled in any otherwise special way</li>
+						<li>For that reason, be mindful of the <code>.length</code> field</li>
+					</ul>
+					<pre class="java">
+						<code data-trim>
+							int[][] numbers = {
+								{1, 2, 3},
+								{4, 5, 6}
+							};
+
+							System.out.println(numbers.length); // what does this print?
+						</code>
+					</pre>
+					<p class="fragment">The length of <code>numbers</code> is 2</p>
+				</section>
+				
+				<section data-auto-animate>
+					<h3>Arrays</h3>
+					<p><strong>💡Try It:</strong> <em>Write code to sum all of the elements in a two-dimensional array</em></p>
+					<pre class="java fragment">
+						<code data-trim>
+							int[][] numbers = new int[5][10];
+							// array contents are provided
+							
+							int sum = 0;
+							for (int i = 0; i < numbers.length; i++)
+								for (int j = 0; j < numbers[i].length; j++)
+									sum += numbers[i][j];
+						</code>
+					</pre>
+				</section>
+				
+				<section data-auto-animate>
+					<h3>Arrays</h3>
+					<p><strong>💡Try It:</strong> <em>Write code to print the sum of each row of a two-dimensional array</em></p>
+					<pre class="java fragment">
+						<code data-trim>
+							int[][] numbers = new int[5][10];
+							// array contents are provided
+							
+							for (int i = 0; i < numbers.length; i++)
+							{
+								int sum = 0;
+								for (int j = 0; j < numbers[i].length; j++)
+									sum += numbers[i][j];
+								System.out.println(sum);
+							}
+						</code>
+					</pre>
+				</section>
+				
+				<section data-auto-animate>
+					<h3>Arrays</h3>
+					<p><strong>💡Try It:</strong> <em>Write code to print the sum of each <u>column</u> of a two-dimensional array</em></p>
+					<pre class="java fragment">
+						<code data-trim>
+							int[][] numbers = new int[5][10];
+							// array contents are provided
+							
+							for (int i = 0; i < numbers[0].length; i++)
+							{
+								int sum = 0;
+								for (int j = 0; j < numbers.length; j++)
+									sum += numbers[j][i];
+								System.out.println(sum);
+							}
+						</code>
+					</pre>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Arrays</h3>
+					<ul>
+						<li>Java doesn't enforce any particular standard for arrays, so we can create "<strong>ragged</strong>" arrays (<em>arrays with different sizes per-row</em>)</li>
+					</ul>
+					<pre class="java">
+						<code data-trim>
+							// this will always create an "squared" array
+							int[][] a = new int[5][10];
+
+							// but we can create a ragged array manually
+							int[][] b = new int[3][]; // null pointers initially
+							b[0] = new int[4];
+							b[1] = new int[5];
+							b[2] = new int[3];
+						</code>
+					</pre>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Arrays</h3>
+					<ul>
+						<li>There are times where <em>higher dimensionality</em> might make sense for your problem. Java doesn't impose any limits, other than <em>memory constraints</em></li>
+						<li>Visualizing dimensions greater than 3d can be hard</li>
+					</ul>
+					<pre class="java">
+						<code data-trim>
+							// 2d is easy to understand
+							int[][] a2 = new int[3][4];
+
+							// 3d might take a bit more thinking
+							int[][][] a3 = new int[3][4][5];
+
+							// 4d and higher can be hard to conceptualize
+							int[][][][] a4 = new int[3][4][5][6];
+							a4[1][1][1][1] = 100; // ...but still perfectly usable
+						</code>
+					</pre>
+				</section>
 			</div>
 		</div>
 
