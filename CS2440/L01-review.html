@@ -837,6 +837,292 @@
 						</code>
 					</pre>
 				</section>
+
+				<section data-auto-animate data-auto-animate-restart>
+					<h3>Parsing Input</h3>
+					<ul>
+						<li>The <code>Scanner</code> class is used for parsing and tokenizing a text stream</li>
+						<li>Provided by <code>import java.util.Scanner;</code></li>
+						<li><code>Scanner</code> can be used to parse <em>keyboard input</em>, <em>file contents</em>, and <em>tokenize Strings</em></li>
+					</ul>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Parsing Input</h3>
+					<ul>
+						<li>The <code>Scanner</code> constructor accepts <em>input streams</em></li>
+						<li class="fragment">One such input stream is data from a <em>file</em></li>
+						<pre class="java fragment">
+							<code data-trim>
+								File file = new File("filename.txt");
+								Scanner scan = new Scanner(file); // IOErrors possible
+
+								while (scan.hasNext())
+									System.out.println(scan.nextLine());
+								scan.close();
+							</code>
+						</pre>
+						<li class="fragment"><code>IOException</code>s and <code>IOError</code>s are common when working with files, and are <em>checked exceptions</em>, meaning they <em>must be handled</em></li>
+					</ul>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Parsing Input</h3>
+					<ul>
+						<li>Consider using a <em>try-catch block</em> to handle <code>IOException</code>s</li>
+						<pre class="java fragment">
+							<code data-trim>
+								Scanner scan = null;
+								try {
+									File file = new File("filename.txt");
+									scan = new Scanner(file);
+									// ...
+								}
+								catch (IOException e)
+								{ /* handle exception */ }
+								finally {
+									if (scan != null) scan.close();
+								}
+							</code>
+						</pre>
+					</ul>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Parsing Input</h3>
+					<ul>
+						<li>We can loop over the file contents using <code>hasNext()</code> to stop when there is no data left</li>
+					</ul>
+					<pre class="java fragment">
+						<code data-trim>
+							Scanner scan = new Scanner(...);
+
+							int count = 0;
+							while (scan.hasNext()) // returns false if there is no more data
+								count += scan.nextLine().length() + 1;
+						</code>
+					</pre>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Parsing Input</h3>
+					<ul>
+						<li><strong>Don't forget to close any open files!</strong></li>
+						<li><em>Get into good habits:</em> Consider calling <code>close()</code> when you open the file!</li>
+						<li>Files left open unnecessarily <em>tie up resources</em> and <em>leak memory</em></li>
+					</ul>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Parsing Input</h3>
+					<ul>
+						<li><em>stdin</em> represents input from the terminal (usually the <em>keyboard</em>), represented by <code>System.in</code> in Java</li>
+						<pre class="java fragment">
+							<code data-trim>
+								Scanner scan = new Scanner(System.in);
+
+								int x = scan.nextInt();
+								double y = scan.nextDouble();
+								String z = scan.nextLine();
+							</code>
+						</pre>
+						<li class="fragment"><em>stdin</em> (in most cases) never closes, so we cannot terminate an input loop with <code>hasNext()</code></li>
+						<li class="fragment"><em>❓ How do we terminate an input loop with stdin?</em></li>
+					</ul>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Parsing Input</h3>
+					<ul>
+						<li><code>Scanner</code> methods are a bit inconsistent because they serve two <em>different</em> purposes</li>
+						<pre class="java fragment">
+							<code data-trim>
+								Scanner scan = new Scanner(System.in);
+								// The user types the following:
+								// > 10
+								// > Hello World
+								// > 20
+
+								int x = scan.nextInt();
+								String y = scan.nextLine();
+								int z = scan.nextInt();
+							</code>
+						</pre>
+						<li class="fragment"><em>❓ What is in these variables <code>x</code>, <code>y</code>, and <code>z</code>?</em></li>
+					</ul>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Parsing Input</h3>
+					<ul>
+						<li>Most <code>Scanner</code> methods are "<em>tokenizing</em>" methods</li>
+						<li><em>Tokenization</em> is the act of identifying atomic (indivisible) units and parsing or labeling them</li>
+					</ul>
+					<pre class="java fragment">
+						<code data-trim>
+							// all of these advance to the next token and parses...
+							scan.nextInt()      // ...as an integer
+							scan.nextLong()     // ...as a long
+							scan.nextFloat()    // ...as a float
+							scan.nextDouble()   // ...as a double
+						</code>
+					</pre>
+					<pre class="java fragment">
+						<code data-trim>
+							scan.next()         // ...as a String
+						</code>
+					</pre>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Parsing Input</h3>
+					<ul>
+						<li>Most <code>Scanner</code> methods are "<em>tokenizing</em>" methods</li>
+						<li><em>Tokenization</em> is the act of identifying atomic (indivisible) units and parsing or labeling them</li>
+						<li>These consume <em>exactly</em> the number of characters needed to process the atom &mdash; no more</li>
+						<li class="fragment"><em>But <code>nextLine()</code> is different.</em></li>
+					</ul>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Parsing Input</h3>
+					<ul>
+						<li><code>nextLine()</code> is <strong>not</strong> a <em>tokenizing</em> method</li>
+						<li>To read an entire line at once, <code>nextLine()</code> starts from the <em>current cursor position</em> and reads up to the next newline character</li>
+					</ul>
+					<pre class="java fragment">
+						<code data-trim data-line-numbers data-id="code">
+							Scanner scan = new Scanner(System.in);
+							// The user types the following:
+							// > 10
+							// > Hello World
+
+							int x = scan.nextInt();     // afterwards, the cursor is after 10
+
+							String y = scan.nextLine(); // ...and this reads just the newline
+						</code>
+					</pre>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Parsing Input</h3>
+					<ul>
+						<li><code>nextLine()</code> is <strong>not</strong> a <em>tokenizing</em> method</li>
+						<li>To read an entire line at once, <code>nextLine()</code> starts from the <em>current cursor position</em> and reads up to the next newline character</li>
+					</ul>
+					<pre class="java">
+						<code data-trim data-line-numbers="7" data-id="code">
+							Scanner scan = new Scanner(System.in);
+							// The user types the following:
+							// > 10
+							// > Hello World
+
+							int x = scan.nextInt();     // afterwards, the cursor is after 10
+							scan.nextLine();            // reads and discards the newline
+							String y = scan.nextLine(); // this reads the next line correctly
+						</code>
+					</pre>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Parsing Input</h3>
+					<ul>
+						<li>A less common use for <code>Scanner</code> is for tokenizing a String &mdash; useful for <em>parsing sentences or lists</em></li>
+						<pre class="java fragment">
+							<code data-trim>
+								String input = "5 10 15 20 25 30";
+								Scanner scan = new Scanner(System.in);
+	
+								while (scan.hasNext())
+									System.out.println(scan.nextInt());
+							</code>
+						</pre>
+						<li class="fragment">This is why the <code>File</code> object is needed!</li>
+						<pre class="java fragment">
+							<code data-trim>
+								Scanner scan = new Scanner("filename.txt");
+								System.out.println(scan.nextLine()); // prints: filename.txt
+							</code>
+						</pre>
+					</ul>
+				</section>
+				
+				<section data-auto-animate>
+					<h3>Parsing Input</h3>
+					<p><strong>💡Try It:</strong> <em>Write code to add up all of the tokens (numbers) in a String</em></p>
+					<pre class="java fragment">
+						<code data-trim>
+							String input = "5 10 15 12 20 18 4 7";
+							Scanner scan = new Scanner(input);
+							
+							int sum = 0;
+							while (scan.hasNext())
+								sum += scan.nextInt();
+							System.out.println(sum);
+						</code>
+					</pre>
+				</section>
+				
+				<section data-auto-animate>
+					<h3>Parsing Input</h3>
+					<p><strong>💡Try It:</strong> <em>Write code to add up tokens (numbers) provided via stdin, terminate on 0</em></p>
+					<pre class="java fragment">
+						<code data-trim>
+							Scanner scan = new Scanner(System.in);
+							
+							int sum = 0;
+							while (true) // looping forever
+							{
+								int x = scan.nextInt();
+								if (x == 0) break;
+								sum += x;
+							}
+							System.out.println(sum);
+						</code>
+					</pre>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Parsing Input</h3>
+					<ul>
+						<li>There is no way to read in a <em>single character</em>, but we can use the String class's methods to help</li>
+					</ul>
+					<pre class="java">
+						<code data-trim>
+							// no such thing as nextChar(), so we have to use our tools wisely
+							char first_letter = scan.nextLine().charAt(0);
+						</code>
+					</pre>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Parsing Input</h3>
+					<ul>
+						<li>There is no way to read in a <em>single character</em>, but we can use the String class's methods to help</li>
+						<li>This can be useful for writing better <em>user interfaces</em></li>
+					</ul>
+					<pre class="java">
+						<code data-trim>
+							char first_letter = scan.nextLine().charAt(0);
+							switch (first_letter)
+							{
+								case 'y':
+								case 'Y':
+									System.out.println("You typed: yes");
+									break;
+								default:
+									System.out.println("You typed: no");
+							}
+						</code>
+					</pre>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Parsing Input</h3>
+					<ul>
+						<li><code>Scanner</code> can be tricky to use well, but if you understand <em>why</em> its methods work the way they do, it is very helpful</li>
+					</ul>
+				</section>
 			</div>
 		</div>
 
