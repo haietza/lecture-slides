@@ -1,0 +1,347 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>CS2435</title>
+
+		<link rel="stylesheet" href="../reveal-js/dist/reset.css">
+		<link rel="stylesheet" href="../reveal-js/dist/reveal.css">
+		<link rel="stylesheet" href="../reveal-js/dist/theme/dracula.css">
+		<link rel="stylesheet" href="../layouts/common.css">
+		<link rel="stylesheet" href="../reveal-js/plugin/highlight/monokai.css">
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+				<div class="header left">
+					CS2435: Intro to Scientific Programming
+				</div>
+				<div class="header right no-title">
+					<em>If Statements</em>
+				</div>
+
+				<section data-state="title-slide">
+					<h1 class="r-fit-text">CS2435: Intro to Scientific Programming</h1>
+					<h2 class="r-fit-text">Branching / Decision Structures</h2>
+				</section>
+
+				<section data-auto-animate data-auto-animate-restart>
+					<h3>Decision Structures</h3>
+					<ul>
+						<li>We want programs to dynamically respond to different inputs</li>
+						<li>One part of that is giving programs the ability to <em>decide what portions of code to run</em> based on certain decisions</li>
+						<li>One tool for creating dynamic programs is the <code>if</code> statement</li>
+					</ul>
+				</section>
+
+				<section data-auto-animate data-auto-animate-restart>
+					<h3><code>if</code> Statements</h3>
+					<ul>
+						<li>One way to think of an <code>if</code> statement is to consider the <em>flowchart</em> for the following structure:</li>
+						<pre class="text">
+							<code data-trim>
+								if it is cold outside
+									put on a jacket
+							</code>
+						</pre>
+						<li>In this example, we only put on a jacket if the condition <em>that it is cold outside</em> is true</li>
+					</ul>
+				</section>
+
+				<section data-auto-animate>
+					<h3><code>if</code> Statements</h3>
+					<ul>
+						<li>In Python, this would be an <code>if</code> statement</li>
+						<pre class="python">
+							<code data-trim>
+								if coldOutside:
+									wearJacket()
+							</code>
+						</pre>
+						<li>An <code>if</code> statement has two main parts:</li>
+						<ul>
+							<li>The <strong>header</strong> uses the <code>if</code> keyword, followed by a <em>boolean condition</em> (or "<em>predicate</em>")</li>
+							<li>The <strong>body</strong> is the <em>indented</em> block of code that runs if the condition evaluates to true</li>
+						</ul>
+					</ul>
+				</section>
+
+				<section data-auto-animate data-auto-animate-restart>
+					<h3>Boolean Values</h3>
+					<ul>
+						<li>A boolean value is either <em>true</em> or <em>false</em>, represented in Python as <code>True</code> and <code>False</code> respectively</li>
+						<li>We infrequently type out <em>boolean literals</em> directly &mdash; instead, we have operators that create booleans for us</li>
+					</ul>
+					<pre class="python">
+						<code data-trim>
+							x = True
+							if x:
+								print("Hello World")
+						</code>
+					</pre>
+				</section>
+
+				<section data-auto-animate data-auto-animate-restart>
+					<h3>Relational Operators</h3>
+					<ul>
+						<li><strong>Relational operators</strong> create boolean values by comparing two values against one another</li>
+					</ul>
+					<pre class="python">
+						<code data-trim>
+							x = float(input("x = "))   # get a value for x from the user
+							y = float(input("y = "))   # get a value for y from the user
+							print('eq', x == y)        # True if x equal to y
+							print('ne', x != y)        # True if x not equal to y
+							print('lt', x <  y)        # True if x less than y
+							print('le', x <= y)        # True if x less than or equal to y
+							print('gt', x >  y)        # True if x greater than y
+							print('ge', x >= y)        # True if x greater than or equal to y
+						</code>
+					</pre>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Relational Operators</h3>
+					<ul>
+						<li>Please note that assignment (<code>=</code>) and equality (<code>==</code>) are two different operators, and <em>must not be confused</em> with one another</li>
+						<li>We can use <em>relational operators</em> to compare any numeric values, as well as <em>strings</em></li>
+					</ul>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Relational Operators</h3>
+					<ul>
+						<li>Using relational operators to compare <em>strings</em> is based on their <em>lexicographic ordering</em></li>
+					</ul>
+					<pre class="python fragment">
+						<code data-trim>
+							print("abc" < "def")
+						</code>
+					</pre>
+					<p class="small fragment"><em>This will print <code>True</code>, "abc" comes before "def"</em></p>
+					<pre class="python fragment">
+						<code data-trim>
+							print("bed" > "bet")
+						</code>
+					</pre>
+					<p class="small fragment"><em>This will print <code>False</code>, "bed" does not come after "bet"</em></p>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Relational Operators</h3>
+					<ul>
+						<li>This can be tricky if you aren't used to how <em>lexicographic ordering</em> works</li>
+						<pre class="python fragment">
+							<code data-trim>
+								print("USD" > "euro") # False, surprisingly, but why?
+							</code>
+						</pre>
+						<pre class="python fragment">
+							<code data-trim>
+								print(ord("U"))   # 85
+								print(ord("e"))   # 101, "U" comes before "e" in the ASCII table
+							</code>
+						</pre>
+						<li class="fragment"><em>Lexicographic ordering</em> is not <em>alphabetic ordering</em></li>
+						<pre class="python fragment">
+							<code data-trim>
+								print("USD".lower() > "euro".lower())  # True, that's better!
+							</code>
+						</pre>
+					</ul>
+				</section>
+
+				<section data-auto-animate data-auto-animate-restart>
+					<h3><code>if</code> Statements</h3>
+					<pre class="python">
+						<code data-trim>
+							x = int(input("x = "))
+							y = int(input("y = "))
+							if x > y:
+								print("x is greater than y")
+							if x == y:
+								print("x is equal to y")
+							if x != y:
+								print("x is not equal to y")
+						</code>
+					</pre>
+				</section>
+
+				<section data-auto-animate>
+					<h3><code>if</code> Statements</h3>
+					<ul>
+						<li>The body of an <code>if</code> statement ends when we dedent the lines back to their previous level</li>
+					</ul>
+					<pre class="python">
+						<code data-trim>
+							x = 10
+							if False:
+								print("The condition is false, so this won't get printed")
+								print("Neither will this")
+								print("Nor will the next line that changes the value of x")
+								x = 12
+							print("This line will be printed, however")
+							print("And the value of x is unchanged:", x)
+						</code>
+					</pre>
+				</section>
+
+				<section data-auto-animate>
+					<h3><code>if</code> Statements</h3>
+					<ul>
+						<li><code>if</code> Statements can be nested, but we have to make sure we are careful with how this works!</li>
+					</ul>
+					<pre class="python">
+						<code data-trim>
+							x = 10
+							if A:
+							    x *= 2       # this line runs if A is true
+							    if B:
+							        x += 5   # this line runs if both A and B are true
+							print(x)
+						</code>
+					</pre>
+				</section>
+
+				<section data-auto-animate data-auto-animate-restart>
+					<h3>Boolean Logic</h3>
+					<ul>
+						<li>Sometimes we need to build more complex boolean expressions by <em>combining conditions</em></li>
+					</ul>
+					<pre class="text">
+						<code data-trim>
+							if it is cold
+							    wear a jacket
+							if it is raining
+							    carry an umbrella
+							if it is cold and it is raining
+							    wear a raincoat
+						</code>
+					</pre>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Boolean Logic</h3>
+					<ul>
+						<li>In Python, we use the <code>and</code>, <code>or</code>, and <code>not</code> operators to help us express complex conditions</li>
+						<li><code>and</code> and <code>or</code> take two conditions and combine them into one</li>
+					</ul>
+					<div class="columns">
+						<div class="one-column">
+							<pre class="text">
+								<code data-trim>
+									A        B        A and B
+									-------------------------
+									T        T        T
+									T        F        F
+									F        T        F
+									F        F        F
+								</code>
+							</pre>
+						</div>
+						<div class="one-column">
+							<pre class="text">
+								<code data-trim>
+									A        B        A or B
+									-------------------------
+									T        T        T
+									T        F        T
+									F        T        T
+									F        F        F
+								</code>
+							</pre>
+						</div>
+					</div>
+				</section>
+
+				<section data-auto-animate>
+					<h3>The <code>and</code> Operator</h3>
+					<ul>
+						<li>The logical <code>and</code> operator takes two operands that must both be boolean expressions</li>
+						<li>The resulting combined expression is true <em>if and only if</em> both operands are true</li>
+					</ul>
+					<pre class="text">
+						<code data-trim>
+							A        B        A and B
+							T        T        T
+							T        F        F
+							F        T        F
+							F        F        F
+						</code>
+					</pre>
+					<p class="small fragment"><em>❓ Can you make two key observations about this table?</em></p>
+				</section>
+
+				<section data-auto-animate>
+					<h3>The <code>or</code> Operator</h3>
+					<ul>
+						<li>The logical <code>or</code> operator takes two operands that must both be boolean expressions</li>
+						<li>The resulting combined expression is true if <em>either</em> operand is true</li>
+					</ul>
+					<pre class="text">
+						<code data-trim>
+							A        B        A or B
+							T        T        T
+							T        F        T
+							F        T        T
+							F        F        F
+						</code>
+					</pre>
+					<p class="small fragment"><em>❓ Can you make two key observations about this table?</em></p>
+				</section>
+
+				<section data-auto-animate>
+					<h3>The <code>not</code> Operator</h3>
+					<ul>
+						<li>The logical <code>not</code> operator is for unary negation &mdash; it <em>inverts</em> the truth value of its expression</li>
+					</ul>
+					<pre class="text">
+						<code data-trim>
+							A        not A
+							T        F
+							F        T
+						</code>
+					</pre>
+					<pre class="python fragment">
+						<code data-trim>
+							if not (x > 10):
+								print("for what values of x will this statement print?")
+						</code>
+					</pre>
+				</section>
+
+				<section data-auto-animate data-auto-animate-restart>
+					<h3><code>if</code> Statements</h3>
+					<p><strong>💡Try It:</strong> <em>Write a program asks the user for their grade and prints "pass" if it is between 70 and 100</em></p>
+					<pre class="python fragment">
+						<code data-trim>
+							grade = int(input("What is your grade? "))
+						</code>
+					</pre>
+					<pre class="python fragment">
+						<code data-trim>
+							if grade >= 70 and grade <= 100:
+								print("pass")
+						</code>
+					</pre>
+				</section>
+			</div>
+		</div>
+
+		<script src="../reveal-js/dist/reveal.js"></script>
+		<script src="../reveal-js/plugin/math/math.js"></script>
+		<script src="../reveal-js/plugin/notes/notes.js"></script>
+		<script src="../reveal-js/plugin/markdown/markdown.js"></script>
+		<script src="../reveal-js/plugin/highlight/highlight.js"></script>
+		<script>
+			Reveal.initialize({
+				hash: true,
+				slideNumber: true,
+				transition: 'convex',
+				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes, RevealMath.KaTeX ],
+			});
+		</script>
+	</body>
+</html>
