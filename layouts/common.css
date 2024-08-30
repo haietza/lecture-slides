@@ -41,6 +41,7 @@ section.left {
 	line-height: 150%;
 	overflow-y: hidden !important;
 	padding-left: 20px !important;
+	max-height: 600px !important;
 }
 
 /*.reveal ul {
