@@ -16,19 +16,343 @@
 		<div class="reveal">
 			<div class="slides">
 				<div class="header left">
-					CS3460: Data Structures
+					CS2440: Computer Science II
 				</div>
 				<div class="header right no-title">
 					<em>Big O Notation</em>
 				</div>
 
 				<section data-state="title-slide">
-					<h1 class="r-fit-text">CS3460: Data Structures & Algorithms</h1>
+					<h1 class="r-fit-text">CS2440: Computer Science II</h1>
 					<h2 class="r-fit-text">Measuring Runtimes: Big O / Asymptotic Notation</h2>
 				</section>
 
-				<section>
-					<h3>Slide Title</h3>
+				<section data-auto-animate data-auto-animate-restart>
+					<h3>Measuring Runtimes</h3>
+					<p>Why not use <em>wall-clock time</em>?</p>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Measuring Runtimes</h3>
+					<ul>
+						<li>May not take <em>input size</em> into account</li>
+						<li>May not take <em>resource allocation</em> into account</li>
+						<li>May not take <em>hardware specs</em> into account</li>
+					</ul>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Measuring Runtimes</h3>
+					<p>Could do empirical performance testing</p>
+					<pre class="java">
+						<code data-trim>
+							public static int linear_search(int[] array, int target)
+							{
+								for (int i = 0; i < array.length; i++)
+									if (array[i] == target) return i;
+								return -1;
+							}
+						</code>
+					</pre>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Measuring Runtimes</h3>
+					<p>Could do empirical performance testing</p>
+					<pre class="java">
+						<code data-trim>
+							public static int binary_search(int[] array, int target)
+							{
+								int lo = 0, hi = array.length - 1;
+								while (lo < hi)
+								{
+									int mid = lo + (hi - lo) / 2;
+									if (target < array[mid]) hi = mid - 1;
+									else if (target > array[mid]) lo = mid + 1;
+									else return mid;
+								}
+								return -1;
+							}
+						</code>
+					</pre>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Measuring Runtimes</h3>
+					<img src="../CS3460/figures/big-o/empirical.svg">
+					<p>Could do empirical performance testing</p>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Measuring Runtimes</h3>
+					<ul>
+						<li>Different inputs make a huge difference</li>
+						<li>Do you want to measure <em>worst-case</em>? <em>Average case</em>?</li>
+					</ul>
+				</section>
+
+				<section data-auto-animate data-auto-animate-restart>
+					<h3>Asymptotic Notation</h3>
+					<ul>
+						<li><strong>Linear search</strong>: $O(n)$</li>
+						<li><strong>Binary search</strong>: $O(\lg n)$</li>
+					</ul>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Asymptotic Notation</h3>
+					<ul>
+						<li>What does $O(f(N))$ mean?</li>
+						<ul>
+							<li class="fragment">Runtime is exactly $f(n)$? <em class="fragment">No.</em></li>
+							<li class="fragment">Upper-bounded by $f(n)$? <em class="fragment">No.</em></li>
+							<li class="fragment">Upper-bounded by $c \times f(n)$? <em class="fragment">Close.</em></li>
+							<li class="fragment">Upper-bounded by $c \times f(n)$ as $n\to\infty$</li>
+						</ul>
+					</ul>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Asymptotic Notation</h3>
+					<ul>
+						<li>Provides an upper-bound on running time, ignoring <em>multiplicative factors</em>, 
+							<em>constant factors</em>, and <em>lower-order terms</em>.</li>
+						<li>Captures what really matters regarding algorithm performance: 
+							<em>How does worst-case performance scale with input size?</em></li>
+					</ul>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Asymptotic Notation</h3>
+					<ul>
+						<li>There's more than just Big O notation</li>
+						<ul>
+							<li class="fragment">$O(f(n))$ is <em>an upper-bound</em> (<em>&le;</em>)</li>
+							<li class="fragment">$\Omega(f(n))$ is <em>a lower-bound</em> (<em>&ge;</em>)</li>
+							<li class="fragment">$\Theta(f(n))$ is upper-bound <em>and</em> lower-bound (<em>=</em>)</li>
+						</ul>
+					</ul>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Asymptotic Notation</h3>
+					<ul>
+						<li>The mathematical rules of asymptotic notation are based on an understanding that we only care about the bound as the input size approaches infinity</li>
+						<ul style="margin-top: 30px;" class="small">
+							<li class="fragment"><em>$O(f(n)) \times O(g(n)) = O(f(n) \times g(n))$</em></li>
+							<li class="fragment"><em>$n \times O(f(n)) = O(n \times f(n))$</em></li>
+							<li class="fragment"><em>$O(f(n)) + O(g(n)) = O(f(n))$ <strong>if</strong> $f(n) > g(n)$</em></li>
+						</ul>
+					</ul>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Asymptotic Notation</h3>
+					<ul>
+						<li>We care about the tightest bound possible</li>
+						<li>$f(n) = n^2 + n \lg n$</li>
+						<ul>
+							<li class="fragment">What are the <em>upper bounds</em> of this function?</li>
+							<li class="fragment">What is the <em>tightest</em> possible upper bound?</li>
+						</ul>
+					</ul>
+				</section>
+
+				<section data-auto-animate data-auto-animate-restart>
+					<h3>Running Times</h3>
+					<p>Why do we almost always focus on <em>worst-case runtime</em>?</p>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Running Times</h3>
+					<table class="small">
+						<tbody>
+							<tr>
+								<td>Constant</td>
+								<td>$O(1)$</td>
+							</tr>
+							<tr>
+								<td>Logarithmic</td>
+								<td>$O(\lg n)$</td>
+							</tr>
+							<tr>
+								<td>Linear</td>
+								<td>$O(n)$</td>
+							</tr>
+							<tr>
+								<td>Polynomial</td>
+								<td>$O(n^2)$, $O(n^3)$, $O(n^{100})$, ...</td>
+							</tr>
+							<tr class="fragment">
+								<td>😐 Exponential</td>
+								<td>$O(2^n)$, $O(3^n)$, ...</td>
+							</tr>
+							<tr class="fragment">
+								<td>☹️ <em>Worse</em></td>
+								<td>$O(n!)$, $O(n^n)$, $O(\alpha(n))$, ...</td>
+							</tr>
+						</tbody>
+					</table>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Running Times</h3>
+					<ul>
+						<li>Why don't we write the <em>base</em> of the logarithm?</li>
+						<li class="fragment">Yes, but <em>why</em> don't they matter?</li>
+						<ul>
+							<li class="fragment">Converting between bases is just <em>multiplying by a constant</em> ($\lg_a n = \lg_a b \times \lg_b n$)</li>
+							<li class="fragment">Usually $\lg n$ means $\lg_2 n$</li>
+						</ul>
+					</ul>
+				</section>
+
+				<section data-auto-animate data-auto-animate-restart>
+					<pre class="java">
+						<code data-trim>
+							public int alg1 (int n)  
+							{
+								int steps = 0;
+								for (int i = 0; i < n; i++)
+								{
+									steps++;
+								}
+								return steps;
+							}
+						</code>
+					</pre>
+				</section>
+
+				<section data-auto-animate data-auto-animate-restart>
+					<pre class="java">
+						<code data-trim>
+							public int alg2 (int n)
+							{
+								int steps = 0;
+								for (int i = 0; i < n; i++)
+								{
+									for (int j = 0; j < n*n; j++)
+									{
+										steps++;
+									}
+								}
+								return steps;
+							}
+						</code>
+					</pre>
+				</section>
+
+				<section data-auto-animate data-auto-animate-restart>
+					<pre class="java">
+						<code data-trim>
+							public int alg3 (int n)
+							{
+								int steps = 0;
+								for (int i = 0; i < n; i++)
+								{
+									for (int j = 0; j < i; j++)
+									{
+										steps++;
+									}
+								}
+								return steps;
+							}
+
+						</code>
+					</pre>
+				</section>
+
+				<section data-auto-animate data-auto-animate-restart>
+					<pre class="java">
+						<code data-trim>
+							public int alg4 (int n)
+							{
+								int steps = 0;
+								for (int i = 0; i < n; i++)
+								{
+									for (int j = 0; j < n; j++)
+									{
+										steps++;
+									}
+								}
+								return steps;
+							}
+						</code>
+					</pre>
+				</section>
+
+				<section data-auto-animate data-auto-animate-restart>
+					<pre class="java">
+						<code data-trim>
+							public int alg5 (int n)
+							{
+								int steps = 0;
+								for (int i = 0; i < n; i++)
+								{
+									for (int j =0; j < i*i; j++)
+									{
+										for (int k = 0; k < j; k++)
+										{
+											steps++;
+										}
+									}
+								}
+								return steps;
+							}
+						</code>
+					</pre>
+				</section>
+
+				<section data-auto-animate data-auto-animate-restart>
+					<pre class="java">
+						<code data-trim>
+							public int alg6 (int n)
+							{
+							int steps = 0;
+							for (int i = 0; i < n; i++) 
+								for (int j = 0; j < i*i; j++) 
+								{
+									steps++;
+									if (j % i == 0)
+										for (int k = 0; k < j; k++)
+											steps++;
+								}
+							return steps;
+							}
+						</code>
+					</pre>
+				</section>
+
+				<section data-auto-animate data-auto-animate-restart>
+					<pre class="java">
+						<code data-trim>
+							public int alg7 (int n)
+							{
+								int steps = 0;
+								for (int i = 1; i < n; i *= 2)
+								{
+									steps++;
+								}
+								return steps;
+							}
+						</code>
+					</pre>
+				</section>
+
+				<section data-auto-animate data-auto-animate-restart>
+					<pre class="java">
+						<code data-trim>
+							public int alg8 (int n)
+							{
+								int steps = 0;
+								for (int i = 0; i*i < n; i++)
+								{
+									steps++;
+								}
+								return steps;
+							}
+						</code>
+					</pre>
 				</section>
 			</div>
 		</div>
