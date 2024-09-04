@@ -327,6 +327,294 @@
 						</code>
 					</pre>
 				</section>
+
+				<section data-auto-animate data-auto-animate-restart>
+					<h3>The <code>else</code> Clause</h3>
+					<ul>
+						<li>Sometimes we want to do some behavior when our <code>if</code> condition is <strong>not</strong> true 
+							&mdash; One way we can accomplish this is by <em>negating the condition</em></li>
+					</ul>
+					<pre class="python">
+						<code data-trim>
+							if a >= 10 and a <= 50:
+								print("a is between 10 and 50")
+						</code>
+					</pre>
+					<pre class="python fragment">
+						<code data-trim>
+							if a &lt; 10 or a &gt; 50:
+								print("a is not between 10 and 50")
+						</code>
+					</pre>
+					<p class="fragment"><em>This transformation is an example of DeMorgan's Law</em></p>
+				</section>
+
+				<section data-auto-animate>
+					<h3>The <code>else</code> Clause</h3>
+					<ul>
+						<li>Another way to do this is using the <code>else</code> clause</li>
+						<li>The body of the <code>if</code> statement runs if the condition is <em>true</em>, the body of the <code>else</code> clause runs if the condition is <em>false</em></li>
+					</ul>
+					<pre class="python">
+						<code data-trim>
+							if a >= 10 and a <= 50:
+								print("a is between 10 and 50")
+							else:
+								print("a is not between 10 and 50")
+						</code>
+					</pre>
+				</section>
+
+				<section data-auto-animate>
+					<h3>The <code>else</code> Clause</h3>
+					<pre class="python">
+						<code data-trim data-line-numbers data-id="code">
+							if a >= 10 and a <= 50:
+								print("a is between 10 and 50")
+							else:
+								print("a is not between 10 and 50")
+						</code>
+					</pre>
+					<ul>
+						<li>A maximum of one of these blocks can run &mdash; one block running will prevent the other one from being entered, <em>even if the condition changes!</em></li>
+					</ul>
+				</section>
+
+				<section data-auto-animate>
+					<h3>The <code>else</code> Clause</h3>
+					<pre class="python">
+						<code data-trim data-line-numbers data-id="code">
+							if a >= 10 and a <= 50:
+								print("a is between 10 and 50")
+								a = 0 # this will not make us enter the else!
+							else:
+								print("a is not between 10 and 50")
+						</code>
+					</pre>
+					<ul>
+						<li>A maximum of one of these blocks can run &mdash; one block running will prevent the other one from being entered, <em>even if the condition changes!</em></li>
+					</ul>
+				</section>
+
+				<section data-auto-animate>
+					<h3>The <code>else</code> Clause</h3>
+					<p><strong>💡Try It:</strong> <em>Write a program that asks the user for their grade and prints "pass" if it is 70 or above and "fail" if it is below 70</em></p>
+					<pre class="python fragment">
+						<code data-trim>
+							grade = int(input("What is your grade? "))
+						</code>
+					</pre>
+					<pre class="python fragment">
+						<code data-trim>
+							if grade >= 70:
+								print("pass")
+							else
+								print("fail")
+						</code>
+					</pre>
+				</section>
+
+				<section data-auto-animate data-auto-animate-restart>
+					<h3>The <code>elif</code> Clause</h3>
+					<ul>
+						<li>Sometimes we want to check <em>more than one condition</em> to determine what action to take</li>
+						<pre class="python">
+							<code data-trim>
+								weather = input("What is the weather?")
+								if weather == "rain":
+									print("take an umbrella")
+								elif weather == "snow":
+									print("wear a jacket")
+								elif weather == "sunny":
+									print("wear your sunscreen")
+							</code>
+						</pre>
+						<li>Same rules apply: <em>can only enter one block</em></li>
+					</ul>
+				</section>
+
+				<section data-auto-animate>
+					<h3>The <code>elif</code> Clause</h3>
+					<ul>
+						<li><code>if</code>-<code>elif</code> chains can end with <code>else</code> blocks, but do not have to &mdash; <em>like a catch-all</em></li>
+						<pre class="python">
+							<code data-trim>
+								weather = input("What is the weather?")
+								if weather == "rain":
+									print("take an umbrella")
+								elif weather == "snow":
+									print("wear a jacket")
+								elif weather == "sunny":
+									print("wear your sunscreen")
+								else:
+									print("enjoy your day!")
+							</code>
+						</pre>
+					</ul>
+				</section>
+
+				<section data-auto-animate>
+					<h3>The <code>elif</code> Clause</h3>
+					<ul>
+						<li>The only way to reach the next <code>elif</code> clause is for all the above <code>if</code> and <code>elif</code> clauses to be <em>false</em></li>
+						<pre class="python">
+							<code data-trim>
+								if a &gt; 10:
+									print("a is greater than 10")
+								elif a &lt; 10:
+									print("a is less than 10")
+								elif b &gt; 0:
+									print("b is greater than zero")
+							</code>
+						</pre>
+					</ul>
+					<p class="fragment"><em>In what situation is the third block reachable?</em></p>
+				</section>
+
+				<section data-auto-animate>
+					<h3>The <code>elif</code> Clause</h3>
+					<p><strong>💡Try It:</strong> <em>Write a program that asks the user for their grade and prints a letter grade &mdash; A for 90+, B for 80-90, C for 70-80, etc</em></p>
+					<pre class="python fragment">
+						<code data-trim>
+							grade = int(input("What is your grade? "))
+						</code>
+					</pre>
+					<pre class="python fragment">
+						<code data-trim>
+							if grade >= 90:
+							    print("A")
+							elif grade >= 80 and grade < 90:
+							    print("B")
+							elif grade >= 70 and grade < 80:
+							    print("C")
+							# ...
+						</code>
+					</pre>
+				</section>
+
+				<section data-auto-animate>
+					<h3>The <code>elif</code> Clause</h3>
+					<p><strong>💡Try It:</strong> <em>Write a program that asks the user for their grade and prints a letter grade &mdash; A for 90+, B for 80-90, C for 70-80, etc</em></p>
+					<pre class="python">
+						<code data-trim>
+							grade = int(input("What is your grade? "))
+						</code>
+					</pre>
+					<pre class="python">
+						<code data-trim>
+							if grade >= 90:
+							    print("A")
+							elif grade >= 80: # we can drop the less-than
+							    print("B")    # because we passed the clause above
+							elif grade >= 70:
+							    print("C")
+							# ...
+						</code>
+					</pre>
+				</section>
+
+				<section data-auto-animate data-auto-animate-restart>
+					<h3>Nested Structures</h3>
+					<ul>
+						<li><strong>Be careful!</strong> Clauses are associated with one another based on indentation level</li>
+						<pre class="python">
+							<code data-trim data-line-numbers data-id="code">
+								if a &gt; 10:
+									if b &gt; 0:
+										print("b is greater than zero")
+									else:
+										print("mystery") # when does this print?
+							</code>
+						</pre>
+					</ul>
+					<p class="fragment"><em>"mystery" prints when <code>a</code> is greater than 10, but <code>b</code> is not greater than zero</em></p>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Nested Structures</h3>
+					<ul>
+						<li><strong>Be careful!</strong> Clauses are associated with one another based on indentation level</li>
+						<pre class="python">
+							<code data-trim data-line-numbers data-id="code">
+								if a &gt; 10:
+									if b &gt; 0:
+										print("b is greater than zero")
+								else:
+									print("mystery") # when does this print?
+							</code>
+						</pre>
+					</ul>
+					<p class="fragment"><em>"mystery" prints when <code>a</code> is not greater than 10 &mdash; <strong>with no consideration of <code>b</code></strong></em></p>
+				</section>
+
+				<section data-auto-animate data-auto-animate-restart>
+					<h3>Building Randomness</h3>
+					<ul>
+						<li>Sometimes programs use random numbers to vary behavior</li>
+						<ul>
+							<li class="fragment">Games need variance so behavior isn't consistent</li>
+							<li class="fragment">Simulations can sometimes use randomness to model <em>real-world behaviors</em></li>
+							<li class="fragment">We can even <em>approximate the solutions to math problems</em> with random numbers</li>
+						</ul>
+					</ul>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Building Randomness</h3>
+					<ul>
+						<li>We can import the <code>random</code> library to generate random values</li>
+						<pre class="python">
+							<code data-trim>
+								import random
+							</code>
+						</pre>
+						<li>Include this import at the top of any program using the <code>random</code> library. <em>Import statements almost always go at the top of the file</em></li>
+					</ul>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Building Randomness</h3>
+					<ul>
+						<li>The <code>randint(a, b)</code> function generates <strong>an integer</strong> value in the range of <code>a</code> to <code>b</code></li>
+					</ul>
+					<pre class="python">
+						<code data-trim>
+							x = random.randint(1, 5)  # can randomly generate 1, 2, 3, 4, 5
+							print(2 * x + 1)          # we can use it like any other number
+						</code>
+					</pre>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Building Randomness</h3>
+					<ul>
+						<li>The <code>uniform(a, b)</code> function generates <strong>a float</strong> in the range of <code>a</code> to <code>b</code></li>
+					</ul>
+					<pre class="python">
+						<code data-trim>
+							x = random.uniform(1, 5)  # any float in the range 1 to 5
+							print(x)
+						</code>
+					</pre>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Building Randomness</h3>
+					<ul>
+						<li>One simple way to create <em>more complex</em> random behavior is combining <code>if</code> statements with <code>randint(...)</code></li>
+					</ul>
+					<pre class="python">
+						<code data-trim>
+							x = random.randint(1, 3)  # can randomly generate 1, 2, 3
+							if x == 1:
+								print("behavior 1")
+							elif x == 2:
+								print("behavior 2")
+							else:
+								print("behavior 3")
+						</code>
+					</pre>
+				</section>
 			</div>
 		</div>
 
