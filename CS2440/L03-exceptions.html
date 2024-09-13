@@ -1,0 +1,251 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>CS2440</title>
+
+		<link rel="stylesheet" href="../reveal-js/dist/reset.css">
+		<link rel="stylesheet" href="../reveal-js/dist/reveal.css">
+		<link rel="stylesheet" href="../reveal-js/dist/theme/dracula.css">
+		<link rel="stylesheet" href="../layouts/common.css">
+		<link rel="stylesheet" href="../reveal-js/plugin/highlight/monokai.css">
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+				<div class="header left">
+					CS2440: Computer Science II
+				</div>
+				<div class="header right no-title">
+					<em>Exception Handling</em>
+				</div>
+
+				<section data-state="title-slide">
+					<h1 class="r-fit-text">CS2440: Computer Science II</h1>
+					<h2 class="r-fit-text">Exception Handling</h2>
+				</section>
+
+				<section data-auto-animate data-auto-animate-restart>
+					<h3>Exceptions</h3>
+					<ul>
+						<li>Often when we write programs for ourselves, we can accept that our program does not handle <em>bad input</em> or <em>bad states</em> gracefully</li>
+						<li>When we write code that will be used by other people, we need to be able to <em>identify</em> and <em>report</em> those problems</li>
+					</ul>
+				</section>
+
+				<section data-auto-animate data-auto-animate-restart>
+					<h3>Exception Types</h3>
+					<ul>
+						<li>There are two types of exceptions: <em>checked</em> and <em>unchecked</em></li>
+						<li class="fragment"><strong>Checked</strong> exceptions <em>must be handled</em>. Java will check at compile-time whether the exception has been handled appropriately, and if it has not, the code will not compile.</li>
+						<li class="fragment">An example of a checked exception is <code>FileNotFoundException</code></li>
+					</ul>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Exception Types</h3>
+					<ul>
+						<li>There are two types of exceptions: <em>checked</em> and <em>unchecked</em></li>
+						<li><strong>Unchecked</strong> exceptions <em>may be handled</em>. These are common exceptions that would be tedious to always check for.</li>
+						<li class="fragment">An example of an unchecked exception is <code>NullPointerException</code></li>
+					</ul>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Exception Types</h3>
+					<img src="figures/exceptions/exception-types.png">
+					<p class="small"><em>grey indicates unchecked, white are checked</em></p>
+				</section>
+
+				<section data-auto-animate data-auto-animate-restart>
+					<h3>Exceptions</h3>
+					<ul>
+						<li>There are two main mechanisms by which exceptions can be reported and handled:</li>
+						<ol>
+							<li class="fragment">the <code>throws</code> clause</li>
+							<li class="fragment">a <code>try</code>/<code>catch</code> block</li>
+						</ol>
+					</ul>
+				</section>
+
+				<section data-auto-animate data-auto-animate-restart>
+					<h3>The <code>throws</code> Clause</h3>
+					<ul>
+						<li>Sometimes, an exception is so <em>disruptive</em> to the expected behavior of a function that it cannot be gracefully handled</li>
+						<li><em>What do you do if a <code>saveFile()</code> function cannot open the file it is supposed to save?</em></li>
+						<li>In cases like this, we can let higher-level functions handle these issues</li>
+					</ul>
+				</section>
+
+				<section data-auto-animate>
+					<h3>The <code>throws</code> Clause</h3>
+					<ul>
+						<li>The <code>throws</code> clause is used to indicate that an exception can be thrown, but this does not handle it</li>
+						<li>The <code>throws</code> clause merely passes the responsibility onto the caller of the method</li>
+					</ul>
+					<pre class="java">
+						<code data-trim data-line-numbers="2">
+							public int loadFile(String filename)
+								throws FileNotFoundException
+							{
+						</code>
+					</pre>
+				</section>
+
+				<section data-auto-animate>
+					<h3><code>try</code>/<code>catch</code></h3>
+					<ul>
+						<li>Code that is unreliable can be put in a <code>try</code>/<code>catch</code> block &mdash; Exceptions thrown in the <code>try</code> block are caught by <code>catch</code> blocks</li>
+					</ul>
+					<pre class="java">
+						<code data-trim>
+							try
+							{
+								// unsafe operation
+							}
+							catch (Exception e)
+							{
+								// handle exception
+							}
+						</code>
+					</pre>
+				</section>
+
+				<section data-auto-animate>
+					<h3><code>try</code>/<code>catch</code></h3>
+					<ul>
+						<li>You can have multiple <code>catch</code> blocks. The <em>first</em> one that matches the Exception type will be used</li>
+					</ul>
+					<pre class="java">
+						<code data-trim>
+							try
+							{
+								// unsafe operation
+							}
+							catch (Exception1 e)
+							{ /* handler 1 */ }
+							catch (Exception2 e)
+							{ /* handler 2 */ }
+							catch (Exception3 e)
+							{ /* handler 3 */ }
+						</code>
+					</pre>
+				</section>
+
+				<section data-auto-animate>
+					<h3><code>try</code>/<code>catch</code></h3>
+					<ul>
+						<li>You can use this understanding to put <em>more general exceptions</em> later in the list</li>
+					</ul>
+					<pre class="java">
+						<code data-trim>
+							try
+							{
+								// unsafe operation
+							}
+							catch (FileNotFoundException e)
+							{ /* handler for file missing */ }
+							catch (EOFException e)
+							{ /* handler for file closed early */ }
+							catch (IOException e)
+							{ /* handler for any other IO problem */ }
+						</code>
+					</pre>
+				</section>
+
+				<section data-auto-animate>
+					<h3><code>try</code>/<code>catch</code></h3>
+					<ul>
+						<li>A <code>finally</code> block can be used to insist that cleanup is guaranteed to happen</li>
+					</ul>
+					<pre class="java">
+						<code data-trim>
+							Scanner s = null;
+							try
+							{
+								s = new Scanner(new File(filename));
+								// unsafe operations...
+							}
+							catch (IOException e)
+							{ /* handler */ }
+							finally
+							{ if (s != null) s.close(); }
+						</code>
+					</pre>
+				</section>
+
+				<section data-auto-animate>
+					<img src="figures/exceptions/Scanner-javadocs.png">
+				</section>
+
+				<section data-auto-animate>
+					<div class="columns">
+						<div class="one-column">
+							<img src="figures/exceptions/FileNotFoundException-heirarchy.png">
+						</div>
+						<div class="one-column">
+							<img src="figures/exceptions/IllegalArgumentException-heirarchy.png">
+						</div>
+					</div>
+				</section>
+
+				<section data-auto-animate data-auto-animate-restart>
+					<pre class="java" style="font-size: 30%;">
+						<code data-trim>
+							public static int go() {
+								int choice = 0;
+								try {
+								  String name = JOptionPane.showInputDialog("Enter your name: ");
+								  System.out.println("MENU:");
+								  System.out.println("1 - normal execution");
+								  System.out.println("2 - uncaught ArithmeticException");
+								  System.out.println("3 - return from try block");
+								  System.out.println("4 - call System.exit");
+								  System.out.println(
+										"5 - return 5 from finally after ArithmeticException");
+								  System.out.println(
+										"6 - return 6 from finally after try returns -1");
+								  System.out.println("X - catch NumberFormatException");
+								  choice = Integer.parseInt(JOptionPane.showInputDialog("Enter your choice: "));
+							 
+								  if (choice == 1) System.out.println("Hello " + name);
+								  else if (choice == 2) System.out.println("1 / 0 =  " + 1/0);
+								  else if (choice == 3) return 3;
+								  else if (choice == 4) System.exit(1);
+								  else if (choice == 5) System.out.println("1 / 0 =  " + 1/0);
+								  else if (choice == 6) return -1;
+								}
+								catch (NumberFormatException e) {
+								  System.out.println("Number Format Exception occurred");
+								}
+								finally {
+								  System.out.println("Goodbye from finally block");
+								  if (choice == 5) return 5;
+								  if (choice == 6) return 6;
+								}
+								return 0;
+							  } 
+							
+						</code>
+					</pre>
+				</section>
+			</div>
+		</div>
+
+		<script src="../reveal-js/dist/reveal.js"></script>
+		<script src="../reveal-js/plugin/math/math.js"></script>
+		<script src="../reveal-js/plugin/notes/notes.js"></script>
+		<script src="../reveal-js/plugin/markdown/markdown.js"></script>
+		<script src="../reveal-js/plugin/highlight/highlight.js"></script>
+		<script>
+			Reveal.initialize({
+				hash: true,
+				slideNumber: true,
+				transition: 'convex',
+				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes, RevealMath.KaTeX ],
+			});
+		</script>
+	</body>
+</html>

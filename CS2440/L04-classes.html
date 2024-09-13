@@ -1,0 +1,308 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>CS2440</title>
+
+		<link rel="stylesheet" href="../reveal-js/dist/reset.css">
+		<link rel="stylesheet" href="../reveal-js/dist/reveal.css">
+		<link rel="stylesheet" href="../reveal-js/dist/theme/dracula.css">
+		<link rel="stylesheet" href="../layouts/common.css">
+		<link rel="stylesheet" href="../reveal-js/plugin/highlight/monokai.css">
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+				<div class="header left">
+					CS2440: Computer Science II
+				</div>
+				<div class="header right no-title">
+					<em>Classes & The <code>Object</code> Class</em>
+				</div>
+
+				<section data-state="title-slide">
+					<h1 class="r-fit-text">CS2440: Computer Science II</h1>
+					<h2 class="r-fit-text">Classes & The <code>Object</code> Class</h2>
+				</section>
+
+				<section data-auto-animate data-auto-animate-restart>
+					<h3>The <code>Object</code> Class</h3>
+					<ul>
+						<li>The <code>Object</code> class is provided by <code>java.lang</code> and sits at the top of the heirarchy tree</li>
+						<li>Every class is a descendant, whether <em>direct</em> or <em>indirect</em>, of the <code>Object</code> class</li>
+					</ul>
+				</section>
+
+				<section data-auto-animate>
+					<h3>The <code>Object</code> Class</h3>
+					<ul>
+						<li>The <code>Object</code> class provides a number of common methods of its own that you can use, but might require <em>overriding</em> for your purpose</li>
+					</ul>
+					<div class="columns xsmall">
+						<div class="one-column">
+							<ul>
+								<li><code>public boolean equals(Object obj)</code></li>
+								<li><code>protected void finalize()</code></li>
+								<li><code>protected Object clone()</code></li>
+							</ul>
+						</div>
+						<div class="one-column">
+							<ul>
+								<li><code>public final Class getClass()</code></li>
+								<li><code>public int hashCode()</code></li>
+								<li><code>public String toString()</code></li>
+							</ul>
+						</div>
+					</div>
+				</section>
+
+				<section data-auto-animate data-auto-animate-restart>
+					<h3>The <code>Object</code> Class</h3>
+					<ul class="small">
+						<li><code>public boolean equals(Object obj)</code></li>
+						<ul>
+							<li>Returns <code>true</code> if the two objects are considered equal, <code>false</code> otherwise. Default operation is to <em>compare addresses</em>.</li>
+						</ul>
+						<li><code>protected Object clone() throws CloneNotSupportedException</code></li>
+						<ul>
+							<li>Returns a copy of this object (hopefully)</li>
+						</ul>
+						<li><code>public String toString()</code></li>
+						<ul>
+							<li>Returns a <code>String</code> representation of the object</li>
+						</ul>
+					</ul>
+				</section>
+
+				<section data-auto-animate>
+					<h3>The <code>Object</code> Class</h3>
+					<p>Slightly less common methods...</p>
+					<ul class="small">
+						<li><code>protected void finalize() throws Throwable</code></li>
+						<ul>
+							<li>Called by the <em>garbage collector</em> before destroying the object on cleanup. Useful for cleaning up <em>resources</em> like files</li>
+						</ul>
+						<li><code>public final Class getClass()</code></li>
+						<ul>
+							<li>Returns a <code>Class</code> object for this class type</li>
+						</ul>
+						<li><code>public int hashCode()</code></li>
+						<ul>
+							<li>Returns a hash of the object. <em>Learn more about this in CS3460</em></li>
+						</ul>
+					</ul>
+				</section>
+
+				<section data-auto-animate data-auto-animate-restart>
+					<h3>The <code>Object</code> Class: <code>equals()</code></h3>
+					<p><code>public boolean equals(Object obj)</code></p>
+					<ul>
+						<li>The <code>equals()</code> method compares two objects for equality. This is implemented by default as: <br/><code>return this == obj;</code></li>
+						<li>This works fine for primitive values, but for objects, this is only true if these are the same object</li>
+					</ul>
+				</section>
+
+				<section data-auto-animate>
+					<h3>The <code>Object</code> Class: <code>equals()</code></h3>
+					<p><code>public boolean equals(Object obj)</code></p>
+					<ul>
+						<li>Usually, for objects, we want to check their contents</li>
+					</ul>
+					<pre class="java">
+						<code data-trim>
+							// a Rectangle class's equals() method, perhaps
+							public boolean equals(Object obj)
+							{
+								if (!(obj instanceof Rectangle)) return false;
+								Rectangle other = (Rectangle) obj;
+								return this.w == other.w && this.h == other.h;
+							}
+						</code>
+					</pre>
+				</section>
+
+				<section data-auto-animate data-auto-animate-restart>
+					<h3>The <code>Object</code> Class: <code>toString()</code></h3>
+					<p><code>public String toString()</code></p>
+					<ul>
+						<li>The <code>toString()</code> method is invoked automatically anytime an object needs to be converted to a String</li>
+						<li>By default, this just prints out the <code>hashCode()</code>. <em>Not very useful</em></li>
+					</ul>
+				</section>
+
+				<section data-auto-animate data-auto-animate-restart>
+					<h3>The <code>Object</code> Class: <code>clone()</code></h3>
+					<p><code>protected Object clone()<br/>throws CloneNotSupportedException</code></p>
+					<ul>
+						<li>The purpose of the <code>clone()</code> method is to <em>create a copy of the object</em></li>
+						<li>The class (or a superclass) must <em>implement</em> the <code>Cloneable</code> <em>interface</em></li>
+					</ul>
+					<p class="small"><code>public class Rectangle implements Cloneable</code> 👍</p>
+				</section>
+
+				<section data-auto-animate>
+					<h3>The <code>Object</code> Class: <code>clone()</code></h3>
+					<pre class="java">
+						<code data-trim>
+							public Location clone()
+							{
+								Location copy = null;
+								try
+								{ copy = (Location) super.clone(); }
+								catch (CloneNotSupportedException e)
+								{
+									throw new RuntimeException(
+										"This class does not implement Cloneable.");
+								}
+								return copy;
+							}						
+						</code>
+					</pre>
+				</section>
+
+				<section data-auto-animate>
+					<h3>The <code>Object</code> Class: <code>clone()</code></h3>
+					<pre class="java">
+						<code data-trim>
+							public class IntArrayBag implements Cloneable
+							{
+								private int[] data;
+								private int size;
+
+								public IntArrayBag()
+								{
+									this.data = new int[100];
+									this.size = 0;
+								}
+
+								// ...
+							}
+						</code>
+					</pre>
+				</section>
+
+				<section data-auto-animate>
+					<h3>The <code>Object</code> Class: <code>clone()</code></h3>
+					<pre class="java" data-id="code">
+						<code data-trim data-line-numbers>
+							public IntArrayBag clone()
+							{
+								IntArrayBag copy = null;
+								try
+								{ copy = (IntArrayBag) super.clone(); }
+								catch (CloneNotSupportedException e)
+								{
+									throw new RuntimeException(
+										"This class does not implement Cloneable.");
+								}
+								return copy;
+							}						
+						</code>
+					</pre>
+				</section>
+
+				<section data-auto-animate>
+					<h3>The <code>Object</code> Class: <code>clone()</code></h3>
+					<pre class="java" data-id="code">
+						<code data-trim data-line-numbers="11">
+							public IntArrayBag clone()
+							{
+								IntArrayBag copy = null;
+								try
+								{ copy = (IntArrayBag) super.clone(); }
+								catch (CloneNotSupportedException e)
+								{
+									throw new RuntimeException(
+										"This class does not implement Cloneable.");
+								}
+								copy.data = data.clone(); // copy the array too!
+								return copy;
+							}						
+						</code>
+					</pre>
+				</section>
+
+				<section data-auto-animate>
+					<h3>The <code>Object</code> Class: <code>clone()</code></h3>
+					<ul>
+						<li>The default <code>clone()</code> behavior might be sufficient, but if there are references to external objects, you might need to override <code>clone()</code></li>
+						<li>Shallow copies are not bad: <em>they are faster!</em></li>
+					</ul>
+				</section>
+
+				<section data-auto-animate data-auto-animate-restart>
+					<h3>The <code>Object</code> Class</h3>
+					<p class="small"><strong>💡Think About It #1:</strong> You create a class <code>Day</code> with a constructor for month, day, and year and <em>no other methods</em>. What will be printed here (or will it throw an exception)?</p>
+					<pre class="java">
+						<code data-trim>
+							Day d1 = new Day(2, 10, 2001);
+							Day d2 = new Day(2, 10, 2001);
+							if (d1.equals(d2))
+								System.out.println("equal");
+							else
+								System.out.println("not equal");
+						</code>
+					</pre>
+					<p class="fragment"><strong>"not equals"</strong> because <span class="fragment">the default <code>equals()</code> method checks identity (<em>addresses</em>)</p>
+				</section>
+
+				<section data-auto-animate data-auto-animate-restart>
+					<h3>The <code>Object</code> Class</h3>
+					<p class="small"><strong>💡Think About It #2:</strong> If the <code>Day</code> object only has month, day, and year fields, and you create a <code>clone()</code> method, should you need a deep copy? Or will a shallow copy be sufficient?</p>
+					<p class="fragment"><strong>Shallow copy is fine.</strong> Copies of primitives are always safe. In fact, if all you need are shallow copies, you may be fine using the default <code>clone()</code> method.</p>
+				</section>
+
+				<section data-auto-animate data-auto-animate-restart>
+					<h3>The <code>Object</code> Class</h3>
+					<p class="small"><strong>💡Think About It #3:</strong> In order to override the <code>clone()</code> method in a way that does not throw a <code>CloneNotSupportedException</code>, what do you need to do to the class?</p>
+					<ol class="fragment" data-fragment-index="1" style="width: 100%">
+						<li class="fragment semi-fade-out" data-fragment-index="2">Add <code>extends Object</code></li>
+						<li class="fragment semi-fade-out" data-fragment-index="2">Add <code>extends Cloneable</code></li>
+						<li>Add <code>implements Cloneable</code></li>
+						<li class="fragment semi-fade-out" data-fragment-index="2">Change the return type</li>
+					</ol>
+				</section>
+
+				<section data-auto-animate data-auto-animate-restart>
+					<h3>The <code>Object</code> Class</h3>
+					<p class="small"><strong>💡Think About It #4:</strong> What datatype does the <code>toString()</code> method return?</p>
+					<ol>
+						<li><code>String</code></li>
+						<li class="fragment semi-fade-out" data-fragment-index="2"><code>Character</code></li>
+						<li class="fragment semi-fade-out" data-fragment-index="2"><code>char</code></li>
+						<span class="fragment" data-fragment-index="1">
+							<li class="fragment semi-fade-out strike" data-fragment-index="2">trick question: it prints the <code>String</code> representation, <code>toString()</code> is a <code>void</code> method</li>
+						</span>
+					</ol>
+				</section>
+
+				<section data-auto-animate data-auto-animate-restart>
+					<h3>The <code>Object</code> Class</h3>
+					<p class="small"><strong>💡Think About It #5:</strong> If you have implemented a <code>toString()</code> method for the <code>Day</code> class, and <code>d1</code> is a <code>Day</code> object, what is wrong with the following code?</p>
+					<pre class="java">
+						<code data-trim>
+							System.out.println(d1);
+						</code>
+					</pre>
+					<p class="fragment"><strong>Nothing.</strong> You do not have to explicitly call <code>toString()</code>. <em>Java will call it automatically anytime the object needs to be converted to a <code>String</code></em>.</p>
+				</section>
+			</div>
+		</div>
+
+		<script src="../reveal-js/dist/reveal.js"></script>
+		<script src="../reveal-js/plugin/math/math.js"></script>
+		<script src="../reveal-js/plugin/notes/notes.js"></script>
+		<script src="../reveal-js/plugin/markdown/markdown.js"></script>
+		<script src="../reveal-js/plugin/highlight/highlight.js"></script>
+		<script>
+			Reveal.initialize({
+				hash: true,
+				slideNumber: true,
+				transition: 'convex',
+				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes, RevealMath.KaTeX ],
+			});
+		</script>
+	</body>
+</html>
