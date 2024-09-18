@@ -68,6 +68,10 @@ table.bordered {
 	background-color: rgba(255, 255, 255, .1);
 }*/
 
+.reveal .fragment.semi-fade-out.visible {
+    opacity: .2 !important;
+}
+
 .float-right {
 	padding-left: 10px;
 	float: right;
