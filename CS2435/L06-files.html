@@ -1,0 +1,483 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>CS2435</title>
+
+		<link rel="stylesheet" href="../reveal-js/dist/reset.css">
+		<link rel="stylesheet" href="../reveal-js/dist/reveal.css">
+		<link rel="stylesheet" href="../reveal-js/dist/theme/dracula.css">
+		<link rel="stylesheet" href="../layouts/common.css">
+		<link rel="stylesheet" href="../reveal-js/plugin/highlight/monokai.css">
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+				<div class="header left">
+					CS2435: Intro to Scientific Programming
+				</div>
+				<div class="header right no-title">
+					<em>File Handling with <code>open()</code></em>
+				</div>
+
+				<section data-state="title-slide">
+					<h1 class="r-fit-text">CS2435: Intro to Scientific Programming</h1>
+					<h2 class="r-fit-text">File Handling</h2>
+				</section>
+
+				<section data-auto-animate data-auto-animate-restart>
+					<h3>Pathnames</h3>
+					<ul>
+						<li>When dealing with files, the first problem to solve is <strong>where the file is located</strong></li>
+						<li>The problem is more complicated when you realize that a program <em>needs to work on different computers</em></li>
+					</ul>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Pathnames</h3>
+					<ul>
+						<li><strong>Consider:</strong> giving directions to your house</li>
+						<li class="fragment">What are some different ways to give instructions for where your house is located?</li>
+						<ul>
+							<li class="fragment"><em>Exact</em> GPS coordinates</li>
+							<li class="fragment">Relative to <em>landmarks</em></li>
+							<li class="fragment">Relative to <em>current heading</em></li>
+						</ul>
+					</ul>
+				</section>
+
+				<section data-auto-animate data-auto-animate-restart>
+					<h3>Absolute Pathnames</h3>
+					<ul>
+						<li>An <strong>absolute pathname</strong> defines the <em>exact</em> location for where a file can be found</li>
+						<li>This is an <em>unambiguous</em> location</li>
+						<pre class="python">
+							<code data-trim>
+								fn = "C:/Users/smithj/Documents/file.txt"  # for Windows
+								fn = "/Users/smithj/Documents/file.txt"    # for Mac
+								fn = "/home/smithj/Documents/file.txt"     # for Linux
+							</code>
+						</pre>
+						<li>You can recognize an <strong>absolute pathname</strong> by <em>its start</em>: <code>C:\</code> on Windows and <code>/</code> on Mac or Linux</li>
+					</ul>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Absolute Pathnames</h3>
+					<ul>
+						<li>What are some problems with using <strong>absolute pathnames</strong>?</li>
+						<ul>
+							<li class="fragment">Not portable to other computers</li>
+							<li class="fragment">Doesn't handle files being moved easily</li>
+						</ul>
+						<li class="fragment">Absolute pathnames are rarely used, and <em>never in the labs</em>!</li>
+					</ul>
+				</section>
+
+				<section data-auto-animate data-auto-animate-restart>
+					<h3>Relative Pathnames</h3>
+					<ul>
+						<li>A <strong>relative pathname</strong> defines the location of a file relative to the <em>current working directory</em></li>
+						<li>Generally, the current working directory will be the directory in which the <code>.py</code> file is located, <em>but this isn't necessarily the case</em></li>
+						<pre class="python">
+							<code data-trim>
+								fn = "file.txt" # a file located in the cwd
+								fn = "./file.txt" # a file located in the cwd
+								fn = "../file.txt" # a file in the directory above the cwd
+								fn = "data/file.txt" # a file inside the data/ folder
+							</code>
+						</pre>
+						<li>Use forward slashes (<code>/</code>) for <em>OS compatibility</em></li>
+					</ul>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Relative Pathnames</h3>
+					<ul>
+						<li><strong>Relative pathnames</strong> are <em>almost always preferred</em></li>
+						<li>If you have a file stored in the same folder as your <code>.py</code> script, relative pathnames will ensure that this file will be accessible <em>even on other computers</em>, or even if you move the file <em>on your own computer</em></li>
+					</ul>
+				</section>
+
+				<section data-auto-animate data-auto-animate-restart>
+					<h3>Relative Pathnames</h3>
+					<ul>
+						<li>A short note on <strong>relative pathnames</strong> &mdash; There are two special nodes that can be used in pathnames</li>
+						<li>"<code>..</code>" refers to <em>moving up one directory</em></li>
+						<pre class="python">
+							<code data-trim>
+								fn = "../file.txt" # a file in the directory above the cwd
+								fn = "../../file.txt" # a file two directories above the cwd
+							</code>
+						</pre>
+						<li>"<code>.</code>" refers to <em>the current directory</em></li>
+						<pre class="python">
+							<code data-trim>
+								fn = "file.txt" # a file located in the cwd
+								fn = "./file.txt" # a file located in the cwd
+							</code>
+						</pre>
+					</ul>
+				</section>
+
+				<section data-auto-animate data-auto-animate-restart>
+					<h3>Reading a File</h3>
+					<ul>
+						<li>Before we can read the contents of a file, we have to <em>open</em> it</li>
+						<pre class="python">
+							<code data-trim>
+								file = open("path/to/file.txt", "r")
+								# code for reading a file goes here
+								file.close()
+							</code>
+						</pre>
+						<li>Whenever you open a file, it is <strong>crucially</strong> important to remember to <em>close your file</em>.</li>
+						<li>Closing a file <em>releases the resource</em>. Once it has been closed, it can no longer be interacted with</li>
+					</ul>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Reading a File</h3>
+					<ul>
+						<li><code>open(filename, mode)</code> takes two arguments</li>
+						<ol>
+							<li><code>filename</code> &mdash; the path to the file</li>
+							<li><code>mode</code> &mdash; a string describing <em>how the file should be opened</em>. <code>"r"</code> for read (<em>the default option</em>). <code>"w"</code> for write. <code>"a"</code> for append</coe></li>
+						</ol>
+						<li>This can throw an error for a variety of reasons: file doesn't exist, file not accessible, and more...</li>
+					</ul>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Reading a File</h3>
+					<ul>
+						<li>One way to read a file is <em>all at once</em> &mdash; the <code>.read()</code> method reads an entire file</li>
+						<pre class="python">
+							<code data-trim>
+								file = open("path/to/file.txt", "r")
+								contents = file.read()   # read the entire file as a string
+								file.close()
+							</code>
+						</pre>
+						<li>This isn't usually what we want, but sometimes this can be helpful</li>
+					</ul>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Reading a File</h3>
+					<ul>
+						<li>Another option: reading the file <em>one line at a time</em> &mdash; the <code>.readline()</code> method reads one line</li>
+						<pre class="python">
+							<code data-trim>
+								file = open("path/to/file.txt", "r")
+								a = file.readline() # read the first line
+								b = file.readline() # read the second line
+								c = file.readline() # read the third line
+								file.close()
+							</code>
+						</pre>
+						<li><strong>Remember:</strong> like the <code>input()</code> method. All of these methods <em>return strings</em>.</li>
+					</ul>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Reading a File</h3>
+					<ul>
+						<li>Another option, <em>looping</em> over a file using a <code>for</code> loop</li>
+						<pre class="python">
+							<code data-trim>
+								file = open("path/to/file.txt", "r")
+								for line in file:
+									print(line.strip()) # strip() removes the newline at the end
+								file.close()
+							</code>
+						</pre>
+						<li>If you need the values to be a different type (such as <em>integers</em>), cast the value &mdash; <code>int(line.strip())</code></li>
+					</ul>
+				</section>
+
+				<section data-auto-animate data-auto-animate-restart>
+					<h3>The File Cursor</h3>
+					<ul>
+						<li>When reading from a file, imagine there's a <strong>cursor</strong> inside it that moves as you read the data</li>
+						<li>Operations like <em>looping</em> over the file or calling <code>.readline()</code> <em>advance the cursor to the next line</em></li>
+						<li><strong>Think:</strong> how does this affect reading a file?</li>
+					</ul>
+				</section>
+
+				<section data-auto-animate>
+					<h3>The File Cursor</h3>
+					<ul style="width: 100%">
+						<li>Imagine we want to loop through a file.</li>
+						<pre class="python" data-id="code">
+							<code data-trim data-line-numbers>
+								file = open("path/to/file.txt", "r")
+								for line in file:
+									print(line.strip())
+								file.close()
+							</code>
+						</pre>
+					</ul>
+				</section>
+
+				<section data-auto-animate>
+					<h3>The File Cursor</h3>
+					<ul style="width: 100%">
+						<li>What happens if we want to loop through it <em>twice</em>?</li>
+						<pre class="python" data-id="code">
+							<code data-trim data-line-numbers>
+								file = open("path/to/file.txt", "r")
+								for line in file:
+									print(line.strip())
+								for line in file:
+									print(line.strip())
+								file.close()
+							</code>
+						</pre>
+						<li class="fragment">What does the <em>second loop</em> print?</li>
+						<li class="fragment">How do we fix it?</li>
+					</ul>
+				</section>
+
+				<section data-auto-animate>
+					<h3>The File Cursor</h3>
+					<ul style="width: 100%">
+						<li>The <code>.seek()</code> method can be used to move the cursor</li>
+						<pre class="python" data-id="code">
+							<code data-trim data-line-numbers="4">
+								file = open("path/to/file.txt", "r")
+								for line in file:
+									print(line.strip())
+								file.seek(0) # move the cursor to the start
+								for line in file:
+									print(line.strip())
+								file.close()
+							</code>
+						</pre>
+					</ul>
+				</section>
+
+				<section data-auto-animate data-auto-animate-restart>
+					<h3>Writing a File</h3>
+					<ul>
+						<li>Passing <code>"w"</code> to the <code>open()</code> method will open a file for writing</li>
+						<pre class="python">
+							<code data-trim data-line-numbers="1">
+								file = open("path/to/file.txt", "w")
+								# code for writing to a file goes here
+								file.close()
+							</code>
+						</pre>
+						<li>It is <strong>considerably</strong> more important to remember to close your file when writing than it is when reading!</li>
+					</ul>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Writing a File</h3>
+					<ul>
+						<li>Opening a file for writing <em>immediately</em> does a few things, depending on the situation</li>
+						<ul>
+							<li class="fragment">If the file does not exist, it will be <em>created</em></li>
+							<li class="fragment">If the file does exist, it will be <em>truncated</em> (its contents will be <em>deleted</em>)</li>
+							<li class="fragment">If the file cannot be created or written to, an <em>error</em> will occur</li>
+						</ul>
+					</ul>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Writing a File</h3>
+					<ul>
+						<li>One way to write to the file is using the <code>.write()</code> method &mdash; this method takes a string and writes it directly to the file</li>
+						<pre class="python">
+							<code data-trim>
+								file = open("path/to/file.txt", "w")
+								file.write("Hello World")
+								file.close()
+							</code>
+						</pre>
+						<li>This method is <em>very different</em> from the <code>print()</code> function, which can take any datatype</li>
+					</ul>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Writing a File</h3>
+					<ul>
+						<li><strong><code>.write()</code> only accepts strings!</strong></li>
+						<li>This means that if you want to write a value that isn't a string, you need to <em>cast</em> it yourself</li>
+						<pre class="python" data-id="code">
+							<code data-trim data-line-numbers="2">
+								file = open("path/to/file.txt", "w")
+								file.write(3.14)        # ERROR! write() expects a string
+								file.close()
+							</code>
+						</pre>
+					</ul>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Writing a File</h3>
+					<ul>
+						<li><strong><code>.write()</code> only accepts strings!</strong></li>
+						<li>This means that if you want to write a value that isn't a string, you need to <em>cast</em> it yourself</li>
+						<pre class="python" data-id="code">
+							<code data-trim data-line-numbers="2">
+								file = open("path/to/file.txt", "w")
+								file.write(str(3.14))   # fixed by converting to a string
+								file.close()
+							</code>
+						</pre>
+					</ul>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Writing a File</h3>
+					<ul>
+						<li><strong>Keep in mind:</strong> the <code>.write()</code> method writes <em>exactly</em> what you ask for. It will not add <em>spaces</em> or <em>newlines</em> for you</li>
+						<pre class="python">
+							<code data-trim>
+								file = open("path/to/file.txt", "w")
+								file.write("Writing a line, with a newline at the end\n")
+								file.write("This text is on a new line, after the previous line")
+								file.write("But this text is on the same line as the one above")
+								file.close()
+							</code>
+						</pre>
+					</ul>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Writing a File</h3>
+					<p><strong>💡Think About It:</strong> what does the following code write to a file?</p>
+					<pre class="python">
+						<code data-trim>
+							file = open("path/to/file.txt", "w")
+							file.write("A\n")
+							file.write("B")
+							file.write("C\n")
+							file.write("D")
+							file.close()
+						</code>
+					</pre>
+					<pre class="text fragment">
+						<code data-trim>
+							A
+							BC
+							D
+						</code>
+					</pre>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Writing a File</h3>
+					<ul>
+						<li>By default, the <code>print()</code> function writes to <em>standard output</em>, which is the terminal window</li>
+						<li>We can provide a <em>keyword argument</em> <code>file=</code> to the <code>print()</code> function to change that behavior and tell it to "print" to a file</li>
+						<pre class="python">
+							<code data-trim data-line-numbers="2">
+								f = open("path/to/file.txt", "w")
+								print(1, 2, 3, file=f)   # that last argument isn't printed, 
+								f.close()                # it makes print() write to the file
+							</code>
+						</pre>
+					</ul>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Writing a File</h3>
+					<ul>
+						<pre class="python">
+							<code data-trim data-line-numbers="2">
+								f = open("path/to/file.txt", "w")
+								print(1, 2, 3, file=f)   # that last argument isn't printed, 
+								f.close()                # it makes print() write to the file
+							</code>
+						</pre>
+						<li>The appeal of this option is that it works like the <code>print()</code> function usually does: it can <em>take any datatype</em>, and it <em>adds a newline character</em> for you automatically</li>
+					</ul>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Writing a File</h3>
+					<ul>
+						<li>Usually when we open a file, we don't want its old contents to stay in the file, which is why the typical option is to <em>truncate</em></li>
+						<li>If you want the old contents to remain, with new data to be <em>added to the end</em>, we can open the file in <strong>append mode</strong></li>
+					</ul>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Writing a File</h3>
+					<ul>
+						<li>Append mode (mode <code>"a"</code> in the <code>open()</code> function) leaves the file contents and puts the <em>cursor</em> at the <em>end of the file</em></li>
+						<pre class="python">
+							<code data-trim data-line-numbers="1">
+								f = open("path/to/file.txt", "a")
+								f.write("All work and no play makes Jack a dull boy\n")
+								f.close()
+							</code>
+						</pre>
+					</ul>
+				</section>
+
+				<section data-auto-animate data-auto-animate-restart>
+					<h3>Closing Your Files</h3>
+					<ul>
+						<li><em>Operating systems are pretty smart!</em> Since file operations are slow, they don't write to a file every time, but <em>buffer</em> writes.</li>
+						<li class="fragment">The contents of the buffer are written to the file when <em>the buffer fills up</em> or when <em>the file is closed</em></li>
+						<li class="fragment">But what happens if you don't close your file?</li>
+						<li class="fragment">Sometimes, some of that data may not make it to the file</li>
+					</ul>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Closing Your Files</h3>
+					<ul>
+						<li>What this means is that closing a file doesn't really affect reading from a file, but failing to close a file when writing can have <em>catastrophic effects</em></li>
+						<pre class="python">
+							<code data-trim>
+								f = open("path/to/file.txt", "w")
+								for i in range(100000):
+									f.write(str(i) + "\n")
+							</code>
+						</pre>
+						<li>Many of the numbers in the above example <em>might</em> be missing when the program terminates</li>
+						<li><strong>These are difficult bugs to diagnose!</strong></li>
+					</ul>
+				</section>
+
+				<section data-auto-animate data-auto-animate-restart>
+					<h3>Context Manager</h3>
+					<ul>
+						<li>Python has a special syntax for <em>context managers</em></li>
+						<pre class="python">
+							<code data-trim>
+								with open("path/to/file.txt", "r") as f:
+									x = 0
+									for line in f:
+										x += int(line.strip())
+									print(x)
+							</code>
+						</pre>
+						<li>When the <code>with</code> block is <em>entered</em>, the file is <em>opened</em> and stored in the variable <code>f</code>. When the <code>with</code> block ends, the file is <em>closed automatically</em> for you</li>
+						<li>Only code in the <code>with</code> block has access to the file</li>
+					</ul>
+				</section>
+			</div>
+		</div>
+
+		<script src="../reveal-js/dist/reveal.js"></script>
+		<script src="../reveal-js/plugin/math/math.js"></script>
+		<script src="../reveal-js/plugin/notes/notes.js"></script>
+		<script src="../reveal-js/plugin/markdown/markdown.js"></script>
+		<script src="../reveal-js/plugin/highlight/highlight.js"></script>
+		<script>
+			Reveal.initialize({
+				hash: true,
+				slideNumber: true,
+				transition: 'convex',
+				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes, RevealMath.KaTeX ],
+			});
+		</script>
+	</body>
+</html>
