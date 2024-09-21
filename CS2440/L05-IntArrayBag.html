@@ -1,0 +1,436 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>CS2440</title>
+
+		<link rel="stylesheet" href="../reveal-js/dist/reset.css">
+		<link rel="stylesheet" href="../reveal-js/dist/reveal.css">
+		<link rel="stylesheet" href="../reveal-js/dist/theme/dracula.css">
+		<link rel="stylesheet" href="../layouts/common.css">
+		<link rel="stylesheet" href="../reveal-js/plugin/highlight/monokai.css">
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+				<div class="header left">
+					CS2440: Computer Science II
+				</div>
+				<div class="header right no-title">
+					<em>Case Study: <code>IntArrayBag</code></em>
+				</div>
+
+				<section data-state="title-slide">
+					<h1 class="r-fit-text">CS2440: Computer Science II</h1>
+					<h2 class="r-fit-text">Specification, Design, & Implementation</h2>
+				</section>
+
+				<section data-auto-animate data-auto-animate-restart>
+					<h3>Abstract Data Types (ADTs)</h3>
+					<ul>
+						<li><strong>Abstract Data Types</strong> are <em>container classes</em>, which store data in an organized way that <em>follow certain rules</em></li>
+					</ul>
+					<div class="columns small">
+						<div class="one-column">
+							<ul>
+								<li>A <strong>specification</strong> of a data structure is a list of the operations it needs to support</li>
+								<li>This will end up being the public interface for the implementation of the data structure</li>
+							</ul>
+						</div>
+						<div class="one-column">
+							<ul>
+								<li>An <strong>implementation</strong> is a concrete representation of the data structure that fulfills the 
+									requirements of the specification, either <em>logically</em> or <em>in code</em></li>
+							</ul>
+						</div>
+					</div>
+				</section>
+
+				<section data-auto-animate data-auto-animate-restart>
+					<div class="columns small">
+						<div class="one-column">
+							<img src="figures/adt/IntArrayBag.png">
+						</div>
+						<div class="one-column" style="text-align: left;">
+							<p class="fragment">
+								This is an portion of a <em>specification</em>. It includes explanations of the <em>parameters</em>, the <em>return type</em>, <em>preconditions</em> and <em>postconditions</em>, and what <em>exceptions</em> are thrown.
+							</p>
+							<p class="fragment">What do these look similar to? <span class="fragment"><strong>Javadocs</strong></span></p>
+							<p class="fragment">When you write a specification, you first determine what you want your class to do. These will become <em>methods</em>.</p>
+						</div>
+					</div>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Specifications</h3>
+					<ul>
+						<li>Methods are annotated with</li>
+						<ul>
+							<li class="fragment"><em>Name & description</em> &ndash; explaining the purpose</li>
+							<li class="fragment"><em>Parameters & return types</em> &ndash; describing the use, purpose, and types</li>
+							<li class="fragment"><em>Preconditions & postconditions</em> &ndash; things that are expected to be true upon entering and leaving the method</li>
+							<li class="fragment"><em>Throws</em> &ndash; info about possible exceptions</li>
+						</ul>
+					</ul>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Specification</h3>
+					<ul class="xsmall">
+						<li><code>public IntArrayBag()</code></li>
+						<li><code>public IntArrayBag(int initialCapacity)</code></li>
+						<li><code>public void add(int element)</code></li>
+						<li><code>public void addAll(IntArrayBag addend)</code></li>
+						<li><code>public void addMany(int... elements)</code> &mdash; a <em>vararg</em> method</li>
+						<li><code>public IntArrayBag clone()</code></li>
+						<li><code>public int countOccurrences(int target)</code></li>
+						<li><code>public void ensureCapacity(int minimumCapacity)</code></li>
+						<li><code>public int getCapacity()</code></li>
+						<li><code>public boolean remove(int target)</code></li>
+						<li><code>public int size()</code></li>
+						<li><code>public void trimToSize()</code></li>
+						<li><code>public static IntArrayBag union(IntArrayBag b1, IntArrayBag b2)</code></li>
+					</ul>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Specification</h3>
+					<ul>
+						<li>At this point, you can test your work by writing code that will <em>make use of the class</em>. This is a good opportunity to ensure that the specification actually match how you expect the methods to be used. <em>Change it if needed.</em></li>
+						<li>Work in parallel can begin here</li>
+						<li><strong>Note</strong> that we still haven't decided on <em>fields</em> or <em>algorthms</em>. Those aren't relevant here.</li>
+					</ul>
+				</section>
+
+				<section data-auto-animate data-auto-animate-restart>
+					<h3>Design</h3>
+					<ul>
+						<li>The second phase is the <strong>design phase</strong>. You decide here what <em>fields</em> your class will use, as well as <em>instructions</em> for how the data is maintained.</li>
+						<li>These instructions are called <strong>invariants</strong></li>
+						<li>An invariant is a type of <em>contract</em> that all methods must uphold. Methods can expect these invariants to be <em>true when the method is called</em>, and must guarantee that the invariants are <em>true again when the method is complete</em>.</li>
+					</ul>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Design</h3>
+					<ul>
+						<li>The fields of <code>IntArrayBag</code> are</li>
+						<pre class="java">
+							<code data-trim>
+								private int[] data;    // an array to store items
+								private int manyItems; // how many items are stored in the array
+							</code>
+						</pre>
+						<li>What <strong>invariants</strong> would we use for these values?</li>
+						<ul>
+							<li class="fragment">The number of elements in the bag is stored in <code>manyItems</code> and is between 0 and <code>data.length</code></li>
+							<li class="fragment">The elements of the bag are stored from <code>data[0]</code> to <code>data[manyItems-1]</code>, ignore the rest</li>
+						</ul>
+					</ul>
+				</section>
+
+				<section data-auto-animate data-auto-animate-restart>
+					<h3>Implementation</h3>
+					<ul>
+						<li>The third phase is the <strong>implementation phase</strong>. Now we can <em>write code</em> for our methods.</li>
+						<li>For the methods of <code>IntArrayBag</code>, we will discuss their implementations</li>
+					</ul>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Implementation</h3>
+					<p><code>public IntArrayBag()</code></p>
+					<pre class="java">
+						<code data-trim>
+							public IntArrayBag( )
+							{
+							   final int INITIAL_CAPACITY = 10;
+							   manyItems = 0;
+							   data = new int[INITIAL_CAPACITY];
+							}
+						</code>
+					</pre>
+					<p class="small">Create a new array of size 10 and set <code>manyItems</code> to 0</p>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Implementation</h3>
+					<p><code>public IntArrayBag(int initialCapacity)</code></p>
+					<pre class="java">
+						<code data-trim>
+							public IntArrayBag(int initialCapacity)
+							{
+								if (initialCapacity < 0)
+									throw new IllegalArgumentException
+									("The initialCapacity is negative: " + initialCapacity);
+								data = new int[initialCapacity];
+								manyItems = 0;
+							}
+						</code>
+					</pre>
+					<p class="small">Create a new array of size <code>initialCapacity</code> and set <code>manyItems</code> to 0</p>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Implementation</h3>
+					<p><code>public void add(int element)</code></p>
+					<pre class="java">
+						<code data-trim>
+							public void add(int element)
+							{
+								if (manyItems == data.length)
+									ensureCapacity((manyItems + 1)*2);
+							
+								data[manyItems] = element;
+								manyItems++;
+							}
+						</code>
+					</pre>
+					<p class="small">Resize if full by calling <code>ensureCapacity()</code>. Put new element at <code>data[manyItems]</code> and increment <code>manyItems</code>. <span class="fragment"><em>Why do we double in size?</em></span></p>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Implementation</h3>
+					<p><code>public void addAll(IntArrayBag x)</code></p>
+					<pre class="java">
+						<code data-trim>
+							public void addAll(IntArrayBag x)
+							{
+								ensureCapacity(manyItems + x.manyItems);
+								System.arraycopy(x.data, 0, data, manyItems, x.manyItems);
+								manyItems += x.manyItems;
+							}   
+						</code>
+					</pre>
+					<p class="small">Call <code>ensureCapacity()</code>, then use <code>System.arraycopy()</code> to copy elements into the bag</p>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Implementation</h3>
+					<p><code>public void addMany(int... elements)</code></p>
+					<pre class="java">
+						<code data-trim>
+							public void addMany(int... elements)
+							{
+								if (manyItems + elements.length > data.length)
+									ensureCapacity((manyItems + elements.length)*2);
+
+								System.arraycopy(elements, 0, data, manyItems, elements.length);
+								manyItems += elements.length;
+							}
+						</code>
+					</pre>
+					<p class="small">Same as before. Use <code>ensureCapacity()</code> to allocate enough room, then copy with <code>System.arraycopy()</code></p>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Implementation</h3>
+					<p><code>public IntArrayBag clone()</code></p>
+					<pre class="java">
+						<code data-trim> 
+							public IntArrayBag clone( )
+							{
+								IntArrayBag answer;
+								try { answer = (IntArrayBag) super.clone( ); }
+								catch (CloneNotSupportedException e)
+								{ throw new RuntimeException("..."); }
+								
+								answer.data = data.clone( );
+								return answer;
+							}
+						</code>
+					</pre>
+					<p class="small">Standard <code>clone()</code> with a copy of the array</p>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Implementation</h3>
+					<p><code>public int countOccurrences(int target)</code></p>
+					<pre class="java">
+						<code data-trim>
+							public int countOccurrences(int target)
+							{
+								int answer = 0;
+								for (int index = 0; index < manyItems; index++)
+									if (target == data[index])
+										answer++;
+								return answer;
+							}
+						</code>
+					</pre>
+					<p class="small">Loop through the array counting instances of <code>target</code></p>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Implementation</h3>
+					<p><code>public void ensureCapacity(int n)</code></p>
+					<pre class="java">
+						<code data-trim>
+							public void ensureCapacity(int n)
+							{
+								if (data.length < n)
+								{
+									int[] biggerArray = new int[n];
+									System.arraycopy(data, 0, biggerArray, 0, manyItems);
+									data = biggerArray;
+								}
+							}
+						</code>
+					</pre>
+					<p class="small">If <code>n</code> (minimumCapacity) is bigger than <code>data.length</code>, make a bigger array, copy all the values over, and change the <code>data</code> pointer</p>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Implementation</h3>
+					<p><code>public void getCapacity()</code></p>
+					<pre class="java">
+						<code data-trim>
+							public int getCapacity( )
+							{
+								return data.length;
+							}
+						</code>
+					</pre>
+					<p class="small">Return <code>data.length</code>, which is the capacity of the bag</p>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Implementation</h3>
+					<p><code>public boolean remove(int target)</code></p>
+					<pre class="java" style="font-size: 50%;">
+						<code data-trim>
+							public boolean remove(int target)
+							{
+								int i;
+								for (i = 0; i < manyItems && target != data[i]; i++);
+									
+								if (i == manyItems) return false;
+								else {
+									data[i] = data[--manyItems];
+									return true;
+								}
+							}
+						</code>
+					</pre>
+					<p class="small fragment">Find value to be removed, and if found, move the last element of the bag to fill in the gap</p>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Implementation</h3>
+					<p><code>public int size()</code></p>
+					<pre class="java">
+						<code data-trim>
+							public int size( )
+							{
+								return manyItems;
+							}
+						</code>
+					</pre>
+					<p class="small">Return <code>manyItems</code>, which is the count of elements in the bag</p>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Implementation</h3>
+					<p><code>public void trimToSize()</code></p>
+					<pre class="java">
+						<code data-trim>
+							public void trimToSize( )
+							{
+								if (data.length != manyItems)
+								{
+									int[ ] trimmedArray = new int[manyItems];
+									System.arraycopy(data, 0, trimmedArray, 0, manyItems);
+									data = trimmedArray;
+								}
+							}
+						</code>
+					</pre>
+					<p class="small">Make <code>data.length</code> equal to <code>manyItems</code> by resizing</p>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Implementation</h3>
+					<p><code>public static IntArrayBag union(</br>IntArrayBag b1, IntArrayBag b2)</code></p>
+					<pre class="java" style="font-size: 50%;">
+						<code data-trim>
+							public static IntArrayBag union(IntArrayBag b1, IntArrayBag b2)
+							{  
+								IntArrayBag res = new IntArrayBag(b1.getCapacity() + b2.getCapacity());
+								System.arraycopy(b1.data, 0, res.data, 0, b1.manyItems);
+								System.arraycopy(b2.data, 0, res.data, b1.manyItems, b2.manyItems);
+								res.manyItems = b1.manyItems + b2.manyItems;
+								return res;
+							}
+						</code>
+					</pre>
+					<p class="small">Make a new <code>IntArrayBag</code> large enough to hold all elements. Copy data over, and set <code>manyItems</code> to the sum <code>b1.manyItems + b2.manyItems</code></p>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Implementation</h3>
+					<p><code>public static IntArrayBag union(</br>IntArrayBag b1, IntArrayBag b2)</code></p>
+					<ul>
+						<li>Why make this method <code>static</code>?</li>
+						<li class="fragment"><em>We don't want to call this method on a particular bag object, but instead accept two bags</em></li>
+					</ul>
+				</section>
+
+				<section data-auto-animate data-auto-animate-restart>
+					<h3>IntArrayBag</h3>
+					<pre class="java">
+						<code data-trim>
+							IntArrayBag b1 = new IntArrayBag();
+							IntArrayBag b2 = new IntArrayBag();
+							b1.add(1);
+							b1.add(2);
+							b1.add(3);
+							b2.addMany(4, 5, 6, 7, 8, 9, 10, 11);
+							b1.addAll(b2);
+							System.out.println(b1.getCapacity());
+							System.out.println(b1);
+							System.out.println(b2);
+							System.out.println(IntArrayBag.union(b1, b2));
+						</code>
+					</pre>
+					<p><em>What does this print?</em></p>
+				</section>
+
+				<section data-auto-animate>
+					<h3>IntArrayBag</h3>
+					<pre class="java">
+						<code data-trim>
+							IntArrayBag b3 = new IntArrayBag();
+							b3.addMany(25, 25, 10, 5, 25, 10, 5, 1, 1, 25, 25);
+							b3.add(b3.countOccurrences(25));
+							b3.remove(10);
+							b3.remove(10);
+							b3.remove(10);
+							IntArrayBag b4 = b3.clone();
+							b3.trimToSize();
+							System.out.println(b4.getCapacity() - b3.getCapacity());
+							System.out.println(b3);
+							System.out.println(b4);
+						</code>
+					</pre>
+					<p><em>What does this print?</em></p>
+				</section>
+			</div>
+		</div>
+
+		<script src="../reveal-js/dist/reveal.js"></script>
+		<script src="../reveal-js/plugin/math/math.js"></script>
+		<script src="../reveal-js/plugin/notes/notes.js"></script>
+		<script src="../reveal-js/plugin/markdown/markdown.js"></script>
+		<script src="../reveal-js/plugin/highlight/highlight.js"></script>
+		<script>
+			Reveal.initialize({
+				hash: true,
+				slideNumber: true,
+				transition: 'convex',
+				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes, RevealMath.KaTeX ],
+			});
+		</script>
+	</body>
+</html>

@@ -1,0 +1,418 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>CS2440</title>
+
+		<link rel="stylesheet" href="../reveal-js/dist/reset.css">
+		<link rel="stylesheet" href="../reveal-js/dist/reveal.css">
+		<link rel="stylesheet" href="../reveal-js/dist/theme/dracula.css">
+		<link rel="stylesheet" href="../layouts/common.css">
+		<link rel="stylesheet" href="../reveal-js/plugin/highlight/monokai.css">
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+				<div class="header left">
+					CS2440: Computer Science II
+				</div>
+				<div class="header right no-title">
+					<em>Case Study: <code>DoubleArraySeq</code></em>
+				</div>
+
+				<section data-state="title-slide">
+					<h1 class="r-fit-text">CS2440: Computer Science II</h1>
+					<h2 class="r-fit-text">Case Study: <code>DoubleArraySeq</code></h2>
+				</section>
+
+				<section data-auto-animate data-auto-animate-restart>
+					<h3>Bag vs Sequence</h3>
+					<ul>
+						<li>Previously, we talked about a bag data structure. <em>What is a bag?</em></li>
+						<li class="fragment">A <strong>bag</strong> is a data structure that contains values for which the ordering doesn't matter</li>
+						<li class="fragment">There is typically no method associated with getting a value at a specific location because that implies an ordering. <span class="fragment"><em>Then how do we interact with its contents?</em></span></li>
+						<li class="fragment">Usually with a <em>counting</em> method</li>
+					</ul>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Bag vs Sequence</h3>
+					<ul>
+						<li>A <strong>sequence</strong> is a data structure that maintains a pre-determined ordering of values</li>
+						<li class="fragment">For this purpose, our sequence data structure will also provide operations for <em>iterating</em> through the data set, and <em>insert</em>/<em>remove</em> operations will be based on that "<em>cursor</em>"</li>
+					</ul>
+				</section>
+
+				<section data-auto-animate data-auto-animate-restart>
+					<h3><code>DoubleArraySeq</code></h3>
+					<ul>
+						<li>For our class, <code>DoubleArraySeq</code>, we will store doubles in a <em>partially-filled</em> array</li>
+						<li class="fragment">What is a partially-filled array and how do we manage one?</li>
+						<li class="fragment">This means we will need to keep a separate variable to remember how much of the array is being used</li>
+					</ul>
+				</section>
+
+				<section data-auto-animate>
+					<h3><code>DoubleArraySeq</code></h3>
+					<ul class="small">
+						<li><code>public DoubleArraySeq()</code></li>
+						<ul>
+							<li>Initialize an empty sequence with an initial capacity of 10.</li>
+						</ul>
+						<li><code>public DoubleArraySeq(int initialCapacity)</code></li>
+						<ul>
+							<li>Initialize an empty sequence with a specified initial capacity.</li>
+						</ul>
+						<li><code>public void addAfter(int element)</code></li>
+						<ul>
+							<li>Add a new element to this sequence, after the current element. If the new element would take this sequence beyond its current capacity, then the capacity is increased before adding the new element.</li>
+						</ul>
+						<li><code>public void addBefore(int element)</code></li>
+						<ul>
+							<li>Add a new element to this sequence, before the current element. If the new element would take this sequence beyond its current capacity, then the capacity is increased before adding the new element.</li>
+						</ul>
+						<li><code>public void addAll(DoubleArraySeq addend)</code></li>
+						<ul>
+							<li>Place the contents of another sequence at the end of this sequence.</li>
+						</ul>
+					</ul>
+				</section>
+
+				<section data-auto-animate>
+					<h3><code>DoubleArraySeq</code></h3>
+					<ul class="small">
+						<li><code>public void advance()</code></li>
+						<ul>
+							<li>Move forward, so that the current element is now the next element in this sequence.</li>
+						</ul>
+						<li><code>public DoubleArraySeq clone()</code></li>
+						<ul>
+							<li>Generate a copy of this sequence.</li>
+						</ul>
+						<li><code>public static DoubleArraySeq catenation(<br/>DoubleArraySeq s1, DoubleArraySeq s2)</code></li>
+						<ul>
+							<li>Create a new sequence that contains all the elements from one sequence followed by another.</li>
+						</ul>
+						<li><code>public void ensureCapacity(int minimumCapacity)</code></li>
+						<ul>
+							<li>Change the current capacity of this sequence.</li>
+						</ul>
+						<li><code>public int getCapacity()</code></li>
+						<ul>
+							<li>Accessor method to get the current capacity of this sequence.</li>
+						</ul>
+					</ul>
+				</section>
+
+				<section data-auto-animate>
+					<h3><code>DoubleArraySeq</code></h3>
+					<ul class="small">
+						<li><code>public double getCurrent()</code></li>
+						<ul>
+							<li>Accessor method to get the current element of this sequence.</li>
+						</ul>
+						<li><code>public double isCurrent()</code></li>
+						<ul>
+							<li>Accessor method to determine whether this sequence has a specified current element that can be retrieved with the <code>getCurrent()</code> method.</li>
+						</ul>
+						<li><code>public void removeCurrent()</code></li>
+						<ul>
+							<li>Remove the current element from this sequence.</li>
+						</ul>
+						<li><code>public int size()</code></li>
+						<ul>
+							<li>Determine the number of elements in this sequence.</li>
+						</ul>
+						<li><code>public void start()</code></li>
+						<ul>
+							<li>Set the current element at the front of this sequence.</li>
+						</ul>
+						<li><code>public void trimToSize()</code></li>
+						<ul>
+							<li>Reduce the current capacity of this sequence to its actual size (i.e., the number of elements it contains).</li>
+						</ul>
+					</ul>
+				</section>
+
+				<section data-auto-animate>
+					<h3><code>DoubleArraySeq</code></h3>
+					<ul class="small">
+						<li>With the <strong>specification phase</strong> complete, we move to the <strong>design phase</strong></li>
+						<li class="fragment"><em>What fields will our class need to support the specification?</em></li>
+						<ul class="fragment">
+							<li><code>data</code> &ndash; a partially-filled array of <code>double</code>s</li>
+							<li><code>manyItems</code> &ndash; a count of the number of elements in the array</li>
+							<li><code>currentIndex</code> &ndash; the index of the current element in the array</li>
+						</ul>
+					</ul>
+				</section>
+
+				<section data-auto-animate>
+					<h3><code>DoubleArraySeq</code></h3>
+					<p><strong>Invariants:</strong> <code>data</code>, <code>manyItems</code>, <code>currentIndex</code></p>
+					<ol class="small">
+						<li class="fragment">The number of values in our sequence is stored in <code>manyItems</code>, in the range of 0 to <code>data.length</code></li>
+						<li class="fragment">For a non-empty sequence, the values in the sequence are stored between <code>data[0]</code> and <code>data[manyItems-1]</code>, and we don't care about values stored after that</li>
+						<li class="fragment">If there is a current element, it is stored at <code>data[currentIndex]</code>. If there is no current element, then <code>currentIndex == manyItems</code></li>
+					</ol>
+					<p class="fragment"><em>When might there be no current element?</em></p>
+				</section>
+
+				<section data-auto-animate>
+					<h3><code>DoubleArraySeq</code></h3>
+					<p><em>When might there be no current element?</em></p>
+					<ul class="small">
+						<li class="fragment">The sequence is <em>empty</em></li>
+						<li class="fragment">The current element was the <em>last element</em> and then <code>advance()</code> was called</li>
+						<li class="fragment">The current element was the <em>last element</em> and then it was <em>removed</em></li>
+						<li class="fragment">The sequence was constructed by <em>concatenation</em></li>
+					</ul>
+				</section>
+
+				<section data-auto-animate>
+					<h3><code>DoubleArraySeq</code></h3>
+					<p class="small"><strong>Where will the current element be, if there is one...</strong></p>
+					<ul class="small">
+						<li>After calling the constructor?</li>
+						<ul class="fragment">
+							<li><em>There is no current element; the sequence is empty</em></li>
+						</ul>
+						<li>After <code>addAfter()</code>?</li>
+						<ul class="fragment">
+							<li><em>The newly-added element will be the current element</em></li>
+						</ul>
+						<li>After <code>addBefore()</code>?</li>
+						<ul class="fragment">
+							<li><em>The newly-added element will be the current element</em></li>
+						</ul>
+						<li>After <code>addAll()</code>?</li>
+						<ul class="fragment">
+							<li><em>The current element will be unchanged</em></li>
+						</ul>
+					</ul>
+				</section>
+
+				<section data-auto-animate>
+					<h3><code>DoubleArraySeq</code></h3>
+					<p class="small"><strong>Where will the current element be, if there is one...</strong></p>
+					<ul class="small">
+						<li>After <code>advance()</code>?</li>
+						<ul class="fragment">
+							<li><em>The current element will be the one after the previous current element, unless it was the last element, in which case there won't be a current element</em></li>
+						</ul>
+						<li>After concatenation?</li>
+						<ul class="fragment">
+							<li><em>There will not be a current element</em></li>
+						</ul>
+						<li>After <code>removeCurrent()</code>?</li>
+						<ul class="fragment">
+							<li><em>The element after the removed element will be the current element, unless it was the last element, in which case there won't be a current element</em></li>
+						</ul>
+						<li>After <code>start()</code>?</li>
+						<ul class="fragment">
+							<li><em>The first element will be the current element</em></li>
+						</ul>
+					</ul>
+				</section>
+
+				<section data-auto-animate>
+					<h3><code>DoubleArraySeq</code></h3>
+					<p class="small"><strong>Where does <code>addBefore()</code> place the newly-added item?</strong></p>
+					<ul class="small">
+						<li>When the sequence is empty</li>
+						<ul class="fragment">
+							<li><em>At the beginning of the array</em></li>
+						</ul>
+						<li>When there is a current element</li>
+						<ul class="fragment">
+							<li><em>To the left of the current element. If values need to shift to make room, we will do so. If the array needs to be resized to make room, we will call <code>ensureCapacity()</code></em></li>
+						</ul>
+						<li>When there is <u>not</u> a current element</li>
+						<ul class="fragment">
+							<li><em>At the beginning of the array. If values need to shift to make room, we will do so. If the array needs to be resized to make room, we will call <code>ensureCapacity()</code></em></li>
+						</ul>
+					</ul>
+				</section>
+
+				<section data-auto-animate>
+					<h3><code>DoubleArraySeq</code></h3>
+					<p class="small"><strong>Where does <code>addAfter()</code> place the newly-added item?</strong></p>
+					<ul class="small">
+						<li>When the sequence is empty</li>
+						<ul class="fragment">
+							<li><em>At the beginning of the array</em></li>
+						</ul>
+						<li>When there is a current element</li>
+						<ul class="fragment">
+							<li><em>To the right of the current element. If values need to shift to make room, we will do so. If the array needs to be resized to make room, we will call <code>ensureCapacity()</code></em></li>
+						</ul>
+						<li>When there is <u>not</u> a current element</li>
+						<ul class="fragment">
+							<li><em>At the end of the array. If the array needs to be resized to make room, we will call <code>ensureCapacity()</code></em></li>
+						</ul>
+					</ul>
+				</section>
+
+				<section data-auto-animate data-auto-animate-restart>
+					<h3>Time Complexity</h3>
+					<table class="small">
+						<tbody>
+							<tr>
+								<td class="small"><strong>Constructor</strong> (initial capacity is $c$)</td>
+								<td class="fragment">$O(c)$</td>
+							</tr>
+							<tr>
+								<td class="small"><code>addBefore()</code> without capacity increase, with current element</td>
+								<td class="fragment">$O(n)$</td>
+							</tr>
+							<tr>
+								<td class="small"><code>addBefore()</code> without capacity increase, without current element</td>
+								<td class="fragment">$O(n)$</td>
+							</tr>
+							<tr>
+								<td class="small"><code>addBefore()</code> with capacity increase</td>
+								<td class="fragment">$O(n)$</td>
+							</tr>
+							<tr>
+								<td class="small"><code>addAfter()</code> without capacity increase, with current element</td>
+								<td class="fragment">$O(n)$</td>
+							</tr>
+							<tr>
+								<td class="small"><code>addAfter()</code> without capacity increase, without current element</td>
+								<td class="fragment">$O(1)$</td>
+							</tr>
+							<tr>
+								<td class="small"><code>addAfter()</code> with capacity increase</td>
+								<td class="fragment">$O(n)$</td>
+							</tr>
+						</tbody>
+					</table>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Time Complexity</h3>
+					<table class="small">
+						<tbody>
+							<tr>
+								<td class="small"><code>s1.addAll(s2)</code> without capacity increase</td>
+								<td class="fragment">$O(n_{2})$</td>
+							</tr>
+							<tr>
+								<td class="small"><code>s1.addAll(s2)</code> with capacity increase</td>
+								<td class="fragment">$O(n_{1}+n_{2})$</td>
+							</tr>
+							<tr>
+								<td class="small"><code>clone()</code></td>
+								<td class="fragment">$O(c)$</td>
+							</tr>
+							<tr>
+								<td class="small"><code>start()</code></td>
+								<td class="fragment">$O(1)$</td>
+							</tr>
+							<tr>
+								<td class="small"><code>advance()</code></td>
+								<td class="fragment">$O(1)$</td>
+							</tr>
+							<tr>
+								<td class="small"><code>removeCurrent()</code></td>
+								<td class="fragment">$O(n)$</td>
+							</tr>
+						</tbody>
+					</table>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Time Complexity</h3>
+					<table class="small">
+						<tbody>
+							<tr>
+								<td class="small"><code>isCurrent()</code></td>
+								<td class="fragment">$O(1)$</td>
+							</tr>
+							<tr>
+								<td class="small"><code>getCurrent()</code></td>
+								<td class="fragment">$O(1)$</td>
+							</tr>
+							<tr>
+								<td class="small"><code>DoubleArraySeq.catenation(s1, s2)</code></td>
+								<td class="fragment">$O(n_{1} + n_{2})$</td>
+							</tr>
+							<tr>
+								<td class="small"><code>getCapacity()</code></td>
+								<td class="fragment">$O(1)$</td>
+							</tr>
+							<tr>
+								<td class="small"><code>ensureCapacity()</code></td>
+								<td class="fragment">$O(c)$</td>
+							</tr>
+							<tr>
+								<td class="small"><code>size()</code></td>
+								<td class="fragment">$O(1)$</td>
+							</tr>
+							<tr>
+								<td class="small"><code>trimToSize()</code></td>
+								<td class="fragment">$O(n)$</td>
+							</tr>
+						</tbody>
+					</table>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Time Complexity</h3>
+					<table class="small">
+						<tbody>
+							<tr>
+								<td class="small"><code>isCurrent()</code></td>
+								<td class="fragment">$O(1)$</td>
+							</tr>
+							<tr>
+								<td class="small"><code>getCurrent()</code></td>
+								<td class="fragment">$O(1)$</td>
+							</tr>
+							<tr>
+								<td class="small"><code>DoubleArraySeq.catenation(s1, s2)</code></td>
+								<td class="fragment">$O(n_{1} + n_{2})$</td>
+							</tr>
+							<tr>
+								<td class="small"><code>getCapacity()</code></td>
+								<td class="fragment">$O(1)$</td>
+							</tr>
+							<tr>
+								<td class="small"><code>ensureCapacity()</code></td>
+								<td class="fragment">$O(c)$</td>
+							</tr>
+							<tr>
+								<td class="small"><code>size()</code></td>
+								<td class="fragment">$O(1)$</td>
+							</tr>
+							<tr>
+								<td class="small"><code>trimToSize()</code></td>
+								<td class="fragment">$O(n)$</td>
+							</tr>
+						</tbody>
+					</table>
+				</section>
+
+				<section data-auto-animate data-auto-animate-restart>
+					<h3><code>toString()</code></h3>
+				</section>
+			</div>
+		</div>
+
+		<script src="../reveal-js/dist/reveal.js"></script>
+		<script src="../reveal-js/plugin/math/math.js"></script>
+		<script src="../reveal-js/plugin/notes/notes.js"></script>
+		<script src="../reveal-js/plugin/markdown/markdown.js"></script>
+		<script src="../reveal-js/plugin/highlight/highlight.js"></script>
+		<script>
+			Reveal.initialize({
+				hash: true,
+				slideNumber: true,
+				transition: 'convex',
+				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes, RevealMath.KaTeX ],
+			});
+		</script>
+	</body>
+</html>
