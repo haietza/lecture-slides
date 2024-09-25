@@ -289,9 +289,139 @@
 							</tr>
 						</tbody>
 					</table>
+					<p class="small fragment"><em>Can we summarize the runtimes of <code>addBefore()</code> and <code>addAfter()</code>?</em></p>
+				</section>
+
+				<section data-auto-animate data-auto-animate-restart>
+					<h3>A Brief Note about Amortization</h3>
+					<ul>
+						<li>The point of <em>asymptotic notation</em> is to give us an idea of how long an algorithm takes to run.</li>
+						<li class="fragment">But sometimes the runtime of an operation is somewhat <em>non-uniform</em></li>
+						<ul>
+							<li class="fragment">$O(1)$ almost always, like when <em>inserting</em></li>
+							<li class="fragment">But occasionally $O(n)$ on <em>resize</em> or <em>upkeep</em></li>
+						</ul>
+						<li class="fragment">Calling this "<em>$O(n)$</em>" doesn't tell the full story</li>
+					</ul>
 				</section>
 
 				<section data-auto-animate>
+					<h3>A Brief Note about Amortization</h3>
+					<ul>
+						<li><em>How expensive is your car to maintain?</em></li>
+						<table class="small" style="width: 75%">
+							<tbody>
+								<tr>
+									<td><strong>Jan</strong></td>
+									<td class="fragment">$20</td>
+								</tr>
+								<tr>
+									<td><strong>Feb</strong></td>
+									<td class="fragment">$20</td>
+								</tr>
+								<tr>
+									<td>...</td>
+									<td></td>
+								</tr>
+								<tr>
+									<td><strong>Nov</strong></td>
+									<td class="fragment">$20</td>
+								</tr>
+								<tr>
+									<td><strong>Dec</strong></td>
+									<td class="fragment">$260 = 20 + tune-up + registration</td>
+								</tr>
+							</tbody>
+						</table>
+						<li class="fragment">Saying your car takes $260/month to maintain <em>doesn't tell the full story</em>!</li>
+					</ul>
+				</section>
+
+				<section data-auto-animate>
+					<h3>A Brief Note about Amortization</h3>
+					<ul>
+						<li><em>Amortization</em> gives us a different perspective</li>
+						<table class="small" style="width: 75%">
+							<tbody>
+								<tr>
+									<td><strong>Jan</strong></td>
+									<td>$20</td>
+									<td class="fragment" data-fragment-index="1"><em>$40</em></td>
+								</tr>
+								<tr>
+									<td><strong>Feb</strong></td>
+									<td>$20</td>
+									<td class="fragment" data-fragment-index="1"><em>$40</em></td>
+								</tr>
+								<tr>
+									<td>...</td>
+									<td></td>
+									<td></td>
+								</tr>
+								<tr>
+									<td><strong>Nov</strong></td>
+									<td>$20</td>
+									<td class="fragment" data-fragment-index="1"><em>$40</em></td>
+								</tr>
+								<tr>
+									<td><strong>Dec</strong></td>
+									<td>$260</td>
+									<td class="fragment" data-fragment-index="1"><em>$40</em></td>
+								</tr>
+								<tr>
+									<td><strong>(Year)</strong></td>
+									<td>$480</td>
+									<td class="fragment" data-fragment-index="1">$480</td>
+								</tr>
+							</tbody>
+						</table>
+						<li class="fragment">It would be better to say our cost is $40/month <em>amortized</em>! <span class="fragment">(<em>Not a bad idea for budgeting either</em>)</span></li>
+					</ul>
+				</section>
+
+				<section data-auto-animate>
+					<h3>A Brief Note about Amortization</h3>
+					<ul class="small">
+						<li>What is <strong>amortization</strong>? It is a guarantee of average <em>over a sequence of consecutive operations</em></li>
+						<ul>
+							<li>If <code>insert()</code> usually takes $O(1)$ time, but every $n$ inserts, has to perform a $O(n)$ resize, it is more accurate to say that "on average," <code>insert()</code> takes constant time.</li>
+							<li>We would call this $O(1)$ <strong>amortized</strong> time</li>
+						</ul>
+						<li>In general, an operation runs in $O(f(n))$ amortized time if <em>any sequence of $k$ operations</em> runs in $O(k f(n))$ time.</li>
+					</ul>
+				</section>
+
+				<section data-auto-animate>
+					<h3>A Brief Note about Amortization</h3>
+					<ul class="small">
+						<li><em>Why do we care?</em></li>
+						<li class="fragment">Suppose we have the following two options for implementing a method</li>
+						<ol>
+							<li class="fragment">$O(\lg n)$ <em>worst-case</em> time / operation</li>
+							<li class="fragment">$O(\lg n)$ <em>amortized</em> time / operation</li>
+						</ol>
+						<li class="fragment">There is <em>no difference</em>, as far as we are concerned, which we use <em>as part of a larger operation</em>. Calling this method $n$ times is going to take $O(n \lg n)$ in either case.</li>
+						<li class="fragment">The only difference is in the <em>"real-time" response time</em> of an individual operation (which may not matter)</li>
+					</ul>
+				</section>
+
+				<section data-auto-animate>
+					<h3>A Brief Note about Amortization</h3>
+					<ul class="small">
+						<li>One helpful approach: <em>the "accounting" method</em>.</li>
+						<li class="fragment">We <em>mentally</em> overcharge ourselves for earlier <em>cheap operations</em> to build up sufficient credit to pay for later <em>expensive operations</em>.</li>
+						<li class="fragment"><strong>Example:</strong> suppose we pay $50/month for gass, plus 1200 in December for maintenance</li>
+						<ul>
+							<li class="fragment">Paying that $1200 all at once in December might be <em>hard</em> financially</li>
+							<li class="fragment">Could be much <em>easier</em> to save $100 per month so you have it ready when December arrives</li>
+							<li class="fragment"><em>Plan to spend $150 per month</em>, 50 for gas, 100 for savings</li>
+							<li class="fragment">By the time we reach December, we have enough "<em>credit</em>" to pay the maintenance cost</li>
+						</ul>
+					</ul>
+					<p class="fragment">Back to <code>DoubleArraySeq</code>...</p>
+				</section>
+
+				<section data-auto-animate data-auto-animate-restart>
 					<h3>Time Complexity</h3>
 					<table class="small">
 						<tbody>
