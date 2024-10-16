@@ -28,7 +28,303 @@
 				</section>
 
 				<section data-auto-animate data-auto-animate-restart>
+					<h3>Arrays</h3>
+					<ul>
+						<li>Arrays are stored in contiguous memory</li>
+						<li>When you create an array, you have to specify both the type and the size in advance</li>
+						<li>Java decides the size of the whole array by taking the size of one element and multiplying it by the size of the array</li>
+					</ul>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Arrays</h3>
+					<ul class="small">
+						<li>Accessing a value in an array takes constant time. A value at <code>array[i]</code> can be located by taking the address of the start of the array <code>addr</code>, and adding <code>i * sizeof(type)</code></li>
+						<li>The size of the array needs to be known in advance because arrays can't be resized</li>
+						<li>It can also be costly to insert a new element if values need to be moved around, which might involve looping through the whole array</li>
+					</ul>
+					<pre class="java fragment">
+						<code data-trim>
+							int[] array = new int[100];
+
+							// storing at addr(array) + 50 * sizeof(int)
+							array[50] = 99;
+						</code>
+					</pre>
+				</section>
+
+				<section data-auto-animate data-auto-animate-restart>
 					<h3>Linked Lists</h3>
+					<ul class="small">
+						<li>Linked lists are structures made up of nodes connected to one another via links</li>
+						<li>In a singly-linked list, each node contains the data being stored and the address for where the next node in the sequence can be found</li>
+						<li>The last node in the sequence would have a <code>null</code> next pointer, indicating it is last</li>
+					</ul>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Linked Lists</h3>
+					<img src="figures/linked-lists/example.png">
+				</section>
+
+				<section data-auto-animate>
+					<h3>Linked Lists</h3>
+					<img src="figures/linked-lists/simple-drawing.png">
+				</section>
+
+				<section data-auto-animate>
+					<h3>Linked Lists</h3>
+					<img src="figures/linked-lists/simple-drawing.png">
+					<ul>
+						<li><strong>Singly-linked lists</strong> are easy to understand and easy to maintain (<em>requires less bookkeeping</em>)</li>
+						<li>The problem is that there is no way to go back to <em>previous values</em> in the list without starting over</li>
+					</ul>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Linked Lists</h3>
+					<ul>
+						<li>One way to get around this issue is by using <strong>doubly-linked lists</strong> &mdash; these have pointers to both the <em>next</em> and the <em>previous</em> nodes in the list</li>
+						<li>Good for moving in both directions, but requires more <em>bookkeeping</em> &mdash; more things to go wrong</li>
+					</ul>
+					<img src="figures/linked-lists/doubly-linked.png" width="80%">
+				</section>
+
+				<section data-auto-animate>
+					<h3>Linked Lists</h3>
+					<img src="figures/linked-lists/tree.png" class="float-left" style="margin-right: 30px;" width="40%">
+					<ul class="small" style="display: block;">
+						<li><strong>Binary trees</strong> can be thought of as linked lists with two next pointers: to a <em>left child</em> and a <em>right child</em></li>
+						<li>(<em>We will learn more about these in CS3460, but the idea is the same, and shows how versatile this idea can be</em>)</li>
+					</ul>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Linked Lists</h3>
+					<ul>
+						<li>At their core, linked lists are very <em>simple</em> to build...</li>
+					</ul>
+					<pre class="java" data-id="linked-list">
+						<code data-trim data-line-numbers>
+							public class StringNode
+							{
+								public String data;
+								public StringNode next;
+							}
+						</code>
+					</pre>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Linked Lists</h3>
+					<ul>
+						<li>However, we can make them slightly more <em>robust</em>...</li>
+					</ul>
+					<pre class="java" data-id="linked-list">
+						<code data-trim data-line-numbers>
+							public class StringNode
+							{
+								private String data;
+								private StringNode next;
+
+								public StringNode(String data, StringNode next)
+								{
+									this.data = data;
+									this.next = next;
+								}
+
+								// ...
+							}
+						</code>
+					</pre>
+				</section>
+
+				<section data-auto-animate>
+					<div class="columns">
+						<div class="one-column">
+							<pre class="java">
+								<code class="small" data-trim data-line-numbers>
+									public class StringNode
+									{
+										private String data;
+										private StringNode next;
+
+										public StringNode()
+										{
+											this.data = null;
+											this.next = null;
+										}
+
+										public StringNode(String data)
+										{
+											this.data = data;
+											this.next = null;
+										}
+								</code>
+							</pre>
+						</div>
+						<div class="one-column">
+							<pre class="java">
+								<code class="small" data-trim data-line-numbers data-ln-start-from="17">
+										public StringNode(String data,
+											StringNode next)
+										{
+											this.data = data;
+											this.next = next;
+										}
+
+										public void setData(String data)
+										{ this.data = data; }
+
+										public void setNext(StringNode next)
+										{ this.next = next; }
+
+										public String getData()
+										{ return this.data; }
+
+										public StringNode getNext()
+										{ return this.next; }
+									}
+								</code>
+							</pre>
+						</div>
+					</div>
+				</section>
+
+				<section data-auto-animate>
+					<div class="columns">
+						<div class="two-columns">
+							<pre class="java">
+								<code data-trim>
+									public static void main(String[] args)
+									{
+										StringNode n1 = new StringNode();
+										node.setData("Apple");
+
+										StringNode n2 = new
+											StringNode("Mango", n1);
+										StringNode n3 = new
+											StringNode("Banana", n2);
+										StringNode n4 = n3;
+
+										while (n4 != null)
+										{
+											System.out.println(n4.getData());
+											n4 = n4.getNext();
+										}
+									}
+								</code>
+							</pre>
+						</div>
+						<div class="one-column">
+							<ol class="small">
+								<li class="fragment">What is <code>n1</code>?</li>
+								<li class="fragment">What is <code>n1.getData()</code>?</li>
+								<li class="fragment">What is <code>n1.getNext()</code>?</li>
+								<li class="fragment">What is <code>n2</code>?</li>
+								<li class="fragment">What is <code>n2.getData()</code>?</li>
+								<li class="fragment">What is <code>n2.getNext()</code>?</li>
+								<li class="fragment">What is <code>n2.getNext().getData()</code>?</li>
+								<li class="fragment">What does this code output?</li>
+								<li class="fragment">💡Write some code to make a new <code>StringNode</code> with your favorite fruit and insert it between "Mango" and "Apple"</li>
+							</ol>
+						</div>
+					</div>
+				</section>
+
+				<section data-auto-animate data-auto-animate-restart>
+					<h3>Traversing a Linked List</h3>
+					<ul>
+						<li>We have seen <code>StringNode</code> but the important thing to understand is: <em>a single node is a linked list</em></li>
+						<li>Often we will implement a <code>LinkedList</code>-type class, but this is usually just a container for the <em>head</em> pointer (<em>and maybe a count of the number of items</em>)</li>
+						<li>To get to the rest of the nodes in the linked list, we have to traverse the linked list</li>
+					</ul>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Traversing a Linked List</h3>
+					<ul>
+						<li>Suppose the fields of a linked list are <code>head</code> and <code>manyNodes</code>. One way to traverse the list is with a <code>while</code> loop</li>
+					</ul>
+					<pre class="java" data-id="traversal">
+						<code data-trim data-line-numbers>
+							Node node = head;
+							while (node != null)
+							{
+								System.out.println(node.getData());
+								node = node.next();
+							}
+						</code>
+					</pre>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Traversing a Linked List</h3>
+					<ul>
+						<li>If you prefer, this can be written as a <code>for</code> loop instead...</li>
+					</ul>
+					<pre class="java" data-id="traversal">
+						<code data-trim data-line-numbers>
+							for (Node node = head; node != null; node = node.getNext())
+								System.out.println(node.getData());
+						</code>
+					</pre>
+				</section>
+
+				<section data-auto-animate>
+					<div class="columns">
+						<div class="one-column">
+							<pre class="java">
+								<code class="xsmall" data-trim data-line-numbers>
+									public class Weather
+									{
+										public static void main(String[] args)
+										{
+											String arr[] = {"snow", "rain", "sleet"};
+											StringNode p, q, r, s;
+
+											p = new StringNode("hail");
+											for (String t : arr)
+												p.setNext(new StringNode(t, p.getNext()));
+
+											System.out.println("Answer 1");
+											for (r = p; r != null; r = r.getNext())
+												System.out.println(r.getData());
+
+											r = p;
+
+											while (r.getNext() != null)
+												r = r.getLink();
+								</code>
+							</pre>
+						</div>
+						<div class="one-column">
+							<pre class="java">
+								<code class="xsmall" data-trim data-line-numbers data-ln-start-from="20">
+											r.setNext(p);
+											q = r.getNext();
+											q = q.getNext();
+											System.out.println("Answer 2 " + q.getData());
+
+											s = new StringNode("cloudy", q);
+											r = r.getNext();
+											r.setData("snow");
+
+											System.out.println("Answer 3 " + q.getData());
+											System.out.println("Answer 4 " + p.getData());
+
+											System.out.println("Answer 5");
+											while (s != p)
+											{
+												System.out.println(s.getData());
+												s = s.getNext();
+											}
+										}
+									}
+								</code>
+							</pre>
+						</div>
+					</div>
 				</section>
 			</div>
 		</div>
