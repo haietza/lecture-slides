@@ -1,0 +1,231 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>CS2440</title>
+
+		<link rel="stylesheet" href="../reveal-js/dist/reset.css">
+		<link rel="stylesheet" href="../reveal-js/dist/reveal.css">
+		<link rel="stylesheet" href="../reveal-js/dist/theme/dracula.css">
+		<link rel="stylesheet" href="../layouts/common.css">
+		<link rel="stylesheet" href="../reveal-js/plugin/highlight/monokai.css">
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+				<div class="header left">
+					CS2440: Computer Science II
+				</div>
+				<div class="header right no-title">
+					<em>Generics, Wildcards, and Iterators</em>
+				</div>
+
+				<section data-state="title-slide">
+					<h1 class="r-fit-text">CS2440: Computer Science II</h1>
+					<h2 class="r-fit-text">Generics, Wildcards, and Iterators</h2>
+				</section>
+
+				<section data-auto-animate data-auto-animate-restart>
+					<h3>Generics</h3>
+					<ul>
+						<li>In Java, there are <em>eight primitive types</em>:</li>
+						<ul>
+							<li><code>byte</code> - 8 bit numeric type</li>
+							<li><code>short</code> - 16 bit numeric type</li>
+							<li><code>int</code> - 32 bit numeric type</li>
+							<li><code>long</code> - 64 bit numeric type</li>
+							<li><code>float</code> - 32 bit decimal type</li>
+							<li><code>double</code> - 64 bit decimal type</li>
+							<li><code>char</code> - display type based on Unicode</li>
+							<li><code>boolean</code> - 8 bit, true/false</li>
+						</ul>
+					</ul>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Generics</h3>
+					<ul>
+						<li>Everything else is <em>an Object type</em>.</li>
+						<li>All objects are part of the <em>hierarchy</em> of Java objects and subclasses of <code>java.lang.Object</code></li>
+						<li>We have talked about methods of the Object class that are <em>inherited</em> and that we have <em>overridden</em> to make useful to us: <code>equals()</code>, <code>toString()</code>, <code>compareTo()</code>, etc.</li>
+					</ul>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Generics</h3>
+					<ul>
+						<li>The Java standard library provides many useful <em>container classes</em>, such as <code>ArrayList</code>, <code>Vector</code>, and <code>LinkedList</code></li>
+						<li>These are examples of generic classes</li>
+						<li>When a generic class is declared, you must indicate what type of objects will be stored in the container</li>
+					</ul>
+					<pre class="java">
+						<code data-trim>
+							ArrayList&lt;String&gt; a = new ArrayList&lt;String&gt;();
+						</code>
+					</pre>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Generics</h3>
+					<pre class="java">
+						<code data-trim>
+							ArrayList&lt;String&gt; a = new ArrayList&lt;String&gt;();
+						</code>
+					</pre>
+					<ul>
+						<li>The value in the angle brackets is called the <strong>type argument</strong>, and for this reason we sometimes refer to a generic class as a <strong>parameterized type</strong></li>
+						<li>One restriction, however, is that you can only use Object types as a type argument. So what do we do when we want to build an <code>ArrayList</code> of <code>int</code>s?</li>
+					</ul>
+				</section>
+
+				<section data-auto-animate data-auto-animate-restart>
+					<h3>Wrapper Classes</h3>
+					<pre class="java">
+						<code data-trim>
+							ArrayList&lt;int&gt; a = new ArrayList&lt;int&gt;(); // ERROR
+							ArrayList&lt;Integer&gt; a = new ArrayList&lt;Integer&gt;(); // perfect!
+						</code>
+					</pre>
+					<ul>
+						<li>Java provides <strong>wrapper classes</strong> that serve as thin wrappers around each of the primitive types</li>
+						<li>Their names are typically the name of the primitive type, but with a capital first letter, with two exceptions</li>
+					</ul>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Wrapper Classes</h3>
+					<table class="small">
+						<thead>
+							<tr>
+								<td>Primitive type</td>
+								<td></td>
+								<td>Wrapper class</td>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td><code>byte</code></td>
+								<td>&Rightarrow;</td>
+								<td><code>Byte</code></td>
+							</tr>
+							<tr>
+								<td><code>short</code></td>
+								<td>&Rightarrow;</td>
+								<td><code>Short</code></td>
+							</tr>
+							<tr>
+								<td><code>int</code></td>
+								<td>&Rightarrow;</td>
+								<td><code>Integer</code></td>
+							</tr>
+							<tr>
+								<td><code>long</code></td>
+								<td>&Rightarrow;</td>
+								<td><code>Long</code></td>
+							</tr>
+							<tr>
+								<td><code>float</code></td>
+								<td>&Rightarrow;</td>
+								<td><code>Float</code></td>
+							</tr>
+							<tr>
+								<td><code>double</code></td>
+								<td>&Rightarrow;</td>
+								<td><code>Double</code></td>
+							</tr>
+							<tr>
+								<td><code>char</code></td>
+								<td>&Rightarrow;</td>
+								<td><code>Character</code></td>
+							</tr>
+							<tr>
+								<td><code>boolean</code></td>
+								<td>&Rightarrow;</td>
+								<td><code>Boolean</code></td>
+							</tr>
+						</tbody>
+					</table>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Wrapper Classes</h3>
+					<ul>
+						<li>Java's wrapper classes support features known as <em>autoboxing</em> and <em>auto-unboxing</em></li>
+						<li>You can use wrapper classes in places where the primitive type would have worked, and vice versa</li>
+					</ul>
+					<pre class="java">
+						<code data-trim>
+							public static void main(String[] args)
+							{
+								Integer x = new Integer(5); // normal constructor
+								Integer y = 7;              // autoboxing
+								Integer z = x + y;          // auto-unboxing to do arithmetic
+								System.out.println(x + " + " + y + " = " + z);
+							}
+						</code>
+					</pre>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Wrapper Classes</h3>
+					<ul>
+						<li>While these are what we sometimes call <em>thin wrappers</em>, keep in mind they do take up more space than the primitives do alone, so consider that tradeoff</li>
+					</ul>
+				</section>
+
+				<section data-auto-animate data-auto-animate-restart>
+					<h3>Building a Generic Class</h3>
+					<pre class="java">
+						<code data-trim>
+							public class Box
+							{
+								private Object object;
+
+								public void set(Object object) { this.object = object; }
+								public Object get() { return object; }
+							}
+						</code>
+					</pre>
+					<ul class="fragment small">
+						<li>Building a generic class requires a few small changes</li>
+						<ul>
+							<li>The <strong>type parameter</strong> should be specified in angle brackets, following the class name</li>
+							<li>This gives us a type variable to be used throughout the class</li>
+						</ul>
+					</ul>
+				</section>
+
+				<section data-auto-animate data-auto-animate-restart>
+					<h3>Building a Generic Class</h3>
+					<pre class="java">
+						<code data-trim>
+							public class Box&lt;T&gt;
+							{
+								private T object;
+
+								public void set(T object) { this.object = object; }
+								public T get() { return object; }
+							}
+						</code>
+					</pre>
+				</section>
+			</div>
+		</div>
+
+		<script src="../reveal-js/dist/reveal.js"></script>
+		<script src="../reveal-js/plugin/math/math.js"></script>
+		<script src="../reveal-js/plugin/notes/notes.js"></script>
+		<script src="../reveal-js/plugin/markdown/markdown.js"></script>
+		<script src="../reveal-js/plugin/highlight/highlight.js"></script>
+		<script>
+			Reveal.initialize({
+				hash: true,
+				slideNumber: true,
+				transition: 'convex',
+				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes, RevealMath.KaTeX ],
+			});
+		</script>
+	</body>
+</html>

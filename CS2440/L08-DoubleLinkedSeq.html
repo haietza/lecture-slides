@@ -1,0 +1,335 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>CS2440</title>
+
+		<link rel="stylesheet" href="../reveal-js/dist/reset.css">
+		<link rel="stylesheet" href="../reveal-js/dist/reveal.css">
+		<link rel="stylesheet" href="../reveal-js/dist/theme/dracula.css">
+		<link rel="stylesheet" href="../layouts/common.css">
+		<link rel="stylesheet" href="../reveal-js/plugin/highlight/monokai.css">
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+				<div class="header left">
+					CS2440: Computer Science II
+				</div>
+				<div class="header right no-title">
+					<em>Case Study: <code>DoubleLinkedSeq</code></em>
+				</div>
+
+				<section data-state="title-slide">
+					<h1 class="r-fit-text">CS2440: Computer Science II</h1>
+					<h2 class="r-fit-text">Case Study: <code>DoubleLinkedSeq</code></h2>
+				</section>
+
+				<section data-auto-animate data-auto-animate-restart>
+					<h3><code>DoubleLinkedSeq</code></h3>
+					<ul class="small">
+						<li>In lab, you will be implementing a sequence of <code>double</code>s with linked lists</li>
+						<li>Linked lists have their own considerations. Remember the operations from <code>DoubleArraySeq</code>?</li>
+						<li class="fragment"><em>What fields will our class need to support the same operations?</em></li>
+						<ul>
+							<li class="fragment"><code>head</code> &ndash; a pointer to the first <code>DoubleNode</code><sup><a href="https://home.cs.colorado.edu/~main/docs/edu/colorado/nodes/DoubleNode.html">[ref]</a></sup></li>
+							<li class="fragment"><code>tail</code> &ndash; a pointer to the last <code>DoubleNode</code></li>
+							<li class="fragment"><code>manyNodes</code> &ndash; a count of the number of items in the sequence</li>
+							<li class="fragment"><code>cursor</code> &ndash; a pointer to the current item</li>
+							<li class="fragment"><code>precursor</code> &ndash; a pointer to the item prior to the current item</li>
+						</ul>
+					</ul>
+				</section>
+
+				<section data-auto-animate>
+					<h3><code>DoubleLinkedSeq</code></h3>
+					<p class="small"><strong>Invariants for:</strong> <code>head</code>, <code>tail</code>, <code>manyNodes</code>, <code>cursor</code>, <code>precursor</code></p>
+					<ol class="small">
+						<li class="fragment">Elements are stored in a linked list</li>
+						<li class="fragment">The first element in the sequence is pointed to by <code>head</code></li>
+						<li class="fragment">The last element in the sequence is pointed to by <code>tail</code></li>
+						<li class="fragment">The current element is pointed to by <code>cursor</code>. If there is no current item, cursor is null</li>
+						<li class="fragment">The element that comes before the current element should be pointed to by <code>precursor</code>. There will be no precursor when the cursor is null or the cursor is at the head of the list. In these cases, it is null</li>
+						<li class="fragment">If the sequence is empty, all pointers are null</li>
+						<li class="fragment">The number of elements in the sequence is stored in <code>manyNodes</code></li>
+					</ol>
+				</section>
+				
+				<section data-auto-animate data-auto-animate-restart>
+					<p><strong>💡Try It:</strong> Draw the linked structure and show the values of the fields <code>head</code>, <code>tail</code>, <code>cursor</code>, <code>precursor</code> for the following String representations</p>
+					<ul>
+						<li><code>&lt;3.2, 4.1, 5.5, [1.0], 3.1&gt;</code></li>
+						<li><code>&lt;&gt;</code></li>
+						<li><code>&lt;4.3&gt;</code></li>
+						<li><code>&lt;[4.3]&gt;</code></li>
+						<li><code>&lt;5.5, [6.2]&gt;</code></li>
+					</ul>
+				</section>
+
+				<section data-auto-animate data-auto-animate-restart>
+					<h3><code>DoubleLinkedSeq</code></h3>
+					<p class="small"><strong>What values change when <code>addBefore()</code> is called?</strong></p>
+					<ul class="small">
+						<li>When the sequence is empty</li>
+						<ul class="fragment">
+							<li><em><code>head</code>, <code>tail</code>, and <code>cursor</code> change</em></li>
+						</ul>
+						<li>When there is <u>not</u> a current element</li>
+						<ul class="fragment">
+							<li><em><code>head</code> and <code>cursor</code> change</em></li>
+						</ul>
+						<li>When there is a current element and it is the first element</li>
+						<ul class="fragment">
+							<li><em><code>head</code> and <code>cursor</code> change</em></li>
+						</ul>
+						<li>When there is a current element and it is not the first element</li>
+						<ul class="fragment">
+							<li><em><code>cursor</code> changes</em></li>
+						</ul>
+					</ul>
+				</section>
+
+				<section data-auto-animate data-auto-animate-restart>
+					<h3><code>DoubleLinkedSeq</code></h3>
+					<p class="small"><strong>Write code for the part of <code>addBefore()</code> for when the list is empty</strong></p>
+					<pre class="java fragment">
+						<code data-trim>
+							if (manyNodes == 0)
+							{
+								head = new DoubleNode(element);
+								tail = head;
+								cursor = head;
+							}
+						</code>
+					</pre>
+				</section>
+
+				<section data-auto-animate>
+					<h3><code>DoubleLinkedSeq</code></h3>
+					<p class="small"><strong>Write code for the part of <code>addBefore()</code> for when there is no current element or the current element is the first element</strong></p>
+					<pre class="java fragment">
+						<code data-trim>
+							else if (cursor == null || cursor == head)
+							{
+								head = new DoubleNode(element, head);
+								cursor = head;
+							}
+						</code>
+					</pre>
+				</section>
+
+				<section data-auto-animate>
+					<h3><code>DoubleLinkedSeq</code></h3>
+					<p class="small"><strong>Write code for the part of <code>addBefore()</code> for when the current element is not the first element</strong></p>
+					<pre class="java fragment">
+						<code data-trim>
+							else
+							{
+								precursor.addNodeAfter(element);
+								cursor = precursor.getLink();
+							}
+						</code>
+					</pre>
+				</section>
+
+				<section data-auto-animate data-auto-animate-restart>
+					<h3><code>DoubleLinkedSeq</code></h3>
+					<p class="small"><strong>What values change when <code>removeCurrent()</code> is called?</strong></p>
+					<ul class="small">
+						<li>When there is only one element</li>
+						<ul class="fragment">
+							<li><em><code>head</code>, <code>tail</code>, and <code>cursor</code> change</em></li>
+						</ul>
+						<li>When the current element is the first element</li>
+						<ul class="fragment">
+							<li><em><code>head</code> and <code>cursor</code> change</em></li>
+						</ul>
+						<li>When the current element is the last element</li>
+						<ul class="fragment">
+							<li><em><code>tail</code>, <code>cursor</code> and <code>precursor</code> change</em></li>
+						</ul>
+						<li>All other cases</li>
+						<ul class="fragment">
+							<li><em><code>cursor</code> changes</em></li>
+						</ul>
+					</ul>
+				</section>
+
+				<section data-auto-animate data-auto-animate-restart>
+					<h3><code>DoubleLinkedSeq</code></h3>
+					<ul class="small">
+						<li class="fragment">You are being provided with a <code>DoubleNode</code> class with helper methods. Which helper method from <code>DoubleNode</code><sup><a href="https://home.cs.colorado.edu/~main/docs/edu/colorado/nodes/DoubleNode.html">[ref]</a></sup> will help with the <code>concatenation()</code> method?</li>
+						<ul class="fragment">
+							<li><code>DoubleNode.listCopyWithTail()</code></li>
+						</ul>
+						<li class="fragment"><code>DoubleLinkedSeq</code> adds a <code>tail</code> reference that was not part of <code>IntLinkedBag</code>. What methods of the sequence class make it useful to keep a tail reference?</li>
+					</ul>
+				</section>
+
+				<section data-auto-animate data-auto-animate-restart>
+					<h3>Time Complexity</h3>
+					<table class="small">
+						<thead>
+							<tr>
+								<td></td>
+								<td><code>DoubleArraySeq</code></td>
+								<td><code>DoubleLinkedSeq</code></td>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td class="small"><code>addBefore()</code></td>
+								<td><em>$O(n)$</em></td>
+								<td class="fragment">$O(1)$</td>
+							</tr>
+							<tr>
+								<td class="small"><code>addAfter()</code></td>
+								<td><em>$O(n)$</em></td>
+								<td class="fragment">$O(1)$</td>
+							</tr>
+							<tr>
+								<td class="small"><code>removeCurrent()</code></td>
+								<td><em>$O(n)$</em></td>
+								<td class="fragment">$O(1)$</td>
+							</tr>
+							<tr>
+								<td class="small"><code>start()</code></td>
+								<td>$O(1)$</td>
+								<td class="fragment">$O(1)$</td>
+							</tr>
+							<tr>
+								<td class="small"><code>isCurrent()</code></td>
+								<td>$O(1)$</td>
+								<td class="fragment">$O(1)$</td>
+							</tr>
+							<tr>
+								<td class="small"><code>getCurrent()</code></td>
+								<td>$O(1)$</td>
+								<td class="fragment">$O(1)$</td>
+							</tr>
+							<tr>
+								<td class="small"><code>advance()</code></td>
+								<td>$O(1)$</td>
+								<td class="fragment">$O(1)$</td>
+							</tr>
+						</tbody>
+					</table>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Time Complexity</h3>
+					<table class="small">
+						<thead>
+							<tr>
+								<td></td>
+								<td><code>DoubleArraySeq</code></td>
+								<td><code>DoubleLinkedSeq</code></td>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td class="small"><code>clone()</code></td>
+								<td><em>$O(n)$</em></td>
+								<td class="fragment"><em>$O(n)$</em></td>
+							</tr>
+							<tr>
+								<td class="small"><code>size()</code></td>
+								<td>$O(1)$</td>
+								<td class="fragment">$O(1)$</td>
+							</tr>
+							<tr>
+								<td class="small"><code>concatenation(seq1, seq2)</code></td>
+								<td><em>$O(n_1 + n_2)$</em></td>
+								<td class="fragment"><em>$O(n_1 + n_2)$</em></td>
+							</tr>
+							<tr>
+								<td class="small"><code>addAll(seq2)</code></td>
+								<td><em>$O(n_1 + n_2)$</em></td>
+								<td class="fragment"><em>$O(n_2)$</em></td>
+							</tr>
+							<tr>
+								<td class="small"><code>toString()</code></td>
+								<td><em>$O(n)$</em></td>
+								<td class="fragment"><em>$O(n)$</em></td>
+							</tr>
+							<tr>
+								<td class="small"><code>equals(seq2)</code></td>
+								<td><em>$O(n)$</em></td>
+								<td class="fragment"><em>$O(n)$</em></td>
+							</tr>
+						</tbody>
+					</table>
+				</section>
+
+				<section data-auto-animate data-auto-animate-restart>
+					<h3><code>DoubleLinkedSeq</code></h3>
+					<p class="small"><strong>Write code for the part of <code>clone()</code> for when the sequence has no current element</strong></p>
+					<pre class="java fragment">
+						<code data-trim>
+							if (cursor == null)
+							{
+								DoubleNode[] copyData = DoubleNode.listCopyWithTail(head);
+								res.head = copyData[0];
+								res.tail = copyData[1];
+								res.cursor = null;
+								res.precursor = null;
+							}
+						</code>
+					</pre>
+				</section>
+
+				<section data-auto-animate>
+					<h3><code>DoubleLinkedSeq</code></h3>
+					<p class="small"><strong>Write code for the part of <code>clone()</code> for when the current element is the first element</strong></p>
+					<pre class="java fragment">
+						<code data-trim>
+							else if (cursor == head)
+							{
+								DoubleNode[] copyData = DoubleNode.listCopyWithTail(head);
+								res.head = copyData[0];
+								res.tail = copyData[1];
+								res.cursor = res.head;
+								res.precursor = null;
+							}
+						</code>
+					</pre>
+				</section>
+
+				<section data-auto-animate>
+					<h3><code>DoubleLinkedSeq</code></h3>
+					<p class="small"><strong>Write code for the part of <code>clone()</code> for when the current element is not the first element</strong></p>
+					<pre class="java fragment">
+						<code data-trim>
+							else
+							{
+								DoubleNode[] copyData1 = DoubleNode.listPart(head, precursor);
+								DoubleNode[] copyData2 = DoubleNode.listPart(cursor, tail);
+								res.head = copyData1[0];
+								res.precursor = copyData1[1];
+								res.cursor = copyData2[0];
+								res.tail = copyData2[1];
+								res.precursor.setLink(res.cursor);
+							}
+						</code>
+					</pre>
+				</section>
+			</div>
+		</div>
+
+		<script src="../reveal-js/dist/reveal.js"></script>
+		<script src="../reveal-js/plugin/math/math.js"></script>
+		<script src="../reveal-js/plugin/notes/notes.js"></script>
+		<script src="../reveal-js/plugin/markdown/markdown.js"></script>
+		<script src="../reveal-js/plugin/highlight/highlight.js"></script>
+		<script>
+			Reveal.initialize({
+				hash: true,
+				slideNumber: true,
+				transition: 'convex',
+				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes, RevealMath.KaTeX ],
+			});
+		</script>
+	</body>
+</html>
