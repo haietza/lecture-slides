@@ -92,6 +92,12 @@
 						<li>Java provides <strong>wrapper classes</strong> that serve as thin wrappers around each of the primitive types</li>
 						<li>Their names are typically the name of the primitive type, but with a capital first letter, with two exceptions</li>
 					</ul>
+					<pre class="java">
+						<code data-trim>
+							ArrayList&lt;Integer&gt; a = new ArrayList&lt;Integer&gt;();
+							ArrayList&lt;Integer&gt; a = new ArrayList&lt;&gt;(); // also allowed
+						</code>
+					</pre>
 				</section>
 
 				<section data-auto-animate>
@@ -174,42 +180,263 @@
 						<li>While these are what we sometimes call <em>thin wrappers</em>, keep in mind they do take up more space than the primitives do alone, so consider that tradeoff</li>
 					</ul>
 				</section>
-
+				
 				<section data-auto-animate data-auto-animate-restart>
-					<h3>Building a Generic Class</h3>
-					<pre class="java">
+					<p><strong>💡Try It:</strong> <em>Write a method that takes an int array as input and reverses it using $o(n)$ auxilliary storage</em></p>
+					<pre class="java fragment">
 						<code data-trim>
-							public class Box
-							{
-								private Object object;
-
-								public void set(Object object) { this.object = object; }
-								public Object get() { return object; }
+							public static void reverse(int[] data) {
+								for (int i = 0; i < data.length / 2; i++) {
+									int temp = data[i];
+									data[i] = data[data.length - i - 1];
+									data[data.length - i - 1] = temp;
+								}
 							}
 						</code>
 					</pre>
-					<ul class="fragment small">
-						<li>Building a generic class requires a few small changes</li>
-						<ul>
-							<li>The <strong>type parameter</strong> should be specified in angle brackets, following the class name</li>
-							<li>This gives us a type variable to be used throughout the class</li>
-						</ul>
+					<p class="fragment">What if we want to reverse other types of arrays?</p>
+				</section>
+				
+				<section data-auto-animate>
+					<h3>Generic Methods</h3>
+					<ul>
+						<li>One solution to the previous problem is that we could create a <em>unique function</em> for arrays of each type we need to be able to reverse</li>
+						<li class="fragment">...or we could make a <strong>generic method</strong>!</li>
+					</ul>
+				</section>
+				
+				<section data-auto-animate>
+					<h3>Generic Methods</h3>
+					<pre class="java">
+						<code data-trim>
+							// this is a generic method with type parameter T
+							public static &lt;T&gt; void reverse(T[] data)
+							{
+								for (int i = 0; i < data.length / 2; i++)
+								{
+									T temp = data[i];
+									data[i] = data[data.length - i - 1];
+									data[data.length - i - 1] = temp;
+								}
+							}
+						</code>
+					</pre>
+				</section>
+				
+				<section data-auto-animate>
+					<h3>Generic Methods</h3>
+					<pre class="java">
+						<code data-trim>
+							// this is a generic method with type parameter T
+							public static &lt;T&gt; void reverse(T[] data)
+							{
+								for (int i = 0; i < data.length / 2; i++)
+								{
+									T temp = data[i];
+									data[i] = data[data.length - i - 1];
+									data[data.length - i - 1] = temp;
+								}
+							}
+						</code>
+					</pre>
+					<p>A <strong>generic method</strong> is defined by placing the <em>type parameter</em> in angle brackets before the return type</p>
+				</section>
+				
+				<section data-auto-animate data-auto-animate-restart>
+					<h3>Type Parameters</h3>
+					<ul>
+						<li>Since <em>type parameters</em> represent <em>class types</em>, they are conventionally written with capital letters</li>
+						<li>The most common type parameters you will see are <code>T</code> and <code>E</code>, but others are occassionally used</li>
+						<li><code>N</code> is sometimes used for numeric types, <code>K</code>/<code>V</code> for key-value pairs, and others</li>
+					</ul>
+				</section>
+				
+				<section data-auto-animate>
+					<h3>Type Parameters</h3>
+					<ul>
+						<li class="small">There are limitations to what you can do with <em>type parameters</em></li>
+						<li class="small fragment">You cannot instantiate an object of the generic type</li>
+						<pre class="java fragment">
+							<code data-trim>
+								T object = new T(); // ERROR
+							</code>
+						</pre>
+						<li class="small fragment">You cannot create an array of the generic type</li>
+						<pre class="java fragment">
+							<code data-trim>
+								T[] array = new T[1000]; // ERROR
+							</code>
+						</pre>
+						<li class="small fragment">These limitations are due to <strong>erasure</strong>, which is a compilation technique in which the exact data type of a generic type is unknown at runtime</li>
+					</ul>
+				</section>
+				
+				<section data-auto-animate>
+					<h3>Type Parameters</h3>
+					<ul>
+						<li class="small">If we couldn't create an array of a generic type, it would be a problem for creating <em>container types</em>. There are a few <em>workarounds</em>:</li>
+						<ol>
+							<li class="small fragment">The array can be of type <code>Object</code>, and we can <em>cast individual values</em></li>
+							<pre class="java fragment">
+								<code data-trim>
+									// we can store type T in this because polymorphism
+									Object[] data = new Object[1000];
+									
+									// cast to type T to fix any issues with type incompatability
+									return (T) data[currentIndex];
+								</code>
+							</pre>
+							<li class="small fragment">The <em>whole array</em> can be casted to type <code>T</code></em></li>
+							<pre class="java fragment">
+								<code data-trim>
+									// we can cast the whole array
+									T[] data = (T[]) new Object[1000];
+								</code>
+							</pre>
+						</ol>
+					</ul>
+				</section>
+				
+				<section data-auto-animate data-auto-animate-restart>
+					<h3>Generic Methods</h3>
+					<ul>
+						<li>Why make a method generic when <code>Object</code> works?</li>
+						<pre class="java">
+							<code data-trim>
+								public static &lt;T&gt; T process(T val)
+								// versus
+								public static Object process(Object val)
+							</code>
+						</pre>
+					</ul>
+				</section>
+				
+				<section data-auto-animate>
+					<h3>Generic Methods</h3>
+					<ul>
+						<li>Why make a method generic when <code>Object</code> works?</li>
+						<ol>
+							<li class="small fragment">No casting is required when interacting with containers</li>
+							<pre class="java fragment">
+								<code data-trim>
+									String s = (String) process("a"); // returned Object
+									String s = process("a");          // returned String
+								</code>
+							</pre>
+							<li class="small fragment">Type safety at compile time</li>
+							<pre class="java fragment">
+								<code data-trim>
+									public static void add(Object elem) // for a String container
+									add(new Rectangle()); // compiles, might error at runtime
+
+									public static &lt;T&gt; void add(T elem) // same container
+									add(new Rectangle()); // ERROR, caught at compile time
+								</code>
+							</pre>
+						</ol>
 					</ul>
 				</section>
 
 				<section data-auto-animate data-auto-animate-restart>
-					<h3>Building a Generic Class</h3>
+					<h3>Generic Classes</h3>
+					<ul>
+						<li>Classes can be generic too</li>
+						<li>The <em>type parameter</em> is written directly <em>following the class name</em> in the <em>class header</em></li>
+						<pre class="java">
+							<code data-trim>
+								public class LinkedSeq&lt;E&gt; implements Cloneable
+							</code>
+						</pre>
+						<li>In this example, the type parameter <code>E</code> can now be used as a type throughout the entire class</li>
+					</ul>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Generic Classes</h3>
+					<p><strong>💡Try It:</strong> <em>Make the following class generic</em></p>
+					<pre class="java">
+						<code data-trim>
+							public class IntBox
+							{
+								private int data;
+
+								public void set(int data) { this.data = data; }
+								public int get() { return this.data; }
+							}
+						</code>
+					</pre>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Generic Classes</h3>
+					<p><strong>💡Try It:</strong> <em>Make the following class generic</em></p>
 					<pre class="java">
 						<code data-trim>
 							public class Box&lt;T&gt;
 							{
-								private T object;
+								private T data;
 
-								public void set(T object) { this.object = object; }
-								public T get() { return object; }
+								public void set(T data) { this.data = data; }
+								public T get() { return this.data; }
 							}
 						</code>
 					</pre>
+				</section>
+
+				<section data-auto-animate data-auto-animate-restart>
+					<h3>Bounded Type Parameters</h3>
+					<ul>
+						<li class="small"><em>Generic type parameters</em> don't provide any information to the compiler at compile time, and therefore, the only methods that can be called on a generic type are <code>Object</code> methods</li>
+						<li class="small">Perhaps counterintuitively, if you want to be able to call more methods, you need to <em>bound the type parameter</em></li>
+						<pre class="java">
+							<code data-trim>
+								public static &lt;T extends Comparable&lt;T&gt;&gt; 
+									int countGreaterThan(T[] array, T elem) 
+								{
+									int count = 0;
+									for (T e : array)
+										if (e.compareTo(elem) &gt; 0) ++count;
+									return count;
+								}								
+							</code>
+						</pre>
+					</ul>
+				</section>
+
+				<section data-auto-animate data-auto-animate-restart>
+					<h3>Subclasses of Generic Classes</h3>
+					<ul>
+						<li class="small">You can create a subclass of a generic class or interface by extending or implementing it</li>
+						<pre class="java">
+							<code data-trim>
+								public class ArrayList&lt;T&gt; extends List&lt;T&gt;
+								public class List&lt;T&gt; extends Collection&lt;T&gt;
+							</code>
+						</pre>
+						<li class="small">Additional type parameters can be used</li>
+						<pre class="java">
+							<code data-trim>
+								public class LabeledBox&lt;S,T&gt; extends Box&lt;T&gt;
+							</code>
+						</pre>
+					</ul>
+				</section>
+
+				<section data-auto-animate data-auto-animate-restart>
+					<h3>Generic Classes</h3>
+					<ul>
+						<li>If we wanted to build a <code>LinkedSeq</code> similar to the <code>DoubleLinkedSeq</code> from lab, we wouldn't be able to use <code>DoubleNode</code>. Instead we need a generic <code>Node</code> class</li>
+						<pre class="java">
+							<code data-trim>
+								public class Node&lt;E&gt;
+								{
+									private E data;
+									private Node&lt;E&gt; link;
+									// ...
+								}
+							</code>
+						</pre>
+					</ul>
 				</section>
 			</div>
 		</div>
