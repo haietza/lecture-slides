@@ -340,7 +340,7 @@
 				<section data-auto-animate data-auto-animate-restart>
 					<h3>Generic Classes</h3>
 					<ul>
-						<li>Classes can be generic too</li>
+						<li>Classes can be generic too <em>(and interfaces!)</em></li>
 						<li>The <em>type parameter</em> is written directly <em>following the class name</em> in the <em>class header</em></li>
 						<pre class="java">
 							<code data-trim>
@@ -385,22 +385,55 @@
 
 				<section data-auto-animate data-auto-animate-restart>
 					<h3>Bounded Type Parameters</h3>
-					<ul>
-						<li class="small"><em>Generic type parameters</em> don't provide any information to the compiler at compile time, and therefore, the only methods that can be called on a generic type are <code>Object</code> methods</li>
-						<li class="small">Perhaps counterintuitively, if you want to be able to call more methods, you need to <em>bound the type parameter</em></li>
-						<pre class="java">
-							<code data-trim>
-								public static &lt;T extends Comparable&lt;T&gt;&gt; 
-									int countGreaterThan(T[] array, T elem) 
-								{
-									int count = 0;
-									for (T e : array)
-										if (e.compareTo(elem) &gt; 0) ++count;
-									return count;
-								}								
-							</code>
-						</pre>
+					<ul class="small">
+						<li><em>Generic type parameters</em> don't provide any information to the compiler at compile time, and therefore, the only methods that can be called on a generic type are <code>Object</code> methods</li>
+						<li>Java's type system has one powerful feature to get around some of these limitations: <strong>bounded type parameters</strong></li>
+						<li>Bounded type parameters allow you to put constraints on what types can be used as type arguments in <em>classes</em>, <em>interfaces</em>, and <em>methods</em>.</li>
+						<li>This gives the developer access to <em>more operations</em>, and can help to <em>prevent errors at compile-time</em>.</li>
 					</ul>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Bounded Type Parameters</h3>
+					<ul class="small">
+						<li><strong>Example:</strong> You would like to write a method <code>countGreaterThan()</code> to determine <em>how many elements in an array are greater than some target element</em>.</li>
+						<li>The <code>compareTo()</code> method is provided by the <code>Comparable&lt;T&gt;</code> interface, <em>not</em> by <code>Object</code></li>
+						<li>We can add a <em>constraint</em> to our method to say that the only supported types will be ones that implement <code>Comparable&lt;T&gt;</code> to guarantee we have access to the <code>compareTo()</code> method, and to restrict types which wouldn't make sense in this context at compile-time.</li>
+					</ul>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Bounded Type Parameters</h3>
+					<pre class="java">
+						<code data-trim>
+							public static &lt;T extends Comparable&lt;T&gt;&gt; 
+								int countGreaterThan(T[] array, T elem) 
+							{
+								int count = 0;
+								for (T e : array)
+									if (e.compareTo(elem) &gt; 0) ++count;
+								return count;
+							}
+						</code>
+					</pre>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Bounded Type Parameters</h3>
+					<pre class="java">
+						<code data-trim>
+							public static &lt;T extends Comparable&lt;T&gt;&gt; 
+								int countGreaterThan(T[] array, T elem) 
+						</code>
+					</pre>
+					<ul class="small">
+						<li>Bounded type parameters always use the <code>extends</code> keyword, even for interfaces, as shown above.</li>
+					</ul>
+				</section>
+
+				<section data-auto-animate data-auto-animate-restart>
+					<h3>Wildcards</h3>
+
 				</section>
 
 				<section data-auto-animate data-auto-animate-restart>
@@ -423,7 +456,7 @@
 				</section>
 
 				<section data-auto-animate data-auto-animate-restart>
-					<h3>Generic Classes</h3>
+					<h3><code>LinkedSeq</code></h3>
 					<ul>
 						<li>If we wanted to build a <code>LinkedSeq</code> similar to the <code>DoubleLinkedSeq</code> from lab, we wouldn't be able to use <code>DoubleNode</code>. Instead we need a generic <code>Node</code> class</li>
 						<pre class="java">
