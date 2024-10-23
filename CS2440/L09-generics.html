@@ -49,7 +49,7 @@
 					<ul>
 						<li>Everything else is <em>an Object type</em>.</li>
 						<li>All objects are part of the <em>hierarchy</em> of Java objects and subclasses of <code>java.lang.Object</code></li>
-						<li>We have talked about methods of the Object class that are <em>inherited</em> and that we have <em>overridden</em> to make useful to us: <code>equals()</code>, <code>toString()</code>, <code>compareTo()</code>, etc.</li>
+						<li>We have talked about methods of the Object class that are <em>inherited</em> and that we have <em>overridden</em> to make useful to us: <code>equals()</code>, <code>toString()</code>, etc.</li>
 					</ul>
 				</section>
 
@@ -69,13 +69,19 @@
 
 				<section data-auto-animate>
 					<h3>Generics</h3>
-					<pre class="java">
-						<code data-trim>
-							ArrayList&lt;String&gt; a = new ArrayList&lt;String&gt;();
-						</code>
-					</pre>
 					<ul>
+						<pre class="java">
+							<code data-trim>
+								ArrayList&lt;String&gt; a = new ArrayList&lt;String&gt;();
+							</code>
+						</pre>
 						<li>The value in the angle brackets is called the <strong>type argument</strong>, and for this reason we sometimes refer to a generic class as a <strong>parameterized type</strong></li>
+						<pre class="java">
+							<code data-trim>
+								ArrayList&lt;Integer&gt; a = new ArrayList&lt;Integer&gt;();
+								ArrayList&lt;Integer&gt; a = new ArrayList&lt;&gt;(); // also allowed
+							</code>
+						</pre>
 						<li>One restriction, however, is that you can only use Object types as a type argument. So what do we do when we want to build an <code>ArrayList</code> of <code>int</code>s?</li>
 					</ul>
 				</section>
@@ -92,12 +98,6 @@
 						<li>Java provides <strong>wrapper classes</strong> that serve as thin wrappers around each of the primitive types</li>
 						<li>Their names are typically the name of the primitive type, but with a capital first letter, with two exceptions</li>
 					</ul>
-					<pre class="java">
-						<code data-trim>
-							ArrayList&lt;Integer&gt; a = new ArrayList&lt;Integer&gt;();
-							ArrayList&lt;Integer&gt; a = new ArrayList&lt;&gt;(); // also allowed
-						</code>
-					</pre>
 				</section>
 
 				<section data-auto-animate>
@@ -384,6 +384,25 @@
 				</section>
 
 				<section data-auto-animate data-auto-animate-restart>
+					<h3>Subclasses of Generic Classes</h3>
+					<ul>
+						<li class="small">You can create a subclass of a generic class or interface by extending or implementing it</li>
+						<pre class="java">
+							<code data-trim>
+								public class ArrayList&lt;T&gt; extends List&lt;T&gt;
+								public class List&lt;T&gt; extends Collection&lt;T&gt;
+							</code>
+						</pre>
+						<li class="small">Additional type parameters can be used</li>
+						<pre class="java">
+							<code data-trim>
+								public class LabeledBox&lt;S,T&gt; extends Box&lt;T&gt;
+							</code>
+						</pre>
+					</ul>
+				</section>
+
+				<section data-auto-animate data-auto-animate-restart>
 					<h3>Bounded Type Parameters</h3>
 					<ul class="small">
 						<li><em>Generic type parameters</em> don't provide any information to the compiler at compile time, and therefore, the only methods that can be called on a generic type are <code>Object</code> methods</li>
@@ -431,27 +450,153 @@
 					</ul>
 				</section>
 
-				<section data-auto-animate data-auto-animate-restart>
-					<h3>Wildcards</h3>
+				<section data-auto-animate>
+					<h3>Bounded Type Parameters</h3>
+					<pre class="java">
+						<code data-trim>
+							// contains abstract method `double getArea()`
+							public abstract class Shape implements Comparable&lt;Shape&gt;
 
+							// the following classes override the getArea() method
+							public class Circle extends Shape
+							public class Polygon extends Shape
+							public class Rectangle extends Polygon
+							public class Square extends Rectangle
+						</code>
+					</pre>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Bounded Type Parameters</h3>
+					<pre class="java">
+						<code data-trim>
+							public static &lt;T extends Shape&gt;
+								void countBigger(T[] array, double size)
+							{
+								int count = 0;
+								for (T e : array)
+									if (e.getArea() &gt; size) ++count;
+								return count;
+							}
+						</code>
+					</pre>
 				</section>
 
 				<section data-auto-animate data-auto-animate-restart>
-					<h3>Subclasses of Generic Classes</h3>
+					<h3>Wildcards</h3>
 					<ul>
-						<li class="small">You can create a subclass of a generic class or interface by extending or implementing it</li>
+						<li class="small">Consider the problem of writing a routine that <em>prints all of the elements</em> in some <code>Collection</code>, regardless of its contents.</li>
 						<pre class="java">
 							<code data-trim>
-								public class ArrayList&lt;T&gt; extends List&lt;T&gt;
-								public class List&lt;T&gt; extends Collection&lt;T&gt;
+								public static void printCollection(Collection&lt;Object&gt; c)
+								{
+									for (Object e : c)
+										System.out.println(e);
+								}
 							</code>
 						</pre>
-						<li class="small">Additional type parameters can be used</li>
+						<li class="small fragment">What objects could you call <code>printCollection()</code> on?</li>
+						<ul>
+							<li class="small fragment"><em><code>Collection&lt;Object&gt;</code> or its subclasses</em></li>
+							<ul>
+								<li class="small fragment"><code>ArrayList&lt;Object&gt;</code>? <em class="fragment">Yes.</em></li>
+								<li class="small fragment"><code>Collection&lt;String&gt;</code>? <em class="fragment">No.</em></li>
+							</ul>
+						</ul>
+					</ul>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Wildcards</h3>
+					<ul>
+						<li class="small">The superclass of all <code>Collection</code>s is actually <code>Collection&lt;?&gt;</code>. This is a collection of unknown type. The <code>?</code> in this case is called a <strong>wildcard</strong>.</li>
 						<pre class="java">
 							<code data-trim>
-								public class LabeledBox&lt;S,T&gt; extends Box&lt;T&gt;
+								public static void printCollection(Collection&lt;?&gt; c)
+								{
+									for (Object e : c)
+										System.out.println(e);
+								}
 							</code>
 						</pre>
+						<li class="small">In this case, removing elements from the <code>Collection</code> and storing them in an <code>Object</code> is considered safe. If you were to insert values into the <code>Collection</code>, there would be no way to know at compile time whether the types matched, and would produce a <em>compile-time error</em></li>
+					</ul>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Wildcards</h3>
+					<ul>
+						<pre class="java">
+							<code data-trim>
+								// remember: Shape implements Comparable&lt;Shape&gt;
+								public static &lt;T extends Comparable&lt;T&gt;&gt;
+									void countBigger(T[] array, T other)
+								{
+									int count = 0;
+									for (T e : array)
+										if (e.compareTo(other) &gt; 0) ++count;
+									return count;
+								}
+							</code>
+						</pre>
+						<li class="small fragment">Does this work to implement a <code>countBigger()</code> method that makes use of the <code>compareTo()</code> method?</li>
+						<ul>
+							<li class="small fragment"><em>Can I call it with a <code>Shape[]</code> array?</em></li>
+							<li class="small fragment"><em>Can I call it with a <code>Square[]</code> array?</em></li>
+						</ul>
+					</ul>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Wildcards</h3>
+					<ul>
+						<pre class="java">
+							<code data-trim>
+								// remember: Shape implements Comparable&lt;Shape&gt;
+								public static &lt;T extends Comparable&lt;T&gt;&gt;
+									void countBigger(T[] array, T other)
+							</code>
+						</pre>
+						<li class="small"><em>Can I call it with a <code>Square[]</code> array?</em></li>
+						<ul>
+							<li class="small fragment"><strong>No</strong>, because <code>Square</code> doesn't implement <code>Comparable&lt;Square&gt;</code></li>
+							<li class="small fragment">How can we fix this?</li>
+						</ul>
+					</ul>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Wildcards</h3>
+					<ul>
+						<li class="small">We could use a wildcard with <code>Comparable</code></li>
+						<pre class="java fragment">
+							<code data-trim>
+								public static &lt;T extends Comparable&lt;?&gt;&gt;
+									void countBigger(T[] array, T other)
+							</code>
+						</pre>
+						<li class="small fragment">This doesn't provide the necessary constraint to make the <code>Comparable</code> interface useful to us <em class="fragment">...but we can bound the wildcard too!</em></li>
+						<pre class="java fragment">
+							<code data-trim>
+								public static &lt;T extends Comparable&lt;? super T&gt;&gt;
+									void countBigger(T[] array, T other)
+							</code>
+						</pre>
+					</ul>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Wildcards</h3>
+					<ul>
+						<pre class="java">
+							<code data-trim>
+								public static &lt;T extends Comparable&lt;? super T&gt;&gt;
+									void countBigger(T[] array, T other)
+							</code>
+						</pre>
+						<li class="small fragment">The <u><code>super</code></u> keyword here means "<em>accept any class for that implements <code>Comparable&lt;T&gt;</code>, or <code>Comparable&lt;S&gt;</code> for any class <code>S</code> that is a superclass of <code>T</code></em>"</li>
+						<li class="small fragment"><strong>In short:</strong> without this, <em>every class</em> would have to implement the <code>Comparable</code> interface</li>
+						<li class="small fragment">A <em>bounded wildcard</em> lets us look at <em>all classes in the hierarchy</em> to decide if the constraint is satisfied</li>
 					</ul>
 				</section>
 
@@ -470,6 +615,92 @@
 							</code>
 						</pre>
 					</ul>
+				</section>
+
+				<section data-auto-animate>
+					<h3><code>LinkedSeq</code></h3>
+					<ul>
+						<pre class="java">
+							<code data-trim>
+								public class Node&lt;E&gt;
+								{
+									private E data;
+									private Node&lt;E&gt; link;
+									// ...
+								}
+							</code>
+						</pre>
+						<li class="small">What would our fields change to?</li>
+						<table class="xsmall">
+							<tbody>
+								<tr class="fragment">
+									<td><code>private DoubleNode head</code></td>
+									<td>&Rightarrow;</td>
+									<td><code>private Node&lt;Double&gt; head</code></td>
+								</tr>
+								<tr class="fragment">
+									<td><code>private DoubleNode tail</code></td>
+									<td>&Rightarrow;</td>
+									<td><code>private Node&lt;Double&gt; tail</code></td>
+								</tr>
+								<tr class="fragment">
+									<td><code>private DoubleNode cursor</code></td>
+									<td>&Rightarrow;</td>
+									<td><code>private Node&lt;Double&gt; cursor</code></td>
+								</tr>
+								<tr class="fragment">
+									<td><code>private DoubleNode precursor</code></td>
+									<td>&Rightarrow;</td>
+									<td><code>private Node&lt;Double&gt; precursor</code></td>
+								</tr>
+								<tr class="fragment">
+									<td><code>private int manyNodes</code></td>
+									<td>&Rightarrow;</td>
+									<td><code>private int manyNodes</code></td>
+								</tr>
+							</tbody>
+						</table>
+					</ul>
+				</section>
+
+				<section data-auto-animate data-auto-animate-restart>
+					<h3>Making a Class Generic</h3>
+					<ul>
+						<li class="small">When a class is made generic, sometimes Java will give warnings about unsafe conversions. Due to <strong>erasure</strong>, Java cannot determine whether casting one object to a different type is safe. This is an "<em>unchecked cast</em>"</li>
+						<li class="small">These sorts of conversions are often safe (as long as you are careful), so you can suppress these warnings by adding the following compiler directive before any method performing a cast:</li>
+						<pre class="text">
+							<code data-trim>
+								@SuppressWarnings("unchecked")
+							</code>
+						</pre>
+						<li class="small">Because we cannot make arrays of generic type, and varargs functions (functions of variable arity) build arrays to hold values, you may need to suppress warnings as well in some cases:</li>
+						<pre class="text">
+							<code data-trim>
+								@SafeVarargs
+							</code>
+						</pre>
+					</ul>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Making a Class Generic</h3>
+					<p class="small">The following steps outline how to take an existing class and make it generic:</p>
+					<ol class="small">
+						<li class="fragment"><em>Change the name of the class</em> to append the type parameter (optionally, <code>&lt;E&gt;</code> or <code>&lt;T&gt;</code>). Do not change the names of the constructors!</li>
+						<li class="fragment"><em>Change any data arrays</em> to arrays of <code>Object</code>s</li>
+						<li class="fragment">Wherever the class referred to the <em>original datatype</em>, in situations where it is used for the data in the container, change to <code>E</code> or <code>T</code>. <em>Be careful!</em></li>
+						<li class="fragment">Change relevant <code>static</code> methods to <em>generic <code>static</code> methods</em></li>
+						<li class="fragment"><em>Add a typecast</em> when an element is retrieved from an <code>Object</code> array</li>
+						<li class="fragment"><em>Suppress warnings</em> where needed</li>
+						<li class="fragment">Change any <code>==</code> for <em>comparing data values</em> to <code>.equals()</code></li>
+						<li class="fragment"><em>For garbage collection purposes</em>, values removed from an <code>Object</code> array should be set to <code>null</code></li>
+						<li class="fragment">Update <em>documentation</em></li>
+					</ol>
+				</section>
+
+				<section data-auto-animate data-auto-animate-restart>
+					<h3>Iterators</h3>
+					
 				</section>
 			</div>
 		</div>
