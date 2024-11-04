@@ -594,7 +594,7 @@
 									void countBigger(T[] array, T other)
 							</code>
 						</pre>
-						<li class="small fragment">The <u><code>super</code></u> keyword here means "<em>accept any class for that implements <code>Comparable&lt;T&gt;</code>, or <code>Comparable&lt;S&gt;</code> for any class <code>S</code> that is a superclass of <code>T</code></em>"</li>
+						<li class="small fragment">The <u><code>super</code></u> keyword here means "<em>accept any class for that implements <code>Comparable&lt;T&gt;</code>, or <code>Comparable&lt;S&gt;</code> for any class <code>S</code> that is a <u>superclass</u> of <code>T</code></em>"</li>
 						<li class="small fragment"><strong>In short:</strong> without this, <em>every class</em> would have to implement the <code>Comparable</code> interface</li>
 						<li class="small fragment">A <em>bounded wildcard</em> lets us look at <em>all classes in the hierarchy</em> to decide if the constraint is satisfied</li>
 					</ul>
@@ -699,8 +699,329 @@
 				</section>
 
 				<section data-auto-animate data-auto-animate-restart>
-					<h3>Iterators</h3>
-					
+					<h3><code>Iterator</code> and <code>Iterable</code></h3>
+					<ul>
+						<li class="small"><em>Generic classes</em> can use <em>bounded wildcards</em> as well</li>
+						<pre class="java">
+							<code data-trim>
+								public class SortedList&lt;E extends Comparable&lt;? super E&gt;&gt;
+							</code>
+						</pre>
+						<li class="small"><em>Generic interfaces</em> (such as <code>Comparable&lt;E&gt;</code> above) aren't much different from regular interfaces, except that any class that implements the interface must either <em>set the type argument</em> or must also be a <em>generic type</em></li>
+						<li class="small">Consider the <code>Iterator&lt;E&gt;</code> interface, which requires the following:</li>
+						<pre class="java">
+							<code data-trim>
+								public boolean hasNext()
+								public E next()
+								public void remove()
+							</code>
+						</pre>
+					</ul>
+				</section>
+
+				<section data-auto-animate>
+					<h3><code>Iterator</code> and <code>Iterable</code></h3>
+					<ul>
+						<li class="small">Another similar type of interface is the <code>Iterable&lt;E&gt;</code> interface. It only requires a single method:</li>
+						<pre class="java">
+							<code data-trim>
+								public Iterator&lt;E&gt; iterator()
+							</code>
+						</pre>
+						<li class="small">This method returns an <code>Iterator</code> object. In this way, <code>Iterator</code> and <code>Iterable</code> go together. Any class that implements the <code>Iterable</code> interface can be iterated over with a <em>for-each loop</em></li>
+						<pre class="java">
+							<code data-trim>
+								public class ArrayList&lt;E&gt; implements Iterable&lt;E&gt;
+
+								ArrayList&lt;String&gt; stringList = new ArrayList&lt;&gt;();
+								for (String elem : stringList) // ...
+							</code>
+						</pre>
+					</ul>
+				</section>
+
+				<section data-auto-animate>
+					<h3><code>Iterator</code> and <code>Iterable</code></h3>
+					<ul>
+						<li class="small">This method returns an <code>Iterator</code> object. In this way, <code>Iterator</code> and <code>Iterable</code> go together. Any class that implements the <code>Iterable</code> interface can be iterated over with a <em>for-each loop</em></li>
+						<pre class="java">
+							<code data-trim>
+								public class ArrayList&lt;E&gt; implements Iterable&lt;E&gt;
+
+								ArrayList&lt;String&gt; stringList = new ArrayList&lt;&gt;();
+								for (String elem : stringList) // ...
+							</code>
+						</pre>
+						<li class="small"><em>Container classes</em> that implement the <code>Iterable&lt;E&gt;</code> interface return an iterator <em>specially built</em> for that class. This means you will usually implement the <code>Iterable</code> interface <em>at the container level</em>, and then build a <em>separate</em> or <em>inner class</em> that implements the <code>Iterator</code> interface that traverses the dataset.</li>
+					</ul>
+				</section>
+
+				<section data-auto-animate>
+					<div class="columns">
+						<div class="one-column">
+							<pre class="java" style="font-size: 30%;">
+								<code data-trim>
+									public class ArrayList&lt;E&gt; implements Iterable&lt;E&gt;
+									{
+										private int manyItems;
+										private Object[] data;
+
+										public ArrayList()
+										{
+											manyItems = 0;
+											data = new Object[10];
+										}
+
+										// other ArrayList methods
+
+										public Iterator&lt;E&gt; iterator()
+										{
+											return new ArrListIter();
+										}
+
+										private class ArrListIter implements Iterator&lt;E&gt;
+										{
+											int index;
+											int lastRtn;
+
+											private ArrListIter()
+											{
+												index = 0;
+												lastRtn = -1;
+											}
+								</code>
+							</pre>
+						</div>
+						<div class="one-column">
+							<pre class="java" style="font-size: 30%;">
+								<code data-trim>
+											public boolean hasNext()
+											{ return index < manyItems; }
+
+											public E next()
+											{
+												if (!hasNext()) throw new
+													NoSuchElementException("Iteration ended");
+												
+												lastRtn = index;
+												index++;
+												return (E) data[lastRtn];
+											}
+
+											public void remove()
+											{
+												if (lastRtn == -1) throw new
+													IllegalStateException("remove called before next");
+
+												for (int i = lastRtn; i < manyItems - 1; i++)
+													data[i] = data[i + 1];
+												data[manyItems - 1] = null;
+
+												manyItems--;
+												index = lastRtn;
+												lastRtn = -1;
+											}
+										}
+									}
+								</code>
+							</pre>
+						</div>
+					</div>
+				</section>
+
+				<section data-auto-animate>
+					<pre class="java">
+						<code data-trim>
+							public boolean hasNext()
+							{ return index < manyItems; }
+						</code>
+					</pre>
+					<ul class="small">
+						<li><code>hasNext()</code> returns <code>true</code> if there are still values remaining</li>
+					</ul>
+				</section>
+
+				<section data-auto-animate>
+					<pre class="java">
+						<code data-trim>
+							public E next()
+							{
+								if (!hasNext()) throw new
+									NoSuchElementException("Iteration ended");
+								
+								lastRtn = index;
+								index++;
+								return (E) data[lastRtn];
+							}
+						</code>
+					</pre>
+					<ul class="small">
+						<li><code>next()</code> <em>throws an exception</em> if there are no values remaining, but otherwise <em>returns the current element</em>, <em>advances</em> the current index, and keeps track of which value was <em>most recently returned</em></li>
+					</ul>
+				</section>
+
+				<section data-auto-animate>
+					<pre class="java">
+						<code data-trim>
+							public void remove()
+							{
+								if (lastRtn == -1) throw new
+									IllegalStateException("remove called before next");
+
+								for (int i = lastRtn; i < manyItems - 1; i++)
+									data[i] = data[i + 1];
+								data[manyItems - 1] = null;
+
+								manyItems--;
+								index = lastRtn;
+								lastRtn = -1;
+							}
+						</code>
+					</pre>
+					<ul class="small">
+						<li><code>remove()</code> <em>throws an exception</em> if <code>next()</code> was not called, otherwise <em>shifts</em> every element after to the left, <em>sets up the index</em> to return the next value, and <em>clears</em> the last returned value</li>
+					</ul>
+				</section>
+
+				<section data-auto-animate data-auto-animate-restart>
+					<h3>Review & Comprehension</h3>
+					<ul>
+						<li class="small">❓ How does the following code get the new <code>Iterator&lt;String&gt;</code>?</li>
+						<pre class="java">
+							<code data-trim>
+								ArrayList&lt;String&gt; names;
+								// code that puts Strings in the ArrayList…
+						
+								Iterator&lt;String&gt; itr = names.iterator();
+								while (itr.hasNext())
+									System.out.println(itr.next());
+							</code>
+						</pre>
+						<ul class="small fragment">
+							<li><strong>Answer:</strong> <em>The <code>iterator()</code> method creates an <code>Iterator</code> object and returns it</em></li>
+						</ul>
+					</ul>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Review & Comprehension</h3>
+					<ul>
+						<li class="small">❓ How does the following code get the new <code>Iterator&lt;String&gt;</code>?</li>
+						<pre class="java">
+							<code data-trim>
+								ArrayList&lt;String&gt; names;
+								// code that puts Strings in the ArrayList…
+						
+								for (String e : names)
+									System.out.println(e);
+							</code>
+						</pre>
+						<ul class="small fragment">
+							<li><strong>Answer:</strong> <em>The for-each loop implicitly calls the <code>iterator()</code> method and calls <code>hasNext()</code> and <code>next()</code> on the iterator to traverse the values</em></li>
+						</ul>
+					</ul>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Review & Comprehension</h3>
+					<ul>
+						<li class="small">❓ What is wrong with the following code?</li>
+						<pre class="java">
+							<code data-trim>
+								int shortnames = 0, longnames = 0;
+								Iterator&lt;String&gt; itr = names.iterator();
+								while (itr.hasNext()) 
+								{
+									if (itr.next().length() < 5) shortnames++;
+									if (itr.next().length() > 10) longnames++;
+								}
+								System.out.println ("There were " + shortnames +
+									" short names and " + longnames + " long names.");
+							</code>
+						</pre>
+						<ul class="small fragment">
+							<li><strong>Answer:</strong> <em>Calling <code>next()</code> advances the iterator. <code>next()</code> is called twice inside the above loop, (potentially) producing the wrong answer</em></li>
+						</ul>
+					</ul>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Review & Comprehension</h3>
+					<ul>
+						<li class="small">❓ A collection must implement which interface to be able to use a for-each loop to iterate over the collection?</li>
+						<ul class="small fragment">
+							<li><strong>Answer:</strong> <em>The collection must implement the <code>Iterable&lt;E&gt;</code> interface</em></li>
+						</ul>
+						<li class="small fragment">❓ What method is required for a class implementing the <code>Iterable&lt;E&gt;</code> interface, and how does it work?</li>
+						<ul class="small fragment">
+							<li><strong>Answer:</strong> <em>The collection must implement the <code>iterator()</code> method. It creates an <code>Iterator&lt;E&gt;</code> object that can be used to traverse the collection</em></li>
+						</ul>
+					</ul>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Review & Comprehension</h3>
+					<ul>
+						<li class="small">❓ The <code>iterator()</code> method claims to return an <code>Iterator&lt;E&gt;</code>, which is an interface, not a class. How can a method return an interface?</li>
+						<ul class="small fragment">
+							<li><strong>Answer:</strong> <em>The <code>iterator()</code> method returns an object that <u>implements</u> the <code>Iterator&lt;E&gt;</code> interface</em></li>
+						</ul>
+					</ul>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Review & Comprehension</h3>
+					<ul>
+						<li class="small">❓ The following code doesn't compile. How can it be corrected?</li>
+						<pre class="java">
+							<code data-trim>
+								public static &lt;T&gt; void printCollection(T collection)
+								{
+									for (Object e : collection)
+										System.out.println(e);
+								}
+							</code>
+						</pre>
+						<ul class="fragment">
+							<li class="small"><strong>Answer:</strong> <em><code>T</code> must implement the <code>Iterable</code> interface in order to iterate it with a for-each loop, so the method header should be:</em></li>
+							<pre class="java">
+								<code data-trim>
+									public static &lt;T extends Iterable&lt;?&gt;&gt; 
+										void printCollection(T collection)
+								</code>
+							</pre>
+						</ul>
+					</ul>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Review & Comprehension</h3>
+					<ul>
+						<li class="small">❓ Implementing a <code>remove()</code> method is a hassle for a class implementing <code>Iterator</code>, but it is considered optional. What could the <code>remove()</code> method do instead?</li>
+						<ul class="small fragment">
+							<li><strong>Answer:</strong> <em>The <code>remove()</code> method could throw an <code>UnsupportedOperationException</code>.</em></li>
+						</ul>
+					</ul>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Review & Comprehension</h3>
+					<ul>
+						<li class="small">💡 Given the following <code>ArrayList</code>, trace how the iterator we examined executes the following code.</li>
+						<pre class="java">
+							<code data-trim>
+								ArrayList&lt;Integer&gt; list = 
+									new ArrayList&lt;&gt;(Arrays.asList(55, 11, 12, 17, 82, 64));
+								
+								Iterator&lt;Integer&gt; itr = list.iterator();
+								while (itr.hasNext()) 
+								{
+									Integer x = itr.next();
+									if (x % 2 == 0) itr.remove();
+								}
+							</code>
+						</pre>
+					</ul>
 				</section>
 			</div>
 		</div>

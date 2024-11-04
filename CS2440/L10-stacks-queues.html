@@ -1,0 +1,291 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>CS2440</title>
+
+		<link rel="stylesheet" href="../reveal-js/dist/reset.css">
+		<link rel="stylesheet" href="../reveal-js/dist/reveal.css">
+		<link rel="stylesheet" href="../reveal-js/dist/theme/dracula.css">
+		<link rel="stylesheet" href="../layouts/common.css">
+		<link rel="stylesheet" href="../reveal-js/plugin/highlight/monokai.css">
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+				<div class="header left">
+					CS2440: Computer Science II
+				</div>
+				<div class="header right no-title">
+					<em>Stacks & Queues</em>
+				</div>
+
+				<section data-state="title-slide">
+					<h1 class="r-fit-text">CS2440: Computer Science II</h1>
+					<h2 class="r-fit-text">Stacks & Queues</h2>
+				</section>
+
+				<section data-auto-animate data-auto-animate-restart>
+					<h3>Stacks</h3>
+					<div class="columns small">
+						<div class="one-column">
+							<h3>Specification</h3>
+							<ul>
+								<li><code>push(x)</code> - insert the object $x$ onto the top of the stack</li>
+								<li><code>pop()</code> - remove and return object on top of the stack</li>
+								<hr>
+								<li><code>peek()</code> - return object on top of stack</li>
+								<li><code>size()</code>, <code>isEmpty()</code></li>
+							</ul>
+						</div>
+						<div class="one-column">
+							<img src="figures/stack-queue/stack.png">
+							<ul>
+								<li>Last-in, first-out (<em>LIFO</em>)</li>
+								<li>Operations only happen on one end of the data structure</li>
+							</ul>
+						</div>
+					</div>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Stacks</h3>
+					<div class="columns small">
+						<div class="one-column">
+							<p><strong>💡Try It:</strong> <em>Follow the structure and output of a stack given the following operations</em></p>
+							<div class="columns">
+								<div class="one-column">
+									<ul>
+										<li><code>push(5)</code></li>
+										<li><code>push(3)</code></li>
+										<li><code>pop()</code></li>
+										<li><code>push(2)</code></li>
+										<li><code>push(8)</code></li>
+										<li><code>pop()</code></li>
+										<li><code>pop()</code></li>
+										<li><code>push(9)</code></li>
+										<li><code>push(1)</code></li>
+									</ul>
+								</div>
+								<div class="one-column">
+									<ul>
+										<li><code>pop()</code></li>
+										<li><code>push(7)</code></li>
+										<li><code>push(6)</code></li>
+										<li><code>pop()</code></li>
+										<li><code>pop()</code></li>
+										<li><code>push(4)</code></li>
+										<li><code>pop()</code></li>
+										<li><code>pop()</code></li>
+										<li><code>pop()</code></li>
+									</ul>
+								</div>
+							</div>
+						</div>
+						<div class="one-column">
+							<!-- TODO -->
+						</div>
+					</div>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Stacks</h3>
+					<p>❓ <em>Consider a series of <code>push()</code> and <code>pop()</code> operations in which you pushed the integers $1, 2, 3$ (in that order).</em></p>
+					<ul>
+						<li class="fragment">Could you pop them off in order $1, 2, 3$?</li>
+						<li class="fragment">Could you pop them off in order $3, 2, 1$?</li>
+						<li class="fragment">Are there any orderings that wouldn't be possible?</li>
+						<li class="fragment">What about with the sequence $1, 2, 3, 4$?</li>
+					</ul>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Stacks</h3>
+					<p>Consider the following method:</p>
+					<pre class="java">
+						<code data-trim>
+							public static &lt;T&gt; Stack&lt;T&gt; popAndPush(Stack&lt;T&gt; stack)
+							{
+								Stack&lt;T&gt; newStack = new Stack&lt;T&gt;();
+								while (!stack.isEmpty())
+									newStack.push(stack.pop());
+								return newStack;
+							}
+						</code>
+					</pre>
+					<p>❓ <em>What is returned when given a stack with values $\{5, 3, 1, 2, 4\}$ with $4$ at the top?</em></p>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Stacks</h3>
+					<p>❓ <em>What does the following method do?</em></p>
+					<pre class="java">
+						<code data-trim>
+							public static String mystery(int num, int b) 
+							{
+								String digitChar = "0123456789ABCDEF";
+								Stack&lt;Character&gt; stack = new Stack&lt;Character&gt;();
+								String answer = "";
+								do {
+									stack.push(digitChar.charAt(num % b));
+									num /= b;
+								} while (num != 0);
+						
+								while (!stack.isEmpty()) answer += stack.pop();
+								return answer;
+							}
+						</code>
+					</pre>
+				</section>
+
+				<section data-auto-animate data-auto-animate-restart>
+					<h3>Stack Implementations: Arrays</h3>
+					<ul class="small">
+						<li>Suppose we choose to implement our stack using an array</li>
+						<li>We want to <em>minimize</em> the amount that <em>elements need to shift</em></li>
+						<li class="fragment">Where would be the best location for the <em>top</em> of the stack?</li>
+						<li class="fragment">What <em>fields</em> would we need?</li>
+						<ul>
+							<li class="fragment"><code>private Object[] data</code> &mdash; elements in stack</li>
+							<li class="fragment"><code>private int manyItems</code> &mdash; count of elements</li>
+						</ul>
+						<li class="fragment">What <em>invariants</em> would we need?</li>
+						<ol>
+							<li class="fragment">The number of items is stored in <code>manyItems</code></li>
+							<li class="fragment">The items in the stack are stored in <code>data</code>, with the <em>bottom of the stack</em> at <code>data[0]</code> and the <em>top of the stack</em> at <code>data[manyItems-1]</code></li>
+						</ol>
+					</ul>	
+				</section>
+
+				<section data-auto-animate data-auto-animate-restart>
+					<h3>Stack Implementations: Arrays</h3>
+					<img src="../CS3460/figures/stacks-queues/array-stack.svg">
+					<div class="columns">
+						<div class="one-column">
+							<pre class="java fragment">
+								<code data-trim class="small">
+									public E pop()
+									{
+										manyItems--;
+										return data[manyItems];
+									}
+								</code>
+							</pre>
+						</div>
+						<div class="one-column">
+							<pre class="java fragment">
+								<code data-trim class="small">
+									public void push(E elem)
+									{
+										data[manyItems] = elem;
+										manyItems++;
+									}
+								</code>
+							</pre>
+							<pre class="java fragment">
+								<code data-trim class="small">
+									public E peek()
+									{
+										return data[manyItems - 1];
+									}
+								</code>
+							</pre>
+						</div>
+					</div>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Stack Implementations: Arrays</h3>
+					<ul class="small">
+						<li>Consider how you might implement the following methods, and give their time complexities</li>
+						<ul>
+							<li class="fragment"><code>public ArrayStack()</code></li>
+							<li class="fragment"><code>public ArrayStack(int initialCapacity)</code></li>
+							<li class="fragment"><code>public ArrayStack clone()</code></li>
+							<li class="fragment"><code>public boolean isEmpty()</code></li>
+							<li class="fragment"><code>public int size()</code></li>
+							<li class="fragment"><code>public void ensureCapacity(int minimumCapacity)</code></li>
+							<li class="fragment"><code>public int getCapacity()</code></li>
+							<li class="fragment"><code>public void trimToSize()</code></li>
+						</ul>
+					</ul>
+				</section>
+
+				<section data-auto-animate data-auto-animate-restart>
+					<h3>Stack Implementations: Linked Lists</h3>
+					<ul class="small">
+						<li>Suppose we choose to implement our stack using a linked list</li>
+						<li>Linked lists can grow and shrink easily.</li>
+						<ul>
+							<li>No need for <code>ensureCapacity()</code>, <code>getCapacity()</code>, or <code>trimToSize()</code></li>
+						</ul>
+						<li>Where would be the best location for the <em>top</em> of the stack?</li>
+						<ul>
+							<li class="fragment"><code>push()</code> and <code>pop()</code> from the head of the linked list is easiest</li>
+						</ul>
+						<li class="fragment">What <em>fields</em> would we need?</li>
+						<ul>
+							<li class="fragment"><code>private Node&lt;E&gt; top</code> &mdash; top of stack</li>
+							<li class="fragment"><code>private int manyItems</code> &mdash; count of elements</li>
+						</ul>
+					</ul>
+				</section>
+
+				<section data-auto-animate data-auto-animate-restart>
+					<h3>Stack Implementations: Linked Lists</h3>
+					<img src="../CS3460/figures/stacks-queues/list-stack-4.svg" data-id="figure">
+					<div class="columns">
+						<div class="one-column">
+							<pre class="java fragment">
+								<code data-trim class="small">
+									public E pop()
+									{
+										E elem = top.data;
+										top = top.next;
+										manyItems--;
+										return elem;
+									}
+								</code>
+							</pre>
+						</div>
+						<div class="one-column">
+							<pre class="java fragment">
+								<code data-trim class="small">
+									public void push(E elem)
+									{
+										top = new Node&lt;E&gt;(top, elem);
+										manyItems++;
+									}
+								</code>
+							</pre>
+							<pre class="java fragment">
+								<code data-trim class="small">
+									public E peek()
+									{
+										return top.data;
+									}
+								</code>
+							</pre>
+						</div>
+					</div>
+				</section>
+			</div>
+		</div>
+
+		<script src="../reveal-js/dist/reveal.js"></script>
+		<script src="../reveal-js/plugin/math/math.js"></script>
+		<script src="../reveal-js/plugin/notes/notes.js"></script>
+		<script src="../reveal-js/plugin/markdown/markdown.js"></script>
+		<script src="../reveal-js/plugin/highlight/highlight.js"></script>
+		<script>
+			Reveal.initialize({
+				hash: true,
+				slideNumber: true,
+				transition: 'convex',
+				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes, RevealMath.KaTeX ],
+			});
+		</script>
+	</body>
+</html>
