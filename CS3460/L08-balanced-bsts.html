@@ -413,7 +413,87 @@
 					<img src="figures/balancing/btree-234.svg" width="70%">
 				</section>
 
-				<!-- TODO: Splay Trees -->
+				<section data-auto-animate data-auto-animate-restart>
+					<h3>Splay Trees</h3>
+					<ul class="small">
+						<li>The "<em>splay</em>" operation promotes an element to the root by <em>repeatedly rotating the node with its parent</em> until we get to the top</li>
+						<li>If element is "<em>in-line</em>" with its parent and grandparent, <em>rotate parent first</em></li>
+					</ul>
+					<img src="figures/balancing/splay-def.svg">
+				</section>
+
+				<!-- TODO: Splay Operation Example -->
+				<section data-auto-animate>
+					<h3>Splay Trees</h3>
+					<ul class="small">
+						<li>What happens to a long uni-directional path when we rotate its bottom element to the root, versus splaying?</li>
+						<img src="figures/balancing/splay-vs-rotate.svg" width="80%">
+					</ul>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Splay Trees</h3>
+					<ul class="small">
+						<li>A <strong>splay tree</strong> is a BST in which we <em>splay</em> an element every time it is accessed:</li>
+						<ul>
+							<li><code>find(e)</code>: <em>Find</em> <code>e</code> as usual, then <code>splay(e)</code></li>
+							<li><code>insert(e)</code>: <em>Insert</em> <code>e</code> as usual, then <code>splay(e)</code></li>
+							<li><code>delete(e)</code>: <code>splay(e)</code>, then replace <code>e</code> with the <em>join</em> of its two child subtrees</li>
+						</ul>
+						<li>A splay tree is called a <strong>self-adjusting</strong> tree, since it continually modifies its structure according to simple local update rules <em>that do not depend on any augmented information stored within the tree</em>.</li>
+					</ul>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Splay Trees</h3>
+					<ul class="small">
+						<li>Incredibly, all operations on a <strong>splay tree</strong> run in <em>$O(\lg n)$ amortized time</em>! (any sequence of $k$ operations, starting with an empty tree, take $O(k \lg n)$ time)</li>
+						<li>A splay tree "<em>magically</em>" stays balanced (in an amortized sense), even though it needs <em>no augmentations</em> to help it do so!</li>
+					</ul>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Splay Trees</h3>
+					<ul class="small">
+						<li><code>split(T, k)</code> &ndash; Split $T$ into two BSTs, one containing keys $\le k$ and the other keys $> k$.</li>
+						<li><code>join(L, R)</code> &ndash; Take two BSTs $L$ and $R$, the keys in $L$ all being less than the keys in $R$, and join them into a single BST.</li>
+						<img src="figures/trees/bst-split-join.svg">
+					</ul>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Splay Trees</h3>
+					<ul class="small">
+						<li>On a <strong>splay tree</strong>:</li>
+						<ul>
+							<li><code>split(T, k)</code> &ndash; Find the element $e$ of key $k$, then <em>splay</em> $e$ to the root and remove its right subtree (if $k$ doesn't exist, use <code>pred(k)</code> instead)</li>
+							<li><code>join(L, R)</code> &ndash; Splay the maximum element in $L$ to the root, then attach $R$ as its right subtree</li>
+						</ul>
+						<img src="figures/trees/bst-split-join.svg">
+					</ul>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Splay Trees</h3>
+					<ul class="small">
+						<li>If we can split and join easily, then we can insert and delete easily as well:</li>
+						<ul>
+							<li class="fragment"><code>insert(T, e)</code> <span class="fragment">&ndash; split $T$ on $e$'s key into $L$ and $R$. Then make $e$ the root, with left subtree $L$ and right subtree $R$.</span></li>
+							<li class="fragment"><code>delete(e)</code> <span class="fragment">&ndash; replace $e$ with the join of its left and right subtrees</span></li>
+						</ul>
+						<li class="fragment">Note that the version of insert above inserts the new element at the <em>root</em>, instead of a <em>leaf</em></li>
+					</ul>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Splay Trees</h3>
+					<ul class="small">
+						<li>We can also encode dynamic sequences, so that <em>insert</em>, <em>delete</em>, and <em>rank</em>-based access all take $O(\lg n)$ time</li>
+						<li>Suppose we want the ability to cut a sequence into two shorter sequences, or to link two sequences together end-to-end</li>
+						<li>The <em>split</em> and <em>join</em> operations are able to do precisely this, and can be performed in $O(\lg n)$ amortized time</li>
+						<li><strong>Application:</strong> cut/paste</li>
+					</ul>
+				</section>
 
 				<section data-auto-animate data-auto-animate-restart>
 					<h3>Randomly-Balanced<br />Binary Search Trees</h3>

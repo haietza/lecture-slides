@@ -287,6 +287,24 @@
 					</ul>
 				</section>
 
+				<section data-auto-animate>
+					<h3>Modifying DFS to Solve Problems</h3>
+					<ul class="small">
+						<li>How do we count connected components in a graph $G$?</li>
+						<ul class="fragment">
+							<li><em>Use full_dfs(), add 1 to a counter each time you start a new call to dfs(i).</em></li>
+						</ul>
+						<li class="fragment">You are given a grid. How do we flood fill? (Hint: grids are a type of <strong>implicit graph</strong>)</li>
+						<ul>
+							<li class="fragment"><em>Use full_dfs() with modified dfs(i), color every node visited in one pass of dfs(i) the same color, change color for each new call to dfs(i).</em></li>
+						</ul>
+						<li class="fragment">How do you determine whether a graph $G$ is bipartite?</li>
+						<ul>
+							<li class="fragment"><em>Run dfs(i), coloring nodes in alternating colors (represented by 0 and 1). If we encounter a node already colored incorrectly, not bipartite.</em></li>
+						</ul>
+					</ul>
+				</section>
+
 				<section data-auto-animate data-auto-animate-restart>
 					<h3>Depth First Search in Practice</h3>
 					<p><strong>The Wolf, the Goat, and the Cabbage Problem</strong></p>
