@@ -27,8 +27,178 @@
 					<h2 class="r-fit-text">Loops</h2>
 				</section>
 
-				<section data-auto-animate data-auto-animate-restart>
-					<h3>Slide Title</h3>
+				<section class="left" data-auto-animate data-auto-animate-restart>
+					<h3>Loop Basics</h3>
+					<ul>
+						<li>We want a block of code to run <em>repeatedly</em> based on some <em>condition</em></li>
+					</ul>
+				</section>
+
+				<section class="left" data-auto-animate data-auto-animate-restart>
+					<h3><code>while</code> Loop</h3>
+					<ul>
+						<li>A <code>while</code> loop runs an indented block of code, or the <em>loop body</em>, repeatedly as long as the <em>loop condition</em> is true</li>
+						<pre class="python">
+							<code data-trim>
+								x = 0
+								while x < 10:
+									print("Hello world")
+							</code>
+						</pre>
+						<p><strong>💡Try It:</strong> <em>What do you think will happen when we run this code?</em></p>
+					</ul>
+				</section>
+
+				<section class="left" data-auto-animate data-auto-animate-restart>
+					<h3>Infinite Loops</h3>
+					<ul>
+						<li>There are some programs we don't want to stop</li>
+						<li>But how do we prevent infinite loops when they are <em>not what we intended</em>?</li>
+					</ul>
+				</section>
+
+				<section class="left" data-auto-animate data-auto-animate-restart>
+					<h3>Loop Control Variables</h3>
+					<ul>
+						<li>Need a code path that eventually makes the <em>loop condition</em> evaluate to <code>False</code></li>
+						<pre class="python fragment">
+							<code data-trim>
+								x = 0
+								while x < 10:
+									print("Hello world")
+									x += 1
+							</code>
+						</pre>
+						<li class="fragment">Each <em>iteration</em> of the loop, the <em>condition</em> is checked</li>
+					</ul>
+				</section>
+
+				<section class="left" data-auto-animate data-auto-animate-restart>
+					<h3><code>for</code> Loop</h3>
+					<ul>
+						<li>We have a <em>collection of values</em></li>
+						<li>We want a program to <em>iterate</em>, or go through those values</li>
+						<pre class="python">
+							<code data-trim>
+								for elem in "abcdefg":
+									print(elem)
+							</code>
+						</pre>
+						<p><strong>💡Try It:</strong> <em>What do you think will happen when we run this code?</em></p>
+					</ul>
+				</section>
+
+				<section class="left" data-auto-animate data-auto-animate-restart>
+					<h3>The <code>range</code> Function</h3>
+					<ul>
+						<li>Generates a <code>range</code> of values the <code>for</code> loop can <em>iterate</em> over</li>
+						<pre class="python">
+							<code data-trim>
+								for i in range(10):
+									print(i)
+							</code>
+						</pre>
+						<li>Starts at 0</li>
+						<li>Goes up to, <em>not including</em>, 10</li>
+					</ul>
+				</section>
+
+				<section class="left" data-auto-animate data-auto-animate-restart>
+					<h3>The <code>range</code> Function: Two Arguments</h3>
+					<ul>
+						<pre class="python">
+							<code data-trim>
+								for i in range(1,10):
+									print(i)
+							</code>
+						</pre>
+						<li>Starts at 1</li>
+						<li>Goes up to, <em>not including</em>, 10</li>
+						<p><strong>💡Try It:</strong> <em>Change the code to print 1 through 10.</em></p>
+					</ul>
+				</section>
+
+				<section class="left" data-auto-animate data-auto-animate-restart>
+					<h3>The <code>range</code> Function: Three Arguments</h3>
+					<ul>
+						<pre class="python">
+							<code data-trim>
+								for i in range(1,10,2):
+									print(i)
+							</code>
+						</pre>
+						<li>Starts at 1</li>
+						<li>Goes up to, <em>not including</em>, 10</li>
+						<li><code>step</code> size of 2 between values</li>
+						<li>Generates the sequence <code>[1,3,5,7,9]</code></li>
+					</ul>
+				</section>
+
+				<section class="left" data-auto-animate data-auto-animate-restart>
+					<h3>Nesting Loops</h3>
+					<ul>
+						<li>Alternative solution, less efficient:</li>
+						<pre class="python">
+							<code data-trim>
+								for i in range(10):
+									if i % 2 == 1:	
+										print(i)
+							</code>
+						</pre>
+						<div class="fragment">
+							<li>Common for <em>multi-dimensional data</em></li>
+							<pre class="python">
+								<code data-trim>
+									for elem in "ABCD":
+										for i in range(3):
+											print(elem, i)
+								</code>
+							</pre>
+							<p><strong>💡Try It:</strong> <em>What do you think will happen when we run this code?</em></p>
+						</div>
+						</ul>
+				</section>
+
+				<section class="left" data-auto-animate data-auto-animate-restart>
+					<h3><code>break</code> and <code>continue</code></h3>
+					<ul>
+						<li>Flow of a loop is typically controlled by the <em>condition</em></li>
+						<li>Sometimes we want to <em>disrupt</em> that flow</li>
+					</ul>
+				</section>
+
+				<section class="left" data-auto-animate data-auto-animate-restart>
+					<h3>The <code>break</code> Statement</h3>
+					<ul>
+						<li>Immediately <em>terminate</em> a loop</li>
+						<li>Applies to closest, or <em>innermost</em>, loop</li>
+						<pre class="python">
+							<code data-trim>
+								for i in range(1000):
+									if i == 10:
+										break
+									print(i)
+							</code>
+						</pre>
+						<p><strong>💡Try It:</strong> <em>What is the last number printed?</em></p>
+					</ul>
+				</section>
+
+				<section class="left" data-auto-animate data-auto-animate-restart>
+					<h3>The <code>continue</code> Statement</h3>
+					<ul>
+						<li><em>Current iteration</em> of innermost loop is terminated</li>
+						<li>But the loop <em>continues</em></li>
+						<pre class="python">
+							<code data-trim>
+								for i in range(25):
+									if i % 2 == 1:
+										contnue
+									print(i)
+							</code>
+						</pre>
+						<p><strong>💡Try It:</strong> <em>Which values are skipped?</em></p>
+					</ul>
 				</section>
 			</div>
 		</div>
