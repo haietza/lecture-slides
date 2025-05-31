@@ -27,7 +27,7 @@
 					<h2 class="r-fit-text">File Handling</h2>
 				</section>
 
-				<section data-auto-animate data-auto-animate-restart>
+				<section class="left" data-auto-animate data-auto-animate-restart>
 					<h3>Pathnames</h3>
 					<ul>
 						<li>When dealing with files, the first problem to solve is <strong>where the file is located</strong></li>
@@ -35,10 +35,10 @@
 					</ul>
 				</section>
 
-				<section data-auto-animate>
+				<section class="left" data-auto-animate>
 					<h3>Pathnames</h3>
 					<ul>
-						<li><strong>Consider:</strong> giving directions to your house</li>
+						<li>Consider giving directions to your house</li>
 						<li class="fragment">What are some different ways to give instructions for where your house is located?</li>
 						<ul>
 							<li class="fragment"><em>Exact</em> GPS coordinates</li>
@@ -48,14 +48,14 @@
 					</ul>
 				</section>
 
-				<section data-auto-animate data-auto-animate-restart>
+				<section class="left" data-auto-animate data-auto-animate-restart>
 					<h3>Absolute Pathnames</h3>
 					<ul>
 						<li>An <strong>absolute pathname</strong> defines the <em>exact</em> location for where a file can be found</li>
 						<li>This is an <em>unambiguous</em> location</li>
 						<pre class="python">
 							<code data-trim>
-								fn = "C:/Users/smithj/Documents/file.txt"  # for Windows
+								fn = "C:\Users\smithj\Documents\file.txt"  # for Windows
 								fn = "/Users/smithj/Documents/file.txt"    # for Mac
 								fn = "/home/smithj/Documents/file.txt"     # for Linux
 							</code>
@@ -64,7 +64,7 @@
 					</ul>
 				</section>
 
-				<section data-auto-animate>
+				<section class="left" data-auto-animate>
 					<h3>Absolute Pathnames</h3>
 					<ul>
 						<li>What are some problems with using <strong>absolute pathnames</strong>?</li>
@@ -76,7 +76,7 @@
 					</ul>
 				</section>
 
-				<section data-auto-animate data-auto-animate-restart>
+				<section class="left" data-auto-animate data-auto-animate-restart>
 					<h3>Relative Pathnames</h3>
 					<ul>
 						<li>A <strong>relative pathname</strong> defines the location of a file relative to the <em>current working directory</em></li>
@@ -93,7 +93,7 @@
 					</ul>
 				</section>
 
-				<section data-auto-animate>
+				<section class="left" data-auto-animate>
 					<h3>Relative Pathnames</h3>
 					<ul>
 						<li><strong>Relative pathnames</strong> are <em>almost always preferred</em></li>
@@ -101,10 +101,10 @@
 					</ul>
 				</section>
 
-				<section data-auto-animate data-auto-animate-restart>
+				<section class="left" data-auto-animate data-auto-animate-restart>
 					<h3>Relative Pathnames</h3>
+					<p>A short note on <strong>relative pathnames</strong>. There are two special nodes that can be used in pathnames:</p>
 					<ul>
-						<li>A short note on <strong>relative pathnames</strong> &mdash; There are two special nodes that can be used in pathnames</li>
 						<li>"<code>..</code>" refers to <em>moving up one directory</em></li>
 						<pre class="python">
 							<code data-trim>
@@ -122,7 +122,7 @@
 					</ul>
 				</section>
 
-				<section data-auto-animate data-auto-animate-restart>
+				<section class="left" data-auto-animate data-auto-animate-restart>
 					<h3>Reading a File</h3>
 					<ul>
 						<li>Before we can read the contents of a file, we have to <em>open</em> it</li>
@@ -133,27 +133,32 @@
 								file.close()
 							</code>
 						</pre>
-						<li>Whenever you open a file, it is <strong>crucially</strong> important to remember to <em>close your file</em>.</li>
-						<li>Closing a file <em>releases the resource</em>. Once it has been closed, it can no longer be interacted with</li>
+						<li>Whenever you open a file, it is <strong>crucially</strong> important to remember to <em>close your file</em></li>
+						<li>Closing a file <em>releases the resource</em>; once it has been closed, it can no longer be interacted with</li>
 					</ul>
 				</section>
 
-				<section data-auto-animate>
+				<section class="left" data-auto-animate>
 					<h3>Reading a File</h3>
 					<ul>
 						<li><code>open(filename, mode)</code> takes two arguments</li>
 						<ol>
-							<li><code>filename</code> &mdash; the path to the file</li>
-							<li><code>mode</code> &mdash; a string describing <em>how the file should be opened</em>. <code>"r"</code> for read (<em>the default option</em>). <code>"w"</code> for write. <code>"a"</code> for append</coe></li>
+							<li><code>filename</code>: the path to the file</li>
+							<li><code>mode</code>: a string describing <em>how the file should be opened</em></li>
+								<ul>
+									<li><code>"r"</code> for read (<em>the default option</em>)
+									<li><code>"w"</code> for write</li>
+									<li><code>"a"</code> for append</coe></li>
+								</ul></li>
 						</ol>
 						<li>This can throw an error for a variety of reasons: file doesn't exist, file not accessible, and more...</li>
 					</ul>
 				</section>
 
-				<section data-auto-animate>
+				<section class="left" data-auto-animate>
 					<h3>Reading a File</h3>
 					<ul>
-						<li>One way to read a file is <em>all at once</em> &mdash; the <code>.read()</code> method reads an entire file</li>
+						<li>One way to read a file is <em>all at once</em>; the <code>read()</code> method reads an entire file</li>
 						<pre class="python">
 							<code data-trim>
 								file = open("path/to/file.txt", "r")
@@ -165,10 +170,10 @@
 					</ul>
 				</section>
 
-				<section data-auto-animate>
+				<section class="left" data-auto-animate>
 					<h3>Reading a File</h3>
 					<ul>
-						<li>Another option: reading the file <em>one line at a time</em> &mdash; the <code>.readline()</code> method reads one line</li>
+						<li>Another option is reading the file <em>one line at a time</em>; the <code>readline()</code> method reads one line</li>
 						<pre class="python">
 							<code data-trim>
 								file = open("path/to/file.txt", "r")
@@ -178,11 +183,11 @@
 								file.close()
 							</code>
 						</pre>
-						<li><strong>Remember:</strong> like the <code>input()</code> method. All of these methods <em>return strings</em>.</li>
+						<li><strong>Remember</strong> the <code>input()</code> method; all of these methods <em>return strings</em></li>
 					</ul>
 				</section>
 
-				<section data-auto-animate>
+				<section class="left" data-auto-animate>
 					<h3>Reading a File</h3>
 					<ul>
 						<li>Another option, <em>looping</em> over a file using a <code>for</code> loop</li>
@@ -194,23 +199,23 @@
 								file.close()
 							</code>
 						</pre>
-						<li>If you need the values to be a different type (such as <em>integers</em>), cast the value &mdash; <code>int(line.strip())</code></li>
+						<li>If you need the values to be a different type (such as <em>integers</em>), cast the value: <code>int(line.strip())</code></li>
 					</ul>
 				</section>
 
-				<section data-auto-animate data-auto-animate-restart>
+				<section class="left" data-auto-animate data-auto-animate-restart>
 					<h3>The File Cursor</h3>
 					<ul>
 						<li>When reading from a file, imagine there's a <strong>cursor</strong> inside it that moves as you read the data</li>
 						<li>Operations like <em>looping</em> over the file or calling <code>.readline()</code> <em>advance the cursor to the next line</em></li>
-						<li><strong>Think:</strong> how does this affect reading a file?</li>
+						<li><strong>Think:</strong> How does this affect reading a file?</li>
 					</ul>
 				</section>
 
-				<section data-auto-animate>
+				<section class="left" data-auto-animate>
 					<h3>The File Cursor</h3>
 					<ul style="width: 100%">
-						<li>Imagine we want to loop through a file.</li>
+						<li>Imagine we want to loop through a file</li>
 						<pre class="python" data-id="code">
 							<code data-trim data-line-numbers>
 								file = open("path/to/file.txt", "r")
@@ -222,7 +227,7 @@
 					</ul>
 				</section>
 
-				<section data-auto-animate>
+				<section class="left" data-auto-animate>
 					<h3>The File Cursor</h3>
 					<ul style="width: 100%">
 						<li>What happens if we want to loop through it <em>twice</em>?</li>
@@ -241,7 +246,7 @@
 					</ul>
 				</section>
 
-				<section data-auto-animate>
+				<section class="left" data-auto-animate>
 					<h3>The File Cursor</h3>
 					<ul style="width: 100%">
 						<li>The <code>.seek()</code> method can be used to move the cursor</li>
@@ -259,7 +264,7 @@
 					</ul>
 				</section>
 
-				<section data-auto-animate data-auto-animate-restart>
+				<section class="left" data-auto-animate data-auto-animate-restart>
 					<h3>Writing a File</h3>
 					<ul>
 						<li>Passing <code>"w"</code> to the <code>open()</code> method will open a file for writing</li>
@@ -274,7 +279,7 @@
 					</ul>
 				</section>
 
-				<section data-auto-animate>
+				<section class="left" data-auto-animate>
 					<h3>Writing a File</h3>
 					<ul>
 						<li>Opening a file for writing <em>immediately</em> does a few things, depending on the situation</li>
@@ -286,10 +291,10 @@
 					</ul>
 				</section>
 
-				<section data-auto-animate>
+				<section class="left" data-auto-animate>
 					<h3>Writing a File</h3>
 					<ul>
-						<li>One way to write to the file is using the <code>.write()</code> method &mdash; this method takes a string and writes it directly to the file</li>
+						<li>One way to write to the file is using the <code>.write()</code> method; this method takes a string and writes it directly to the file</li>
 						<pre class="python">
 							<code data-trim>
 								file = open("path/to/file.txt", "w")
@@ -301,7 +306,7 @@
 					</ul>
 				</section>
 
-				<section data-auto-animate>
+				<section class="left" data-auto-animate>
 					<h3>Writing a File</h3>
 					<ul>
 						<li><strong><code>.write()</code> only accepts strings!</strong></li>
@@ -316,7 +321,7 @@
 					</ul>
 				</section>
 
-				<section data-auto-animate>
+				<section class="left" data-auto-animate>
 					<h3>Writing a File</h3>
 					<ul>
 						<li><strong><code>.write()</code> only accepts strings!</strong></li>
@@ -331,10 +336,10 @@
 					</ul>
 				</section>
 
-				<section data-auto-animate>
+				<section class="left" data-auto-animate>
 					<h3>Writing a File</h3>
 					<ul>
-						<li><strong>Keep in mind:</strong> the <code>.write()</code> method writes <em>exactly</em> what you ask for. It will not add <em>spaces</em> or <em>newlines</em> for you</li>
+						<li><strong>Keep in mind:</strong> The <code>.write()</code> method writes <em>exactly</em> what you ask for; it will not add <em>spaces</em> or <em>newlines</em> for you</li>
 						<pre class="python">
 							<code data-trim>
 								file = open("path/to/file.txt", "w")
@@ -347,9 +352,9 @@
 					</ul>
 				</section>
 
-				<section data-auto-animate>
+				<section class="left" data-auto-animate>
 					<h3>Writing a File</h3>
-					<p><strong>💡Think About It:</strong> what does the following code write to a file?</p>
+					<p><strong>💡Think About It:</strong> What does the following code write to a file?</p>
 					<pre class="python">
 						<code data-trim>
 							file = open("path/to/file.txt", "w")
@@ -369,7 +374,7 @@
 					</pre>
 				</section>
 
-				<section data-auto-animate>
+				<section class="left" data-auto-animate>
 					<h3>Writing a File</h3>
 					<ul>
 						<li>By default, the <code>print()</code> function writes to <em>standard output</em>, which is the terminal window</li>
@@ -384,7 +389,7 @@
 					</ul>
 				</section>
 
-				<section data-auto-animate>
+				<section class="left" data-auto-animate>
 					<h3>Writing a File</h3>
 					<ul>
 						<pre class="python">
@@ -394,11 +399,11 @@
 								f.close()                # it makes print() write to the file
 							</code>
 						</pre>
-						<li>The appeal of this option is that it works like the <code>print()</code> function usually does: it can <em>take any datatype</em>, and it <em>adds a newline character</em> for you automatically</li>
+						<li>The appeal of this option is that it works like the <code>print()</code> function usually does; it can <em>take any datatype</em>, and it <em>adds a newline character</em> for you automatically</li>
 					</ul>
 				</section>
 
-				<section data-auto-animate>
+				<section class="left" data-auto-animate>
 					<h3>Writing a File</h3>
 					<ul>
 						<li>Usually when we open a file, we don't want its old contents to stay in the file, which is why the typical option is to <em>truncate</em></li>
@@ -406,7 +411,7 @@
 					</ul>
 				</section>
 
-				<section data-auto-animate>
+				<section class="left" data-auto-animate>
 					<h3>Writing a File</h3>
 					<ul>
 						<li>Append mode (mode <code>"a"</code> in the <code>open()</code> function) leaves the file contents and puts the <em>cursor</em> at the <em>end of the file</em></li>
@@ -420,7 +425,7 @@
 					</ul>
 				</section>
 
-				<section data-auto-animate data-auto-animate-restart>
+				<section class="left" data-auto-animate data-auto-animate-restart>
 					<h3>Closing Your Files</h3>
 					<ul>
 						<li><em>Operating systems are pretty smart!</em> Since file operations are slow, they don't write to a file every time, but <em>buffer</em> writes.</li>
@@ -430,7 +435,7 @@
 					</ul>
 				</section>
 
-				<section data-auto-animate>
+				<section class="left" data-auto-animate>
 					<h3>Closing Your Files</h3>
 					<ul>
 						<li>What this means is that closing a file doesn't really affect reading from a file, but failing to close a file when writing can have <em>catastrophic effects</em></li>
@@ -446,7 +451,7 @@
 					</ul>
 				</section>
 
-				<section data-auto-animate data-auto-animate-restart>
+				<section class="left" data-auto-animate data-auto-animate-restart>
 					<h3>Context Manager</h3>
 					<ul>
 						<li>Python has a special syntax for <em>context managers</em></li>
@@ -459,7 +464,8 @@
 									print(x)
 							</code>
 						</pre>
-						<li>When the <code>with</code> block is <em>entered</em>, the file is <em>opened</em> and stored in the variable <code>f</code>. When the <code>with</code> block ends, the file is <em>closed automatically</em> for you</li>
+						<li>When the <code>with</code> block is <em>entered</em>, the file is <em>opened</em> and stored in the variable <code>f</code></li>
+						<li>When the <code>with</code> block ends, the file is <em>closed automatically</em> for you</li>
 						<li>Only code in the <code>with</code> block has access to the file</li>
 					</ul>
 				</section>
