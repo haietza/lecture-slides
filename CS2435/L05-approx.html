@@ -19,18 +19,156 @@
 					CS2435: Intro to Scientific Programming
 				</div>
 				<div class="header right no-title">
-					<em>Approximation Algorithms</em>
+					<em>Numerical Methods & Approximation Algorithms</em>
 				</div>
 
 				<section data-state="title-slide">
 					<h1 class="r-fit-text">CS2435: Intro to Scientific Programming</h1>
-					<h2 class="r-fit-text">Approximation Algorithms</h2>
+					<h2 class="r-fit-text">Numerical Methods & Approximation Algorithms</h2>
+				</section>
+
+				<section class="left" data-auto-animate data-auto-animate-restart>
+					<h3>Introduction to Numerical Methods</h3>
+					<ul>
+						<li>Numerical methods are essential tools for solving mathematical problems that are <em>difficult or impossible</em> to solve analytically</li>
+						<li>They provide <em>approximations</em> to solutions, which are often <em>sufficient</em> for practical applications</li>
+						<li>We'll explore two main categories: Root Finding and Numerical Integration</li>
+					</ul>
 				</section>
 
 				<section class="left" data-auto-animate data-auto-animate-restart>
 					<h3>Root Finding</h3>
 					<ul>
-						<li>Find zeroes, or <em>roots</em>, of a continuous function</li>
+						<li>For a continuous function $f(x)$, roots are values where $f(x)=0$</li>
+						<li>These are points where the function <em>crosses the x-axis</em> (x-intercepts)</li>
+					</ul>
+				</section>
+
+				<section class="left" data-auto-animate data-auto-animate-restart>
+					<h3>Bisection Method</h3>
+					<p>The Concept: A Number Guessing Game</p>
+					<ul>
+						<li>Imagine guessing a number between 1 and 1,000</li>
+						<li>A sequential guess ("Is your number 1?", "Is your number 2?") would be <em>linear</em> in worst-case runtime (1,000 guesses for 1,000)</li>
+					</ul>
+				</section>
+
+				<section class="left" data-auto-animate data-auto-animate-restart>
+					<h3>Bisection Method</h3>
+					<p>The Concept: A Number Guessing Game</p>
+					<ul>
+						<li>A better strategy: "Is your number less than 500?"</li>
+						<li>This cuts the search space in half each time</li>
+						<li>This strategy is <em>logarithmic</em>, finding the number in at most 10 guesses for a range of 1,000</li>
+					</ul>
+				</section>
+
+				<section class="left" data-auto-animate data-auto-animate-restart>
+					<h3>Applying to Root Finding</h3>
+					<ul>
+						<li>Given a continuous function $f(x)$ and two x-values, $x_1$ and $x_2$, where $f(x_1) \times f(x_2) < 0$</li>
+						<li>This guarantees a root exists between $x_1$ and $x_2$</li>
+						<li>Calculate the midpoint: $m = \frac{x_1 + x_2}{2}$</li>
+					</ul>
+				</section>
+
+				<section class="left" data-auto-animate data-auto-animate-restart>
+					<h3>Three Possible Outcomes</h3>
+					<ul>
+						<li>$f(x_1)f(m) < 0$: Root is between $x_1$ and $m$; repeat with $x_2 = m$</li>
+						<li>$f(x_1)f(m) > 0$: Root is between $m$ and $x_2$; repeat with $x_1 = m$</li>
+						<li>$f(x_1)f(m) = 0$: Found a root at $m$</li>
+					</ul>
+					<p>We may never find a root <em>exactly</em> using this method, but as the distance decreases, we may accept either value as a <em>reasonable approximation</em></p>
+				</section>
+
+				<section class="left" data-auto-animate data-auto-animate-restart>
+					<h3>Newton-Raphson Method</h3>
+					<ul>
+						<li>Uses the <em>derivative</em> of a function, $f'(x_n)$, to calculate a tangent line at a point $x_n$</li>
+						<li>The x-intercept of this tangent line becomes the next, usually better, approximation for the root ($x_{n+1}$)</li>
+					</ul>
+				</section>
+
+				<section class="left" data-auto-animate data-auto-animate-restart>
+					<h3>Newton-Raphson Method</h3>
+					<ul>
+						<li>The formula: $x_{n+1} = x_n - \frac{f(x_n)}{f&#39;(x_n)}$</li>
+						<li>Start with some value $x_0$</li>
+						<li>Repeat process until the difference between successive guesses is <em>sufficiently small</em></li>
+						<li>Faster convergence than bisection method, but sensitive to initial guess</li>
+					</ul>
+				</section>
+
+				<section class="left" data-auto-animate data-auto-animate-restart>
+					<h3>Secant Method</h3>
+					<ul>
+						<li>Instead of the derivative, it uses two points on the curve to draw a <em>secant line</em></li>
+						<li>The x-intercept of the secant line provides the next approximation</li>
+					</ul>
+				</section>
+
+				<section class="left" data-auto-animate data-auto-animate-restart>
+					<h3>Secant Method</h3>
+					<ul>
+						<li>The forumla: $x_n = x_{n-1} - f(x_{n-1})\frac{x_{n-1} - x_{n-2}}{f(x_{n-1}) - f(x_{n-2})}$</li>
+						<li>Useful when the derivative is <em>unknown, difficult, or expensive</em> to compute</li>
+						<li>Requires only one new function evaluation per iteration (reusing previous values)</li>
+					</ul>
+				</section>
+
+				<section class="left" data-auto-animate data-auto-animate-restart>
+					<h3>Numerical Integration</h3>
+					<ul>
+						<li>Concerns computing an approximation for the <em>definite integral</em> $\int_{a}^{b}f(x)dx$</li>
+						<li>Used to compute the <em>area under a curve</em></li>
+					</ul>
+				</section>
+
+				<section class="left" data-auto-animate data-auto-animate-restart>
+					<h3>Riemann Sums</h3>
+					<ul>
+						<li><em>Partitions</em> the area under the curve into shapes similar to the function's contour</li>
+						<li>Defined as: $S = \sum_{i=1}^{n}f(x_i^*)(x_i - x_{i-1})$ where $x_i^* \in [x_{i-1}, x_i]$</li>
+						<li>Work best when the gap between successive $x_i$ values is <em>consistent</em></li>
+					</ul>
+				</section>
+
+				<section class="left" data-auto-animate data-auto-animate-restart>
+					<h3>Variations Based on $x_i^*$ Selection</h3>
+					<ul>
+						<li>Left: $x_i^* = x_{i-1}$</li>
+						<li>Right: $x_i^* = x_i$</li>
+						<li>Middle: $x_i^* = (x_{i-1} + x_i)/2$</li>
+						<li>Upper: $x_i^*$ is the largest value in $[x_{i-1}, x_i]$</li>
+						<li>Lower: $x_i^*$ is the smallest value in $[x_{i-1}, x_i]$</li>
+					</ul>
+				</section>
+
+				<section class="left" data-auto-animate data-auto-animate-restart>
+					<h3>Trapezoidal Rule</h3>
+					<ul>
+						<li>Takes the <em>average</em> of the left and right Riemann sums</li>
+						<li>Equivalent to using <em>trapezoids</em> instead of rectangles to approximate the area</li>
+						<li>The formula: $S = \sum_{i=1}^{n}\frac{f(x_{i-1}) + f(x_i)}{2}\Delta x$</li>
+						<li>Converges more efficiently than other Riemann sums</li>
+					</ul>
+				</section>
+
+				<section class="left" data-auto-animate data-auto-animate-restart>
+					<h3>Simpson's Rule</h3>
+					<ul>
+						<li>Riemann sums use <em>zeroth-order</em> polynomials (rectangles)</li>
+						<li>Trapezoidal rule uses <em>first-order</em> polynomials (trapezoids)</li>
+						<li>Simpson's rule uses <em>second-order</em> polynomials (parabolas)</li>
+					</ul>
+				</section>
+
+				<section class="left" data-auto-animate data-auto-animate-restart>
+					<h3>Simpson's Rule</h3>
+					<ul>
+						<li>The formula: $$\int_{a}^{b}f(x)dx \approx \frac{1}{3}h[f(a) + 4f(\frac{a+b}{2}) + f(b)]$$ $$ = \frac{b-a}{6}[f(a) + 4f(\frac{a+b}{2}) + f(b)]$$</li>
+						<li>This is equivalent to $\frac{2M+T}{3}$, where M is the middle Riemann sum approximation and T is the trapezoidal rule approximation</li>
 					</ul>
 				</section>
 			</div>
