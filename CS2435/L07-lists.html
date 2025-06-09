@@ -1,0 +1,411 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>CS2435</title>
+
+		<link rel="stylesheet" href="../reveal-js/dist/reset.css">
+		<link rel="stylesheet" href="../reveal-js/dist/reveal.css">
+		<link rel="stylesheet" href="../reveal-js/dist/theme/dracula.css">
+		<link rel="stylesheet" href="../layouts/common.css">
+		<link rel="stylesheet" href="../reveal-js/plugin/highlight/monokai.css">
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+				<div class="header left">
+					CS2435: Intro to Scientific Programming
+				</div>
+				<div class="header right no-title">
+					<em>Elementary Data Structures</em>
+				</div>
+
+				<section data-state="title-slide">
+					<h1 class="r-fit-text">CS2435: Intro to Scientific Programming</h1>
+					<h2 class="r-fit-text">Lists and Tuples</h2>
+				</section>
+
+				<section class="left" data-auto-animate data-auto-animate-restart>
+					<h3>Lists and Tuples</h3>
+					<ul>
+						<li>So far, the only <em>sequence</em> (non-scalar) datatype we have used in Python has been <code>str</code></li>
+						<li>Now we will introduce two very different data structures, used for <em>holding</em> and <em>organizing</em> data</li>
+					</ul>
+				</section>
+
+				<section class="left" data-auto-animate data-auto-animate-restart>
+					<h3>Lists</h3>
+					<ul>
+						<li>Sequences of (often) homogeneous data</li>
+						<li>Ordered, changeable, allow duplicates</li>
+						<li>Similar to arrays in other languages (e.g., Java's <code>ArrayList</code>, C++'s <code>vector</code>)</li>
+						<li>Represented by comma-separated values in square brackets <code>[]</code></li>
+					</ul>
+				</section>
+
+				<section class="left" data-auto-animate data-auto-animate-restart>
+					<h3>List Operations</h3>
+					<pre class="python">
+						<code data-trim data-id="code" data-line-numbers>
+							x = list()          # empty list 
+							x = [1, 2, 3, 4, 5] # list of numbers
+							print(x)
+						</code>
+					</pre>
+				</section>
+
+				<section class="left" data-auto-animate data-auto-animate-restart>
+					<h3>Common Operations</h3>
+					<pre class="python">
+						<code data-trim data-id="code" data-line-numbers>
+							x = [1, 2, 3, 4, 5]
+							print(len(x))       # Result: 5 
+							print(3 in x)       # Result: True 
+							print(x[1])         # Result: 2 (second element) 
+							print(x[-1])        # Result: 5 (last element) 
+							x = [5, 6] + [7, 8] # Concatenation: [5, 6, 7, 8] 
+							x = [0] * 5         # Multiplication: [0, 0, 0, 0, 0] 
+						</code>
+					</pre>
+				</section>
+				
+				<section class="left" data-auto-animate data-auto-animate-restart>
+					<h3>Deleting Elements</h3>
+					<pre class="python">
+						<code data-trim data-id="code" data-line-numbers>
+							x = [1, 2, 3, 4, 5]
+							del x[2] # Deletes the third element (index 2) 
+							print(x) # Prints [1, 2, 4, 5]
+						</code>
+					</pre>
+				</section>
+
+				<section class="left" data-auto-animate data-auto-animate-restart>
+					<h3>Slicing</h3>
+					<pre class="python">
+						<code data-trim data-id="code" data-line-numbers>
+							x = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+							print(x[1:5])    # Prints [1, 2, 3, 4] 
+							print(x[:3])     # Prints [0, 1, 2] 
+							print(x[5:])     # Prints [5, 6, 7, 8, 9] 
+							print(x[-1::-1]) # Prints [9, 8, 7, 6, 5, 4, 3, 2, 1, 0] (reverse) 
+						</code>
+					</pre>
+				</section>
+
+				<section class="left" data-auto-animate data-auto-animate-restart>
+					<h3>Useful List Methods</h3>
+					<pre class="python">
+						<code data-trim data-id="code" data-line-numbers>
+							x = ["apple", "cherry", "banana", "pear"]
+							x.append("apple")       # Adds "apple" to the end 
+							print(x.index("pear"))  # Result: 3 
+							print(x.count("apple")) # Result: 2 
+							x.remove("apple")       # Removes the first instance of "apple" 
+							x.sort()                # Sorts the list 
+							print(x.pop())          # Removes and returns the last element
+						</code>
+					</pre>
+				</section>
+
+				<section class="left" data-auto-animate data-auto-animate-restart>
+					<h3>The Problem with Mutability</h3>
+					<ul>
+						<li>Lists are <em>mutable</em>: Their contents can be modified</li>
+						<li>Complex types are stored as <em>references</em> (pointers to memory locations)</li>
+					</ul>
+				</section>
+
+				<section class="left" data-auto-animate data-auto-animate-restart>
+					<h3>The Problem with Mutability</h3>
+					<p>Assignment copies references, not objects</p>
+					<pre class="python">
+						<code data-trim data-id="code" data-line-numbers>
+							x = [1, 2, 3, 4, 5]
+							y = x 	 # y now holds the *same address* as x 
+							y[1] = 9
+							print(x) # Prints [1, 9, 3, 4, 5] (x was also modified!) 
+						</code>
+					</pre>
+				</section>
+
+				<section class="left" data-auto-animate data-auto-animate-restart>
+					<h3>The Problem with Mutability</h3>
+					<p>Solution: <code>list.copy()</code></p>
+					<pre class="python">
+						<code data-trim data-id="code" data-line-numbers>
+							x = [1, 2, 3, 4, 5]
+							y = x.copy() # Creates a unique copy of the list 
+							y[1] = 9
+							print(x)     # Prints [1, 2, 3, 4, 5] (x is unchanged!) 
+							print(y)     # Prints [1, 9, 3, 4, 5] 
+						</code>
+					</pre>
+				</section>
+
+				<section class="left" data-auto-animate data-auto-animate-restart>
+					<h3>Two-Dimensional Lists</h3>
+					<ul>
+						<li>A list can contain other lists</li>
+						<li>Commonly used to represent <em>matrices</em> or <em>tables</em></li>
+					</ul>
+				</section>
+
+				<section class="left" data-auto-animate data-auto-animate-restart>
+					<h3>Two-Dimensional Lists</h3>
+					<pre class="python">
+						<code data-trim data-id="code" data-line-numbers>
+							x = [[1, 2, 3], [4, 5, 6], [7, 8, 9]] # A list of lists 
+							print(len(x)) # Length is 3 (number of rows) 
+							print(x[1]) # Retrieves the whole second row: [4, 5, 6] 
+							print(x[1][2]) # Retrieves an individual element (row 1, column 2): 6
+						</code>
+					</pre>
+					<ul>
+						<li>First index = row number (row 0 is top)</li>
+						<li>Second index = column number (column 0 is left)</li>
+					</ul>
+				</section>
+
+				<section class="left" data-auto-animate data-auto-animate-restart>
+					<h3>Tuples</h3>
+					<ul>
+						<li>Sequences of (often) heterogeneous data</li>
+						<li>Used for record-keeping data structures</li>
+						<li>Similar to C's <code>struct</code></li>
+						<li>Represented by comma-separated values in parentheses <code>()</code></li>
+					</ul>
+				</section>
+
+				<section class="left" data-auto-animate data-auto-animate-restart>
+					<h3>Tuples</h3>
+					<pre class="python">
+						<code data-trim data-id="code" data-line-numbers>
+							x = tuple() # Empty tuple 
+							point = (2.5, 3.5) # Defining a point in 2D 
+							student = ("Smith", "John", "900732807", 93, 3.85) # Student information
+						</code>
+					</pre>
+					<ul>
+						<li class="fragment">Values in a tuple are <em>conceptually related</em> and often shouldn't be separated</li>
+						<li class="fragment">Can contain <em>different</em> data types (e.g., strings, ints, floats)</li>
+						<li class="fragment">Single-element tuple: Must include a trailing comma <code>(1,)</code></li>
+					</ul>
+				</section>
+
+				<section class="left" data-auto-animate data-auto-animate-restart>
+					<h3>Tuple Operations</h3>
+					<p>Many operations are similar to lists</p>
+					<pre class="python">
+						<code data-trim data-id="code" data-line-numbers>
+							x = (1, "hello", 3, 4)
+							print(len(x)) # Result: 4 
+							print(2 in x) # Result: False 
+							print(x[1]) # Result: "hello" 
+							print(x[-1]) # Result: 4 
+							x = (5, 6) + (7, 8) # Concatenation: (5, 6, 7, 8)
+						</code>
+					</pre>
+					<p>Slicing syntax works the same way as with lists</p>
+				</section>
+
+				<section class="left" data-auto-animate data-auto-animate-restart>
+					<h3>Tuple Unpacking</h3>
+					<p>Assigning tuple elements to individual variables</p>
+					<pre class="python">
+						<code data-trim data-id="code" data-line-numbers>
+							x = (1.5, 2, 3) # Tuple with three elements 
+							a, b, c = x # Unpack contents into variables 
+							print(a + b * c) # Prints 7.5 
+						</code>
+					</pre>
+					<div class="fragment">
+						<p>Unpacking in Loops</p>
+						<pre class="python">
+							<code data-trim data-id="code" data-line-numbers>
+								x = [(1, "hello"), (2, "world")]
+								for n, s in x: # Unpack directly in the loop header 
+									print(str(n) + s)
+								# Prints:
+								# 1hello
+								# 2world
+							</code>
+						</pre>
+					</div>
+				</section>
+
+				<section class="left" data-auto-animate data-auto-animate-restart>
+					<h3>Immutability</h3>
+					<ul>
+						<li>Tuples are <em>immutable</em>: Their contents cannot be modified</li>
+						<li>No item assignment or deletion</li>
+					</ul>
+					<pre class="python">
+						<code data-trim data-id="code" data-line-numbers>
+							x = (1, 2, 3, 4)
+							# x[0] = 5 # ERROR! Tuples do not support item assignment 
+							# del x[2] # ERROR! Tuples do not support item deletion  
+						</code>
+					</pre>
+					<ul>
+						<li>If changes are needed, a <em>new tuple</em> must be rebuilt </li>
+						<li>Best for values that don't need modification </li>
+					</ul>
+				</section>
+
+				<section class="left" data-auto-animate data-auto-animate-restart>
+					<h3>Practical Examples of Lists and Tuples</h3>
+					<p><code>str.split()</code></p>
+					<ul>
+						<li>Splits a string into a <em>list of strings</em> based on a <em>delimiter</em></li>
+						<li>No arguments: Splits by whitespace</li>
+					</ul>
+					<pre class="python">
+						<code data-trim data-id="code" data-line-numbers>
+							x = "the quick brown fox jumps over the lazy dog"
+							words = x.split() # Splits by spaces/whitespace 
+							print(words)
+							# Prints: ['the', 'quick', 'brown', 'fox', 'jumps', 'over', 'the', 'lazy', 'dog'] 
+						</code>
+					</pre>
+				</section>
+
+				<section class="left" data-auto-animate data-auto-animate-restart>
+					<h3><code>str.split()</code></h3>
+					<ul>
+						<li>Can take a delimiter argument</li>
+					</ul>
+					<pre class="python">
+						<code data-trim data-id="code" data-line-numbers>
+							x = "1,2,3,4,5"
+							numbers = x.split(",")
+							print(numbers) # Prints: ['1', '2', '3', '4', '5'] 
+						</code>
+					</pre>
+				</section>
+
+				<section class="left" data-auto-animate data-auto-animate-restart>
+					<h3><code>enumerate()</code></h3>
+					<ul>
+						<li>Takes a <em>sequence</em> and returns a <em>sequence of tuples</em></li>
+						<li>Each tuple contains <code>(index, element)</code></li>
+					</ul>
+					<pre class="python">
+						<code data-trim data-id="code" data-line-numbers>
+							x = "the quick brown fox jumps over the lazy dog"
+							words = x.split()
+							for i, word in enumerate(words): # Enumerate and unpack 
+								print(f"{i}: {word}")
+							# Prints:
+							# 0: the
+							# 1: quick
+							# ...
+						</code>
+					</pre>
+				</section>
+
+				<section class="left" data-auto-animate data-auto-animate-restart>
+					<h3><code>zip()</code></h3>
+					<ul>
+						<li>Combines <em>two sequences</em> into a sequence of <em>length-2 tuples</em></li>
+						<li>Tuples are built from elements at <em>corresponding locations</em></li>
+					</ul>
+				</section>
+
+				<section class="left" data-auto-animate data-auto-animate-restart>
+					<h3><code>zip()</code></h3>
+					<pre class="python">
+						<code data-trim data-id="code" data-line-numbers>
+							letters = ["a", "b", "c", "d", "e"] 
+							numbers = [1, 2, 3, 4, 5] 
+							for x, y in zip(letters, numbers): 
+								print(x, y) 
+							# Output:
+							# a 1
+							# b 2
+							# c 3
+							# d 4
+							# e 5
+						</code>
+					</pre>
+				</section>
+
+				<section class="left" data-auto-animate data-auto-animate-restart>
+					<h3><code>random.choice()</code></h3>
+					<ul>
+						<li>Randomly selects and returns a value <em>from a sequence</em></li>
+					</ul>
+					<pre class="python">
+						<code data-trim data-id="code" data-line-numbers>
+							import random 
+							MOVES = ["rock", "paper", "scissors"] 
+							p1 = input("Choose a move: rock, paper, scissors? ") # Human's move 
+							p2 = random.choice(MOVES) # Computer's randomly chosen move
+						</code>
+					</pre>
+					<ul>
+						<li class="fragment">Other random methods: <code>random.choices()</code> (with replacement), <code>random.sample()</code> (without replacement)</li>
+					</ul>
+				</section>
+
+				<section class="left" data-auto-animate data-auto-animate-restart>
+					<h3>List Comprehensions</h3>
+					<ul>
+						<li>A concise way to build a list</li>
+						<li>Syntax: <code>[expression for element in sequence if condition]</code></li>
+						<li>Condition is optional</li>
+					</ul>
+				</section>
+
+				<section class="left" data-auto-animate data-auto-animate-restart>
+					<h3>List Comprehensions</h3>
+					<p>Example: Squaring numbers</p>
+					<pre class="python">
+						<code data-trim data-id="code" data-line-numbers>
+							# Traditional loop
+							x = []
+							for elem in range(10):
+								x.append(elem * elem)
+
+							# List comprehension
+							x = [elem * elem for elem in range(10)]
+						</code>
+					</pre>
+				</section>
+
+				<section class="left" data-auto-animate data-auto-animate-restart>
+					<h3>List Comprehensions</h3>
+					<p>Example: Filtering even numbers</p>
+					<pre class="python">
+						<code data-trim data-id="code" data-line-numbers>
+							# Traditional loop
+							x = []
+							for elem in range(20):
+								if elem % 2 == 0: # Only add if even
+									x.append(elem)
+
+							# List comprehension
+							x = [elem for elem in range(20) if elem % 2 == 0]
+						</code>
+					</pre>
+				</section>
+			</div>
+		</div>
+
+		<script src="../reveal-js/dist/reveal.js"></script>
+		<script src="../reveal-js/plugin/math/math.js"></script>
+		<script src="../reveal-js/plugin/notes/notes.js"></script>
+		<script src="../reveal-js/plugin/markdown/markdown.js"></script>
+		<script src="../reveal-js/plugin/highlight/highlight.js"></script>
+		<script>
+			Reveal.initialize({
+				hash: true,
+				slideNumber: true,
+				transition: 'convex',
+				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes, RevealMath.KaTeX ],
+			});
+		</script>
+	</body>
+</html>
