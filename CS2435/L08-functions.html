@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>CS2435</title>
+
+		<link rel="stylesheet" href="../reveal-js/dist/reset.css">
+		<link rel="stylesheet" href="../reveal-js/dist/reveal.css">
+		<link rel="stylesheet" href="../reveal-js/dist/theme/dracula.css">
+		<link rel="stylesheet" href="../layouts/common.css">
+		<link rel="stylesheet" href="../reveal-js/plugin/highlight/monokai.css">
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+				<div class="header left">
+					CS2435: Intro to Scientific Programming
+				</div>
+				<div class="header right no-title">
+					<em>Functions and Classes</em>
+				</div>
+
+				<section data-state="title-slide">
+					<h1 class="r-fit-text">CS2435: Intro to Scientific Programming</h1>
+					<h2 class="r-fit-text">Functions and Classes</h2>
+				</section>
+
+				<section class="left" data-auto-animate data-auto-animate-restart>
+					<h3>Functions</h3>
+					<ul>
+						<li>Functions help refactor code by putting <em>commonly repeated operations</em> into reusable blocks</li>
+						<li>They are created using the <code>def</code> keyword, followed by the <em>function name</em> and a <em>parameter list</em> in parentheses</li>
+						<li>Function names follow identifier rules:</li>
+							<ul>
+								<li>alphanumeric characters and underscores</li>
+								<li>first character not a digit</li>
+								<li>conventionally not starting with a capital letter</li>
+							</ul>
+					</ul>
+				</section>
+
+				<section class="left" data-auto-animate data-auto-animate-restart>
+					<h3>Defining and Calling Functions</h3>
+					<pre class="python">
+						<code data-trim data-id="code" data-line-numbers>
+						def say_hello():
+							print("Hello World")
+						</code>
+					</pre>
+					<p>Call the function: <code>say_hello()</code></p>
+				</section>
+
+				<section class="left" data-auto-animate data-auto-animate-restart>
+					<h3>Parameters and Arguments</h3>
+					<ul>
+						<li>Parameters are <em>variables</em> that a function receives as <em>input</em></li>
+						<li>Arguments are the <em>values</em> passed into the function when it's <em>called</em></li>
+					</ul>
+					<pre class="python">
+						<code data-trim data-id="code" data-line-numbers>
+						def say_hello_to(name):
+							print("Hello, %s!" % name)
+
+						say_hello_to("Sarah") # "Sarah" is the argument for the 'name' parameter
+						</code>
+					</pre>
+				</section>
+
+				<section class="left" data-auto-animate data-auto-animate-restart>
+					<h3>Return Statements</h3>
+					<ul>
+						<li><code>return</code> statements instantly terminate the function and return control to the <em>calling context</em></li>
+						<li>They can optionally <em>return a value</em> through the function call</li>
+					</ul>
+					<pre class="python">
+						<code data-trim data-id="code" data-line-numbers>
+						def sum_squares(numbers):
+							a = 0
+							for x in numbers:
+								a += x * x
+							return a # Returns the sum of squares
+						</code>
+					</pre>
+				</section>
+
+				<section class="left" data-auto-animate data-auto-animate-restart>
+					<h3>Object-Oriented Programming</h3>
+					<ul>
+						<li><em>Methods</em> are class-owned functions that operate on the <em>data</em> within an <em>object</em></li>
+						<li><strong>Accessors:</strong> Methods designed to <em>get information</em> from an object (e.g., <code>str.split()</code>)</li>
+						<li><strong>Mutators:</strong> Methods designed to <em>change the internal data</em> of an object (e.g., <code>list.append()</code>)</li>
+					</ul>
+				</section>
+
+				<section class="left" data-auto-animate data-auto-animate-restart>
+					<h3>Classes in Python</h3>
+					<ul>
+						<li>A <em>blueprint</em> that describes the structure of an object</li>
+						<li>Created using the <code>class</code> keyword</li>
+						<li>Class names conventionally start with a <em>capital letter</em></li>
+					</ul>
+					<pre class="python">
+						<code data-trim data-id="code" data-line-numbers>
+					class Student:
+						pass # An empty class 
+						</code>
+					</pre>
+				</section>
+
+				<section class="left" data-auto-animate data-auto-animate-restart>
+					<h3>The <code>self</code> Parameter</h3>
+					<ul>
+						<li>All class methods require <code>self</code> as their <em>first parameter</em></li>
+						<li><code>self</code> is a reference to the <em>object</em> the method is <em>called on</em></li>
+						<li>Python <em>automatically</em> provides <code>self</code> when the method is called</li>
+					</ul>
+				</section>
+
+				<section class="left" data-auto-animate data-auto-animate-restart>
+					<h3>Constructors</h3>
+					<ul>
+						<li>A method called when an object is <em>created</em> in order to set up its data</li>
+						<li>Must be named <code>__init__</code></li>
+					</ul>
+					<pre class="python">
+						<code data-trim data-id="code" data-line-numbers>
+					class Rectangle:
+						def __init__(self, width, height):
+							self.width = width
+							self.height = height
+						</code>
+					</pre>
+					<p>When calling the constructor <code>Rectangle(3, 5)</code>, <code>self</code> is automatically passed; only arguments for <code>width</code> and <code>height</code> are provided</p>
+				</section>
+
+				<section class="left" data-auto-animate data-auto-animate-restart>
+					<h3>String Representation</h3>
+					<ul>
+						<li>Special method for converting object to a <em>string representation</em></li>
+						<li>Must be named <code>__str__</code></li>
+						<li>Does not print anything, simply <em>returns string</em> to be printed</li>
+					</ul>
+					<pre class="python">
+						<code data-trim data-id="code" data-line-numbers>
+					class Rectangle:
+						# ... (init method) ...
+						def __str__(self):
+							return "Rectangle(%d x %d)" % (self.width, self.height)
+						</code>
+					</pre>
+					<p>Printing an object <code>print(r)</code> will automatically call its <code>__str__</code> method if defined</p>
+				</section>
+			</div>
+		</div>
+
+		<script src="../reveal-js/dist/reveal.js"></script>
+		<script src="../reveal-js/plugin/math/math.js"></script>
+		<script src="../reveal-js/plugin/notes/notes.js"></script>
+		<script src="../reveal-js/plugin/markdown/markdown.js"></script>
+		<script src="../reveal-js/plugin/highlight/highlight.js"></script>
+		<script>
+			Reveal.initialize({
+				hash: true,
+				slideNumber: true,
+				transition: 'convex',
+				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes, RevealMath.KaTeX ],
+			});
+		</script>
+	</body>
+</html>
