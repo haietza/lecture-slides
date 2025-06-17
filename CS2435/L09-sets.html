@@ -1,0 +1,241 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>CS2435</title>
+
+		<link rel="stylesheet" href="../reveal-js/dist/reset.css">
+		<link rel="stylesheet" href="../reveal-js/dist/reveal.css">
+		<link rel="stylesheet" href="../reveal-js/dist/theme/dracula.css">
+		<link rel="stylesheet" href="../layouts/common.css">
+		<link rel="stylesheet" href="../reveal-js/plugin/highlight/monokai.css">
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+				<div class="header left">
+					CS2435: Intro to Scientific Programming
+				</div>
+				<div class="header right no-title">
+					<em>Elementary Data Structures</em>
+				</div>
+
+				<section data-state="title-slide">
+					<h1 class="r-fit-text">CS2435: Intro to Scientific Programming</h1>
+					<h2 class="r-fit-text">Sets and Dictionaries</h2>
+				</section>
+
+				<section class="left" data-auto-animate data-auto-animate-restart>
+					<h3>Sets</h3>
+					<ul>
+						<li>Used for <em>homogeneous</em> data</li>
+						<li>Key differences from lists:
+							<ul>
+								<li>Hold only hashable (<em>immutable</em>) data</li>
+								<li>No guaranteed order</li>
+								<li>No duplicates allowed</li>
+							</ul>
+						</li>
+					</ul>
+				</section>
+
+				<section class="left" data-auto-animate data-auto-animate-restart>
+					<h3>Why Use Sets?</h3>
+					<ul>
+						<li>Incredibly efficient for checking <em>set membership</em> (using <code>in</code> keyword)</li>
+						<li>Lists check <em>linearly</em> $O(n)$</li>
+						<li>Sets use hash tables for <em>constant time</em> $O(1)$ checks</li>
+					</ul>
+				</section>
+
+				<section class="left" data-auto-animate data-auto-animate-restart>
+					<h3>Basic Operations</h3>
+					<pre class="python">
+						<code data-trim data-id="code" data-line-numbers>
+							x = set()      # create an empty set
+							x = {1, 2, 3}  # curly braces denote a set
+							print(len(x))  # result: 5, number of elements in set
+							print(3 in x)  # result: True
+							x.add(6)       # result: False
+							x.remove(3)    # remove 3 from the set
+						</code>
+					</pre>
+				</section>
+
+				<section class="left" data-auto-animate data-auto-animate-restart>
+					<h3>Connectives (Union)</h3>
+					<p>Elements in <em>either</em> set (like <code>OR</code>)</p>
+					<pre class="python">
+						<code data-trim data-id="code" data-line-numbers>
+							s1 = {"a", "b", "c"}
+							s2 = {"c", "d", "e"}
+							result = s1.union(s2) # or s1 | s2
+							print(result)         # {'a', 'b', 'c', 'd', 'e'}
+						</code>
+					</pre>
+				</section>
+
+				<section class="left" data-auto-animate data-auto-animate-restart>
+					<h3>Connectives (Intersection)</h3>
+					<p>Elements in <em>both</em> sets (like <code>AND</code>)</p>
+					<pre class="python">
+						<code data-trim data-id="code" data-line-numbers>
+							s1 = {"a", "b", "c"}
+							s2 = {"c", "d", "e"}
+							result = s1.intersection(s2) # or s1 & s2
+							print(result)                # {'c'}
+						</code>
+					</pre>
+				</section>
+
+				<section class="left" data-auto-animate data-auto-animate-restart>
+					<h3>Connectives (Difference)</h3>
+					<ul>
+						<li>Elements in one set but not the other</li>
+						<li>Non-symmetric: $A-B \ne B-A$</li>
+					</ul>
+					<pre class="python">
+						<code data-trim data-id="code" data-line-numbers>
+							s1 = {"a", "b", "c"}
+							s2 = {"c", "d", "e"}
+							result = s1.difference(s2) # or s1 - s2
+							print(result)              # {'a', 'b'}
+							print(s2 - s1)             # {'d', 'e'}
+						</code>
+					</pre>
+				</section>
+
+				<section class="left" data-auto-animate data-auto-animate-restart>
+					<h3>Connectives (Symmetric Difference)</h3>
+					<p>Elements in <em>either</em> set, but <em>not both</em></p>
+					<pre class="python">
+						<code data-trim data-id="code" data-line-numbers>
+							s1 = {"a", "b", "c"}
+							s2 = {"c", "d", "e"}
+							result = s1.symmetric_difference(s2) # or s1 ^ s2
+							print(result)                        # {'a', 'b', 'd', 'e'}
+						</code>
+					</pre>
+				</section>
+
+				<section class="left" data-auto-animate data-auto-animate-restart>
+					<h3>Set Comprehension</h3>
+					<ul>
+						<li>Build a set by describing its construction</li>
+						<li>Syntax: <code>{expression for element in sequence if condition}</code></li>
+						<li>Uses curly braces, similar to list comprehension</li>
+					</ul>
+				</section>
+
+				<section class="left" data-auto-animate data-auto-animate-restart>
+					<h3>Dictionaries</h3>
+					<ul>
+						<li>Store values in <em>key-value</em> pairs</li>
+						<li>Use a key to <em>retrieve/modify</em> the associated value</li>
+						<li><em>Fast</em> for finding, updating, removing values (like sets)</li>
+						<li>No guaranteed order on keys</li>
+					</ul>
+				</section>
+
+				<section class="left" data-auto-animate data-auto-animate-restart>
+					<h3>Basic Operations</h3>
+					<pre class="python">
+						<code data-trim data-id="code" data-line-numbers>
+							x = dict()            # or x = {}
+							x = {'a': 1, 'b': 2}
+							print(x['b'])         # prints 2
+							print(x['d'])         # KeyError
+							print(x.get('b'))     # prints 2
+							print(x.get('d', -1)) # prints -1, get() takes a default value
+						</code>
+					</pre>
+				</section>
+
+				<section class="left" data-auto-animate data-auto-animate-restart>
+					<h3>More Operations</h3>
+					<pre class="python">
+						<code data-trim data-id="code" data-line-numbers>
+							x = {'a': 1, 'b': 2}
+							print('a' in x) # prints True (checks keys)
+							print(len(x))   # prints 2
+							x['c'] = 3      # add entry
+							del x['b']      # delete pair
+							print(x)        # {'a': 1, 'c': 3}
+						</code>
+					</pre>
+				</section>
+
+				<section class="left" data-auto-animate data-auto-animate-restart>
+					<h3>Iteration</h3>
+					<ul>
+						<li>Multiple ways to iterate: Keys, values, or items (key-value pairs)</li>
+						<li><code>items()</code> method is most common</li>
+					</ul>
+					<pre class="python">
+						<code data-trim data-id="code" data-line-numbers>
+							d = {'a': 1, 'b': 2}
+							for k in d.keys(): print(k)
+							for v in d.values(): print(v)
+							for k,v in d.items(): print(k, '-->', v)
+						</code>
+					</pre>
+				</section>
+
+				<section class="left" data-auto-animate data-auto-animate-restart>
+					<h3>Converting Data Structures</h3>
+					<p>Easy conversion between simple sequence types (lists, sets, tuples)</p>
+					<pre class="python">
+						<code data-trim data-id="code" data-line-numbers>
+							x = [1, 2, 3, 3, 4]
+							s = set(x)         # {1, 2, 3, 4}
+							t = tuple(x)       # (1, 2, 3, 3, 4)
+							l_from_s = list(s) # [1, 2, 3, 4] (order arbitrary)
+						</code>
+					</pre>
+				</section>
+
+				<section class="left" data-auto-animate data-auto-animate-restart>
+					<h3>Converting Data Structures</h3>
+					<p>From a dictionary: Depends on what you want to retrieve</p>
+					<pre class="python">
+						<code data-trim data-id="code" data-line-numbers>
+							d = {'a': 1, 'b': 2}
+							print(list(d))          # ['a', 'b'] (keys)
+							print(list(d.keys()))   # ['a', 'b']
+							print(list(d.values())) # [1, 2]
+							print(list(d.items()))  # [('a', 1), ('b', 2)]
+						</code>
+					</pre>
+				</section>
+
+				<section class="left" data-auto-animate data-auto-animate-restart>
+					<h3>Converting Data Structures</h3>
+					<p>To a dictionary: Sequence must be tuples (or sequences) of length 2 (key/value pairs)</p>
+					<pre class="python">
+						<code data-trim data-id="code" data-line-numbers>
+							d = dict([('a', 1), ('b', 2)]) # Correct
+							dict([1, 2, 3])                # Error
+							dict([(1,2,3), (4,5,6)])       # Error
+						</code>
+					</pre>
+				</section>
+			</div>
+		</div>
+
+		<script src="../reveal-js/dist/reveal.js"></script>
+		<script src="../reveal-js/plugin/math/math.js"></script>
+		<script src="../reveal-js/plugin/notes/notes.js"></script>
+		<script src="../reveal-js/plugin/markdown/markdown.js"></script>
+		<script src="../reveal-js/plugin/highlight/highlight.js"></script>
+		<script>
+			Reveal.initialize({
+				hash: true,
+				slideNumber: true,
+				transition: 'convex',
+				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes, RevealMath.KaTeX ],
+			});
+		</script>
+	</body>
+</html>
