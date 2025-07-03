@@ -99,6 +99,13 @@
 				</section>
 
 				<section>
+					<aside class="notes">
+						Assume x = 16<br>
+						Start with a guess for y<sub>i</sub>, let's say 3<br>
+						Is y<sub>i</sub> x y<sub>i</sub> close enough to x? 3 x 3 = 9, no it's not<br>
+						Calculate y<sub>i+1</sub> => (3 + (16/3)) / 2 = 4.17<br>
+						Repeat with y<sub>i+1</sub> until close enough to x
+					</aside>
 					<table class="bordered">
 						<thead>
 							<tr>
@@ -149,28 +156,62 @@
 					</textarea>
 				</section>
 
+				<section class="left" data-auto-animate>
+					<aside class="notes">
+						<p>Sagan's quote plays on the literal meaning of "from scratch." If we truly were to start from absolute nothing, we would need to create everything, including the universe, physics and chemistry to understand how ingredients interact, biology to grow the apples, geology to form the earth the ingredients come from, and so on…</p>
+						<p>Programmers build upon the work of those who came before. We use tools and knowledge developed over decades (or centuries) to create new software. We write code in a high-level language, which is then translated into lower-level code, and eventually into machine instructions that the computer's hardware understands. Each layer depends on the ones below it.</p>
+						<p>In essence, the quote emphasizes that even seemingly simple tasks rest upon a foundation of immense complexity. In programming, this translates to understanding that every line of code we write is supported by a vast and intricate system. Programming languages make writing programs more like "simple tasks".</p>
+					</aside>
+					<h3>Programming</h3>
+					<ul>
+						<li>How do we capture a "recipe" in a mechanical process?</li>
+						<li>Programming languages give us a set of rich primitive operations to construct programs</li>
+						<li>"<em>If you wish to make an apple pie from scratch, you must first invent the universe</em>" - Carl Sagan</li>
+					</ul>
+					<p class="fragment"><strong>💡Try It:</strong> <em>Write a Python expression, using the appropriate mathematical tools, to evaluate this common formula.</em></p>
+				</section>
+
+				<section class="left" data-auto-animate>
+					<h3>Programming</h3>
+					<ul>
+						<li>Many languages are interchangeable (see *Alan Turing*), but it is the quality of the primitives that separates them</li>
+						<ul>
+							<li>powerful, low-level <em>assembly languages</em></li>
+							<li>balanced, middle-level languages like <em>C</em></li>
+							<li>expressive, high-level languages like <em>Python</em></li>
+						</ul>
+						<li>Programming languages give us a set of rich primitive operations to construct programs</li>
+						<li>"<em>If you wish to make an apple pie from scratch, you must first invent the universe</em>" - Carl Sagan</li>
+					</ul>
+					<p class="fragment"><strong>💡Try It:</strong> <em>Write a Python expression, using the appropriate mathematical tools, to evaluate this common formula.</em></p>
+				</section>
+
+				<section class="left" data-auto-animate>
+					<aside class="notes">
+						<p>Semantic error: Incorrect use of language constructs (e.g., using * instead of + for a sum).</p>
+						<p>Logical error: Flaw in the program's reasoning or algorithm (e.g., incorrect conditional statements, flawed logic flow).</p>
+					</aside>
+					<h3>Programming</h3>
+					<ul>
+						<li>When things go wrong</li>
+						<ul>
+							<li><strong>Syntactic errors</strong>: common and very easy to solve</em></li>
+							<li><strong>Semantic errors</strong>: some languages detect these before a program can run, some do not</li>
+							<li><strong>Logical errors</strong>: difficult to solve</li>
+							<ul>
+								<li>Program <em>crashes</em></li>
+								<li>Program never <em>terminates</em></li>
+								<li>Program gives <em>unexpected answer</em></li>
+							</ul>
+						</ul>
+						<li>Programming languages give us a set of rich primitive operations to construct programs</li>
+						<li>"<em>If you wish to make an apple pie from scratch, you must first invent the universe</em>" - Carl Sagan</li>
+					</ul>
+					<p class="fragment"><strong>💡Try It:</strong> <em>Write a Python expression, using the appropriate mathematical tools, to evaluate this common formula.</em></p>
+				</section>
+
 				<section class="left" data-markdown data-auto-animate>
 					<textarea data-template>
-						### Programming
-						- How do we capture a "recipe" in a mechanical process?
-						- Programming languages give us a set of rich primitive operations to construct programs
-						- "*If you wish to make an apple pie from scratch, you must first invent the universe*" - Carl Sagan
-						---
-						### Programming
-						- Many languages are interchangeable (see *Alan Turing*), but it is the quality of the primitives that separates them
-							- powerful, low-level *assembly languages*
-							- balanced, middle-level languages like *C*
-							- expressive, high-level languages like *Python*
-						---
-						### Programming
-						- When things go wrong
-							- **Syntactic errors**: common and very easy to solve
-							- **Semantic errors**: some languages detect these before a program can run, some do not
-							- **Logical errors**: difficult to solve
-								- Program *crashes*
-								- Program never *terminates*
-								- Program gives *unexpected answer*
-						---
 						### Programming
 						- We aren't limited to *primitive operations* (thankfully)
 							- Computers have *built-in* primitive operations
@@ -194,6 +235,9 @@
 				transition: 'convex',
 				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes, RevealMath.KaTeX ],
 			});
+			Reveal.configure({
+				pdfSeparateFragments: false
+			})
 		</script>
 	</body>
 </html>

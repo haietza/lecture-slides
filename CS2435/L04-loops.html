@@ -50,6 +50,9 @@
 				</section>
 
 				<section class="left" data-auto-animate data-auto-animate-restart>
+					<aside class="notes">
+						We don't want a web server to stop. Operating systems run as infinite loops, it keeps running waiting for you to click things with your mouse, etc.
+					</aside>
 					<h3>Infinite Loops</h3>
 					<ul>
 						<li>There are some programs we don't want to stop</li>
@@ -58,6 +61,20 @@
 				</section>
 
 				<section class="left" data-auto-animate data-auto-animate-restart>
+					<aside class="notes">
+						Condition of while loop is x < 10<br>
+						For loop to stop, x has to be x has to be >= 10<br>
+						We can change a variable's value and resave it into the variable<br>
+						x + 1 does not store the result, but x = x + 1 does (not mathematical, it's an assignment statement)<br>
+						Every time loop is executed, x gets incremented<br>
+						We can print out x so we can see how it changes<br>
+						Once x = 10, we exit loop<br>
+						x value is loop control variable<br>
+						We don't want to do too much to the loop control variable, because it makes it complicated to know how many times loop will run<br>
+						x = x + 1 is common construction<br>
+						Python supports syntax for this<br>
+						x += 1
+					</aside>
 					<h3>Loop Control Variables</h3>
 					<ul>
 						<li>Need a code path that eventually makes the <em>loop condition</em> evaluate to <code>False</code></li>
@@ -74,6 +91,13 @@
 				</section>
 
 				<section class="left" data-auto-animate data-auto-animate-restart>
+					<aside class="notes">
+						while is more flexible, we specify exact conditions loop is executed<br>
+						We'll later learn about sets, lists, dictionaries, but for now we only know about one type of squences - strings (text data)<br>
+						for [variable name - item being extracted from sequence] in [sequence iterating over]<br>
+						Extracted each character one by one, stored it in elem variable and then output that element<br>
+						Gets first value in sequence, a, does printing, then goes back to top and gets next value in sequence and does body of loop, and so on
+					</aside>
 					<h3><code>for</code> Loop</h3>
 					<ul>
 						<li>We have a <em>collection of values</em></li>
@@ -89,6 +113,10 @@
 				</section>
 
 				<section class="left" data-auto-animate data-auto-animate-restart>
+					<aside class="notes">
+						Main way to use for loop is probably operating on a range of values, and we use range method for that<br>
+						If interested in looping a specific number of times (not on what you are looping over), range function is good for that
+					</aside>
 					<h3>The <code>range</code> Function</h3>
 					<ul>
 						<li>Generates a <code>range</code> of values the <code>for</code> loop can <em>iterate</em> over</li>
@@ -104,6 +132,10 @@
 				</section>
 
 				<section class="left" data-auto-animate data-auto-animate-restart>
+					<aside class="notes">
+						Single argument, start at 0, go up to not including value (goes from 0 to 4)<br>
+						Two arguments, specify start and endpoint (starts at 1, goes up to 4, have to do 1,11 to get 1-10 as values)
+					</aside>
 					<h3>The <code>range</code> Function: Two Arguments</h3>
 					<ul>
 						<pre class="python">
@@ -119,6 +151,12 @@
 				</section>
 
 				<section class="left" data-auto-animate data-auto-animate-restart>
+					<aside class="notes">
+						Third value is step value/size (increment by 2 each time)<br>
+						Try to adopt meaningful variable names, x is not meaningful<br>
+						Text we are iterating over, elem is element in text<br>
+						i is not a meaningful variable name, but this is exception; we use i, j, and k usually for loop control variables
+					</aside>
 					<h3>The <code>range</code> Function: Three Arguments</h3>
 					<ul>
 						<pre class="python">
@@ -135,6 +173,12 @@
 				</section>
 
 				<section class="left" data-auto-animate data-auto-animate-restart>
+					<aside class="notes">
+						Possible to nest these structures inside one another<br>
+						Accomplish same thing another way (less efficient) - if i not divisible by 2 (odd numbers / 2 have remainder of 1)<br>
+						While elem is A, it goes through inner loop for 0, 1, and 2<br>
+						Then it goes to the outer loop and elem is B, then goes through inner loop again, and so on
+					</aside>
 					<h3>Nesting Loops</h3>
 					<ul>
 						<li>Alternative solution, less efficient:</li>
@@ -160,6 +204,12 @@
 				</section>
 
 				<section class="left" data-auto-animate data-auto-animate-restart>
+					<aside class="notes">
+						while loop lets us say when we want to stop doing the loop<br>
+						But condition is only checked at top of loop<br>
+						Sometimes we are in the middle of doing something and we want to terminate immediately<br>
+						break and continue are used for this
+					</aside>
 					<h3><code>break</code> and <code>continue</code></h3>
 					<ul>
 						<li>Flow of a loop is typically controlled by the <em>condition</em></li>
@@ -168,6 +218,13 @@
 				</section>
 
 				<section class="left" data-auto-animate data-auto-animate-restart>
+					<aside class="notes">
+						break keyword breaks out of closest possible loop<br>
+						If loop nested inside of loop, breaks out of innermost loop<br>
+						Even though range goes to 1000, we stopped after 10<br>
+						In this simple example, we could probably address limiting the iterations in the header of the loop, break is typically used in more complex code<br>
+						Sometimes considered impropertly terminating a loop, they make it difficult to follow flow of loop 
+					</aside>
 					<h3>The <code>break</code> Statement</h3>
 					<ul>
 						<li>Immediately <em>terminate</em> a loop</li>
@@ -185,6 +242,10 @@
 				</section>
 
 				<section class="left" data-auto-animate data-auto-animate-restart>
+					<aside class="notes">
+						Sometimes we don't want to terminate loop, but skip values (skip odd numbers)<br>
+						Skips the remainder of the loop every time it is odd number; goes back to top of loop
+					</aside>
 					<h3>The <code>continue</code> Statement</h3>
 					<ul>
 						<li><em>Current iteration</em> of innermost loop is terminated</li>
