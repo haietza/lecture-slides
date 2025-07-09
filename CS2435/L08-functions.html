@@ -70,10 +70,22 @@
 
 				<section class="left" data-auto-animate data-auto-animate-restart>
 					<h3>Return Statements</h3>
-					<ul>
-						<li><code>return</code> statements instantly terminate the function and return control to the <em>calling context</em></li>
-						<li>They can optionally <em>return a value</em> through the function call</li>
-					</ul>
+						<p><code>return</code> statements instantly terminate the function and return control to the <em>calling context</em></p>
+					<pre class="python">
+						<code data-trim data-id="code" data-line-numbers>
+						def print_even(numbers):
+							for x in numbers:
+								if x % 2 == 0:
+									print(x, 'is even')
+									return # Exit the function immediately
+							print('no even numbers')
+						</code>
+					</pre>
+				</section>
+
+				<section class="left" data-auto-animate data-auto-animate-restart>
+					<h3>Return Statements</h3>
+					<p>They can optionally <em>return a value</em> through the function call</p>
 					<pre class="python">
 						<code data-trim data-id="code" data-line-numbers>
 						def sum_squares(numbers):
