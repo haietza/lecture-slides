@@ -62,7 +62,7 @@
 						</pre>
 						<li>An <code>if</code> statement has two main parts:</li>
 						<ul>
-							<li>The <strong>header</strong> uses the <code>if</code> keyword, followed by a <em>boolean condition</em> (or "<em>predicate</em>")</li>
+							<li>The <strong>header</strong> uses the <code>if</code> keyword, followed by a <em>boolean condition</em> (or <em>predicate</em>)</li>
 							<li>The <strong>body</strong> is the <em>indented</em> block of code that runs if the condition evaluates to true</li>
 						</ul>
 					</ul>
@@ -257,6 +257,11 @@
 				</section>
 
 				<section class="left" data-auto-animate>
+					<aside class="notes">
+						<p>Output is False when at least one of the inputs is False</p>
+						<p>Output is True only when both inputs are True</p>
+						<p>Short circuiting: Only left operand is evaluated if others are not needed (e.g. if left operand is <code>False</code> for <code>and</code> statement)</p>
+					</aside>
 					<h3>The <code>and</code> Operator</h3>
 					<ul>
 						<li>The logical <code>and</code> operator takes two operands that must both be boolean expressions</li>
@@ -275,6 +280,11 @@
 				</section>
 
 				<section class="left" data-auto-animate>
+					<aside class="notes">
+						<p>Output is True when at least one of the inputs is True</p>
+						<p>Output is False only when both inputs are False</p>
+						<p>Short circuiting: Only left operand is evaluated if others are not needed (e.g. if left operand is <code>True</code> for <code>or</code> statement)</p>
+					</aside>
 					<h3>The <code>or</code> Operator</h3>
 					<ul>
 						<li>The logical <code>or</code> operator takes two operands that must both be boolean expressions</li>
@@ -332,7 +342,7 @@
 					<h3>The <code>else</code> Clause</h3>
 					<ul>
 						<li>Sometimes we want to do some behavior when our <code>if</code> condition is <strong>not</strong> true 
-							&mdash; One way we can accomplish this is by <em>negating the condition</em></li>
+							; one way we can accomplish this is by <em>negating the condition</em></li>
 					</ul>
 					<pre class="python">
 						<code data-trim>
@@ -376,7 +386,7 @@
 						</code>
 					</pre>
 					<ul>
-						<li>A maximum of one of these blocks can run &mdash; one block running will prevent the other one from being entered, <em>even if the condition changes!</em></li>
+						<li>A maximum of one of these blocks can run; one block running will prevent the other one from being entered, <em>even if the condition changes!</em></li>
 					</ul>
 				</section>
 
@@ -392,7 +402,7 @@
 						</code>
 					</pre>
 					<ul>
-						<li>A maximum of one of these blocks can run &mdash; one block running will prevent the other one from being entered, <em>even if the condition changes!</em></li>
+						<li>A maximum of one of these blocks can run; one block running will prevent the other one from being entered, <em>even if the condition changes!</em></li>
 					</ul>
 				</section>
 
@@ -436,7 +446,7 @@
 				<section class="left" data-auto-animate>
 					<h3>The <code>elif</code> Clause</h3>
 					<ul>
-						<li><code>if</code>-<code>elif</code> chains can end with <code>else</code> blocks, but do not have to &mdash; <em>like a catch-all</em></li>
+						<li><code>if</code>-<code>elif</code> chains can end with <code>else</code> blocks, but do not have to <em>(like a catch-all)</em></li>
 						<pre class="python">
 							<code data-trim>
 								weather = input("What is the weather?")
@@ -454,6 +464,9 @@
 				</section>
 
 				<section class="left" data-auto-animate>
+					<aside class="notes"?\>
+						<p>If a equals 10, the first two predicates will be False; if b is greater than 0, the third will be True and will run.</p>
+					</aside>
 					<h3>The <code>elif</code> Clause</h3>
 					<ul>
 						<li>The only way to reach the next <code>elif</code> clause is for all the above <code>if</code> and <code>elif</code> clauses to be <em>false</em></li>
@@ -568,7 +581,7 @@
 								import random
 							</code>
 						</pre>
-						<li>Include this import at the top of any program using the <code>random</code> library. <em>Import statements almost always go at the top of the file</em></li>
+						<li>Include this import at the top of any program using the <code>random</code> library <em>(import statements almost always go at the top of the file)</em></li>
 					</ul>
 				</section>
 
