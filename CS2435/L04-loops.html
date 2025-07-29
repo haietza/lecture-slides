@@ -35,6 +35,9 @@
 				</section>
 
 				<section class="left" data-auto-animate data-auto-animate-restart>
+					<aside class="notes">
+						Infinite loop since x will always be less than 10
+					</aside>
 					<h3><code>while</code> Loop</h3>
 					<ul>
 						<li>A <code>while</code> loop runs an indented block of code, or the <em>loop body</em>, repeatedly as long as the <em>loop condition</em> is true</li>
@@ -96,7 +99,8 @@
 						We'll later learn about sets, lists, dictionaries, but for now we only know about one type of squences - strings (text data)<br>
 						for [variable name - item being extracted from sequence] in [sequence iterating over]<br>
 						Extracted each character one by one, stored it in elem variable and then output that element<br>
-						Gets first value in sequence, a, does printing, then goes back to top and gets next value in sequence and does body of loop, and so on
+						Gets first value in sequence, a, does printing, then goes back to top and gets next value in sequence and does body of loop, and so on<br>
+						Code will print each character of abcdefg on its own line
 					</aside>
 					<h3><code>for</code> Loop</h3>
 					<ul>
@@ -134,7 +138,8 @@
 				<section class="left" data-auto-animate data-auto-animate-restart>
 					<aside class="notes">
 						Single argument, start at 0, go up to not including value (goes from 0 to 4)<br>
-						Two arguments, specify start and endpoint (starts at 1, goes up to 4, have to do 1,11 to get 1-10 as values)
+						Two arguments, specify start and endpoint (starts at 1, goes up to 4, have to do 1,11 to get 1-10 as values)<br>
+						Code changes to range(1,11) to print 1 through 10
 					</aside>
 					<h3>The <code>range</code> Function: Two Arguments</h3>
 					<ul>
@@ -177,7 +182,8 @@
 						Possible to nest these structures inside one another<br>
 						Accomplish same thing another way (less efficient) - if i not divisible by 2 (odd numbers / 2 have remainder of 1)<br>
 						While elem is A, it goes through inner loop for 0, 1, and 2<br>
-						Then it goes to the outer loop and elem is B, then goes through inner loop again, and so on
+						Then it goes to the outer loop and elem is B, then goes through inner loop again, and so on<br>
+						Code will print each character of elem with each number 0 through 1, e.g. A0 A1 A2 then B0 B1 B2, etc.
 					</aside>
 					<h3>Nesting Loops</h3>
 					<ul>
@@ -223,7 +229,8 @@
 						If loop nested inside of loop, breaks out of innermost loop<br>
 						Even though range goes to 1000, we stopped after 10<br>
 						In this simple example, we could probably address limiting the iterations in the header of the loop, break is typically used in more complex code<br>
-						Sometimes considered impropertly terminating a loop, they make it difficult to follow flow of loop 
+						Sometimes considered impropertly terminating a loop, they make it difficult to follow flow of loop<br>
+						Code will print 10
 					</aside>
 					<h3>The <code>break</code> Statement</h3>
 					<ul>
