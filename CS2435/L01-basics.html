@@ -4,7 +4,7 @@
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-		<title>CS2435</title>
+		<title>CS2435 - Lecture 01 - Basics</title>
 
 		<link rel="stylesheet" href="../reveal-js/dist/reset.css">
 		<link rel="stylesheet" href="../reveal-js/dist/reveal.css">
@@ -27,7 +27,7 @@
 					<h2 class="r-fit-text">Printing and Other Basics</h2>
 				</section>
 
-				<section class="left" data-auto-animate data-auto-animate-restart>
+				<section class="left" data-auto-animate>
 					<h3>Parts of a Python Program</h3>
 					<ul>
 						<li>A Python program is written in a file with a <code>.py</code> extension</li>
@@ -96,7 +96,7 @@
 					</ul>
 				</section>
 
-				<section class="left" data-auto-animate data-auto-animate-restart>
+				<section class="left" data-auto-animate>
 					<h3>Print Statements</h3>
 					<ul>
 						<li>We use the <code>print</code> statement to print data to the screen (function is provided by Python)</li>
@@ -112,7 +112,7 @@
 					</pre>
 				</section>
 
-				<section class="left" data-auto-animate data-auto-animate-restart>
+				<section class="left" data-auto-animate>
 					<h3>Data Types</h3>
 					<ul>
 						<li>There are many types of data that Python can store:</li>
@@ -139,12 +139,14 @@
 
 				<section class="left" data-auto-animate>
 					<aside class="notes">
-						<p>print(0.1 + 0.2)<br>
-						outputs 0.30000000000000004 due to rounding errors</p>
-
-						<p>print(2e2) outputs 200.0<br>
-						2e2 means 2 × 10^2, which evaluates to 2 × 100 = 200.<br>
-						The result is a float because scientific notation is a common way to express floating-point values.</p>
+						<ul>
+							<li>print(0.1 + 0.2) outputs 0.30000000000000004 due to rounding errors</li>
+							<li>print(2e2) outputs 200.0</li>
+							<ul>
+								<li>2e2 means 2 × 10^2, which evaluates to 2 × 100 = 200</li>
+								<li>The result is a float because scientific notation is a common way to express floating-point values</li>
+							</ul>
+						</ul>
 					</aside>
 					<h3>Data Types &mdash; <code>int</code> & <code>float</code></h3>
 					<ul>
@@ -189,7 +191,7 @@
 
 				<section class="left" data-auto-animate>
 					<aside class="notes">
-						<p><em>my_name</em> as a variable name is more descriptive than <em>x</em></p>
+						<p><code>my_name</code> as a variable name is more descriptive than <code>x</code></p>
 					</aside>
 					<h3>Variables</h3>
 					<ul>
@@ -291,7 +293,7 @@
 					</ul>
 				</section>
 
-				<section class="left" data-auto-animate data-auto-animate-restart>
+				<section class="left" data-auto-animate>
 					<aside class="notes">
 						<p>34: The <code>print</code> statement correctly performs muliplication before addition</p>
 						<p>PEMDAS order of operations: Parentheses, exponents, multiplication/division, addition/subraction</p>
@@ -334,7 +336,7 @@
 					<p class="fragment"><strong>💡Try It:</strong> <em>Write a Python expression, using the appropriate mathematical tools, to evaluate this common formula.</em></p>
 				</section>
 
-				<section class="left" data-auto-animate data-auto-animate-restart>
+				<section class="left" data-auto-animate>
 					<h3>The <code>math</code> Library</h3>
 					<ul>
 						<li>We can import <em>other libraries</em> with <code>import</code></li>
@@ -366,6 +368,8 @@
 				slideNumber: true,
 				transition: 'convex',
 				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes, RevealMath.KaTeX ],
+				showNotes: false,
+				pdfSeparateFragments: false
 			});
 		</script>
 	</body>

@@ -4,7 +4,7 @@
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-		<title>CS2435</title>
+		<title>CS2435 - Lecture 04 - Loops</title>
 
 		<link rel="stylesheet" href="../reveal-js/dist/reset.css">
 		<link rel="stylesheet" href="../reveal-js/dist/reveal.css">
@@ -27,14 +27,14 @@
 					<h2 class="r-fit-text">Loops</h2>
 				</section>
 
-				<section class="left" data-auto-animate data-auto-animate-restart>
+				<section class="left" data-auto-animate>
 					<h3>Loop Basics</h3>
 					<ul>
 						<li>We want a block of code to run <em>repeatedly</em> based on some <em>condition</em></li>
 					</ul>
 				</section>
 
-				<section class="left" data-auto-animate data-auto-animate-restart>
+				<section class="left" data-auto-animate>
 					<aside class="notes">
 						Infinite loop since x will always be less than 10
 					</aside>
@@ -52,9 +52,12 @@
 					</ul>
 				</section>
 
-				<section class="left" data-auto-animate data-auto-animate-restart>
+				<section class="left" data-auto-animate>
 					<aside class="notes">
-						We don't want a web server to stop. Operating systems run as infinite loops, it keeps running waiting for you to click things with your mouse, etc.
+						<ul>
+							<li>We don't want a web server to stop</li>
+							<li>Operating systems run as infinite loops, it keeps running waiting for you to click things with your mouse, etc.</li>
+						</ul>
 					</aside>
 					<h3>Infinite Loops</h3>
 					<ul>
@@ -63,20 +66,18 @@
 					</ul>
 				</section>
 
-				<section class="left" data-auto-animate data-auto-animate-restart>
+				<section class="left" data-auto-animate>
 					<aside class="notes">
-						Condition of while loop is x < 10<br>
-						For loop to stop, x has to be x has to be >= 10<br>
-						We can change a variable's value and resave it into the variable<br>
-						x + 1 does not store the result, but x = x + 1 does (not mathematical, it's an assignment statement)<br>
-						Every time loop is executed, x gets incremented<br>
-						We can print out x so we can see how it changes<br>
-						Once x = 10, we exit loop<br>
-						x value is loop control variable<br>
-						We don't want to do too much to the loop control variable, because it makes it complicated to know how many times loop will run<br>
-						x = x + 1 is common construction<br>
-						Python supports syntax for this<br>
-						x += 1
+						<ul>
+							<li>Condition of while loop is x < 10</li>
+							<li>For loop to stop, x has to be x has to be >= 10 (x is loop control variable)</li>
+							<li>We can change a variable's value and resave it into the variable</li>
+							<li>x + 1 does not store the result, but x = x + 1 does (not mathematical, it's an assignment statement)</li>
+							<li>Every time loop is executed, x gets incremented</li>
+							<li>Once x = 10, we exit loop</li>
+							<li>We don't want to do too much to the loop control variable, because it makes it complicated to know how many times loop will run</li>
+							<li>Python supports x += 1 compound assignment syntax</li>
+						</ul>
 					</aside>
 					<h3>Loop Control Variables</h3>
 					<ul>
@@ -93,14 +94,16 @@
 					</ul>
 				</section>
 
-				<section class="left" data-auto-animate data-auto-animate-restart>
+				<section class="left" data-auto-animate>
 					<aside class="notes">
-						while is more flexible, we specify exact conditions loop is executed<br>
-						We'll later learn about sets, lists, dictionaries, but for now we only know about one type of squences - strings (text data)<br>
-						for [variable name - item being extracted from sequence] in [sequence iterating over]<br>
-						Extracted each character one by one, stored it in elem variable and then output that element<br>
-						Gets first value in sequence, a, does printing, then goes back to top and gets next value in sequence and does body of loop, and so on<br>
-						Code will print each character of abcdefg on its own line
+						<ul>
+							<li>while is more flexible, we specify exact conditions loop is executed</li>
+							<li>We'll later learn about sets, lists, dictionaries, but for now we only know about one type of squences - strings (text data)</li>
+							<li>for [variable name - item being extracted from sequence] in [sequence iterating over]</li>
+							<li>Extracted each character one by one, stored it in elem variable and then output that element</li>
+							<li>Gets first value in sequence, a, does printing, then goes back to top and gets next value in sequence and does body of loop, and so on</li>
+							<li>Code will print each character of abcdefg on its own line</li>
+						</ul>
 					</aside>
 					<h3><code>for</code> Loop</h3>
 					<ul>
@@ -116,10 +119,12 @@
 					</ul>
 				</section>
 
-				<section class="left" data-auto-animate data-auto-animate-restart>
+				<section class="left" data-auto-animate>
 					<aside class="notes">
-						Main way to use for loop is probably operating on a range of values, and we use range method for that<br>
-						If interested in looping a specific number of times (not on what you are looping over), range function is good for that
+						<ul>
+							<li>Main way to use for loop is probably operating on a range of values, and we use range method for that</li>
+							<li>If interested in looping a specific number of times (not on what you are looping over), range function is good for that</li>
+						</ul>
 					</aside>
 					<h3>The <code>range</code> Function</h3>
 					<ul>
@@ -135,11 +140,13 @@
 					</ul>
 				</section>
 
-				<section class="left" data-auto-animate data-auto-animate-restart>
+				<section class="left" data-auto-animate>
 					<aside class="notes">
-						Single argument, start at 0, go up to not including value (goes from 0 to 4)<br>
-						Two arguments, specify start and endpoint (starts at 1, goes up to 4, have to do 1,11 to get 1-10 as values)<br>
-						Code changes to range(1,11) to print 1 through 10
+						<ul>
+							<li>Single argument, start at 0, go up to not including value (goes from 0 to 4)</li>
+							<li>Two arguments, specify start and endpoint (starts at 1, goes up to 4, have to do 1,11 to get 1-10 as values)</li>
+							<li>Code changes to range(1,11) to print 1 through 10</li>
+						</ul>
 					</aside>
 					<h3>The <code>range</code> Function: Two Arguments</h3>
 					<ul>
@@ -155,12 +162,14 @@
 					</ul>
 				</section>
 
-				<section class="left" data-auto-animate data-auto-animate-restart>
+				<section class="left" data-auto-animate>
 					<aside class="notes">
-						Third value is step value/size (increment by 2 each time)<br>
-						Try to adopt meaningful variable names, x is not meaningful<br>
-						Text we are iterating over, elem is element in text<br>
-						i is not a meaningful variable name, but this is exception; we use i, j, and k usually for loop control variables
+						<ul>
+							<li>Third value is step value/size (increment by 2 each time)</li>
+							<li>Try to adopt meaningful variable names, x is not meaningful</li>
+							<li>Text we are iterating over, elem is element in text</li>
+							<li>i is not a meaningful variable name, but this is exception; we use i, j, and k usually for loop control variables</li>
+						</ul>
 					</aside>
 					<h3>The <code>range</code> Function: Three Arguments</h3>
 					<ul>
@@ -177,13 +186,15 @@
 					</ul>
 				</section>
 
-				<section class="left" data-auto-animate data-auto-animate-restart>
+				<section class="left" data-auto-animate>
 					<aside class="notes">
-						Possible to nest these structures inside one another<br>
-						Accomplish same thing another way (less efficient) - if i not divisible by 2 (odd numbers / 2 have remainder of 1)<br>
-						While elem is A, it goes through inner loop for 0, 1, and 2<br>
-						Then it goes to the outer loop and elem is B, then goes through inner loop again, and so on<br>
-						Code will print each character of elem with each number 0 through 1, e.g. A0 A1 A2 then B0 B1 B2, etc.
+						<ul>
+							<li>Possible to nest these structures inside one another</li>
+							<li>Accomplish same thing another way (less efficient) - if i not divisible by 2 (odd numbers / 2 have remainder of 1)</li>
+							<li>While elem is A, it goes through inner loop for 0, 1, and 2</li>
+							<li>Then it goes to the outer loop and elem is B, then goes through inner loop again, and so on</li>
+							<li>Code will print each character of elem with each number 0 through 1, e.g. A0 A1 A2 then B0 B1 B2, etc.</li>
+						</ul>
 					</aside>
 					<h3>Nesting Loops</h3>
 					<ul>
@@ -209,12 +220,14 @@
 						</ul>
 				</section>
 
-				<section class="left" data-auto-animate data-auto-animate-restart>
+				<section class="left" data-auto-animate>
 					<aside class="notes">
-						while loop lets us say when we want to stop doing the loop<br>
-						But condition is only checked at top of loop<br>
-						Sometimes we are in the middle of doing something and we want to terminate immediately<br>
-						break and continue are used for this
+						<ul>
+							<li>while loop lets us say when we want to stop doing the loop</li>
+							<li>But condition is only checked at top of loop</li>
+							<li>Sometimes we are in the middle of doing something and we want to terminate immediately</li>
+							<li>break and continue are used for this</li>
+						</ul>
 					</aside>
 					<h3><code>break</code> and <code>continue</code></h3>
 					<ul>
@@ -223,14 +236,16 @@
 					</ul>
 				</section>
 
-				<section class="left" data-auto-animate data-auto-animate-restart>
+				<section class="left" data-auto-animate>
 					<aside class="notes">
-						break keyword breaks out of closest possible loop<br>
-						If loop nested inside of loop, breaks out of innermost loop<br>
-						Even though range goes to 1000, we stopped after 10<br>
-						In this simple example, we could probably address limiting the iterations in the header of the loop, break is typically used in more complex code<br>
-						Sometimes considered impropertly terminating a loop, they make it difficult to follow flow of loop<br>
-						Code will print 10
+						<ul>
+							<li>break keyword breaks out of closest possible loop</li>
+							<li>If loop nested inside of loop, breaks out of innermost loop</li>
+							<li>Even though range goes to 1000, we stopped after 10</li>
+							<li>In this simple example, we could probably address limiting the iterations in the header of the loop, break is typically used in more complex code</li>
+							<li>Sometimes considered impropertly terminating a loop, they make it difficult to follow flow of loop</li>
+							<li>Code will print 10</li>
+						</ul>
 					</aside>
 					<h3>The <code>break</code> Statement</h3>
 					<ul>
@@ -248,10 +263,12 @@
 					</ul>
 				</section>
 
-				<section class="left" data-auto-animate data-auto-animate-restart>
+				<section class="left" data-auto-animate>
 					<aside class="notes">
-						Sometimes we don't want to terminate loop, but skip values (skip odd numbers)<br>
-						Skips the remainder of the loop every time it is odd number; goes back to top of loop
+						<ul>
+							<li>Sometimes we don't want to terminate loop, but skip values (skip odd numbers)</li>
+							<li>Skips the remainder of the loop every time it is odd number; goes back to top of loop</li>
+						</ul>
 					</aside>
 					<h3>The <code>continue</code> Statement</h3>
 					<ul>
@@ -282,6 +299,8 @@
 				slideNumber: true,
 				transition: 'convex',
 				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes, RevealMath.KaTeX ],
+				showNotes: false,
+				pdfSeparateFragments: false
 			});
 		</script>
 	</body>

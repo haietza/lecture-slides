@@ -4,7 +4,7 @@
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-		<title>CS2435</title>
+		<title>CS2435 - Lecture 08 - Functions</title>
 
 		<link rel="stylesheet" href="../reveal-js/dist/reset.css">
 		<link rel="stylesheet" href="../reveal-js/dist/reveal.css">
@@ -27,7 +27,7 @@
 					<h2 class="r-fit-text">Functions and Classes</h2>
 				</section>
 
-				<section class="left" data-auto-animate data-auto-animate-restart>
+				<section class="left" data-auto-animate>
 					<h3>Functions</h3>
 					<ul>
 						<li>Functions help refactor code by putting <em>commonly repeated operations</em> into reusable blocks</li>
@@ -41,7 +41,7 @@
 					</ul>
 				</section>
 
-				<section class="left" data-auto-animate data-auto-animate-restart>
+				<section class="left" data-auto-animate>
 					<h3>Defining and Calling Functions</h3>
 					<pre class="python">
 						<code data-trim data-id="code" data-line-numbers>
@@ -52,7 +52,7 @@
 					<p>Call the function: <code>say_hello()</code></p>
 				</section>
 
-				<section class="left" data-auto-animate data-auto-animate-restart>
+				<section class="left" data-auto-animate>
 					<h3>Parameters and Arguments</h3>
 					<ul>
 						<li>Parameters are <em>variables</em> that a function receives as <em>input</em></li>
@@ -68,7 +68,7 @@
 					</pre>
 				</section>
 
-				<section class="left" data-auto-animate data-auto-animate-restart>
+				<section class="left" data-auto-animate>
 					<h3>Return Statements</h3>
 						<p><code>return</code> statements instantly terminate the function and return control to the <em>calling context</em></p>
 					<pre class="python">
@@ -86,7 +86,7 @@
 					</pre>
 				</section>
 
-				<section class="left" data-auto-animate data-auto-animate-restart>
+				<section class="left" data-auto-animate>
 					<h3>Return Statements</h3>
 					<p>They can optionally <em>return a value</em> through the function call</p>
 					<pre class="python">
@@ -103,7 +103,7 @@
 					</pre>
 				</section>
 
-				<section class="left" data-auto-animate data-auto-animate-restart>
+				<section class="left" data-auto-animate>
 					<h3>Object-Oriented Programming</h3>
 					<ul>
 						<li><em>Methods</em> are class-owned functions that operate on the <em>data</em> within an <em>object</em></li>
@@ -112,7 +112,7 @@
 					</ul>
 				</section>
 
-				<section class="left" data-auto-animate data-auto-animate-restart>
+				<section class="left" data-auto-animate>
 					<h3>Classes in Python</h3>
 					<ul>
 						<li>A <em>blueprint</em> that describes the structure of an object</li>
@@ -129,7 +129,7 @@
 					</pre>
 				</section>
 
-				<section class="left" data-auto-animate data-auto-animate-restart>
+				<section class="left" data-auto-animate>
 					<h3>The <code>self</code> Parameter</h3>
 					<ul>
 						<li>All class methods require <code>self</code> as their <em>first parameter</em></li>
@@ -138,10 +138,12 @@
 					</ul>
 				</section>
 
-				<section class="left" data-auto-animate data-auto-animate-restart>
+				<section class="left" data-auto-animate>
 					<aside class="notes">
-						It is tedious to have to set all the values for Rectangle after creating it<br>
-						Use a constructor instead
+						<ul>
+							<li>It is tedious to have to set all the values for Rectangle after creating it</li>
+							<li>Use a constructor instead</li>
+						</ul>
 					</aside>
 					<h3>The <code>self</code> Parameter</h3>
 					<pre class="python">
@@ -158,7 +160,7 @@
 					</pre>
 				</section>
 
-				<section class="left" data-auto-animate data-auto-animate-restart>
+				<section class="left" data-auto-animate>
 					<h3>Constructors</h3>
 					<ul>
 						<li>A method called when an object is <em>created</em> in order to set up its data</li>
@@ -177,9 +179,9 @@
 					<p>When calling the constructor <code>Rectangle(3, 5)</code>, <code>self</code> is automatically passed; only arguments for <code>width</code> and <code>height</code> are provided</p>
 				</section>
 
-				<section class="left" data-auto-animate data-auto-animate-restart>
+				<section class="left" data-auto-animate>
 					<aside class="notes">
-						<p>Printing an object <code>print(r)</code> will automatically call its <code>__str__</code> method if defined</p>
+						Printing an object <code>print(r)</code> will automatically call its <code>__str__</code> method if defined
 					</aside>
 					<h3>String Representation</h3>
 					<ul>
@@ -214,6 +216,8 @@
 				slideNumber: true,
 				transition: 'convex',
 				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes, RevealMath.KaTeX ],
+				showNotes: false,
+				pdfSeparateFragments: false
 			});
 		</script>
 	</body>

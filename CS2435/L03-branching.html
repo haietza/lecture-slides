@@ -4,7 +4,7 @@
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-		<title>CS2435</title>
+		<title>CS2435 - Lecture 03 - Branching</title>
 
 		<link rel="stylesheet" href="../reveal-js/dist/reset.css">
 		<link rel="stylesheet" href="../reveal-js/dist/reveal.css">
@@ -27,7 +27,7 @@
 					<h2 class="r-fit-text">Branching / Decision Structures</h2>
 				</section>
 
-				<section class="left" data-auto-animate data-auto-animate-restart>
+				<section class="left" data-auto-animate>
 					<h3>Decision Structures</h3>
 					<ul>
 						<li>We want programs to dynamically respond to different inputs</li>
@@ -36,7 +36,7 @@
 					</ul>
 				</section>
 
-				<section class="left" data-auto-animate data-auto-animate-restart>
+				<section class="left" data-auto-animate>
 					<h3><code>if</code> Statements</h3>
 					<ul>
 						<li>One way to think of an <code>if</code> statement is to consider the <em>flowchart</em> for the following structure:</li>
@@ -68,11 +68,11 @@
 					</ul>
 				</section>
 
-				<section class="left" data-auto-animate data-auto-animate-restart>
+				<section class="left" data-auto-animate>
 					<h3>Boolean Values</h3>
 					<ul>
 						<li>A boolean value is either <em>true</em> or <em>false</em>, represented in Python as <code>True</code> and <code>False</code> respectively</li>
-						<li>We infrequently type out <em>boolean literals</em> directly &mdash; instead, we have operators that create booleans for us</li>
+						<li>We infrequently type out <em>boolean literals</em> directly; instead, we have operators that create booleans for us</li>
 					</ul>
 					<pre class="python">
 						<code data-trim>
@@ -83,7 +83,7 @@
 					</pre>
 				</section>
 
-				<section class="left" data-auto-animate data-auto-animate-restart>
+				<section class="left" data-auto-animate>
 					<h3>Relational Operators</h3>
 					<ul>
 						<li><strong>Relational operators</strong> create boolean values by comparing two values against one another</li>
@@ -153,7 +153,7 @@
 					</ul>
 				</section>
 
-				<section class="left" data-auto-animate data-auto-animate-restart>
+				<section class="left" data-auto-animate>
 					<h3><code>if</code> Statements</h3>
 					<pre class="python">
 						<code data-trim>
@@ -205,7 +205,7 @@
 					</pre>
 				</section>
 
-				<section class="left" data-auto-animate data-auto-animate-restart>
+				<section class="left" data-auto-animate>
 					<h3>Boolean Logic</h3>
 					<ul>
 						<li>Sometimes we need to build more complex boolean expressions by <em>combining conditions</em></li>
@@ -258,9 +258,11 @@
 
 				<section class="left" data-auto-animate>
 					<aside class="notes">
-						<p>Output is False when at least one of the inputs is False</p>
-						<p>Output is True only when both inputs are True</p>
-						<p>Short circuiting: Only left operand is evaluated if others are not needed (e.g. if left operand is <code>False</code> for <code>and</code> statement)</p>
+						<ul>
+							<li>Output is False when at least one of the inputs is False</li>
+							<li>Output is True only when both inputs are True</li>
+							<li>Short circuiting: Only left operand is evaluated if others are not needed (e.g. if left operand is <code>False</code> for <code>and</code> statement)</li>
+						</ul>
 					</aside>
 					<h3>The <code>and</code> Operator</h3>
 					<ul>
@@ -281,9 +283,11 @@
 
 				<section class="left" data-auto-animate>
 					<aside class="notes">
-						<p>Output is True when at least one of the inputs is True</p>
-						<p>Output is False only when both inputs are False</p>
-						<p>Short circuiting: Only left operand is evaluated if others are not needed (e.g. if left operand is <code>True</code> for <code>or</code> statement)</p>
+						<ul>
+							<li>Output is True when at least one of the inputs is True</li>
+							<li>Output is False only when both inputs are False</li>
+							<li>Short circuiting: Only left operand is evaluated if others are not needed (e.g. if left operand is <code>True</code> for <code>or</code> statement)</li>
+						</ul>
 					</aside>
 					<h3>The <code>or</code> Operator</h3>
 					<ul>
@@ -322,7 +326,7 @@
 					</pre>
 				</section>
 
-				<section class="left" data-auto-animate data-auto-animate-restart>
+				<section class="left" data-auto-animate>
 					<h3><code>if</code> Statements</h3>
 					<p><strong>💡Try It:</strong> <em>Write a program that asks the user for their grade and prints "pass" if it is between 70 and 100</em></p>
 					<pre class="python fragment">
@@ -338,7 +342,7 @@
 					</pre>
 				</section>
 
-				<section class="left" data-auto-animate data-auto-animate-restart>
+				<section class="left" data-auto-animate>
 					<h3>The <code>else</code> Clause</h3>
 					<ul>
 						<li>Sometimes we want to do some behavior when our <code>if</code> condition is <strong>not</strong> true 
@@ -424,7 +428,7 @@
 					</pre>
 				</section>
 
-				<section class="left" data-auto-animate data-auto-animate-restart>
+				<section class="left" data-auto-animate>
 					<h3>The <code>elif</code> Clause</h3>
 					<ul>
 						<li>Sometimes we want to check <em>more than one condition</em> to determine what action to take</li>
@@ -464,7 +468,7 @@
 				</section>
 
 				<section class="left" data-auto-animate>
-					<aside class="notes"?\>
+					<aside class="notes">
 						<p>If a equals 10, the first two predicates will be False; if b is greater than 0, the third will be True and will run.</p>
 					</aside>
 					<h3>The <code>elif</code> Clause</h3>
@@ -526,7 +530,7 @@
 					</pre>
 				</section>
 
-				<section class="left" data-auto-animate data-auto-animate-restart>
+				<section class="left" data-auto-animate>
 					<h3>Nested Structures</h3>
 					<ul>
 						<li><strong>Be careful!</strong> Clauses are associated with one another based on indentation level</li>
@@ -560,7 +564,7 @@
 					<p class="fragment"><em>"mystery" prints when <code>a</code> is not greater than 10 &mdash; <strong>with no consideration of <code>b</code></strong></em></p>
 				</section>
 
-				<section class="left" data-auto-animate data-auto-animate-restart>
+				<section class="left" data-auto-animate>
 					<h3>Building Randomness</h3>
 					<ul>
 						<li>Sometimes programs use random numbers to vary behavior</li>
@@ -642,6 +646,8 @@
 				slideNumber: true,
 				transition: 'convex',
 				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes, RevealMath.KaTeX ],
+				showNotes: false,
+				pdfSeparateFragments: false
 			});
 		</script>
 	</body>
