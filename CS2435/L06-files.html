@@ -151,7 +151,7 @@
 									<li><code>"a"</code> for append</coe></li>
 								</ul></li>
 						</ol>
-						<li>This can throw an error for a variety of reasons: file doesn't exist, file not accessible, and more...</li>
+						<li>This method can throw an error for a variety of reasons: file doesn't exist, file not accessible, and more...</li>
 					</ul>
 				</section>
 
@@ -228,6 +228,10 @@
 				</section>
 
 				<section class="left" data-auto-animate>
+					<aside class="notes">
+						The file is only printed once, since the cursor stayed at the end of the file after the first for loop<br>
+						Fix it by using the seek method to move the cursor
+					</aside>
 					<h3>The File Cursor</h3>
 					<ul style="width: 100%">
 						<li>What happens if we want to loop through it <em>twice</em>?</li>
