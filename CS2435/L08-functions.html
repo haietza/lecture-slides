@@ -79,6 +79,9 @@
 									print(x, 'is even')
 									return # Exit the function immediately
 							print('no even numbers')
+						
+						print_even([1, 3, 4, 5]) # Prints "4 is even"
+						print_even([1, 3, 5, 7]) # Prints "no even numbers"
 						</code>
 					</pre>
 				</section>
@@ -93,6 +96,9 @@
 							for x in numbers:
 								a += x * x
 							return a # Returns the sum of squares
+
+						x = sum_squares([1, 2, 3, 4]) # Returns 30, stores in x
+						print(x // 2) # Divide result by 2 and print, which prints 15
 						</code>
 					</pre>
 				</section>
@@ -117,6 +123,8 @@
 						<code data-trim data-id="code" data-line-numbers>
 					class Student:
 						pass # An empty class 
+
+					jack = Student() # Create an empty Student object
 						</code>
 					</pre>
 				</section>
@@ -131,6 +139,26 @@
 				</section>
 
 				<section class="left" data-auto-animate data-auto-animate-restart>
+					<aside class="notes">
+						It is tedious to have to set all the values for Rectangle after creating it<br>
+						Use a constructor instead
+					</aside>
+					<h3>The <code>self</code> Parameter</h3>
+					<pre class="python">
+						<code data-trim data-id="code" data-line-numbers>
+					class Rectangle:
+						def getArea(self):
+							return self.width * self.height
+						
+					r = Rectangle()    # Create a Rectangle object
+					r.width = 3        # Set r's width to 3
+					r.height = 5       # Set r's height to 5
+					print(r.getArea()) # Returns and prints 15
+						</code>
+					</pre>
+				</section>
+
+				<section class="left" data-auto-animate data-auto-animate-restart>
 					<h3>Constructors</h3>
 					<ul>
 						<li>A method called when an object is <em>created</em> in order to set up its data</li>
@@ -142,12 +170,17 @@
 						def __init__(self, width, height):
 							self.width = width
 							self.height = height
+						
+					r = Rectangle(3, 5) # Create a Rectangle object with width 3 and height 5
 						</code>
 					</pre>
 					<p>When calling the constructor <code>Rectangle(3, 5)</code>, <code>self</code> is automatically passed; only arguments for <code>width</code> and <code>height</code> are provided</p>
 				</section>
 
 				<section class="left" data-auto-animate data-auto-animate-restart>
+					<aside class="notes">
+						<p>Printing an object <code>print(r)</code> will automatically call its <code>__str__</code> method if defined</p>
+					</aside>
 					<h3>String Representation</h3>
 					<ul>
 						<li>Special method for converting object to a <em>string representation</em></li>
@@ -160,9 +193,12 @@
 						# ... (init method) ...
 						def __str__(self):
 							return "Rectangle(%d x %d)" % (self.width, self.height)
+
+					r = Rectangle(3, 5).    # Create a Rectangle object with width 3 and height 5
+					print(r)                # Prints "Rectangle(3 x 5)"
+					print("info: %s" % (r)) # Conversion to string is explicit here
 						</code>
 					</pre>
-					<p>Printing an object <code>print(r)</code> will automatically call its <code>__str__</code> method if defined</p>
 				</section>
 			</div>
 		</div>
