@@ -66,6 +66,7 @@
 				<section class="left" data-auto-animate>
 					<aside class="notes">
 						<ul>
+							<li>A continuous function just means there are no gaps when we graph it</li>
 							<li>If f(x<sub>1</sub>) x f(x<sub>2</sub>) < 0, then one has to be positive and one has to be negative (to evaluate to a negative number, or less than 0)</li>
 							<li>A root exists between x<sub>1</sub> and x<sub>2</sub> because one point is above the 0 and one point is below the 0 (positive and negative)</li>
 						</ul>
@@ -80,7 +81,10 @@
 
 				<section class="left" data-auto-animate>
 					<aside class="notes">
-						If root is between x<sub>1</sub> and m, we need to start the process again by finding the midpoint between x<sub>1</sub> and m (replace x<sub>2</sub> in previous calculation with m to find midpoint)
+						<ul>
+							<li>If root is between x<sub>1</sub> and m, we need to start the process again by finding the midpoint between x<sub>1</sub> and m (replace x<sub>2</sub> in previous calculation with m to find midpoint)</li>
+							<li>If root is between m and x<sub>2</sub>, we need to start the process again by finding the midpoint between m and x<sub>2</sub> and m (replace x<sub>1</sub> in previous calculation with m to find midpoint)</li>
+						</ul>
 					</aside>
 					<h3>Three Possible Outcomes</h3>
 					<ul>
@@ -92,6 +96,9 @@
 				</section>
 
 				<section class="left" data-auto-animate>
+					<aside class="notes">
+						Derivative of a function is the slope or tangent; how steep the function is going up or going down at a specific point. A derivative of 0 means it is perfectly flat at that point.
+					</aside>
 					<h3>Newton-Raphson Method</h3>
 					<ul>
 						<li>Uses the <em>derivative</em> of a function, $f'(x_n)$, to calculate a tangent line at a point $x_n$</li>
@@ -110,6 +117,9 @@
 				</section>
 
 				<section class="left" data-auto-animate>
+					<aside class="notes">
+						A tangent line "touches" a curve/function at a single point, while a secant line intersects the curve/function at two points (the tangent shares the secant line's instantaneous slope at that point)
+					</aside>
 					<h3>Secant Method</h3>
 					<ul>
 						<li>Instead of the derivative, it uses two points on the curve to draw a <em>secant line</em></li>
@@ -118,6 +128,9 @@
 				</section>
 
 				<section class="left" data-auto-animate>
+					<aside class="notes">
+						Previous values $x_{n-1} and $x_{n-2} have already been calculated and can be reused.
+					</aside>
 					<h3>Secant Method</h3>
 					<ul>
 						<li>The forumla: $x_n = x_{n-1} - f(x_{n-1})\frac{x_{n-1} - x_{n-2}}{f(x_{n-1}) - f(x_{n-2})}$</li>
