@@ -1,0 +1,256 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>CS3667 - Lecture 01 - Basics</title>
+
+		<link rel="stylesheet" href="../reveal-js/dist/reset.css">
+		<link rel="stylesheet" href="../reveal-js/dist/reveal.css">
+		<link rel="stylesheet" href="../reveal-js/dist/theme/black.css">
+		<link rel="stylesheet" href="../layouts/common.css">
+		<link rel="stylesheet" href="../reveal-js/plugin/highlight/monokai.css">
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+				<div class="header left">
+					CS3667: Software Engineering
+				</div>
+				<div class="header right no-title">
+					<em>Core CS Review</em>
+				</div>
+
+				<section data-state="title-slide">
+					<h1 class="r-fit-text">CS3667: Software Engineering</h1>
+					<h2 class="r-fit-text">Core CS Review</h2>
+				</section>
+
+				<section class="left" data-auto-animate>
+					<aside class="notes">
+						<ul>
+							<li>This is exactly like using a refrigerator: you just open the door and get food, without needing to know the thermodynamics of the compressor.</li>
+						</ul>
+					</aside>
+					<h3>Abstraction</h3>
+					<ul>
+						<li class="fragment">Simplifying complexity by focusing on what matters and hiding what doesn’t.</li>
+						<li class="fragment">Real-world Analogy: A refrigerator. You know how to use it without understanding coolant cycles or compressors.</li>
+					</ul>
+				</section>
+
+				<section class="left" data-auto-animate>
+					<aside class="notes">
+						<ul>
+							<li>Abstraction is a concept that sits at the very heart of computer science.</li>
+							<li>Why do we need it? Because human working memory is limited. Abstraction reduces cognitive load, makes code reusable, and enables massive systems to be built safely.</li>
+							<li>Think about the java.util package. You use ArrayList without worrying about how the underlying array resizes itself.</li>
+							<li>You interact with an interface, not the complex implementation.</li>
+						</ul>
+					</aside>
+					<h3>Abstraction</h3>
+						<ul>
+							<li class="fragment">Computers are built on layered abstractions:
+							<ul>
+								<li class="fragment">Hardware hides electrical details.</li>
+								<li class="fragment">Operating systems hide hardware details behind files and processes.</li>
+								<li class="fragment">Programming languages hide machine code.</li>
+								<li class="fragment">Functions hide implementation behind clean interfaces.</li>
+							</ul>
+							</li>
+						</ul>
+				</section>
+
+				<section class="left">
+					<aside class="notes">
+						Use https://www.w3schools.com/java/java_abstract.asp if needed.
+					</aside>
+					<h3>Abstraction Activity (15 mins)</h3>
+					<ul>
+						<li>Connect to the cs3667 remote VM using the VS Code Remote SSH extension.</li>
+						<li>Create a new directory using <code>mkdir abstraction</code>.</li>
+						<li>Inside, write an abstract class <code>Appliance</code> with an abstract method <code>operate()</code>.</li>
+						<li>Then, write a concrete class <code>Refrigerator</code> that extends <code>Appliance</code> and implements the <code>operate()</code> method with a simple print statement.</li>
+					</ul>
+				</section>
+
+				<section class="left">
+					<aside class="notes">
+						<ul>
+							<li>Polymorphism means 'many forms'. It is about flexibility.</li>
+							<li>In Java, subtype polymorphism is the most common.</li>
+							<li>Imagine a draw() function. A Circle class and a Square class can both implement it.</li>
+							<li>You can call shape.draw() without knowing the exact shape.</li>
+							<li>Java handles this via 'dynamic dispatch', meaning it does a lookup at runtime to see what the object actually is before calling the method.</li>
+						</ul>
+					</aside>
+					<h3>Polymorphism</h3>
+					<ul>
+						<li class="fragment">A single interface, function, or operation working with different types of data.</li>
+						<li class="fragment">Subtype Polymorphism (OOP): A parent class reference pointing to a child class object.</li>
+						<li class="fragment">Dynamic Dispatch: In Java, instance method calls look at the runtime object to decide which method to execute.</li>
+						<li class="fragment">Example: <code>Animal a = new Dog(); a.foo();</code> invokes the Dog's method because Java checks the object type at runtime.</li>
+					</ul>
+				</section>
+
+				<section class="left">
+					<aside class="notes">
+						Use https://www.w3schools.com/java/java_polymorphism.asp if needed.
+					</aside>
+					<h3>Polymorphism Activity (20 mins)</h3>
+					<ul>
+						<li>Work in pairs.</li>
+						<li>Create a new directory using <code>mkdir polymorphism</code>.</li>
+						<li>Inside, student A writes a <code>Shape</code> abstract class with a <code>draw()</code> method, and <code>Circle/Square</code> implementations.</li>
+						<li>Student B writes a <code>Main</code> class that takes an array of <code>Shape</code> objects and calls <code>draw()</code> in a loop.</li>
+						<li>Once done, pair up, read each other's code on your own screens, and discuss how dynamic dispatch resolves the method calls.</li>
+					</ul>
+				</section>
+
+				<section class="left">
+					<aside class="notes">
+						<ul>
+							<li>There are two other major types of polymorphism.</li>
+							<li>Parametric polymorphism is what you know as Generics.</li>
+							<li>When you use List<T>, the code doesn't care if T is a String or a Custom Object.</li>
+							<li>Ad Hoc polymorphism is simply method overloading; same method name, different signatures.</li>
+							<li>Consider the question on the slide: Can static methods be dynamically dispatched?</li>
+							<li>The answer is no. Static methods belong to the class, not the instance, so the compiler figures out which method to call before the code even runs (compile-time).</li>
+						</ul>
+					</aside>
+					<h3>Expanded Polymorphism</h3>
+					<ul>
+						<li class="fragment">Parametric Polymorphism: Functions or data structures that work with any type.
+							<ul>
+								<li>Example: Generics like <code>List&lt;T&gt;</code> in Java.</li>
+							</ul>
+						</li>
+						<li class="fragment">Ad Hoc Polymorphism: Multiple functions share the same name but differ in parameters (function overloading).</li>
+						<li class="fragment">Can Java static methods be dynamically dispatched?</li>
+					</ul>
+				</section>
+
+				<section class="left">
+					<aside class="notes">
+						Use https://www.w3schools.com/java/java_polymorphism.asp if needed.
+					</aside>
+					<h3>Polymorphism Activity (20 mins)</h3>
+					<ul>
+						<li>In your <code>polymorphism</code> directory, create a class <code>MathUtils</code>.</li>
+						<li>Implement Ad Hoc polymorphism by overloading an <code>add</code> method to handle two <code>int</code>s, three <code>int</code>s, and two <code>double</code>s.</li>
+						<li>Next, implement Parametric polymorphism by writing a generic method <code>printArray(T[] array)</code> that prints any array type.</li>
+					</ul>
+				</section>
+
+				<section class="left" data-auto-animate>
+					<aside class="notes">
+						<ul>
+							<li>For encapsulation in OOP, we bundle data and methods together into a class.</li>
+							<li>But encapsulation is often conflated with information hiding. Information hiding is strictly about access control.</li>
+						</ul>
+					</aside>
+					<h3>Encapsulation & Information Hiding</h3>
+					<ul>
+						<li>Encapsulation: Enclosing data and operations into a single syntactic unit (e.g., a Java class).</li>
+						<li>Information Hiding: Restricting access to certain class elements from other code elements.</li>
+						
+					</ul>
+				</section>
+
+				<section class="left" data-auto-animate>
+					<aside class="notes">
+						<ul>
+							<li>When I make a variable private, I am ensuring no other class can change it unexpectedly.</li>
+							<li>Think about a Point class with private x and y. Can a distance(Point p2) method inside the Point class directly access p2.x?</li>
+							<li>Yes! Because private means private to the class definition, not the specific object instance.</li>
+						</ul>
+					</aside>
+					<h3>Encapsulation & Information Hiding</h3>
+					<ul>
+						<li>Access Modifiers:
+							<ul>
+								<li class="fragment"><code>private</code>: Only elements in the same class have access.</li>
+								<li class="fragment"><code>protected</code>: Same class, subclasses, and package access.</li>
+								<li class="fragment"><code>package</code> (default): Any class in the same package has access.</li>
+								<li class="fragment"><code>public</code>: Accessible by any class.</li>
+							</ul>
+						</li>
+					</ul>
+				</section>
+
+				<section class="left">
+					<aside class="notes">
+						Use https://www.w3schools.com/java/java_encapsulation.asp if needed.
+						<ul>
+							<li>No Data Integrity: Any other part of the program can write myAccount.balance = 1000000; and instantly make the user a millionaire without a proper deposit.</li>
+							<li>No Validation: Someone could accidentally (or maliciously) write myAccount.balance = -5000;. A bank account should not drop below zero without specific overdraft rules being triggered.</li>
+							<li>No Audit Trail: In a real banking system, every change to a balance needs to be logged (e.g., tracking the time, location, and reason for a deposit). If anyone can change the variable directly, you cannot trigger logging code when the balance changes.</li>
+							<li>Brittle Code: If you later decide to change how the balance is stored (for example, storing it as an integer of cents to avoid floating-point math errors), you will break every piece of code in your entire program that directly accessed the balance variable.</li>
+						</ul>
+					</aside>
+					<h3>Encapsulation & Information Hiding Activity (20 mins)</h3>
+					<ul>
+						<li>Create a new directory using <code>mkdir information-hiding</code>.</li>
+						<li>Write a poorly encapsulated <code>BankAccount</code> class where the balance is public.</li>
+						<li>Discuss with your partner the security implications.</li>
+						<li>Then, refactor the class to properly hide the information using private fields and public getter/setter methods that include validation logic (e.g., cannot deposit negative money).</li>
+					</ul>
+				</section>
+
+				<section class="left">
+					<aside class="notes">
+						<ul>
+							<li>As systems grow, we need higher-level organizational structures.</li>
+							<li>Packages map directly to your file system directories.</li>
+							<li>Interfaces act as strict contracts. If your class signs the contract, it must provide the behavior.</li>
+							<li>Abstract classes are similar but more powerful for creating deep hierarchies, like Animal to Dog to a concrete Poodle.</li>
+							<li>You can instantiate a specific object into a broader reference: Animal gigisDog = new Poodle("Rosie");</li>
+						</ul>
+					</aside>
+					<h3>Packages, Interfaces, & Abstract Classes</h3>
+					<ul>
+						<li class="fragment">Packages: Organizational structures grouping related classes (e.g., <code>java.util</code>). Package names connect to project directory names.</li>
+						<li class="fragment">Interfaces: A <em>behavior contract</em>. Any class implementing an interface is contractually obligated to implement its methods.</li>
+						<li class="fragment">Abstract Classes vs Interfaces: Abstract classes can define instance fields and implement methods.
+							<ul>
+								<li>They act as higher-level abstractions in hierarchies (e.g., Animal < Dog < Poodle).</li>
+							</ul>
+						</li>
+					</ul>
+				</section>
+
+				<section class="left">
+					<aside class="notes">
+						Use https://www.w3schools.com/java/java_packages.asp if needed.
+					</aside>
+					<h3>Packages, Interfaces, & Abstract Classes Activity (15 mins)</h3>
+					<ul>
+						<li>Create a new directory using <code>mkdir pets</code>.</li>
+						<li>Create a package <code>pets</code>.</li>
+						<li>Define an interface <code>Breatheable</code> with a <code>breath()</code> method.</li>
+						<li>Create an abstract class <code>Animal</code> that implements <code>Breatheable</code> with an abstract method <code>makeSound()</code>.</li>
+						<li>Create a concrete class <code>Dog</code> extending <code>Animal</code>.</li>
+					</ul>
+				</section>
+
+			</div>
+		</div>
+
+		<script src="../reveal-js/dist/reveal.js"></script>
+		<script src="../reveal-js/plugin/math/math.js"></script>
+		<script src="../reveal-js/plugin/notes/notes.js"></script>
+		<script src="../reveal-js/plugin/markdown/markdown.js"></script>
+		<script src="../reveal-js/plugin/highlight/highlight.js"></script>
+		<script>
+			Reveal.initialize({
+				hash: true,
+				slideNumber: true,
+				transition: 'convex',
+				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes, RevealMath.KaTeX ],
+				showNotes: false,
+				pdfSeparateFragments: false
+			});
+		</script>
+	</body>
+</html>
