@@ -234,6 +234,45 @@
 					</ul>
 				</section>
 
+				<section class="left">
+					<aside class="notes">
+						<ul>
+							<li>In enterprise software, you will rarely deploy code on your local Windows or Mac machine. You will deploy to Linux servers.</li>
+							<li>When you SSH into our course VM, you are in a completely different computer. There is no GUI.</li>
+							<li>You must navigate using commands like pwd to see where you are, and ls to see what files are present.</li>
+							<li>We will also use a terminal text editor called Vim for quick edits.</li>
+							<li>Vim has two main modes: Normal mode for navigating, and Insert mode for typing.</li>
+						</ul>
+					</aside>
+					<h3>Linux and Vim</h3>
+					<ul>
+						<li class="fragment">Interact with the remote VM entirely through the terminal.</li>
+						<li class="fragment">Essential Commands:
+							<ul>
+								<li class="fragment"><code>pwd</code>: Print working directory.</li>
+								<li class="fragment"><code>ls</code>: List files in current location (<code>ls -a</code> for hidden).</li>
+								<li class="fragment"><code>cd</code>: Change directory (<code>cd ..</code> to move up).</li>
+								<li class="fragment"><code>mkdir</code>: Make a directory.</li>
+								<li class="fragment"><code>touch</code>: Create a new empty file.</li>
+							</ul>
+    					</li>
+					</ul>
+				</section>
+
+				<section class="left">
+					<aside class="notes">
+						Use https://cheatography.com/davechild/cheat-sheets/linux-command-line/ and https://web.stanford.edu/class/cs110/summer-2021/handouts/vim-cheat-sheet/
+ if needed.
+					</aside>
+					<h3>Linux and Vim Activity (15 mins)</h3>
+					<ul>
+						<li>SSH into the server, <code>pwd</code> to confirm your location.</li>
+						<li>Use <code>mkdir</code> to create project1, <code>cd</code> into it. </li>
+						<li>Use <code>touch Main.java</code> to create a file.</li>
+						<li>Open it using Vim (<code>vim Main.java</code>), press <code>i</code> for insert mode, type a basic Hello World class, press Esc, and type <code>:wq</code> to save and quit.</li>
+					</ul>
+				</section>
+
 			</div>
 		</div>
 
