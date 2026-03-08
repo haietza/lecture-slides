@@ -234,42 +234,80 @@
 					</ul>
 				</section>
 
-				<section class="left">
+				<section class="left" data-auto-animate="">
 					<aside class="notes">
 						<ul>
-							<li>In enterprise software, you will rarely deploy code on your local Windows or Mac machine. You will deploy to Linux servers.</li>
-							<li>When you SSH into our course VM, you are in a completely different computer. There is no GUI.</li>
-							<li>You must navigate using commands like pwd to see where you are, and ls to see what files are present.</li>
-							<li>We will also use a terminal text editor called Vim for quick edits.</li>
-							<li>Vim has two main modes: Normal mode for navigating, and Insert mode for typing.</li>
+							<li>In enterprise software engineering, you will frequently find yourself SSH'd into a remote Linux server to debug an issue, check logs, or patch a configuration file.</li>
+							<li>You won't have a graphical user interface. This is where Vim comes in.</li>
+							<li>Vim is a 'modal' text editor. This is the biggest hurdle for beginners: you aren't always typing!</li>
+							<li>By default, you are in 'Normal' mode, where every keystroke is a command to navigate or manipulate text.</li>
+							<li>To actually type Java code, you press i to enter 'Insert' mode. When you are done typing, you must press Escape to get back to Normal mode.</li>
+							<li>This separation of typing and manipulating makes Vim incredibly fast once you build the muscle memory.</li>
 						</ul>
 					</aside>
-					<h3>Linux and Vim</h3>
+					<h3>Vim</h3>
 					<ul>
-						<li class="fragment">Interact with the remote VM entirely through the terminal.</li>
-						<li class="fragment">Essential Commands:
+						<li>Core Commands:
 							<ul>
-								<li class="fragment"><code>pwd</code>: Print working directory.</li>
-								<li class="fragment"><code>ls</code>: List files in current location (<code>ls -a</code> for hidden).</li>
-								<li class="fragment"><code>cd</code>: Change directory (<code>cd ..</code> to move up).</li>
-								<li class="fragment"><code>mkdir</code>: Make a directory.</li>
-								<li class="fragment"><code>touch</code>: Create a new empty file.</li>
+								<li class="fragment"><code>i</code> Enter Insert mode (insert before cursor).</li>
+								<li class="fragment"><code>Esc</code> Return to Normal mode.</li>
+								<li class="fragment"><code>:w</code> Write (save) the file.</li>
+								<li class="fragment"><code>:q</code> Quit.</li>
+								<li class="fragment"><code>:wq</code> Save and quit.</li>
+								<li class="fragment"><code>:q!</code> Force quit without saving.</li>
 							</ul>
-    					</li>
+						</li>
+					</ul>
+				</section>
+
+				<section class="left" data-auto-animate="">
+					<aside class="notes">
+						<ul>
+							<li>In enterprise software engineering, you will frequently find yourself SSH'd into a remote Linux server to debug an issue, check logs, or patch a configuration file.</li>
+							<li>You won't have a graphical user interface. This is where Vim comes in.</li>
+							<li>Vim is a 'modal' text editor. This is the biggest hurdle for beginners: you aren't always typing!</li>
+							<li>By default, you are in 'Normal' mode, where every keystroke is a command to navigate or manipulate text.</li>
+							<li>To actually type Java code, you press i to enter 'Insert' mode. When you are done typing, you must press Escape to get back to Normal mode.</li>
+							<li>This separation of typing and manipulating makes Vim incredibly fast once you build the muscle memory.</li>
+						</ul>
+					</aside>
+					<h3>Vim</h3>
+					<ul>
+						<li>Efficient Editing (Normal Mode):
+							<ul>
+								<li class="fragment"><code>h, j, k, l</code> Navigate Left, Down, Up, Right.</li>
+								<li class="fragment"><code>dd</code> Delete (cut) the current line.</li>
+								<li class="fragment"><code>yy</code> Yank (copy) the current line.</li>
+								<li class="fragment"><code>p</code> Put (paste) text previously yanked or deleted.</li>
+								<li class="fragment"><code>u</code> Undo the last action.</li>
+							</ul>
+						</li>
 					</ul>
 				</section>
 
 				<section class="left">
 					<aside class="notes">
-						Use https://cheatography.com/davechild/cheat-sheets/linux-command-line/ and https://web.stanford.edu/class/cs110/summer-2021/handouts/vim-cheat-sheet/
- if needed.
+						Use https://web.stanford.edu/class/cs110/summer-2021/handouts/vim-cheat-sheet/ if needed.
 					</aside>
-					<h3>Linux and Vim Activity (15 mins)</h3>
+					<h3>Vim Activity (15 mins)</h3>
 					<ul>
-						<li>SSH into the server, <code>pwd</code> to confirm your location.</li>
-						<li>Use <code>mkdir</code> to create project1, <code>cd</code> into it. </li>
-						<li>Use <code>touch Main.java</code> to create a file.</li>
-						<li>Open it using Vim (<code>vim Main.java</code>), press <code>i</code> for insert mode, type a basic Hello World class, press Esc, and type <code>:wq</code> to save and quit.</li>
+						<li>Connect to the cs3667 remote VM.</li>
+						<li>Open a new file by typing <code>vim StudentRecord.java</code>.</li>
+						<li>Press <code>i</code> to enter Insert mode. Type out a basic Java class with a public static void main(String[] args) method that prints "Hello Vim".</li>
+						<li>Press <code>Esc</code> to return to Normal mode.</li>
+						<li>Save your progress without quitting by typing <code>:w</code> and pressing Enter.</li>
+					</ul>
+				</section>
+
+				<section class="left">
+					<aside class="notes">
+						Use https://web.stanford.edu/class/cs110/summer-2021/handouts/vim-cheat-sheet/ if needed.
+					</aside>
+					<h3>Vim Activity (15 mins)</h3>
+					<ul>
+						<li>Deliberately make a mistake: press <code>dd</code> to delete your print statement line.</li>
+						<li>Recover from the mistake: press <code>u</code> to undo the deletion.</li>
+						<li>Save and exit the editor by typing <code>:wq</code> and pressing Enter.</li>
 					</ul>
 				</section>
 
