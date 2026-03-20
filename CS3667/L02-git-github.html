@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>CS3667 - Lecture 01 - Basics</title>
+
+		<link rel="stylesheet" href="../reveal-js/dist/reset.css">
+		<link rel="stylesheet" href="../reveal-js/dist/reveal.css">
+		<link rel="stylesheet" href="../reveal-js/dist/theme/black.css">
+		<link rel="stylesheet" href="../layouts/common.css">
+		<link rel="stylesheet" href="../reveal-js/plugin/highlight/monokai.css">
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+				<div class="header left">
+					CS3667: Software Engineering
+				</div>
+				<div class="header right no-title">
+					<em>Git and GitHub</em>
+				</div>
+
+				<section data-state="title-slide">
+					<h1 class="r-fit-text">CS3667: Software Engineering</h1>
+					<h2 class="r-fit-text">Git and GitHub</h2>
+				</section>
+
+				<section class="left" data-auto-animate>
+					<aside class="notes">
+						<ul>
+							<li>Before we write enterprise code, we need to know how to manage it.</li>
+							<li>Historically, version control stored 'deltas' — just the changes between files.</li>
+							<li>Git revolutionized this by taking a snapshot of your entire project at a given point in time.</li>
+							<li>Under the hood, Git bundles your code with meta-data into a 'blob' and assigns it a SHA-1 hash.</li>
+							<li>This ensures integrity—if a single bit changes, the hash changes.</li>
+							<li>Today, we are setting up our tools on the course Linux VM</li>
+						</ul>
+					</aside>
+					<h3>Evolution of Version Control</h3>
+					<ul>
+						<li class="fragment">Local Systems: Manual copying, backup folders (timestamped). Full copies of files.</li>
+						<li class="fragment">Centralized Systems (CVS, Subversion): Single server maintains deltas. Single point of failure.</li>
+						<li class="fragment">Distributed Systems (Git, Mercurial): Peer-to-peer. Each peer "fully mirrors" the repository.</li>
+					</ul>
+				</section>
+
+				<section class="left" data-auto-animate>
+					<aside class="notes">
+						<ul>
+							<li>Before we write enterprise code, we need to know how to manage it.</li>
+							<li>Historically, version control stored 'deltas' — just the changes between files.</li>
+							<li>Git revolutionized this by taking a snapshot of your entire project at a given point in time.</li>
+							<li>Under the hood, Git bundles your code with meta-data into a 'blob' and assigns it a SHA-1 hash.</li>
+							<li>This ensures integrity—if a single bit changes, the hash changes.</li>
+							<li>Today, we are setting up our tools on the course Linux VM</li>
+						</ul>
+					</aside>
+					<h3>Git's Secret Sauce: Snapshots</h3>
+					<ul>
+						<li class="fragment">Git uses project “snapshots” not file deltas/diffs.</li>
+						<li class="fragment">Everything is check-summed using a SHA-1 hash.</li>
+						<li class="fragment">The SHA-1 hash (40 hex characters) is a unique identifier “key” in the database.</li>
+						<li class="fragment">Any content deviation (accidental or intentional) is noticeable.</li>
+					</ul>
+				</section>
+
+				<section class="left">
+					
+					<h3>VCS Activity (15 mins)</h3>
+					
+				</section>
+
+
+			</div>
+		</div>
+
+		<script src="../reveal-js/dist/reveal.js"></script>
+		<script src="../reveal-js/plugin/math/math.js"></script>
+		<script src="../reveal-js/plugin/notes/notes.js"></script>
+		<script src="../reveal-js/plugin/markdown/markdown.js"></script>
+		<script src="../reveal-js/plugin/highlight/highlight.js"></script>
+		<script>
+			Reveal.initialize({
+				hash: true,
+				slideNumber: true,
+				transition: 'convex',
+				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes, RevealMath.KaTeX ],
+				showNotes: false,
+				pdfSeparateFragments: false
+			});
+		</script>
+	</body>
+</html>
