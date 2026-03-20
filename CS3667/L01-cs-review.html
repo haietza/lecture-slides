@@ -11,6 +11,7 @@
 		<link rel="stylesheet" href="../reveal-js/dist/theme/black.css">
 		<link rel="stylesheet" href="../layouts/common.css">
 		<link rel="stylesheet" href="../reveal-js/plugin/highlight/monokai.css">
+		<link rel="stylesheet" href="custom.css" />
 	</head>
 	<body>
 		<div class="reveal">
@@ -27,7 +28,7 @@
 					<h2 class="r-fit-text">Core CS Review</h2>
 				</section>
 
-				<section class="left" data-auto-animate>
+				<section class="left">
 					<aside class="notes">
 						<ul>
 							<li>This is exactly like using a refrigerator: you just open the door and get food, without needing to know the thermodynamics of the compressor.</li>
@@ -40,7 +41,7 @@
 					</ul>
 				</section>
 
-				<section class="left" data-auto-animate>
+				<section class="left">
 					<aside class="notes">
 						<ul>
 							<li>Abstraction is a concept that sits at the very heart of computer science.</li>
@@ -49,17 +50,13 @@
 							<li>You interact with an interface, not the complex implementation.</li>
 						</ul>
 					</aside>
-					<h3>Abstraction</h3>
-						<ul>
-							<li class="fragment">Computers are built on layered abstractions:
-							<ul>
-								<li class="fragment">Hardware hides electrical details.</li>
-								<li class="fragment">Operating systems hide hardware details behind files and processes.</li>
-								<li class="fragment">Programming languages hide machine code.</li>
-								<li class="fragment">Functions hide implementation behind clean interfaces.</li>
-							</ul>
-							</li>
-						</ul>
+					<!-- Clicking this image opens it in a fullscreen overlay -->
+					<img 
+						src="imgs/abstraction.jpg" data-preview-image 
+						alt="Graphic showing abstraction layers in computing"
+						aria-describedby="abstraction-caption">
+					<div id="abstraction-caption" class="sr-only">Abstraction: The Art of Hiding Complexity. Simplifying complexity by focusing on what matters and hiding what doesn’t. Functions and Classes (Hides complex implementation behind a clean interface). Programming Languages (Hides raw machine code). Operating Systems (Hides hardware behind files and processes)
+ Hardware (Hides raw electrical details). The Refrigerator analogy: You know how to use a refrigerator without understanding cooland cycles or compressors. Your code should offer the same courtesy to other developers.</div>
 				</section>
 
 				<section class="left">
@@ -80,8 +77,8 @@
 						<ul>
 							<li>Polymorphism means 'many forms'. It is about flexibility.</li>
 							<li>In Java, subtype polymorphism is the most common.</li>
-							<li>Imagine a draw() function. A Circle class and a Square class can both implement it.</li>
-							<li>You can call shape.draw() without knowing the exact shape.</li>
+							<li>Imagine a foo() function. A Dog class and a Cat class can both implement it.</li>
+							<li>You can call a.foo() without knowing the exact animal.</li>
 							<li>Java handles this via 'dynamic dispatch', meaning it does a lookup at runtime to see what the object actually is before calling the method.</li>
 						</ul>
 					</aside>
@@ -90,8 +87,23 @@
 						<li class="fragment">A single interface, function, or operation working with different types of data.</li>
 						<li class="fragment">Subtype Polymorphism (OOP): A parent class reference pointing to a child class object.</li>
 						<li class="fragment">Dynamic Dispatch: In Java, instance method calls look at the runtime object to decide which method to execute.</li>
-						<li class="fragment">Example: <code>Animal a = new Dog(); a.foo();</code> invokes the Dog's method because Java checks the object type at runtime.</li>
+						<pre class="fragment java">
+							<code data-trim>
+								Animal a = new Dog();
+								a.foo(); // Dog's foo() method called, not Animal's
+							</code>
+							</pre>							
+						</li>
 					</ul>
+				</section>
+
+				<section class="left">
+					<!-- Clicking this image opens it in a fullscreen overlay -->
+					<img 
+						src="imgs/dynamic-dispatch.jpg" data-preview-image 
+						alt="Graphic showing dynamic dispatch in Java"
+						aria-describedby="dynamic-dispatch-caption">
+					<div id="dynamic-dispatch-caption" class="sr-only">The Dynamic Dispatch Resolver. Animal a = new Dog(); a.foo(); Compile-Time Reference Animal a points to JVM Dispatch points to Run-Time Heap new Dog() .foo(). Java checks the strict reference type at compile-time, but executes the actual heap objet's mthod at runtime.</div>
 				</section>
 
 				<section class="left">
@@ -99,7 +111,7 @@
 						Use https://www.w3schools.com/java/java_polymorphism.asp if needed.
 					</aside>
 					<h3>Polymorphism Activity (20 mins)</h3>
-					<ul>
+					<ul class="dense-slide">
 						<li>Work in pairs.</li>
 						<li>Create a new directory using <code>mkdir polymorphism</code>.</li>
 						<li>Inside, student A writes a <code>Shape</code> abstract class with a <code>draw()</code> method, and <code>Circle/Square</code> implementations.</li>
@@ -152,9 +164,8 @@
 					</aside>
 					<h3>Encapsulation & Information Hiding</h3>
 					<ul>
-						<li>Encapsulation: Enclosing data and operations into a single syntactic unit (e.g., a Java class).</li>
-						<li>Information Hiding: Restricting access to certain class elements from other code elements.</li>
-						
+						<li class="fragment">Encapsulation: Enclosing data and operations into a single syntactic unit (e.g., a Java class).</li>
+						<li class="fragment">Information Hiding: Restricting access to certain class elements from other code elements.</li>
 					</ul>
 				</section>
 
@@ -180,6 +191,15 @@
 				</section>
 
 				<section class="left">
+					<!-- Clicking this image opens it in a fullscreen overlay -->
+					<img 
+						src="imgs/encapsulation-info-hiding.jpg" data-preview-image 
+						alt="Graphic showing encapsulation and information hiding in Java"
+						aria-describedby="encapsulation-info-hiding-caption">
+					<div id="encapsulation-info-hiding-caption" class="sr-only">Protecting System Integrity. Encapsulation: They Suntactic Unit (Java Class). Information Hiding: Restricing Access. Access Modifier Legend. private: Inside the vault only (Same class). package (default): BZuilding security pass (Same package). protected: Building security + family members (Same package + subclasses).</div>
+				</section>
+
+				<section class="left">
 					<aside class="notes">
 						Use https://www.w3schools.com/java/java_encapsulation.asp if needed.
 						<ul>
@@ -190,7 +210,7 @@
 						</ul>
 					</aside>
 					<h3>Encapsulation & Information Hiding Activity (20 mins)</h3>
-					<ul>
+					<ul class="dense-slide">
 						<li>Create a new directory using <code>mkdir information-hiding</code>.</li>
 						<li>Write a poorly encapsulated <code>BankAccount</code> class where the balance is public.</li>
 						<li>Discuss with your partner the security implications.</li>
@@ -198,11 +218,29 @@
 					</ul>
 				</section>
 
-				<section class="left">
+				<section class="left" data-auto-animate>
 					<aside class="notes">
 						<ul>
 							<li>As systems grow, we need higher-level organizational structures.</li>
 							<li>Packages map directly to your file system directories.</li>
+							
+						</ul>
+					</aside>
+					<h3>Packages, Interfaces, & Abstract Classes</h3>
+					<ul>
+						<li class="fragment">Packages: Organizational structures grouping related classes (e.g., <code>java.util</code>). Package names connect to project directory names.</li>
+						<li class="fragment">This code would be stored in the directory path <code>com/university/zoo</code>.</li>
+							<pre class="java fragment">
+								<code data-trim>
+								package com.university.zoo;
+								</code>
+							</pre>
+					</ul>
+				</section>
+
+				<section class="left" data-auto-animate>
+					<aside class="notes">
+						<ul>
 							<li>Interfaces act as strict contracts. If your class signs the contract, it must provide the behavior.</li>
 							<li>Abstract classes are similar but more powerful for creating deep hierarchies, like Animal to Dog to a concrete Poodle.</li>
 							<li>You can instantiate a specific object into a broader reference: Animal gigisDog = new Poodle("Rosie");</li>
@@ -210,7 +248,6 @@
 					</aside>
 					<h3>Packages, Interfaces, & Abstract Classes</h3>
 					<ul>
-						<li class="fragment">Packages: Organizational structures grouping related classes (e.g., <code>java.util</code>). Package names connect to project directory names.</li>
 						<li class="fragment">Interfaces: A <em>behavior contract</em>. Any class implementing an interface is contractually obligated to implement its methods.</li>
 						<li class="fragment">Abstract Classes vs Interfaces: Abstract classes can define instance fields and implement methods.
 							<ul>
@@ -234,7 +271,7 @@
 					</ul>
 				</section>
 
-				<section class="left" data-auto-animate="">
+				<section class="left">
 					<aside class="notes">
 						<ul>
 							<li>In enterprise software engineering, you will frequently find yourself SSH'd into a remote Linux server to debug an issue, check logs, or patch a configuration file.</li>
@@ -245,51 +282,28 @@
 							<li>This separation of typing and manipulating makes Vim incredibly fast once you build the muscle memory.</li>
 						</ul>
 					</aside>
-					<h3>Vim</h3>
-					<ul>
-						<li>Core Commands:
-							<ul>
-								<li class="fragment"><code>i</code> Enter Insert mode (insert before cursor).</li>
-								<li class="fragment"><code>Esc</code> Return to Normal mode.</li>
-								<li class="fragment"><code>:w</code> Write (save) the file.</li>
-								<li class="fragment"><code>:q</code> Quit.</li>
-								<li class="fragment"><code>:wq</code> Save and quit.</li>
-								<li class="fragment"><code>:q!</code> Force quit without saving.</li>
-							</ul>
-						</li>
-					</ul>
+					<!-- Clicking this image opens it in a fullscreen overlay -->
+					<img 
+						src="imgs/vim.jpg" data-preview-image 
+						alt="Graphic showing vim modes and commands"
+						aria-describedby="vim-caption">
+					<div id="vim-caption" class="sr-only">The Tactical Toolkit: Navigating Vim. Vim's power comes from its modal architecture, separting the act of manipulating text from the act of inserting text. Normal Mode (Default state: Navigation and Manipulation). Use i for Insert Mode (Typing raw text). Use Esc to return to Normal mode. Command Mode (FIle operations). :w (write/save), :q (quit), :wq (save and quit), :q (force quit).</div>
 				</section>
 
-				<section class="left" data-auto-animate="">
-					<aside class="notes">
-						<ul>
-							<li>In enterprise software engineering, you will frequently find yourself SSH'd into a remote Linux server to debug an issue, check logs, or patch a configuration file.</li>
-							<li>You won't have a graphical user interface. This is where Vim comes in.</li>
-							<li>Vim is a 'modal' text editor. This is the biggest hurdle for beginners: you aren't always typing!</li>
-							<li>By default, you are in 'Normal' mode, where every keystroke is a command to navigate or manipulate text.</li>
-							<li>To actually type Java code, you press i to enter 'Insert' mode. When you are done typing, you must press Escape to get back to Normal mode.</li>
-							<li>This separation of typing and manipulating makes Vim incredibly fast once you build the muscle memory.</li>
-						</ul>
-					</aside>
-					<h3>Vim</h3>
-					<ul>
-						<li>Efficient Editing (Normal Mode):
-							<ul>
-								<li class="fragment"><code>h, j, k, l</code> Navigate Left, Down, Up, Right.</li>
-								<li class="fragment"><code>dd</code> Delete (cut) the current line.</li>
-								<li class="fragment"><code>yy</code> Yank (copy) the current line.</li>
-								<li class="fragment"><code>p</code> Put (paste) text previously yanked or deleted.</li>
-								<li class="fragment"><code>u</code> Undo the last action.</li>
-							</ul>
-						</li>
-					</ul>
+				<section class="left">
+					<!-- Clicking this image opens it in a fullscreen overlay -->
+					<img 
+						src="imgs/vim-normal.jpg" data-preview-image 
+						alt="Graphic showing vim normal mode and commands"
+						aria-describedby="vim-normal-caption">
+					<div id="vim-normal-caption" class="sr-only">Normal Mode: The Action Map. dd Delete (cut) the current line. yy Yank (copy) the current line. p Put (paste) text previously yanked or deleted. u Undo the last action. h, j, k, l Navigate Left, Down, Up, Right. In Normal mode, your keyboard is no longer a typewriter; it is a remote control for text manipulation.</div>
 				</section>
 
 				<section class="left">
 					<aside class="notes">
 						Use https://web.stanford.edu/class/cs110/summer-2021/handouts/vim-cheat-sheet/ if needed.
 					</aside>
-					<h3>Vim Activity (15 mins)</h3>
+					<h3>Vim Activity - Part 1 (10 mins)</h3>
 					<ul>
 						<li>Connect to the cs3667 remote VM.</li>
 						<li>Open a new file by typing <code>vim StudentRecord.java</code>.</li>
@@ -303,7 +317,7 @@
 					<aside class="notes">
 						Use https://web.stanford.edu/class/cs110/summer-2021/handouts/vim-cheat-sheet/ if needed.
 					</aside>
-					<h3>Vim Activity (15 mins)</h3>
+					<h3>Vim Activity - Part 2 (5 mins)</h3>
 					<ul>
 						<li>Deliberately make a mistake: press <code>dd</code> to delete your print statement line.</li>
 						<li>Recover from the mistake: press <code>u</code> to undo the deletion.</li>
