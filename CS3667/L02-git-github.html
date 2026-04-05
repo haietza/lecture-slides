@@ -27,15 +27,15 @@
 					<h2 class="r-fit-text">Git and GitHub</h2>
 				</section>
 
-				<section class="left" data-auto-animate>
+				<section class="left">
 					<aside class="notes">
 						<ul>
 							<li>Before we write enterprise code, we need to know how to manage it.</li>
+							<li>Manual copying, timestamped files were used in the early days.</li>
+							<li>Then came centralized systems, but if the server went down, work stopped.</li>
 							<li>Historically, version control stored 'deltas' — just the changes between files.</li>
-							<li>Git revolutionized this by taking a snapshot of your entire project at a given point in time.</li>
-							<li>Under the hood, Git bundles your code with meta-data into a 'blob' and assigns it a SHA-1 hash.</li>
-							<li>This ensures integrity—if a single bit changes, the hash changes.</li>
-							<li>Today, we are setting up our tools on the course Linux VM</li>
+							<li>Git is distributed, your computer holds the full history.</li>
+							<li>Git revolutionized version control by taking a snapshot of your entire project at a given point in time.</li>
 						</ul>
 					</aside>
 					<h3>Evolution of Version Control</h3>
@@ -46,15 +46,11 @@
 					</ul>
 				</section>
 
-				<section class="left" data-auto-animate>
+				<section class="left">
 					<aside class="notes">
 						<ul>
-							<li>Before we write enterprise code, we need to know how to manage it.</li>
-							<li>Historically, version control stored 'deltas' — just the changes between files.</li>
-							<li>Git revolutionized this by taking a snapshot of your entire project at a given point in time.</li>
 							<li>Under the hood, Git bundles your code with meta-data into a 'blob' and assigns it a SHA-1 hash.</li>
-							<li>This ensures integrity—if a single bit changes, the hash changes.</li>
-							<li>Today, we are setting up our tools on the course Linux VM</li>
+							<li>This hash ensures integrity; if a single bit changes, the hash changes.</li>
 						</ul>
 					</aside>
 					<h3>Git's Secret Sauce: Snapshots</h3>
@@ -67,9 +63,231 @@
 				</section>
 
 				<section class="left">
-					
-					<h3>VCS Activity (15 mins)</h3>
-					
+					<aside class="notes">
+						TODO: COMPLETE GITHUB SETUP GOOGLE DOC STEPS IN CLASS.
+					</aside>
+					<h3>Initialization Activity (10 mins)</h3>
+					<ul>
+						<li>Connect to the course VM via VS Code SSH.</li>
+						<li>Open the terminal and navigate to your workspace using <code>cd</code>.</li>
+						<li>Create a new directory <code>mkdir git-lab-1</code> and enter it.</li>
+						<li>Initialize a new Git repository <code>git init</code>.</li>
+						<li>Run <code>ls -a</code> to see the hidden .git directory (this is the repository where Git will store all your snapshots and metadata).</li>
+					</ul>
+				</section>
+
+				<section class="left">
+					<h3>The Three Local States of Git</h3>
+					<ul>
+						<li class="fragment">Working Directory: Where you edit files.</li>
+						<li class="fragment">Staging Area (Index): Where you prepare files for commit.</li>
+						<li class="fragment">Repository (.git directory): Where Git permanently stores the snapshots.</li>
+					</ul>
+				</section>
+
+				<section class="left">
+					<aside class="notes">
+						<ul>
+							<li>When you <strong>edit</strong> a Java file, it's just in your Working Directory.</li>
+							<li>Git knows it's modified, but it won't track the changes until you 'stage' them with git add.</li>
+							<li><strong>Staging</strong> allows you to group logical changes together.</li>
+							<li>Finally, git <strong>commit</strong> takes everything on the stage and permanently stores it in the .git folder as a snapshot.</li>
+						</ul>
+					</aside>
+					<h3>The Basic Git Workflow</h3>
+					<ul>
+						<li class="fragment">Edit files in the working directory.</li>
+						<li class="fragment"><code>git add [filename(s)]</code>: Puts files in the staging area.</li>
+						<li class="fragment"><code>git commit -m "[commit message]"</code>: Puts files that are in the staging area into the repository.</li>
+					</ul>
+				</section>
+
+				<section class="left">
+					<aside class="notes">
+						Recreate User.java on course VM with git repo so students can see working example after activity.
+					</aside>
+					<h3>The Commit Cycle Activity (15 mins)</h3>
+					<ul>
+						<li>Create User.java with a private fields for firstName and lastName and getter and setter methods.</li>
+						<li>Run <code>git status</code> to see it untracked.</li>
+						<li>Run <code>git add User.java</code>, then <code>git status</code> to see it staged.</li>
+						<li>Run <code>git commit -m "Add User class"</code>.</li>
+						<li>Add a toString() method, stage, and commit with a clear message. Use <code>git log</code> to review the history.</li>
+					</ul>
+				</section>
+
+				<section class="left">
+					<aside class="notes">
+						<ul>
+							<li>In many older VCS tools, branching meant copying the entire project folder; it was slow and expensive.</li>
+							<li>In Git, a branch is just a 40-character file pointing to a specific SHA-1 commit hash. It's nearly instantaneous.</li>
+							<li>Think of branches as bookmarks; when you create a branch, you just create a new bookmark at the current commit.</li>
+							<li>When you run git checkout [branchname], Git moves the HEAD pointer to that branch and updates your Working Directory to match that snapshot.</li>
+						</ul>
+					</aside>
+					<h3>Branches are Commit Chains</h3>
+					<ul>
+						<li class="fragment">Branches are simply lightweight, movable pointers to a commit.</li>
+						<li class="fragment">The default branch is now commonly called main.</li>
+						<li class="fragment">Creating a branch: <code>git checkout -b [branch-name]</code> creates and checks out the branch.</li>
+						<li class="fragment"><code>HEAD</code> is a special pointer that tells Git which branch you are currently on.</li>
+					</ul>
+				</section>
+
+				<section class="left">
+					<aside class="notes">
+						Recreate activity on course VM to confirm students see it?
+					</aside>
+					<h3>Branching Context Switch Activity (15 mins)</h3>
+					<ul>
+						<li>In the existing repo, create and checkout a new branch: <code>git checkout -b feature-auth</code>.</li>
+						<li>Add an Auth.java file. Commit it.</li>
+						<li>Run <code>git checkout main</code>. Observe that Auth.java disappears from the file explorer in VS Code!</li>
+						<li>Checkout feature-auth again to see it reappear.</li>
+					</ul>
+				</section>
+
+				<section class="left">
+					<aside class="notes">
+						<ul>
+							<li>Merging brings isolated work back together.</li>
+							<li>If main hasn't changed since you branched off, Git just slides the pointer forward; a fast-forward.</li>
+							<li>But if someone else merged changes into main while you were working, Git performs a two-way merge, creating a new merge commit.</li>
+							
+						</ul>
+					</aside>
+					<h3>Types of Merges</h3>
+					<ul>
+						<li class="fragment">Fast-forward merge: The "commit path" from the merging branch intersects the tip of the source branch. Git simply moves the pointer forward.</li>
+						<li class="fragment">Two-way merge (Recursive): Changes have occurred on both branches. Git creates a new commit object with 2 parents.</li>
+					</ul>
+				</section>
+
+				<section class="left">
+					<aside class="notes">
+						<ul>
+							<li>If you both edited the same line of code, Git throws its hands up. This is a merge conflict.</li>
+						</ul>
+					</aside>
+					<h3>Merge Conflicts</h3>
+					<ul>
+						<li class="fragment">Occurs when changes conflict (e.g., same line edited in both branches).</li>
+						<li class="fragment">Git pauses the merge. You must manually resolve conflicts in files marked by Git.</li>
+						<li class="fragment">Use VS Code's merge conflict editor to Accept Current, Accept Incoming, or Accept Both.</li>
+					</ul>
+				</section>
+
+				<section class="left">
+					<aside class="notes">
+						TODO: Recreate activity on course VM to confirm students see it?
+					</aside>
+					<h3>Engineering a Conflict Activity (15 mins)</h3>
+					<ul>
+						<li>On main, edit User.java (e.g., add private int age;). Commit.</li>
+						<li>Checkout feature-auth. Edit the exact same line in User.java (e.g., add private String email;). Commit.</li>
+						<li>Checkout main and run <code>git merge feature-auth</code>.</li>
+						<li>Open User.java in VS Code. Use the VS Code UI to resolve the conflict (keep both).</li>
+						<li>Add and commit the resolved file to finalize the merge.</li>
+					</ul>
+				</section>
+
+				<section class="left">
+					<aside class="notes">
+						<ul>
+							<li>So far, our snapshots have lived exclusively on our course VM.</li>
+							<li>To collaborate, we need a remote server like GitHub.</li>
+							<li>'origin' is just the standard alias for the URL of your remote repository.</li>
+							<li>When we push, we are sending our commit chain up to GitHub.</li>
+							<li>When we clone or fetch, we are downloading the chain.</li>
+						</ul>
+					</aside>
+					<h3>Working with Remotes</h3>
+					<ul>
+						<li class="fragment"><code>git clone [url]</code>: Creates a local repository of an already existing remote repository.</li>
+						<li class="fragment"><code>git remote add origin [url]</code>: Connects a local repo to a remote.</li>
+						<li class="fragment"><code>git push -u origin [branch]</code>: Pushes your local branch to the remote.</li>
+						<li class="fragment"><code>git fetch</code>: Pulls down remote data, but doesn't merge it.</li>
+					</ul>
+				</section>
+
+				<section class="left">
+					<aside class="notes">
+						TODO: USE GITHUB CLASSROOM TO CREATE REPOSITORIES?
+					</aside>
+					<h3>The First Push Activity (15 mins)</h3>
+					<ul>
+						<li>Create an empty repository on GitHub.</li>
+						<li>In your terminal, add the remote: <code>git remote add origin [your-url]</code>.</li>
+						<li>Push the code: <code>git push -u origin main</code>.</li>
+						<li>Verify the code appears on the GitHub website.</li>
+					</ul>
+				</section>
+
+				<section class="left">
+					<aside class="notes">
+						<ul>
+							<li>In professional software engineering, you rarely push directly to main.</li>
+							<li>You push a feature branch and open a Pull Request.</li>
+							<li>A PR is a request for your peers to review your code before it merges into the production branch.</li>
+							<li>This is where automated tests run and code reviews happen.</li>
+						</ul>
+					</aside>
+					<h3>The Pull Request Workflow</h3>
+					<ul>
+						<li class="fragment">Clone (one-time only).</li>
+						<li class="fragment">Create/checkout local branch for a change request.</li>
+						<li class="fragment">Work and commit locally.</li>
+						<li class="fragment">Push the branch to GitHub.</li>
+						<li class="fragment">On GitHub, generate a Pull Request (PR).</li>
+						<li class="fragment">Review, approve, and merge on GitHub.</li>
+					</ul>
+				</section>
+
+				<section class="left">
+					<aside class="notes">
+						TODO: USE GITHUB CLASSROOM TO CREATE REPOSITORIES?
+					</aside>
+					<h3>Collaborative PRs Activity (15 mins)</h3>
+					<ul>
+						<li>Work in pairs.</li>
+						<li>Add your partner as a Collaborator on your GitHub repo.</li>
+						<li>Partner clones the repo, creates a branch feature-logger, adds a System.out.println to a method, commits, and pushes the branch.</li>
+						<li>Partner opens a Pull Request on GitHub.</li>
+						<li>You review the PR on GitHub, leave a comment, and click "Merge pull request".</li>
+						<li>Finally, pull the merged changes locally: git checkout main, git fetch origin, git merge origin/main.</li>
+					</ul>
+				</section>
+
+				<section class="left">
+					<aside class="notes">
+						<ul>
+							<li>Git is forgiving locally, but unforgiving once you share your history.</li>
+							<li>If you accidentally stage a file you didn't mean to, git restore --staged brings it back to the working directory.</li>
+							<li>If you realize your last commit message was terrible, git commit --amend lets you fix it.</li>
+							<li>But remember: never amend or alter commits that your teammates have already pulled.</li>
+						</ul>
+					</aside>
+					<h3>Fixing Mistakes</h3>
+					<ul>
+						<li class="fragment">Discard working directory changes: <code>git restore [filename]</code> (Removes uncommitted changes).</li>
+						<li class="fragment">Unstage a file: <code>git restore --staged [filename]</code>.</li>
+						<li class="fragment">Modify last commit: <code>git commit --amend</code> (Use to fix typos in the last commit message or add missed files).</li>
+						<li class="fragment">DO NOT rewrite history on branches that have already been pushed to a remote repository!</li>
+					</ul>
+				</section>
+
+				<section class="left">
+					<aside class="notes">
+						TODO: USE GITHUB CLASSROOM TO CREATE REPOSITORIES?
+						TODO: Add references to prolab links for assistance during activities here and above,
+					</aside>
+					<h3>Fixing Mistakes Activity (15 mins)</h3>
+					<ul>
+						<li>Add a file Secrets.txt containing dummy passwords. Stage it (git add).</li>
+						<li>Realize the security flaw! Unstage it using <code>git restore --staged Secrets.txt</code>.</li>
+						<li>Create a .gitignore file and add Secrets.txt to it.</li>
+						<li>Run <code>git status</code> to verify Secrets.txt is no longer tracked. Commit the .gitignore file.</li>
+					</ul>
 				</section>
 
 
