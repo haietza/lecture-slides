@@ -4,13 +4,14 @@
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-		<title>CS3667 - Lecture 01 - Basics</title>
+		<title>CS3667 - Lecture 02 - Git and GitHub</title>
 
 		<link rel="stylesheet" href="../reveal-js/dist/reset.css">
 		<link rel="stylesheet" href="../reveal-js/dist/reveal.css">
 		<link rel="stylesheet" href="../reveal-js/dist/theme/black.css">
 		<link rel="stylesheet" href="../layouts/common.css">
 		<link rel="stylesheet" href="../reveal-js/plugin/highlight/monokai.css">
+		<link rel="stylesheet" href="custom.css" />
 	</head>
 	<body>
 		<div class="reveal">
@@ -63,8 +64,17 @@
 				</section>
 
 				<section class="left">
+					<!-- Clicking this image opens it in a fullscreen overlay -->
+					<img 
+						src="imgs/git-snapshots.jpg" data-preview-image 
+						alt="Graphic showing git snapshots"
+						aria-describedby="snapshots-caption">
+					<div id="snapshots-caption" class="sr-only">Git's Secret Sauce: The Power of Snapshots. Snapshots Over Deltas. Git captures the state of the entire project rather than just tracking file differences. The Data 'Blob'. Project code is bundled with metadata into a single unit known as a blob. The 40-Character Unique Key. Every snapshot is checksummed into a 40-hex character SHA-1 hash. Built-in Integrity. If even a single bit changes, the hash deviates, making any corruption noticeable. Content-Addressable Database. The SHA-1 hash acts as the unique database key for retrieving specific snapshots. Permanent Storage. These snapshots are stored permanently in the .git directory after every commit.</div>
+				</section>
+
+				<section class="left">
 					<aside class="notes">
-						TODO: COMPLETE GITHUB SETUP GOOGLE DOC STEPS IN CLASS.
+						Use https://git-scm.com/book/en/v2/Git-Basics-Getting-a-Git-Repository if needed.
 					</aside>
 					<h3>Initialization Activity (10 mins)</h3>
 					<ul>
@@ -86,6 +96,15 @@
 				</section>
 
 				<section class="left">
+					<!-- Clicking this image opens it in a fullscreen overlay -->
+					<img 
+						src="imgs/git-3-stages.jpg" data-preview-image 
+						alt="Graphic showing git stages"
+						aria-describedby="stages-caption">
+					<div id="stages-caption" class="sr-only">The 3 Stages of Git. Master the local lifecycle of your code by moving files through Git's three core environments. Working Directory: The Edit Zone. This is the local folder wher eyou actively modify and create your files. Staging Area: The Prep Zone. Also known as the Index, this is where you bundle specific changes before committing. Repository: The Permanent Storage. The .git directory where Git permanently stores your projec snapshots and metadata.</div>
+				</section>
+
+				<section class="left">
 					<aside class="notes">
 						<ul>
 							<li>When you <strong>edit</strong> a Java file, it's just in your Working Directory.</li>
@@ -100,6 +119,15 @@
 						<li class="fragment"><code>git add [filename(s)]</code>: Puts files in the staging area.</li>
 						<li class="fragment"><code>git commit -m "[commit message]"</code>: Puts files that are in the staging area into the repository.</li>
 					</ul>
+				</section>
+
+				<section class="left">
+					<!-- Clicking this image opens it in a fullscreen overlay -->
+					<img 
+						src="imgs/git-workflow.jpg" data-preview-image 
+						alt="Graphic showing git workflow"
+						aria-describedby="workflow-caption">
+					<div id="workflow-caption" class="sr-only">The Journey of a File: Master the Basic Git Workflow. Working Directory. Step 1: git add. Staging Area (Index). Step 2: git commit -m message. .git Repository</div>
 				</section>
 
 				<section class="left">
