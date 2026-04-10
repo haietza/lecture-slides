@@ -32,38 +32,30 @@
 					<aside class="notes">
 						<ul>
 							<li>Before we write enterprise code, we need to know how to manage it.</li>
-							<li>Manual copying, timestamped files were used in the early days.</li>
+							<li>Manual copying, timestamped files/folders were used in the early days.</li>
 							<li>Then came centralized systems, but if the server went down, work stopped.</li>
 							<li>Historically, version control stored 'deltas' — just the changes between files.</li>
-							<li>Git is distributed, your computer holds the full history.</li>
+							<li>Distributed systems like Git and Mercurial are peer-to-peer.</li>
 							<li>Git revolutionized version control by taking a snapshot of your entire project at a given point in time.</li>
 						</ul>
 					</aside>
-					<h3>Evolution of Version Control</h3>
-					<ul>
-						<li class="fragment">Local Systems: Manual copying, backup folders (timestamped). Full copies of files.</li>
-						<li class="fragment">Centralized Systems (CVS, Subversion): Single server maintains deltas. Single point of failure.</li>
-						<li class="fragment">Distributed Systems (Git, Mercurial): Peer-to-peer. Each peer "fully mirrors" the repository.</li>
-					</ul>
+					<!-- Clicking this image opens it in a fullscreen overlay -->
+					<img 
+						src="imgs/git-evolution.jpg" data-preview-image 
+						alt="Graphic showing git evolution"
+						aria-describedby="evolution-caption">
+					<div id="evolution-caption" class="sr-only">1 Local VCS. Computer A with Version Database File v1 File v2 File v3 going into Working Files folders. Manual backups, simple history database, local work only. 2 Centralized VCS. Central Server and Database with Client 1, 2, and 3 checking out versions and committing changes. Single point of failure, dependent on server connection, uses version deltas (SVN model). 3 Distributed VCS (Git). Full history mirror (database) on GitHub (remote). Peer A, B, and C can push and pull between any remote, GitHub or peer. They commit locally. Robust and fast, full clones of repository history, work offline, sync to remote (git model).</div>
 				</section>
 
 				<section class="left">
 					<aside class="notes">
 						<ul>
+							<li>Git uses project “snapshots” not file deltas/diffs.</li>
 							<li>Under the hood, Git bundles your code with meta-data into a 'blob' and assigns it a SHA-1 hash.</li>
+							<li>The SHA-1 hash (40 hex characters) is a unique identifier “key” in the database.</li>
 							<li>This hash ensures integrity; if a single bit changes, the hash changes.</li>
 						</ul>
 					</aside>
-					<h3>Git's Secret Sauce: Snapshots</h3>
-					<ul>
-						<li class="fragment">Git uses project “snapshots” not file deltas/diffs.</li>
-						<li class="fragment">Everything is check-summed using a SHA-1 hash.</li>
-						<li class="fragment">The SHA-1 hash (40 hex characters) is a unique identifier “key” in the database.</li>
-						<li class="fragment">Any content deviation (accidental or intentional) is noticeable.</li>
-					</ul>
-				</section>
-
-				<section class="left">
 					<!-- Clicking this image opens it in a fullscreen overlay -->
 					<img 
 						src="imgs/git-snapshots.jpg" data-preview-image 
@@ -96,12 +88,19 @@
 				</section>
 
 				<section class="left">
+					<aside class="notes">
+						<ul>
+							<li>Working Directory: Where you edit files.</li>
+							<li>Staging Area (Index): Where you prepare files for commit.</li>
+							<li>Repository (.git directory): Where Git permanently stores the snapshots.</li>
+						</ul>
+					</aside>
 					<!-- Clicking this image opens it in a fullscreen overlay -->
 					<img 
 						src="imgs/git-3-stages.jpg" data-preview-image 
 						alt="Graphic showing git stages"
 						aria-describedby="stages-caption">
-					<div id="stages-caption" class="sr-only">The 3 Stages of Git. Master the local lifecycle of your code by moving files through Git's three core environments. Working Directory: The Edit Zone. This is the local folder wher eyou actively modify and create your files. Staging Area: The Prep Zone. Also known as the Index, this is where you bundle specific changes before committing. Repository: The Permanent Storage. The .git directory where Git permanently stores your projec snapshots and metadata.</div>
+					<div id="stages-caption" class="sr-only">The Three Local States of Git. Working Directory where you edit files. Staging Area (index) where you prepare files for commit. Repository (.git directory) where git permanently stores the snapshots.</div>
 				</section>
 
 				<section class="left">
