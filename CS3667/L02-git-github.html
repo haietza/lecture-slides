@@ -79,15 +79,6 @@
 				</section>
 
 				<section class="left">
-					<h3>The Three Local States of Git</h3>
-					<ul>
-						<li class="fragment">Working Directory: Where you edit files.</li>
-						<li class="fragment">Staging Area (Index): Where you prepare files for commit.</li>
-						<li class="fragment">Repository (.git directory): Where Git permanently stores the snapshots.</li>
-					</ul>
-				</section>
-
-				<section class="left">
 					<aside class="notes">
 						<ul>
 							<li>Working Directory: Where you edit files.</li>
@@ -144,21 +135,12 @@
 				</section>
 
 				<section class="left">
-					<aside class="notes">
-						<ul>
-							<li>In many older VCS tools, branching meant copying the entire project folder; it was slow and expensive.</li>
-							<li>In Git, a branch is just a 40-character file pointing to a specific SHA-1 commit hash. It's nearly instantaneous.</li>
-							<li>Think of branches as bookmarks; when you create a branch, you just create a new bookmark at the current commit.</li>
-							<li>When you run git checkout [branchname], Git moves the HEAD pointer to that branch and updates your Working Directory to match that snapshot.</li>
-						</ul>
-					</aside>
-					<h3>Branches are Commit Chains</h3>
-					<ul>
-						<li class="fragment">Branches are simply lightweight, movable pointers to a commit.</li>
-						<li class="fragment">The default branch is now commonly called main.</li>
-						<li class="fragment">Creating a branch: <code>git checkout -b [branch-name]</code> creates and checks out the branch.</li>
-						<li class="fragment"><code>HEAD</code> is a special pointer that tells Git which branch you are currently on.</li>
-					</ul>
+					<!-- Clicking this image opens it in a fullscreen overlay -->
+					<img 
+						src="imgs/git-branches.jpg" data-preview-image 
+						alt="Graphic showing git branches"
+						aria-describedby="branches-caption">
+					<div id="branches-caption" class="sr-only">Understanding Git Branches. Branches are lightweight pointers. Branches point to specific commits. They are simply names, easy to create and move. The default branch: main. Creating a branch. git checkout -b feature-X creates a new branch (e.g., feature-X) and switches (checks out) to it. Head: The current branch. A special pointer that tells Git which branch you are currently on. In this view, HEAD is on feature-x.</div>
 				</section>
 
 				<section class="left">
