@@ -173,6 +173,24 @@
 				</section>
 
 				<section class="left">
+					<!-- Clicking this image opens it in a fullscreen overlay -->
+					<img 
+						src="imgs/git-ff-merge.jpg" data-preview-image 
+						alt="Graphic showing git fast forward merge"
+						aria-describedby="ff-merge-caption">
+					<div id="ff-merge-caption" class="sr-only">Before Fast-Foward Merge. Commits C0 and C1 are where main, HEAD point. feature-X branches off with commits X1 and X2. After Fast-Forward Merge. Commits C2 and C3 replace X1 and X2 in the before diagram, HEAD, feature-X, and main point to the C3 commit. No new merge commit is created. feature-X is a direct ancenstor of main.</div>
+				</section>
+
+				<section class="left">
+					<!-- Clicking this image opens it in a fullscreen overlay -->
+					<img 
+						src="imgs/git-2w-merge.jpg" data-preview-image 
+						alt="Graphic showing git two-way recursive merge"
+						aria-describedby="2w-merge-caption">
+					<div id="2w-merge-caption" class="sr-only">Two-way merge (Recursive). Common ancestor is the starting commit Co. Path 1, the main line branches off with changes in commits C1 and C2. Main points to C2. Path 2, feature-X line branches off the common ancestor with different changes made in commits XA and XB. feature-X points to XB. C2 and XB merge into a new merge commit M. Changes occurred on both branches. A new commit object with 2 parents is created.</div>
+				</section>
+
+				<section class="left">
 					<aside class="notes">
 						<ul>
 							<li>If you both edited the same line of code, Git throws its hands up. This is a merge conflict.</li>
