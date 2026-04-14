@@ -12,6 +12,7 @@
 		<link rel="stylesheet" href="../layouts/common.css">
 		<link rel="stylesheet" href="../reveal-js/plugin/highlight/monokai.css">
 		<link rel="stylesheet" href="custom.css" />
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 	</head>
 	<body>
 		<div class="reveal">
@@ -68,7 +69,7 @@
 					<aside class="notes">
 						Use https://git-scm.com/book/en/v2/Git-Basics-Getting-a-Git-Repository if needed.
 					</aside>
-					<h3>Initialization Activity (10 mins)</h3>
+					<h3><i class="fa-solid fa-pencil"></i> Initialization (10 mins)</h3>
 					<ul>
 						<li>Connect to the course VM via VS Code SSH.</li>
 						<li>Open the terminal and navigate to your workspace using <code>cd</code>.</li>
@@ -124,7 +125,7 @@
 					<aside class="notes">
 						Recreate User.java on course VM with git repo so students can see working example after activity.
 					</aside>
-					<h3>The Commit Cycle Activity (15 mins)</h3>
+					<h3><i class="fa-solid fa-pencil"></i> The Commit Cycle (15 mins)</h3>
 					<ul>
 						<li>Create User.java with a private fields for firstName and lastName and getter and setter methods.</li>
 						<li>Run <code>git status</code> to see it untracked.</li>
@@ -147,7 +148,7 @@
 					<aside class="notes">
 						Recreate activity on course VM to confirm students see it?
 					</aside>
-					<h3>Branching Context Switch Activity (15 mins)</h3>
+					<h3><i class="fa-solid fa-pencil"></i> Branching Context Switch (15 mins)</h3>
 					<ul>
 						<li>In the existing repo, create and checkout a new branch: <code>git checkout -b feature-auth</code>.</li>
 						<li>Add an Auth.java file. Commit it.</li>
@@ -205,15 +206,24 @@
 				</section>
 
 				<section class="left">
+					<!-- Clicking this image opens it in a fullscreen overlay -->
+					<img 
+						src="imgs/git-merge-conflict.jpg" data-preview-image 
+						alt="Graphic showing git merge conflict"
+						aria-describedby="conflict-caption">
+					<div id="conflict-caption" class="sr-only">Merge Conflict in Git. Common ancestor is the starting commit Co. Path 1, the main line branches off with changes in commits C1 and C2, where line 10 was edited. Main points to C2. Path 2, feature-X line branches off the common ancestor with different changes made in commits XA and XB, where line 10 was also edited. feature-X points to XB. There is a merge conflict state when attempting to merge feature-X into main. Conflict detected with File User.java. Automatic merge failed. Changes detected to the same line (10) of the same file (User.java) in both parents. Manual resolution required. Worktree contains conflict markers. Human must edit and choose, add and commit to complete the merge.</div>
+				</section>
+
+				<section class="left">
 					<aside class="notes">
 						TODO: Recreate activity on course VM to confirm students see it?
 					</aside>
-					<h3>Engineering a Conflict Activity (15 mins)</h3>
+					<h3><i class="fa-solid fa-pencil"></i> Engineering a Conflict (15 mins)</h3>
 					<ul>
-						<li>On main, edit User.java (e.g., add private int age;). Commit.</li>
-						<li>Checkout feature-auth. Edit the exact same line in User.java (e.g., add private String email;). Commit.</li>
+						<li>On main, edit User.java (e.g., add age field). Commit.</li>
+						<li>Checkout feature-auth. Edit the exact same line in User.java (e.g., add email field). Commit.</li>
 						<li>Checkout main and run <code>git merge feature-auth</code>.</li>
-						<li>Open User.java in VS Code. Use the VS Code UI to resolve the conflict (keep both).</li>
+						<li>Open User.java in VS Code. Use the UI to resolve the conflict (keep both).</li>
 						<li>Add and commit the resolved file to finalize the merge.</li>
 					</ul>
 				</section>
@@ -238,10 +248,19 @@
 				</section>
 
 				<section class="left">
+					<!-- Clicking this image opens it in a fullscreen overlay -->
+					<img 
+						src="imgs/git-remotes.jpg" data-preview-image 
+						alt="Graphic showing working with git remotes"
+						aria-describedby="remotes-caption">
+					<div id="remotes-caption" class="sr-only">Working with Remotes in Git. git clone [url] creates local copy from remote. Remote Server (e.g., GitHub) cloning project copy to Your Computer. Creates a local repository of an already existing remote repository. git remote add origin [url] connects a local repo to remote. Your local project connects to remote repo, sets origin as remote name.  git push -u origin [branch] pushes local branch to remote, like feature-X branch on your computer to GitHub Remote. -u sets upstream tracking. git fetch downloads remote updates without merge. It pulls the data down to your computer but doens't merge it.</div>
+				</section>
+
+				<section class="left">
 					<aside class="notes">
 						TODO: USE GITHUB CLASSROOM TO CREATE REPOSITORIES?
 					</aside>
-					<h3>The First Push Activity (15 mins)</h3>
+					<h3><i class="fa-solid fa-pencil"></i> The First Push (15 mins)</h3>
 					<ul>
 						<li>Create an empty repository on GitHub.</li>
 						<li>In your terminal, add the remote: <code>git remote add origin [your-url]</code>.</li>
@@ -271,17 +290,25 @@
 				</section>
 
 				<section class="left">
+					<!-- Clicking this image opens it in a fullscreen overlay -->
+					<img 
+						src="imgs/git-pr.jpg" data-preview-image 
+						alt="Graphic showing the git pull request process"
+						aria-describedby="pr-caption">
+					<div id="pr-caption" class="sr-only">The Pull Request Workflow. 1 Clone (one-time only). Get a local copy of the repository, cloning from the GitHub server to your computer. 2 Create, checkout a branch on your local project for a change request. 3 Work and commit locally by adding changes to your branch. 4 Push to GitHub by uploading your branch to the remote. 5 Open Pull Request on Github. Reviewers comment and approve, then merge the pull request on GitHub.</div>
+				</section>
+
+				<section class="left">
 					<aside class="notes">
 						TODO: USE GITHUB CLASSROOM TO CREATE REPOSITORIES?
 					</aside>
-					<h3>Collaborative PRs Activity (15 mins)</h3>
+					<h3><i class="fa-solid fa-pencil"></i> Collaborative PRs (15 mins)</h3>
 					<ul>
-						<li>Work in pairs.</li>
-						<li>Add your partner as a Collaborator on your GitHub repo.</li>
+						<li>Work in pairs. Add your partner as a Collaborator on your GitHub repo.</li>
 						<li>Partner clones the repo, creates a branch feature-logger, adds a System.out.println to a method, commits, and pushes the branch.</li>
 						<li>Partner opens a Pull Request on GitHub.</li>
 						<li>You review the PR on GitHub, leave a comment, and click "Merge pull request".</li>
-						<li>Finally, pull the merged changes locally: git checkout main, git fetch origin, git merge origin/main.</li>
+						<li>Pull the merged changes locally: git checkout main, git fetch origin, git merge origin/main.</li>
 					</ul>
 				</section>
 
@@ -308,7 +335,7 @@
 						TODO: USE GITHUB CLASSROOM TO CREATE REPOSITORIES?
 						TODO: Add references to prolab links for assistance during activities here and above,
 					</aside>
-					<h3>Fixing Mistakes Activity (15 mins)</h3>
+					<h3><i class="fa-solid fa-pencil"></i> Fixing Mistakes (15 mins)</h3>
 					<ul>
 						<li>Add a file Secrets.txt containing dummy passwords. Stage it (git add).</li>
 						<li>Realize the security flaw! Unstage it using <code>git restore --staged Secrets.txt</code>.</li>
