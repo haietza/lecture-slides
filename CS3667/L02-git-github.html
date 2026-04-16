@@ -331,6 +331,24 @@
 				</section>
 
 				<section class="left">
+					<!-- Clicking this image opens it in a fullscreen overlay -->
+					<img 
+						src="imgs/git-restore.jpg" data-preview-image 
+						alt="Graphic showing the git restore process"
+						aria-describedby="restore-caption">
+					<div id="restore-caption" class="sr-only">git restore config.java. Local repository (HEAD commit) of clean file config.java (HEAD state) reverts working copy to last commit state. Working directory has config.java in restored state, changes discarded, original text restored. Result summary: Discards all uncommitted changes to config.java in the working directory. Source of file is the last commit (HEAD). Critical warning: This is a destructive action; changes are permanently lost.</div>
+				</section>
+
+				<section class="left">
+					<!-- Clicking this image opens it in a fullscreen overlay -->
+					<img 
+						src="imgs/git-restore-staged.jpg" data-preview-image 
+						alt="Graphic showing the git restore staged process"
+						aria-describedby="restore-staged-caption">
+					<div id="restore-staged-caption" class="sr-only">git restore --staged config.java. Local repository (HEAD commit) has clean file config.java (HEAD state). Unstages file from staging area (replaces staged copy with HEAD copy). Working directory now has modified file config.java (unstaged). File removed from pending commit list. Modified disk version remains. Result summary: Unstages config.java from the staging area. Replaces staged content with the version from HEAD. The modified version on disk (working directory) is not changed. Warning: Command only unstages the file. Disk version remains modified and not included in next commit.</div>
+				</section>
+
+				<section class="left">
 					<aside class="notes">
 						TODO: USE GITHUB CLASSROOM TO CREATE REPOSITORIES?
 						TODO: Add references to prolab links for assistance during activities here and above,
