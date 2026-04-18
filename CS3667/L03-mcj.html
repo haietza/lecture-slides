@@ -91,18 +91,6 @@
 				<section class="left">
 					<aside class="notes">
 						<ul>
-
-						</ul>
-					</aside>
-					<h3>xxx</h3>
-					<ul>
-
-					</ul>
-				</section>
-
-				<section class="left">
-					<aside class="notes">
-						<ul>
 							<li></li>
 						</ul>
 					</aside>
@@ -110,13 +98,47 @@
 					<ul>
 						<li>Open VS Code on the course VM.</li>
 						<li>Create a simple HelloWorld.java file in a src directory.</li>
-						<li>Create a Makefile in the root directory that contains three targets:</li>
+						<li>Create a makefile in the root directory that contains three targets:</li>
 							<ul>
 								<li><code>compile</code> (compiles the Java file into a bin directory)</li>
 								<li><code>run</code> (executes the compiled class)</li>
 								<li><code>clean</code> (removes all .class files from bin)</li>
 							</ul>
-						
+					</ul>
+				</section>
+
+				<section class="left">
+					<aside class="notes">
+						<ul>
+							<li>Code is read far more often than it is written. In a team of 30 developers, if everyone formats code differently, it becomes unreadable.</li>
+							<li>Checkstyle is an automated tool that enforces a coding standard, like the Google Java Style Guide.</li>
+							<li>It runs via the command line using a JAR file and an XML configuration file.</li>
+							<li>The XML file is hierarchical; it starts with a Checker module, and inside it, modules like TreeWalker and Indentation define exactly how the code should look.</li>
+						</ul>
+					</aside>
+					<h3>What is Checkstyle?</h3>
+					<ul>
+						<li>Checkstyle is a development tool to help programmers write Java code that adheres to a coding standard.</li>
+						<li>It automates the process of checking Java code to spare humans of this boring (but important) task.</li>
+						<li>To run Checkstyle, you need Java, a checkstyle jar file, an xml file describing the styles, and Java files to check.</li>
+					</ul>
+				</section>
+
+				<section class="left">
+					<aside class="notes">
+						<ul>
+							<li>Code is read far more often than it is written. In a team of 30 developers, if everyone formats code differently, it becomes unreadable.</li>
+							<li>Checkstyle is an automated tool that enforces a coding standard, like the Google Java Style Guide.</li>
+							<li>It runs via the command line using a JAR file and an XML configuration file.</li>
+							<li>The XML file is hierarchical; it starts with a Checker module, and inside it, modules like TreeWalker and Indentation define exactly how the code should look.</li>
+						</ul>
+					</aside>
+					<h3>Running and Configuring Checkstyle</h3>
+					<ul>
+						<li>The command to run checkstyle looks like: <code>java -jar [path-to-jar] -c [path-to-xml] [path-to-files]</code>.</li>
+						<li>The -c flag tells checkstyle that the following argument will be the xml file from which to read checks.</li>
+						<li>In the XML configuration, all module names must be recognized by Checkstyle; we cannot invent them.</li>
+						<li>For example, the Indentation module can have a property caseIndent with a value of 4, telling checkstyle that tabs should be 4 spaces long.</li>
 					</ul>
 				</section>
 
