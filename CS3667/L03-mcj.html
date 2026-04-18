@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>CS3667 - Lecture 03 - Make, Checkstyle, and JUnit</title>
+
+		<link rel="stylesheet" href="../reveal-js/dist/reset.css">
+		<link rel="stylesheet" href="../reveal-js/dist/reveal.css">
+		<link rel="stylesheet" href="../reveal-js/dist/theme/black.css">
+		<link rel="stylesheet" href="../layouts/common.css">
+		<link rel="stylesheet" href="../reveal-js/plugin/highlight/monokai.css">
+		<link rel="stylesheet" href="custom.css" />
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+				<div class="header left">
+					CS3667: Software Engineering
+				</div>
+				<div class="header right no-title">
+					<em>Make, Checkstyle, and JUnit</em>
+				</div>
+
+				<section data-state="title-slide">
+					<h1 class="r-fit-text">CS3667: Software Engineering</h1>
+					<h2 class="r-fit-text">Make, Checkstyle, and JUnit</h2>
+				</section>
+
+				<section class="left">
+					<aside class="notes">
+						<ul>
+							<li>In enterprise software, we don't compile files one by one using javac in the terminal. We automate the build process.</li>
+							<li>Today we're looking at GNU Make, a classic tool that builds executables from source files.</li>
+							<li>You define 'targets', like compile or clean, and the dependencies required to build them.</li>
+							<li>We also define macros for things like our JUnit library paths to keep our scripts clean and reusable</li>
+						</ul>
+					</aside>
+					<h3>Build Automation: Make & Makefiles</h3>
+					<ul>
+						<li>GNU Make is a tool which controls the generation of executables and other non-source files of a program from the program's source files.</li>
+						<li>It is especially useful in C and C++ which have complex builds, but we will use it for Java.</li>
+						<li>We will use Make to compile our Java projects, run Checkstyle, run tests, and run demos.</li>
+					</ul>
+				</section>
+
+				<section class="left">
+					<aside class="notes">
+						<ul>
+							<li>Lines 1-2 are macros. When used in the makefile, they are replaced with whatever is on the right side of the equals.</li>
+							<li>Line 4 is a special target that runs when "make" is run in the command line without any arguments passed to it.</li>
+							<li>Line 5 is the command that runs for the default target. @echo prints a string to the command line.</li>
+							<li>It has the TAB character before the command. Spaces do not work!</li>
+							<li>Line 7 is a normal target. It is run when typing "make compile" in the command line.</li>
+							<li>$(JUNIT_LIB) is a dependency, and an example of a macro being used.</li>
+							<li>The dependency tells the makefile we need lib/junit-platform-console-standalone-1.11.0.jar to run this command.</li>
+							<li>Line 8 is the command that runs when we run make compile.</li>
+							<li>It is the same as we would type in the command line (compiles our Java code).</li>
+							<li>(Line 2) The JFLAGS macro tells java to put our class files in the bin directory (-d is destination) and the code we are using is in the src folder.</li>
+							<li>The -cp flag (class path) tells java where other dependencies are for our program (the jar file in the JUNIT_LIB macro).</li>
+							<li>The remainder of line 8 is the path to the java file(s) that we want to compile (Demo.java in the src/mypackage directory).</li>
+							<li>Line 10 is the dependency that is not a macro. We need the .class file to run our Java program.</li>
+							<li>Line 11 is the command to run the Demo program.</li>
+							<li>(Line 2) We want the jar on our class path, but we also need bin (where our .class files are) on it. These multiple locations are separated by a colon.</li>
+							<li>mypackage/Demo is the file we are running. If it is in a package, we need to put the package name/the file name. We do not put bin since bin is not a package.</li>
+							<li>Line 13 is the clean target that removes compiled files.</li>
+							<li>Line 14 removes class files from directories in the bin directory. ** refers to any directory and *.class refers to any file with the .class extension.</li>
+						</ul>
+					</aside>
+					<h3>Anatomy of a Makefile</h3>
+					<pre><code class="language-makefile" data-line-numbers="1-2|4|5|7|8|2,8|10|11|1,11|13|14" data-trim>
+						JUNIT_LIB = lib/junit-platform-console-standalone-1.11.0.jar
+						JFLAGS = -d bin -sourcepath src
+						
+						default:
+							@echo "this command runs if no args are given to make"
+
+						compile: $(JUNIT_LIB)
+							javac $(JFLAGS) -cp $(JUNIT_LIB) src/mypackage/Demo.java
+
+						run: bin/mypackage/Demo.class
+							java -cp bin:$(JUNIT_LIB) mypackage/Demo
+
+						clean:
+							rm -f ./bin/**/*.class
+					</code></pre>
+				</section>
+
+				<section class="left">
+					<aside class="notes">
+						<ul>
+
+						</ul>
+					</aside>
+					<h3>xxx</h3>
+					<ul>
+
+					</ul>
+				</section>
+
+				<section class="left">
+					<aside class="notes">
+						<ul>
+							<li></li>
+						</ul>
+					</aside>
+					<h3><i class="fa-solid fa-pencil"></i> First Makefile (10 mins)</h3>
+					<ul>
+						<li>Open VS Code on the course VM.</li>
+						<li>Create a simple HelloWorld.java file in a src directory.</li>
+						<li>Create a Makefile in the root directory that contains three targets:</li>
+							<ul>
+								<li><code>compile</code> (compiles the Java file into a bin directory)</li>
+								<li><code>run</code> (executes the compiled class)</li>
+								<li><code>clean</code> (removes all .class files from bin)</li>
+							</ul>
+						
+					</ul>
+				</section>
+
+			</div>
+		</div>
+
+		<script src="../reveal-js/dist/reveal.js"></script>
+		<script src="../reveal-js/plugin/math/math.js"></script>
+		<script src="../reveal-js/plugin/notes/notes.js"></script>
+		<script src="../reveal-js/plugin/markdown/markdown.js"></script>
+		<script src="../reveal-js/plugin/highlight/highlight.js"></script>
+		<script>
+			Reveal.initialize({
+				hash: true,
+				slideNumber: true,
+				transition: 'convex',
+				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes, RevealMath.KaTeX ],
+				showNotes: false,
+				pdfSeparateFragments: false
+			});
+		</script>
+	</body>
+</html>
