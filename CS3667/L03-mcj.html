@@ -327,9 +327,9 @@
 					</aside>
 					<h3>JUnit Example</h3>
 					<pre><code class="language-java" data-line-numbers="1|2|3|5|6|7|9|10|11|14|15|16" data-trim>
-						import static org.junit.jupiter.api.Assertions.assertEquals
-						import org.junit.jupiter.api.Test
-						import org.junit.jupiter.api.BeforeEach
+						import static org.junit.jupiter.api.Assertions.assertEquals;
+						import org.junit.jupiter.api.Test;
+						import org.junit.jupiter.api.BeforeEach;
 
 						public class ExampleTest {
 							public static final String TEST_NAME = "Tester";
@@ -367,7 +367,7 @@
 					<aside class="notes">
 						<ul>
 							<li>We almost always want to use BeforeEach hook (e.g. creating testing variables)</li>
-							<li>AFterEach (e.g. resetting System.out if it was redirected)</li>
+							<li>AfterEach (e.g. resetting System.out if it was redirected)</li>
 						</ul>
 					</aside>
 					<h3>Lifecycle Hooks</h3>
@@ -408,6 +408,267 @@
 							</ul>
 						</li>
 					</ul>
+				</section>
+
+				<section class="left">
+					<h3><i class="fa-solid fa-pencil"></i> JUnit Practice (10 mins)</h3>
+					<ul>
+						<li>Create a simple Calculator.java class with an add(int a, int b) method.</li>
+						<li>Write a JUnit 5 test class named CalculatorTest.java.</li>
+						<li>Implement a @BeforeEach method to instantiate the Calculator, and write two @Test methods using assertEquals to verify the addition logic.</li>
+					</ul>
+				</section>
+
+				<section class="left">
+					<h3>Redirecting System.out</h3>
+					<ul>
+						<li>out is a static PrintStream field in the System class.</li>
+						<li>It can be changed using the static setOut method of System.</li>
+						<li>For some tests, we want to check that the program prints something to the terminal (System.out).</li>
+						<li>Tests do not have access to the terminal window.</li>
+						<li>Need to redirect System.out so that print statements send the data elsewhere.</li>
+					</ul>
+				</section>
+
+				<section class="left">
+					<h3>Redirecting System.out Steps</h3>
+					<ul>
+						<li>Create a PrintStream field to store the original System.out</li>
+						<li>Create a ByteArrayOutputStream field to store the new location to receive the output</li>
+						<li>In BeforeEach
+							<ul>
+								<li>Set the PrintStream field to System.out</li>
+								<li>Set the ByteArrayOutputStream field to a new one</li>
+								<li>Run System.setOut(new PrintStream(baos)); where baos is your ByteArrayOutputStream field</li>
+							</ul>
+						</li>
+						<li>In AfterEach
+							<ul>
+								<li>Run System.setOut(oldOut) where oldOut is the field that you stored the original System.out</li>
+							</ul>
+						</li>
+					</ul>
+				</section>
+
+				<section class="left">
+					<aside class="notes">
+						<ul>
+							<li>Line 3: import for our new output location</li>
+							<li>Line 4: import to save original System.out</li>
+						</ul>
+					</aside>
+					<h3>Redirecting System.out Example</h3>
+					<pre><code class="language-java" data-line-numbers="3|4" data-trim>
+						package mysystem;
+						import static org.junit.jupiter.api.Assertions.assertEquals;
+						import java.io.ByteArrayOutputStream;			
+						import java.io.PrintStream;					
+						import org.junit.jupiter.api.Test;
+						import org.junit.jupiter.api.AfterEach;
+						import org.junit.jupiter.api.BeforeEach;
+					</code></pre>
+				</section>
+
+				<section class="left">
+					<aside class="notes">
+						<ul>
+							<li>Line 2: field for class we are testing</li>
+							<li>Line 3: field to store the new output location</li>
+							<li>Line 4: field to store the original System.out</li>
+						</ul>
+					</aside>
+					<h3>Redirecting System.out Example</h3>
+					<pre><code class="language-java" data-line-numbers="2|3|4" data-trim>
+						public class TestExample {  
+							private ClassToTest obj; 			
+							private ByteArrayOutputStream baos;	
+							private PrintStream oldOut;			
+					</code></pre>
+				</section>
+
+				<section class="left">
+					<aside class="notes">
+						<ul>
+							<li>Line 2: runs before every test</li>
+							<li>Line 3: save the original System.out</li>
+							<li>Line 4: create our new output location</li>
+							<li>Line 5: set System.out to the new location</li>
+							<li>Line 6: initialize our test field</li>
+							<li>Line 9: runs after every test</li>
+							<li>Line 10: reset System.out to the original location</li>
+						</ul>
+					</aside>
+					<h3>Redirecting System.out Example</h3>
+					<pre><code class="language-java" data-line-numbers="2|3|4|5|6|9|10" data-trim>
+						@BeforeEach
+						public void beforeEach() {				
+							this.oldOut = System.out;			
+							this.baos = new ByteArrayOutputStream();	
+							System.setOut(new PrintStream(baos));	
+							this.obj = new ClassToTest();			
+						}
+						@AfterEach
+						public void afterEach() {			
+							System.setOut(oldOut);			
+						}
+					</code></pre>
+				</section>
+
+				<section class="left">
+					<aside class="notes">
+						<ul>
+							<li>Line 2: our test function</li>
+							<li>Line 3: call the method that prints</li>
+							<li>Line 4: assert that the expected output is equal to the actual output</li>
+							<li>Line 6: helper method used to get the printed output</li>
+							<li>Line 7: flush all data from the PrintStream into our ByteArrayOutputStream</li>
+							<li>Line 8: return the output with return characters stripped.
+							<li>Stripping return characters ensure the test works on mac, unix, and windows.</li>
+						</ul>
+					</aside>
+					<h3>Redirecting System.out Example</h3>
+					<pre><code class="language-java" data-line-numbers="2|3|4|6|7|8" data-trim>
+						@Test
+						public void someTest() {				
+							obj.printMe();					
+							assertEquals("expected", getOutput());
+						}
+						private String getOutput() {		
+							System.out.flush();	
+							return baos.toString().replaceAll("\r", "");     
+						}
+					</code></pre>
+				</section>
+
+				<section class="left">
+					<!-- Clicking this image opens it in a fullscreen overlay -->
+					<img 
+						src="imgs/junit-systemout.jpg" data-preview-image 
+						alt="Graphic showing redirection of System.out"
+						aria-describedby="systemout-caption">
+					<div id="systemout-caption" class="sr-only">System.out Capture & Restore Lifecycle. Initial state Before Anything: System.out points to the terminal, baos is null. Setup BeforeEach: System.out points to a customized PrintStream that passes data to baos. Execution Test: Test calls method that prints to System.out, output goes to the PrintStream stored in System.out, Test calls getOutput. Capture & Process getOutput: PrintStream in System.out is flushed, output goes into baos, output in baos is retrieved as a String, returned to test with \r characters stripped. Verification Test Assertion: Clean string and expected string, compare output from getOutput to the expected output teardown afterEach: Resets System.out to point back to the terminal.</div>
+				</section>
+
+				<section class="left">
+					<h3>Redirecting System.in</h3>
+					<ul>
+						<li>in is a static InputStream field in the System class.</li>
+						<li>It can be changed using the static setIn method of System.</li>
+						<li>For some tests, we need to provide input from the keyboard.</li>
+						<li>Tests do not have access to the keyboard.</li>
+						<li>Need to redirect System.in so that when the program tries to read from the keyboard, it reads from something we provide instead.</li>
+					</ul>
+				</section>
+
+				<section class="left">
+					<h3>Redirecting System.in Steps</h3>
+					<ul>
+						<li>Create an InputStream field to store the original System.in</li>
+						<li>Create a ByteArrayInputStream field to use for new input</li>
+						<li>In BeforeEach: Set the InputStream field to System.in</li>
+						<li>In Tests
+							<ul>
+								<li>Create a String with the input you want to provide</li>
+								<li>Set the ByteArrayInputStream field to a new one, passing the bytes of the input string to the constructor</li>
+								<li>Run System.setIn(bais) where bais is the ByteArrayInputStream field</li>
+							</ul>
+						</li>
+						<li>In AfterEach: Run System.setIn(oldIn) where oldOut is the field that you stored the original System.out</li>
+					</ul>
+				</section>
+
+				<section class="left">
+					<aside class="notes">
+						<ul>
+							<li>Line 3: import for new input location</li>
+							<li>Line 4: import to save original input location</li>
+						</ul>
+					</aside>
+					<h3>Redirecting System.in Example</h3>
+					<pre><code class="language-java" data-line-numbers="3|4" data-trim>
+						package mysystem;
+						import static org.junit.jupiter.api.Assertions.assertEquals;
+						import java.io.ByteArrayInputStream;		
+						import java.io.InputStream;				
+						import org.junit.jupiter.api.Test;
+						import org.junit.jupiter.api.AfterEach;
+						import org.junit.jupiter.api.BeforeEach;
+					</code></pre>
+				</section>
+
+				<section class="left">
+					<aside class="notes">
+						<ul>
+							<li>Line 2: field to store object we are testing</li>
+							<li>Line 3: field to store original input location</li>
+							<li>Line 4: field to store new input location</li>
+						</ul>
+					</aside>
+					<h3>Redirecting System.in Example</h3>
+					<pre><code class="language-java" data-line-numbers="2|3|4" data-trim>
+						public class TestInExample {
+							private ClassToTest obj;			
+							private InputStream oldIn;			
+							private ByteArrayInputStream bais;		
+					</code></pre>
+				</section>
+
+				<section class="left">
+					<aside class="notes">
+						<ul>
+							<li>Line 2: runs before every test</li>
+							<li>Line 3: initialize object we are testing</li>
+							<li>Line 4: save original System.in</li>
+							<li>Note that we are not initializing the new input. That is done in the tests. This is because each test will require different input.</li>
+							<li>Line 7: runs after every test</li>
+							<li>Line 8: resets System.in to the keyboard</li>
+						</ul>
+					</aside>
+					<h3>Redirecting System.in Example</h3>
+					<pre><code class="language-java" data-line-numbers="2|3|4|7|8" data-trim>
+						@BeforeEach
+						public void beforeEach() {			
+							this.obj = new ClassToTest();		
+							this.oldIn = System.in;			
+						}
+						@AfterEach
+						public void afterEach() {			
+							System.setIn(oldIn);			
+						}		
+					</code></pre>
+				</section>
+
+				<section class="left">
+					<aside class="notes">
+						<ul>
+							<li>Line 2: Our test function</li>
+							<li>Line 3: String to use as input. This string is equivalent to the user entering two numbers</li>
+							<li>Line 4: Create our input stream</li>
+							<li>Line 5: Set System.in to our input</li>
+							<li>Line 6: Call the method that reads from System.in</li>
+							<li>Line 7: Make an assertion about the results</li>
+						</ul>
+					</aside>
+					<h3>Redirecting System.in Example</h3>
+					<pre><code class="language-java" data-line-numbers="2|3|4|5|6|7" data-trim>
+						@Test
+						public void someTest() {			
+							final String ourInput = "1\n5\n";	 
+							bais = new ByteArrayInputStream(ourInput.getBytes()); 
+							System.setIn(bais);				
+							int sum = obj.addNumsFromUser();	
+							assertEquals(6, sum);			
+						}
+					</code></pre>
+				</section>
+
+				<section class="left">
+					<!-- Clicking this image opens it in a fullscreen overlay -->
+					<img 
+						src="imgs/junit-systemin.jpg" data-preview-image 
+						alt="Graphic showing redirection of System.in"
+						aria-describedby="systemin-caption">
+					<div id="systemin-caption" class="sr-only">System.in Capture & Restore Lifecycle. Initial State Before Anything System.in points to the keyboard, bais is null. Setup BeforeEach System.in is saved to a field. Preparation Test creates a string with the desired input, sets bais to a new ByteArrayInputStream which is passed the bytes of the input String. Injection System.setIn redirects the standard input stream. Excution Test calls method that reads from the System.in, asserts something about the results. Teardown AfterEach System.setIn resets System.in to point back to the keyboard</div>
 				</section>
 
 			</div>
