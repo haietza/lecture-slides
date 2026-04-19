@@ -40,9 +40,9 @@
 					</aside>
 					<h3>Build Automation: Make & Makefiles</h3>
 					<ul>
-						<li>GNU Make is a tool which controls the generation of executables and other non-source files of a program from the program's source files.</li>
-						<li>It is especially useful in C and C++ which have complex builds, but we will use it for Java.</li>
-						<li>We will use Make to compile our Java projects, run Checkstyle, run tests, and run demos.</li>
+						<li class="fragment">GNU Make is a tool which controls the generation of executables and other non-source files of a program from the program's source files.</li>
+						<li class="fragment">It is especially useful in C and C++ which have complex builds, but we will use it for Java.</li>
+						<li class="fragment">We will use Make to compile our Java projects, run Checkstyle, run tests, and run demos.</li>
 					</ul>
 				</section>
 
@@ -91,7 +91,7 @@
 				<section class="left">
 					<h3><i class="fa-solid fa-pencil"></i> First Makefile (10 mins)</h3>
 					<ul>
-						<li>Open VS Code on the course VM.</li>
+						<li>Open VS Code on the course VM and create a make directory.</li>
 						<li>Create a simple HelloWorld.java file in a src directory.</li>
 						<li>Create a makefile in the root directory that contains three targets:
 							<ul>
@@ -99,6 +99,7 @@
 								<li><code>run</code> (executes the compiled class)</li>
 								<li><code>clean</code> (removes all .class files from bin)</li>
 							</ul>
+						</li>
 					</ul>
 				</section>
 
@@ -113,27 +114,27 @@
 					</aside>
 					<h3>What is Checkstyle?</h3>
 					<ul>
-						<li>Checkstyle is a development tool to help programmers write Java code that adheres to a coding standard.</li>
-						<li>It automates the process of checking Java code.</li>
-						<li>To run Checkstyle, you need Java, a checkstyle jar file, an xml file describing the styles, and Java files to check.</li>
+						<li class="fragment">Checkstyle is a development tool to help programmers write Java code that adheres to a coding standard.</li>
+						<li class="fragment">It automates the process of checking Java code.</li>
+						<li class="fragment">To run Checkstyle, you need Java, a checkstyle jar file, an xml file describing the styles, and Java files to check.</li>
 					</ul>
 				</section>
 
 				<section class="left">
 					<h3>Running and Configuring Checkstyle</h3>
 					<ul>
-						<li>The command to run checkstyle looks like: <code>java -jar [path-to-jar] -c [path-to-xml] [path-to-files]</code>.</li>
-						<li>The -c flag tells checkstyle that the following argument will be the xml file from which to read checks.</li>
+						<li class="fragment">The command to run checkstyle looks like: <code>java -jar [path-to-jar] -c [path-to-xml] [path-to-files]</code>.</li>
+						<li class="fragment">The -c flag tells checkstyle that the following argument will be the xml file from which to read checks.</li>
 					</ul>
 				</section>
 
 				<section class="left">
 					<h3>Running Checkstyle</h3>
-					<pre><code class="language-bash" data-trim>java -jar ./checkstyle-10.18.1-all.jar -c ./my-styles.xml src/*.java</code></pre>
+					<pre><code class="language-bash" data-trim>java -jar ./checkstyle-13.2.0-all.jar -c ./styles.xml src/*.java</code></pre>
 					<ul>
-						<li>checkstyle-10.18.1-all.jar is in the current directory and is a valid checkstyle jar file</li>
-						<li>my-styles.xml is in the current directory and is a valid checkstyle xml file</li>
-						<li>There is a src folder with java files in it to check</li>
+						<li class="fragment">checkstyle-13.2.0-all.jar is in the current directory and is a valid checkstyle jar file</li>
+						<li class="fragment">styles.xml is in the current directory and is a valid checkstyle xml file</li>
+						<li class="fragment">There is a src folder with java files in it to check</li>
 					</ul>
 				</section>
 
@@ -155,85 +156,111 @@
 					</aside>
 					<h3>Configuring Checkstyle</h3>
 					<pre><code class="language-xml" data-line-numbers="1|2-4|5|6|7|8|9|10-12" data-trim>
-					&lt;?xml version="1.0"?&gt;
-					&lt;!DOCTYPE module PUBLIC
-						"-//Puppy Crawl//DTD Check Configuration 1.2//EN"
-						"http://www.puppycrawl.com/dtds/configuration_1_2.dtd"&gt;
-					&lt;module name="Checker"&gt;
-						&lt;module name="NewlineAtEndOfFile"/&gt;
-							&lt;module name="TreeWalker"&gt;
-								&lt;module name="Indentation"&gt;
-									&lt;property name="caseIndent" value="4"/&gt;
+						&lt;?xml version="1.0"?&gt;
+						&lt;!DOCTYPE module PUBLIC
+							"-//Puppy Crawl//DTD Check Configuration 1.2//EN"
+							"http://www.puppycrawl.com/dtds/configuration_1_2.dtd"&gt;
+						&lt;module name="Checker"&gt;
+							&lt;module name="NewlineAtEndOfFile"/&gt;
+								&lt;module name="TreeWalker"&gt;
+									&lt;module name="Indentation"&gt;
+										&lt;property name="caseIndent" value="4"/&gt;
+									&lt;/module&gt;
 								&lt;/module&gt;
-							&lt;/module&gt;
-					&lt;/module&gt;
+						&lt;/module&gt;
 					</code></pre>
 				</section>
 
 				<section class="left">
 					<aside class="notes">
 						<ul>
-							<li>java -jar checkstyle-10.18.1-all.jar -c google_checks.xml src/BadFormatting.java</li>
+							<li>java -jar checkstyle-13.2.0-all.jar -c styles.xml CheckstyleDemo.java</li>
 							<li>Students manually fix indentation, naming conventions, and missing Javadocs based on terminal output.</li>
 							<li>In modern enterprise environments, code with Checkstyle violations is automatically rejected by the version control system during a pull request.</li>
 						</ul>
 					</aside>
 					<h3><i class="fa-solid fa-pencil"></i> Checkstyle Practice (10 mins)</h3>
 					<ul>
-						<li>Download the provided checkstyle-10.18.1-all.jar and a standard google_checks.xml file to the course VM.</li>
-						<li>Take a poorly formatted Java file provided in the repository, run the Checkstyle command against it via the terminal.</li>
-						<li>Work together to fix every error until Checkstyle returns no output.</li>
+						<li>Create a checkstyle directory on the course VM.</li>
+						<li>Download the provided checkstyle-13.2.0-all.jar, styles.xml and CheckstyleDemo.java.</li>
+						<li>Take the poorly formatted Java file provided in the repository, run the Checkstyle command against it via the terminal.</li>
+						<li>Work in pairs to fix every error until Checkstyle returns no output.</li>
 					</ul>
 				</section>
 
 				<section class="left">
 					<aside class="notes">
-						Unit tests are often written before writing code.
+						<ul>
+							<li>Unit tests are often written before writing code.</li>
+							<li>Lots of other kinds of Testing
+								<ul>
+									<li>Acceptance: Done by customer</li>
+									<li>Load: Concurrent requests, lots of data</li>
+									<li>Security: Penetration, injection</li>
+									<li>Usability: User experience</li>
+								</ul>
+							</li>
+							<li>Passing tests does not mean NO bugs</li>
+							<li>How do we know when we have tested enough?
+								<ul>
+									<li>Edge/boundary cases (zero, maximum, etc.)</li>
+									<li>Consider possible user input (expected, unexpected)</li>
+									<li>Test possible branches/paths of execution</li>
+								</ul>
+							</li>
+						</ul>
 					</aside>
-					<h3>Software Testing Hierarchy</h3>
-					<ul>
-						<li>End-to-End (e2e): Tests the entire system; the final testing step.</li>
-						<li>Integration: Tests interactions between components, but not the entire system; intermediate testing step.</li>
-						<li>Unit: Tests one component at a time in isolation from the rest of the system; the first testing step.</li>
-					</ul>
+					<!-- Clicking this image opens it in a fullscreen overlay -->
+					<img 
+						src="imgs/testing.jpg" data-preview-image 
+						alt="Graphic showing software testing hierarchy"
+						aria-describedby="testing-caption">
+					<div id="testing-caption" class="sr-only">Software testing hierarchy. 3 End-to-end (Full System) tests the entire system, the final validation testing step. 2 Integration testing (interactions) tests interactions between components, does not test the entire system. 1 Unit testing (isolation) tests one component at a time, in isolation from the rest of the system.</div>
 				</section>
 
 				<section class="left">
 					<h3>Isolating from the System</h3>
 					<ul>
-						<li>For integration / unit testing, tests need to isolate from parts of the system not being tested.</li>
-						<li>These parts of the system need to be "faked":
+						<li class="fragment">For integration / unit testing, tests need to isolate from parts of the system not being tested.</li>
+						<li class="fragment">These parts of the system need to be "faked":
 						<ul>
-							<li>Stubs</li>
-							<li>Spies</li>
-							<li>Mocks</li>
-							<li>Fakes</li>
+							<li class="fragment">Stubs</li>
+							<li class="fragment">Spies</li>
+							<li class="fragment">Mocks</li>
+							<li class="fragment">Fakes</li>
 						</ul>
+						</li>
 					</ul>
 				</section>
 
 				<section class="left">
+					<aside class="notes">
+						For example, instead of calling a database API to get a value, a stub just returns a hard-coded value.
+					</aside>
 					<h3>Stubs</h3>
 					<ul>
-						<li>Used in place of the dependency</li>
-						<li>Extremely simple version of a system component</li>
-						<li>Uses hard-coded values</li>
-						<li>All logic removed</li>
+						<li class="fragment">Used in place of the dependency</li>
+						<li class="fragment">Extremely simple version of a system component</li>
+						<li class="fragment">Uses hard-coded values</li>
+						<li class="fragment">All logic removed</li>
 					</ul>
 				</section>
 
 				<section class="left">
+					<aside class="notes">
+						A spy logs the interactions with a method to see how often it is called, what arguments are passed to it, etc.
+					</aside>
 					<h3>Spies</h3>
 					<ul>
-						<li>Used in place of a dependency</li>
-						<li>Kept as simple as possible</li>
-						<li>"Watches" method calls</li>
-						<li>Tests assert validity of method calls by asking spy for info</li>
-						<li>Used to get information such as
+						<li class="fragment">Used in place of a dependency</li>
+						<li class="fragment">Kept as simple as possible</li>
+						<li class="fragment">"Watches" method calls</li>
+						<li class="fragment">Tests assert validity of method calls by asking spy for info</li>
+						<li class="fragment">Used to get information such as
 							<ul>
-								<li>What methods are called</li>
-								<li>How often / how many times a method is called</li>
-								<li>What arguments are passed to a method</li>
+								<li class="fragment">What methods are called</li>
+								<li class="fragment">How often / how many times a method is called</li>
+								<li class="fragment">What arguments are passed to a method</li>
 							</ul>
 						</li>
 					</ul>
@@ -242,67 +269,62 @@
 				<section class="left">
 					<h3>Mocks</h3>
 					<ul>
-						<li>Used in place of a dependency</li>
-						<li>Somewhat like a cross between a stub and a spy</li>
-						<li>Can dynamically change behavior of mocked interface (less hardcoded)</li>
-						<li>Watches methods and their return values</li>
-						<li>The mock asserts validity of methods calls</li>
+						<li class="fragment">Used in place of a dependency</li>
+						<li class="fragment">Somewhat like a cross between a stub and a spy</li>
+						<li class="fragment">Can dynamically change behavior of mocked interface (less hardcoded)</li>
+						<li class="fragment">Watches methods and their return values</li>
+						<li class="fragment">The mock asserts validity of methods calls</li>
 					</ul>
 				</section>
 
 				<section class="left">
+					<aside class="notes">
+						For example, instead of calling a database API to get a value, an in-memory database is used.
+					</aside>
 					<h3>Fakes</h3>
 					<ul>
-						<li>Used in place of a dependency</li>
-						<li>Have a full implementation of the dependency</li>
-						<li>Simplified version of production code</li>
-						<li>Only use when a stub, spy, or mock is not sufficient</li>
+						<li class="fragment">Used in place of a dependency</li>
+						<li class="fragment">Have a full implementation of the dependency</li>
+						<li class="fragment">Simplified version of production code</li>
+						<li class="fragment">Only use when a stub, spy, or mock is not sufficient</li>
 					</ul>
 				</section>
 
 				<section class="left">
 					<h3>Unit Testing</h3>
 					<ul>
-						<li>We will only work on Unit Testing (no integration or e2e).</li>
-						<li>We will use JUnit for Unit Testing.</li>
-						<li>We will use stubs, but not spies, mocks, or fakes.</li>
+						<li class="fragment">We will only work on Unit Testing (no integration or e2e).</li>
+						<li class="fragment">We will use JUnit for Unit Testing.</li>
+						<li class="fragment">We will use stubs, but not spies, mocks, or fakes.</li>
 					</ul>
 				</section>
 
 				<section class="left">
+					<aside class="notes">
+						<ul>
+							<li>Test Suite: With JUnit, this is a Java class.</li>
+							<li>Test: With JUnit, this is a method with the @Test decorator.</li>
+							<li>Assertion: One of the many assertion functions provided by the JUnit Library.</li>
+							<li>Lifecycle Hooks: In JUnit, these are methods specified by certain decorators such as beforeEach or afterEach.</li>
+						</ul>
+					</aside>
 					<h3>Unit Testing Parts</h3>
 					<ul>
-						<li>Test Suite: A collection of related tests
-							<ul>
-								<li>With JUnit, this is a Java class.</li>
-							</ul>
-						</li>
-						<li>Test: Determines whether or not the code is working properly; contains one or more assertions
-							<ul>
-								<li>With JUnit, this is a method with the @Test decorator.</li>
-							</ul>
-						</li>
-						<li>Assertion: A statement that should return true if the code is working properly and false otherwise
-							<ul>
-								<li>One of the many assertion functions provided by the JUnit Library.</li>
-							</ul>
-						</li>
-						<li>Lifecycle Hooks: Special points in the testing cycle during which we can insert code to run
-							<ul>
-								<li>In JUnit, these are methods specified by certain decorators such as beforeEach or afterEach.</li>
-							</ul>
-						</li>
+						<li class="fragment">Test Suite: A collection of related tests</li>
+						<li class="fragment">Test: Determines whether or not the code is working properly; contains one or more assertions</li>
+						<li class="fragment">Assertion: A statement that should return true if the code is working properly and false otherwise</li>
+						<li class="fragment">Lifecycle Hooks: Special points in the testing cycle during which we can insert code to run</li>
 					</ul>
 				</section>
 
 				<section class="left">
 					<h3>JUnit Test Files</h3>
 					<ul>
-						<li>Regular Java classes</li>
-						<li>Regular fields and methods</li>
-						<li>Addition of some imported decorators and methods from JUnit</li>
-						<li>Class name does not matter</li>
-						<li>Method and field names do not matter</li>
+						<li class="fragment">Regular Java classes</li>
+						<li class="fragment">Regular fields and methods</li>
+						<li class="fragment">Addition of some imported decorators and methods from JUnit</li>
+						<li class="fragment">Class name does not matter</li>
+						<li class="fragment">Method and field names do not matter</li>
 					</ul>
 				</section>
 
@@ -325,7 +347,6 @@
 							<li>The MyClass constructor accepts 1 string and should store that value in a field; the getName function should return the value from that field.</li>
 						</ul>
 					</aside>
-					<h3>JUnit Example</h3>
 					<pre><code class="language-java" data-line-numbers="1|2|3|5|6|7|9|10|11|14|15|16" data-trim>
 						import static org.junit.jupiter.api.Assertions.assertEquals;
 						import org.junit.jupiter.api.Test;
@@ -372,17 +393,17 @@
 					</aside>
 					<h3>Lifecycle Hooks</h3>
 					<ul>
-						<li>BeforeEach: Runs before each test
+						<li class="fragment">BeforeEach: Runs before each test
 							<ul>
-								<li>Use to set up the testing environment</li>
-								<li>Ensures a clean environment from test-to-test</li>
-								<li>Tests should not interfere with each other</li>
+								<li class="fragment">Use to set up the testing environment</li>
+								<li class="fragment">Ensures a clean environment from test-to-test</li>
+								<li class="fragment">Tests should not interfere with each other</li>
 							</ul>
 						</li>
-						<li>AfterEach: Runs after each test
+						<li class="fragment">AfterEach: Runs after each test
 							<ul>
-								<li>Use to reset changes a test may have made</li>
-								<li>Can be done in BeforeEach, the choice of where to put code is semantic</li>
+								<li class="fragment">Use to reset changes a test may have made</li>
+								<li class="fragment">Can be done in BeforeEach, the choice of where to put code is semantic</li>
 							</ul>
 						</li>
 					</ul>
@@ -397,42 +418,58 @@
 					</aside>
 					<h3>Lifecycle Hooks</h3>
 					<ul>
-						<li>BeforeAll: Runs once, before any test
+						<li class="fragment">BeforeAll: Runs once, before any test
 							<ul>
-								<li>Use to set things needed by all tests, but cannot change from test-to-test</li>
+								<li class="fragment">Use to set things needed by all tests, but cannot change from test-to-test</li>
 							</ul>
 						</li>
-						<li>AfterAll: Runs once, after all tests
+						<li class="fragment">AfterAll: Runs once, after all tests
 							<ul>
-								<li>Run to clean up the environment when testing is over</li>
+								<li class="fragment">Run to clean up the environment when testing is over</li>
 							</ul>
 						</li>
 					</ul>
 				</section>
 
 				<section class="left">
+					<h3>Running JUnit</h3>
+					<pre><code class="language-bash" data-trim>java -jar ./junit-platform-console-standalone-6.0.2.jar execute -cp . --scan-classpath</code></pre>
+					<ul>
+						<li class="fragment">junit-platform-console-standalone-6.0.2.jar is in the current directory and is a valid junit jar file</li>
+						<li class="fragment">execute is the command to find and execute tests (@Test decorator)</li>
+						<li class="fragment">-cp declares the class path as the current directory (where test classes are)</li>
+						<li class="fragment">--scan-classpath is a falg to scan through class path and look for all tests to run</li>
+					</ul>
+				</section>
+
+				<section class="left">
+					<aside class="notes">
+						java -jar junit-platform-console-standalone-6.0.2.jar execute -cp . --scan-classpath
+					</aside>
 					<h3><i class="fa-solid fa-pencil"></i> JUnit Practice (10 mins)</h3>
 					<ul>
+						<li>On the course VM, create a junit directory.</li>
 						<li>Create a simple Calculator.java class with an add(int a, int b) method.</li>
 						<li>Write a JUnit 5 test class named CalculatorTest.java.</li>
 						<li>Implement a @BeforeEach method to instantiate the Calculator, and write two @Test methods using assertEquals to verify the addition logic.</li>
+						<li>Run the tests and verify they both pass.</li>
 					</ul>
 				</section>
 
 				<section class="left">
 					<h3>Redirecting System.out</h3>
 					<ul>
-						<li>out is a static PrintStream field in the System class.</li>
-						<li>It can be changed using the static setOut method of System.</li>
-						<li>For some tests, we want to check that the program prints something to the terminal (System.out).</li>
-						<li>Tests do not have access to the terminal window.</li>
-						<li>Need to redirect System.out so that print statements send the data elsewhere.</li>
+						<li class="fragment">out is a static PrintStream field in the System class.</li>
+						<li class="fragment">It can be changed using the static setOut method of System.</li>
+						<li class="fragment">For some tests, we want to check that the program prints something to the terminal (System.out).</li>
+						<li class="fragment">Tests do not have access to the terminal window.</li>
+						<li class="fragment">Need to redirect System.out so that print statements send the data elsewhere.</li>
 					</ul>
 				</section>
 
 				<section class="left">
 					<h3>Redirecting System.out Steps</h3>
-					<ul>
+					<ul class="dense-slide">
 						<li>Create a PrintStream field to store the original System.out</li>
 						<li>Create a ByteArrayOutputStream field to store the new location to receive the output</li>
 						<li>In BeforeEach
@@ -552,17 +589,17 @@
 				<section class="left">
 					<h3>Redirecting System.in</h3>
 					<ul>
-						<li>in is a static InputStream field in the System class.</li>
-						<li>It can be changed using the static setIn method of System.</li>
-						<li>For some tests, we need to provide input from the keyboard.</li>
-						<li>Tests do not have access to the keyboard.</li>
-						<li>Need to redirect System.in so that when the program tries to read from the keyboard, it reads from something we provide instead.</li>
+						<li class="fragment">in is a static InputStream field in the System class.</li>
+						<li class="fragment">It can be changed using the static setIn method of System.</li>
+						<li class="fragment">For some tests, we need to provide input from the keyboard.</li>
+						<li class="fragment">Tests do not have access to the keyboard.</li>
+						<li class="fragment">Need to redirect System.in so that when the program tries to read from the keyboard, it reads from something we provide instead.</li>
 					</ul>
 				</section>
 
 				<section class="left">
 					<h3>Redirecting System.in Steps</h3>
-					<ul>
+					<ul class="dense-slide">
 						<li>Create an InputStream field to store the original System.in</li>
 						<li>Create a ByteArrayInputStream field to use for new input</li>
 						<li>In BeforeEach: Set the InputStream field to System.in</li>
@@ -669,6 +706,24 @@
 						alt="Graphic showing redirection of System.in"
 						aria-describedby="systemin-caption">
 					<div id="systemin-caption" class="sr-only">System.in Capture & Restore Lifecycle. Initial State Before Anything System.in points to the keyboard, bais is null. Setup BeforeEach System.in is saved to a field. Preparation Test creates a string with the desired input, sets bais to a new ByteArrayInputStream which is passed the bytes of the input String. Injection System.setIn redirects the standard input stream. Excution Test calls method that reads from the System.in, asserts something about the results. Teardown AfterEach System.setIn resets System.in to point back to the keyboard</div>
+				</section>
+
+				<section class="left">
+					<aside class="notes">
+						<ul>
+							<li>Makefiles are great, but managing hundreds of external JAR files manually is a nightmare.</li>
+							<li>Gradle solves this by combining build automation with dependency management.</li>
+							<li>Instead of writing bash commands like in Make, we write scripts in Groovy or Kotlin.</li>
+							<li>Gradle evaluates your script, builds a dependency graph of all the tasks, and executes them in the most efficient order possible.</li>
+						</ul>
+					</aside>
+					<h3>The Evolution of Build Tools</h3>
+					<ul>
+						<li class="fragment">While Make is powerful, Java enterprise applications require dependency resolution and convention-over-configuration.</li>
+						<li class="fragment">Gradle is a modern build automation tool that uses a Groovy or Kotlin Domain Specific Language (DSL).</li>
+						<li class="fragment">A build.gradle file defines the project's plugins, repositories, dependencies, and custom tasks.</li>
+						<li class="fragment">Gradle uses a Directed Acyclic Graph (DAG) to determine the exact order tasks must execute.</li>
+					</ul>
 				</section>
 
 			</div>

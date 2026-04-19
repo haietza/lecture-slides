@@ -12,6 +12,7 @@
 		<link rel="stylesheet" href="../layouts/common.css">
 		<link rel="stylesheet" href="../reveal-js/plugin/highlight/monokai.css">
 		<link rel="stylesheet" href="custom.css" />
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 	</head>
 	<body>
 		<div class="reveal">
@@ -114,7 +115,7 @@
 					<ul class="dense-slide">
 						<li>Work in pairs.</li>
 						<li>Create a new directory using <code>mkdir polymorphism</code>.</li>
-						<li>Inside, student A writes a <code>Shape</code> abstract class with a <code>draw()</code> method, and <code>Circle/Square</code> implementations.</li>
+						<li>Student A writes a <code>Shape</code> abstract class with a <code>draw()</code> method, and <code>Circle/Square</code> implementations.</li>
 						<li>Student B writes a <code>Main</code> class that takes an array of <code>Shape</code> objects and calls <code>draw()</code> in a loop.</li>
 						<li>Once done, pair up, read each other's code on your own screens, and discuss how dynamic dispatch resolves the method calls.</li>
 					</ul>
@@ -125,7 +126,7 @@
 						<ul>
 							<li>There are two other major types of polymorphism.</li>
 							<li>Parametric polymorphism is what you know as Generics.</li>
-							<li>When you use List<T>, the code doesn't care if T is a String or a Custom Object.</li>
+							<li>When you use List&lt;T&gt;, the code doesn't care if T is a String or a Custom Object.</li>
 							<li>Ad Hoc polymorphism is simply method overloading; same method name, different signatures.</li>
 							<li>Consider the question on the slide: Can static methods be dynamically dispatched?</li>
 							<li>The answer is no. Static methods belong to the class, not the instance, so the compiler figures out which method to call before the code even runs (compile-time).</li>
@@ -230,12 +231,12 @@
 					<ul>
 						<li class="fragment">Packages: Organizational structures grouping related classes (e.g., <code>java.util</code>). Package names connect to project directory names.</li>
 						<li class="fragment">This code would be stored in the directory path <code>com/university/zoo</code>.</li>
-							<pre class="java fragment">
-								<code data-trim>
-								package com.university.zoo;
-								</code>
-							</pre>
 					</ul>
+					<pre class="java fragment">
+							<code data-trim>
+							package com.university.zoo;
+							</code>
+						</pre>
 				</section>
 
 				<section class="left" data-auto-animate>
@@ -263,7 +264,8 @@
 					</aside>
 					<h3><i class="fa-solid fa-pencil"></i> Packages, Interfaces, & Abstract Classes (15 mins)</h3>
 					<ul>
-						<li>Create a new directory using <code>mkdir pets</code>.</li>
+						<li>Create a new directory using <code>mkdir packages</code>.</li>
+						<li>Create a new directory inside called pets.</li>
 						<li>Create a package <code>pets</code>.</li>
 						<li>Define an interface <code>Breatheable</code> with a <code>breath()</code> method.</li>
 						<li>Create an abstract class <code>Animal</code> that implements <code>Breatheable</code> with an abstract method <code>makeSound()</code>.</li>
