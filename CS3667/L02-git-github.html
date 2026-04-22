@@ -159,11 +159,12 @@
 						</ul>
 					</aside>
 					<h3><i class="fa-solid fa-pencil"></i> Branching Context Switch (15 mins)</h3>
-					<ul>
+					<ul class="dense-slide">
 						<li>In the existing repo, create and checkout a new branch: <code>git checkout -b feature-auth</code>.</li>
 						<li>Add an Auth.java file. Commit it.</li>
 						<li>Run <code>git checkout main</code>. Observe that Auth.java disappears from the file explorer in VS Code!</li>
 						<li>Checkout feature-auth again to see it reappear.</li>
+						<li>Run <code>git branch -a</code>. Observe local and remote branches.</li>
 					</ul>
 				</section>
 
@@ -368,6 +369,7 @@
 				<section class="left">
 					<aside class="notes">
 						<ul>
+							<li>The .gitignore file allows us to tell git to NOT track certain files (e.g. the .class files).</li>
 							<li>Complete steps on course VM when students have completed activity.</li>
 						</ul>
 					</aside>
