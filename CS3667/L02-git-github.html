@@ -272,15 +272,16 @@
 				<section class="left">
 					<aside class="notes">
 						<ul>
+							<li>Have students create a repo on the App State GitHub.</li>
+							<li>Provide assistance on finding the URL of the remote repository they create.</li>
 							<li>Use https://git-scm.com/book/en/v2/Git-Basics-Working-with-Remotes if needed.</li>
-							<li>TODO: USE GITHUB CLASSROOM TO CREATE REPOSITORIES?</li>
 						</ul>
 					</aside>
 					<h3><i class="fa-solid fa-pencil"></i> The First Push (15 mins)</h3>
 					<ul>
 						<li>Create an empty repository on GitHub.</li>
 						<li>In your terminal, add the remote: <code>git remote add origin [your-url]</code>.</li>
-						<li>Push the code: <code>git push -u origin main</code>.</li>
+						<li>Push the code: <code class="language-bash">git push -u origin main</code>.</li>
 						<li>Verify the code appears on the GitHub website.</li>
 					</ul>
 				</section>
@@ -317,16 +318,17 @@
 				<section class="left">
 					<aside class="notes">
 						<ul>
-							<li>TODO: USE GITHUB CLASSROOM TO CREATE REPOSITORIES?</li>
+							<li>Help students add collaborators on GitHub repos.</li>
+							<li></li>
 						</ul>
 					</aside>
 					<h3><i class="fa-solid fa-pencil"></i> Collaborative PRs (15 mins)</h3>
-					<ul>
+					<ul class="dense-slide">
 						<li>Work in pairs. Add your partner as a Collaborator on your GitHub repo.</li>
-						<li>Partner clones the repo, creates a branch feature-logger, adds a System.out.println to a method, commits, and pushes the branch.</li>
+						<li>In new directory on course VM, partner clones the repo, creates a branch feature-logger, adds a System.out.println to a method, commits, and pushes the branch to your repo.</li>
 						<li>Partner opens a Pull Request on GitHub.</li>
 						<li>You review the PR on GitHub, leave a comment, and click "Merge pull request".</li>
-						<li>Pull the merged changes locally: git checkout main, git fetch origin, git merge origin/main.</li>
+						<li>Pull the merged changes locally: <code>git checkout main</code>, <code>git fetch origin</code>, <code>git merge origin/main</code>.</li>
 					</ul>
 				</section>
 
@@ -375,7 +377,7 @@
 					</aside>
 					<h3><i class="fa-solid fa-pencil"></i> Fixing Mistakes (15 mins)</h3>
 					<ul>
-						<li>Add a file Secrets.txt containing dummy passwords. Stage it (git add).</li>
+						<li>Add a file Secrets.txt containing dummy passwords. Stage it (<code>git add</code>).</li>
 						<li>Realize the security flaw! Unstage it using <code>git restore --staged Secrets.txt</code>.</li>
 						<li>Create a .gitignore file and add Secrets.txt to it.</li>
 						<li>Run <code>git status</code> to verify Secrets.txt is no longer tracked. Commit the .gitignore file.</li>
