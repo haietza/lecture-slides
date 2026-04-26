@@ -90,7 +90,7 @@
 
 				<section class="left">
 					<h3><i class="fa-solid fa-pencil"></i> First Makefile (10 mins)</h3>
-					<ul>
+					<ul class="dense-slide">
 						<li>Open VS Code on the course VM and create a make directory.</li>
 						<li>Create a simple HelloWorld.java file in a src directory.</li>
 						<li>Create a makefile in the root directory that contains three targets:
@@ -124,7 +124,7 @@
 					<h3>Running and Configuring Checkstyle</h3>
 					<ul>
 						<li class="fragment">The command to run checkstyle looks like: <code>java -jar [path-to-jar] -c [path-to-xml] [path-to-files]</code>.</li>
-						<li class="fragment">The -c flag tells checkstyle that the following argument will be the xml file from which to read checks.</li>
+						<li class="fragment">The <code>-c</code> flag tells checkstyle that the following argument will be the xml file from which to read checks.</li>
 					</ul>
 				</section>
 
@@ -219,74 +219,24 @@
 				</section>
 
 				<section class="left">
+					<aside class="notes">
+						<ul>
+							<li>If you are testing a class that saves to a database, you don't want your unit test actually writing to a real database.</li>
+							<li>We isolate the component using a Test Doubles, in place of the dependency.</li>
+							<li>Fakes: For example, instead of calling a database API to get a value, an in-memory database is used.</li>
+						</ul>
+					</aside>
 					<h3>Isolating from the System</h3>
-					<ul>
+					<ul class="dense-slide">
 						<li class="fragment">For integration / unit testing, tests need to isolate from parts of the system not being tested.</li>
 						<li class="fragment">These parts of the system need to be "faked":
 						<ul>
-							<li class="fragment">Stubs</li>
-							<li class="fragment">Spies</li>
-							<li class="fragment">Mocks</li>
-							<li class="fragment">Fakes</li>
+							<li class="fragment">Stubs: Extremely simple, use hard-coded values, with all logic removed.</li>
+							<li class="fragment">Spies: "Watch" method calls to get information (how often called or arguments passed).</li>
+							<li class="fragment">Mocks: A cross between a stub and a spy; can dynamically change behavior and asserts validity of method calls.</li>
+							<li class="fragment">Fakes: Have a full implementation of the dependency, a simplified version of production code.</li>
 						</ul>
 						</li>
-					</ul>
-				</section>
-
-				<section class="left">
-					<aside class="notes">
-						For example, instead of calling a database API to get a value, a stub just returns a hard-coded value.
-					</aside>
-					<h3>Stubs</h3>
-					<ul>
-						<li class="fragment">Used in place of the dependency</li>
-						<li class="fragment">Extremely simple version of a system component</li>
-						<li class="fragment">Uses hard-coded values</li>
-						<li class="fragment">All logic removed</li>
-					</ul>
-				</section>
-
-				<section class="left">
-					<aside class="notes">
-						A spy logs the interactions with a method to see how often it is called, what arguments are passed to it, etc.
-					</aside>
-					<h3>Spies</h3>
-					<ul>
-						<li class="fragment">Used in place of a dependency</li>
-						<li class="fragment">Kept as simple as possible</li>
-						<li class="fragment">"Watches" method calls</li>
-						<li class="fragment">Tests assert validity of method calls by asking spy for info</li>
-						<li class="fragment">Used to get information such as
-							<ul>
-								<li class="fragment">What methods are called</li>
-								<li class="fragment">How often / how many times a method is called</li>
-								<li class="fragment">What arguments are passed to a method</li>
-							</ul>
-						</li>
-					</ul>
-				</section>
-
-				<section class="left">
-					<h3>Mocks</h3>
-					<ul>
-						<li class="fragment">Used in place of a dependency</li>
-						<li class="fragment">Somewhat like a cross between a stub and a spy</li>
-						<li class="fragment">Can dynamically change behavior of mocked interface (less hardcoded)</li>
-						<li class="fragment">Watches methods and their return values</li>
-						<li class="fragment">The mock asserts validity of methods calls</li>
-					</ul>
-				</section>
-
-				<section class="left">
-					<aside class="notes">
-						For example, instead of calling a database API to get a value, an in-memory database is used.
-					</aside>
-					<h3>Fakes</h3>
-					<ul>
-						<li class="fragment">Used in place of a dependency</li>
-						<li class="fragment">Have a full implementation of the dependency</li>
-						<li class="fragment">Simplified version of production code</li>
-						<li class="fragment">Only use when a stub, spy, or mock is not sufficient</li>
 					</ul>
 				</section>
 
@@ -375,12 +325,12 @@
 					</aside>
 					<h3>Common Assert Functions</h3>
 					<ul>
-						<li>assertTrue</li>
-						<li>assertFalse</li>
-						<li>assertNull</li>
-						<li>assertNotNull</li>
-						<li>assertThrows</li>
-						<li>assertNotEquals</li>
+						<li><code>assertTrue</code></li>
+						<li><code>assertFalse</code></li>
+						<li><code>assertNull</code></li>
+						<li><code>assertNotNull</code></li>
+						<li><code>assertThrows</code></li>
+						<li><code>assertNotEquals</code></li>
 					</ul>
 				</section>
 
@@ -393,14 +343,14 @@
 					</aside>
 					<h3>Lifecycle Hooks</h3>
 					<ul>
-						<li class="fragment">BeforeEach: Runs before each test
+						<li class="fragment"><code>BeforeEach</code> Runs before each test
 							<ul>
 								<li class="fragment">Use to set up the testing environment</li>
 								<li class="fragment">Ensures a clean environment from test-to-test</li>
 								<li class="fragment">Tests should not interfere with each other</li>
 							</ul>
 						</li>
-						<li class="fragment">AfterEach: Runs after each test
+						<li class="fragment"><code>AfterEach</code> Runs after each test
 							<ul>
 								<li class="fragment">Use to reset changes a test may have made</li>
 								<li class="fragment">Can be done in BeforeEach, the choice of where to put code is semantic</li>
@@ -418,12 +368,12 @@
 					</aside>
 					<h3>Lifecycle Hooks</h3>
 					<ul>
-						<li class="fragment">BeforeAll: Runs once, before any test
+						<li class="fragment"><code>BeforeAll</code> Runs once, before any test
 							<ul>
 								<li class="fragment">Use to set things needed by all tests, but cannot change from test-to-test</li>
 							</ul>
 						</li>
-						<li class="fragment">AfterAll: Runs once, after all tests
+						<li class="fragment"><code>AfterAll</code> Runs once, after all tests
 							<ul>
 								<li class="fragment">Run to clean up the environment when testing is over</li>
 							</ul>
@@ -436,9 +386,9 @@
 					<pre><code class="language-bash" data-trim>java -jar ./junit-platform-console-standalone-6.0.2.jar execute -cp . --scan-classpath</code></pre>
 					<ul>
 						<li class="fragment">junit-platform-console-standalone-6.0.2.jar is in the current directory and is a valid junit jar file</li>
-						<li class="fragment">execute is the command to find and execute tests (@Test decorator)</li>
-						<li class="fragment">-cp declares the class path as the current directory (where test classes are)</li>
-						<li class="fragment">--scan-classpath is a falg to scan through class path and look for all tests to run</li>
+						<li class="fragment"><code>execute</code> is the command to find and execute tests (@Test decorator)</li>
+						<li class="fragment"><code>-cp</code> declares the class path as the current directory (where test classes are)</li>
+						<li class="fragment"><code>--scan-classpath</code> is a flag to scan through class path and look for all tests to run</li>
 					</ul>
 				</section>
 
@@ -449,9 +399,9 @@
 					<h3><i class="fa-solid fa-pencil"></i> JUnit Practice (10 mins)</h3>
 					<ul>
 						<li>On the course VM, create a junit directory.</li>
-						<li>Create a simple Calculator.java class with an add(int a, int b) method.</li>
+						<li>Create a simple Calculator.java class with an <code>add(int a, int b)</code> method.</li>
 						<li>Write a JUnit 5 test class named CalculatorTest.java.</li>
-						<li>Implement a @BeforeEach method to instantiate the Calculator, and write two @Test methods using assertEquals to verify the addition logic.</li>
+						<li>Implement a <code>@BeforeEach</code> method to instantiate the Calculator, and write two <code>@Test</code> methods using <code>assertEquals</code> to verify the addition logic.</li>
 						<li>Run the tests and verify they both pass.</li>
 					</ul>
 				</section>
@@ -459,8 +409,8 @@
 				<section class="left">
 					<h3>Redirecting System.out</h3>
 					<ul>
-						<li class="fragment">out is a static PrintStream field in the System class.</li>
-						<li class="fragment">It can be changed using the static setOut method of System.</li>
+						<li class="fragment"><code>out</code> is a static PrintStream field in the System class.</li>
+						<li class="fragment">It can be changed using the static <code>setOut</code> method of System.</li>
 						<li class="fragment">For some tests, we want to check that the program prints something to the terminal (System.out).</li>
 						<li class="fragment">Tests do not have access to the terminal window.</li>
 						<li class="fragment">Need to redirect System.out so that print statements send the data elsewhere.</li>
@@ -476,12 +426,12 @@
 							<ul>
 								<li>Set the PrintStream field to System.out</li>
 								<li>Set the ByteArrayOutputStream field to a new one</li>
-								<li>Run System.setOut(new PrintStream(baos)); where baos is your ByteArrayOutputStream field</li>
+								<li>Run <code>System.setOut(new PrintStream(baos))</code> where <code>baos</code> is your ByteArrayOutputStream field</li>
 							</ul>
 						</li>
 						<li>In AfterEach
 							<ul>
-								<li>Run System.setOut(oldOut) where oldOut is the field that you stored the original System.out</li>
+								<li>Run <code>System.setOut(oldOut)</code> where <code>oldOut</code> is the field that you stored the original System.out</li>
 							</ul>
 						</li>
 					</ul>
@@ -589,8 +539,8 @@
 				<section class="left">
 					<h3>Redirecting System.in</h3>
 					<ul>
-						<li class="fragment">in is a static InputStream field in the System class.</li>
-						<li class="fragment">It can be changed using the static setIn method of System.</li>
+						<li class="fragment"><code>in</code> is a static InputStream field in the System class.</li>
+						<li class="fragment">It can be changed using the static <code>setIn</code> method of System.</li>
 						<li class="fragment">For some tests, we need to provide input from the keyboard.</li>
 						<li class="fragment">Tests do not have access to the keyboard.</li>
 						<li class="fragment">Need to redirect System.in so that when the program tries to read from the keyboard, it reads from something we provide instead.</li>
@@ -607,10 +557,10 @@
 							<ul>
 								<li>Create a String with the input you want to provide</li>
 								<li>Set the ByteArrayInputStream field to a new one, passing the bytes of the input string to the constructor</li>
-								<li>Run System.setIn(bais) where bais is the ByteArrayInputStream field</li>
+								<li>Run <code>System.setIn(bais)</code> where <code>bais</code> is the ByteArrayInputStream field</li>
 							</ul>
 						</li>
-						<li>In AfterEach: Run System.setIn(oldIn) where oldOut is the field that you stored the original System.out</li>
+						<li>In AfterEach: Run <code>System.setIn(oldIn)</code> where <code>oldOut</code> is the field that you stored the original System.out</li>
 					</ul>
 				</section>
 
@@ -729,7 +679,7 @@
 				<section class="left">
 					<aside class="notes">
 						<ul>
-							<li>gradlew (Mac/Linux), gradlew.bat (Windows): These are what you actually run. Never requires Gradle to be installed on the machine.</li>
+							<li>gradlew (Mac/Linux), gradlew.bat (Windows): These are what you actually run (./gradlew). Never requires Gradle to be installed on the machine (gradle).</li>
 							<li>gradle-wrapper.properties: Ensures every developer and the autograder use the exact same version.</li>
 						</ul>
 					</aside>
@@ -737,7 +687,7 @@
 					<ul>
 						<li class="fragment"><code>build.gradle.kts</code> Build script for the project.</li>
 						<li class="fragment"><code>settings.gradle.kts</code> Sets the project name.</li>
-						<li class="fragment"><code>gradlew / gradlew.bat</code> Gradle Wrapper scripts.</li>
+						<li class="fragment"><code>gradlew / gradlew.bat</code> Gradle Wrapper scripts (run as <code>./gradlew</code>, not <code>gradle</code>).</li>
 						<li class="fragment"><code>gradle/wrapper/gradle-wrapper.jar</code> Executable that powers <code>./gradlew</code>.</li>
 						<li class="fragment"><code>gradle/wrapper/gradle-wrapper.properties</code> Specifies Gradle version the wrapper downloads and uses.</li>
 					</ul>
