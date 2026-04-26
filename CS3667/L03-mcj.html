@@ -726,6 +726,153 @@
 					</ul>
 				</section>
 
+				<section class="left">
+					<aside class="notes">
+						<ul>
+							<li>gradlew (Mac/Linux), gradlew.bat (Windows): These are what you actually run. Never requires Gradle to be installed on the machine.</li>
+							<li>gradle-wrapper.properties: Ensures every developer and the autograder use the exact same version.</li>
+						</ul>
+					</aside>
+					<h3>Project Structure</h3>
+					<ul>
+						<li class="fragment"><code>build.gradle.kts</code> Build script for the project.</li>
+						<li class="fragment"><code>settings.gradle.kts</code> Sets the project name.</li>
+						<li class="fragment"><code>gradlew / gradlew.bat</code> Gradle Wrapper scripts.</li>
+						<li class="fragment"><code>gradle/wrapper/gradle-wrapper.jar</code> Executable that powers <code>./gradlew</code>.</li>
+						<li class="fragment"><code>gradle/wrapper/gradle-wrapper.properties</code> Specifies Gradle version the wrapper downloads and uses.</li>
+					</ul>
+				</section>
+
+				<section class="left">
+					<h3>Project Structure</h3>
+					<ul>
+						<li class="fragment"><code>config/checkstyle/styles.xml</code> Checkstyle rule configuration.</li>
+						<li class="fragment"><code>src/main/java/calculator/Calculator.java</code> Production source code.</li>
+						<li class="fragment"><code>src/test/java/calculator/CalculatorTest.java</code> JUnit 5 test suite.</li>
+					</ul>
+				</section>
+
+				<section class="left">
+					<aside class="notes">
+						<ul>
+							<li>The build file we will be using is a simplified version of what is generated with gradle init (to make it easier for us to learn how to use gradle).</li>
+							<li>We are using the newer, default Kotlin version.</li>
+							<li>The build file we are using is just a basic example for building, linting, and testing our Java code; there are many more options and features that can be implemented.</li>
+							<li>Plugins declare the build capabilities the project needs.</li>
+							<li>java: enables compiling, testing and packaging Java source code</li>
+							<li>checkstyle: enables rule enforcement against Java files</li>
+							<li>Repositories tell Gradle where to download dependencies from.</li>
+							<li>Maven Central is the largest public Java package registry.</li>
+							<li>All JUnit libraries will be resolved from here automatically.</li>
+							<li>The Java toolchain is part of the project configuration.</li>
+							<li>It pins the Java version for the entire project.</li>
+							<li>This configuraton guarantees every developer compiles with the same JDK.</li>
+						</ul>
+					</aside>
+					<h3>The Gradle build File</h3>
+					<pre><code class="language-kotlin" data-line-numbers data-trim>
+					plugins {
+						java
+						checkstyle
+					}
+
+					repositories {
+						mavenCentral()
+					}
+
+					java {
+						toolchain {
+							languageVersion = JavaLanguageVersion.of(17)
+						}
+					}
+					</code></pre>
+				</section>
+
+				<section class="left">
+					<aside class="notes">
+						<ul>
+							<li>The dependencies declare the libraries the project needs and when it needs them.</li>
+							<li>platform(bom) imports a Bill of Materials that aligns all JUnit module versions automatically.</li>
+							<li>testImplementation is available when compiling and running tests, not in production code.</li>
+							<li>testRuntimeOnly is only needed at runtime, not at compile time.</li>
+							<li>The task configuration tells Gradle how to run your tests.</li>
+							<li>useJUnitPlatform() activates the JUnit 5 test engine.</li>
+						</ul>
+					</aside>
+					<h3>The Gradle build File</h3>
+					<pre><code class="language-kotlin" data-line-numbers data-trim>
+					dependencies {
+						testImplementation(platform("org.junit:junit-bom:5.10.2"))
+						testImplementation("org.junit.jupiter:junit-jupiter")
+						testRuntimeOnly("org.junit.platform:junit-platform-launcher")
+					}
+
+					tasks.test {
+						useJUnitPlatform()
+					}
+					</code></pre>
+				</section>
+
+				<section class="left">
+					<aside class="notes">
+						<ul>
+							<li>The checkstyle configuration tells Gradle how to enforce your styles.</li>
+							<li>toolVersion pins a specific Checkstyle version for consistency.</li>
+							<li>configFile points to your rule set; this is where your styles are defined.</li>
+							<li>isIgnoreFailures = false means style violations fail the build, they are not optional (necessary for CI/CD pipelines).</li>
+							<li>The checkstyle reports control the format of the Checkstyle output.</li>
+							<li>Disables XML reports which are machine-readable, better for CI/CD pipelines.</li>
+							<li>Enables HTML reports which are easier for humans to read.</li>
+							<li>The Report location: build/reports/checkstyle/main.html</li>
+						</ul>
+					</aside>
+					<h3>The Gradle build File</h3>
+					<pre><code class="language-kotlin" data-line-numbers data-trim>
+					checkstyle {
+						toolVersion = "10.17.0"
+						configFile = file("config/checkstyle/styles.xml")
+						isIgnoreFailures = false
+					}
+
+					tasks.withType&lt;Checkstyle&gt;().configureEach {
+						reports {
+							xml.required = false
+							html.required = true
+						}
+					}
+					</code></pre>
+				</section>
+
+				<section class="left">
+					<h3>Gradle Commands</h3>
+					<ul class="dense-slide">
+						<li class="fragment"><code>./gradlew help</code> Confirms the Gradle wrapper is working and shows basic usage.</li>
+						<li class="fragment"><code>./gradlew tasks</code> Lists every task available in the project, grouped by category.</li>
+						<li class="fragment"><code>./gradlew classes</code> Compiles only the production source code in src/main/java/.</li>
+						<li class="fragment"><code>./gradlew testClasses</code> Compiles both production code and test code in src/test/java/.</li>
+					</ul>
+				</section>
+
+				<section class="left">
+					<aside class="notes">
+						<ul>
+							<li>test: Implicitly runs classes and testClasses first</li>
+							<li>Executes every method annotated with @Test</li>
+							<li>Prints pass/fail summary to the terminal, full report at: build/reports/tests/test/index.html</li>
+							<li>clean: Gradle is aggressive about caching — if nothing has changed, it skips tasks entirely and reports UP-TO-DATE</li>
+							<li>Occasionally the cache gets stale, or you want to verify a completely fresh build</li>
+							<li>build: Compiles production code and test code, runs Checkstyle, runs all tests, fails if any step fails</li>
+						</ul>
+					</aside>
+					<h3>Gradle Commands</h3>
+					<ul class="dense-slide">
+						<li class="fragment"><code>./gradlew check</code> Runs all verification tasks, including Checkstyle.</li>
+						<li class="fragment"><code>./gradlew test</code> Compiles everything and runs the full JUnit test suite.</li>
+						<li class="fragment"><code>./gradlew clean</code> Deletes the entire build/ directory.</li>
+						<li class="fragment"><code>./gradlew build</code> Runs the complete build pipeline in one command.</li>
+					</ul>
+				</section>
+
 			</div>
 		</div>
 

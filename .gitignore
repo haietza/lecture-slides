@@ -1,3 +1,4 @@
 desktop.ini
 *.pyc
 other/*.svg
+.DS_Store
