@@ -407,6 +407,12 @@
 				</section>
 
 				<section class="left">
+					<aside class="notes">
+						<ul>
+							<li>Testing standard output is tricky because JUnit runs in the background. It can't 'see' the console.</li>
+							<li>To test System.out.print, we have to hijack the output stream before the test runs, divert it into an array of bytes in memory, read that array, and then put the stream back to normal in @AfterEach so we don't break the rest of the application.</li>
+						</ul>
+					</aside>
 					<h3>Redirecting System.out</h3>
 					<ul>
 						<li class="fragment"><code>out</code> is a static PrintStream field in the System class.</li>
@@ -537,6 +543,13 @@
 				</section>
 
 				<section class="left">
+					<aside class="notes">
+						<ul>
+							<li>Similarly, to test a Scanner that reads from System.in, we can't pause the automated test to type on the keyboard.</li>
+							<li>We simulate keyboard inputs by converting a String with newline characters into an InputStream.</li>
+							<li>The code thinks a user is typing really fast, but it's just reading bytes from memory.</li>
+						</ul>
+					</aside>
 					<h3>Redirecting System.in</h3>
 					<ul>
 						<li class="fragment"><code>in</code> is a static InputStream field in the System class.</li>
@@ -742,6 +755,7 @@
 					<aside class="notes">
 						<ul>
 							<li>The dependencies declare the libraries the project needs and when it needs them.</li>
+							<li>Gradle connects to Maven Central, downloads the JUnit JAR and any JARs that that JAR needs, and adds them all to your classpath automatically.</li>
 							<li>platform(bom) imports a Bill of Materials that aligns all JUnit module versions automatically.</li>
 							<li>testImplementation is available when compiling and running tests, not in production code.</li>
 							<li>testRuntimeOnly is only needed at runtime, not at compile time.</li>
@@ -820,6 +834,13 @@
 						<li class="fragment"><code>./gradlew test</code> Compiles everything and runs the full JUnit test suite.</li>
 						<li class="fragment"><code>./gradlew clean</code> Deletes the entire build/ directory.</li>
 						<li class="fragment"><code>./gradlew build</code> Runs the complete build pipeline in one command.</li>
+					</ul>
+				</section>
+
+				<section class="left">
+					<h3><i class="fa-solid fa-pencil"></i> Replace Make with Gradle (xx mins)</h3>
+					<ul class="dense-slide">
+						<li>Begin work on the Gradle Assignment in Canvas.</li>
 					</ul>
 				</section>
 
