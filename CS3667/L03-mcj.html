@@ -54,12 +54,12 @@
 							<li>Line 5 is the command that runs for the default target. @echo prints a string to the command line.</li>
 							<li>It has the TAB character before the command. Spaces do not work!</li>
 							<li>Line 7 is a normal target. It is run when typing "make compile" in the command line.</li>
-							<li>$(JUnit_LIB) is a dependency, and an example of a macro being used.</li>
-							<li>The dependency tells the makefile we need lib/JUnit-platform-console-standalone-1.11.0.jar to run this command.</li>
+							<li>$(JUNIT_LIB) is a dependency, and an example of a macro being used.</li>
+							<li>The dependency tells the makefile we need lib/junit-platform-console-standalone-6.0.2.jar to run this command.</li>
 							<li>Line 8 is the command that runs when we run make compile.</li>
 							<li>It is the same as we would type in the command line (compiles our Java code).</li>
 							<li>(Line 2) The JFLAGS macro tells java to put our class files in the bin directory (-d is destination) and the code we are using is in the src folder.</li>
-							<li>The -cp flag (class path) tells java where other dependencies are for our program (the jar file in the JUnit_LIB macro).</li>
+							<li>The -cp flag (class path) tells java where other dependencies are for our program (the jar file in the JUNIT_LIB macro).</li>
 							<li>The remainder of line 8 is the path to the java file(s) that we want to compile (Demo.java in the src/mypackage directory).</li>
 							<li>Line 10 is the dependency that is not a macro. We need the .class file to run our Java program.</li>
 							<li>Line 11 is the command to run the Demo program.</li>
@@ -71,17 +71,17 @@
 					</aside>
 					<h3>Anatomy of a Makefile</h3>
 					<pre><code class="language-makefile" data-line-numbers="1-2|4|5|7|8|2,8|10|11|1,11|13|14" data-trim>
-						JUnit_LIB = lib/JUnit-platform-console-standalone-1.11.0.jar
+						JUNIT_LIB = lib/junit-platform-console-standalone-6.0.2.jar
 						JFLAGS = -d bin -sourcepath src
 						
 						default:
 							@echo "this command runs if no args are given to make"
 
-						compile: $(JUnit_LIB)
-							javac <mark>$(JFLAGS)</mark> -cp $(JUnit_LIB) src/mypackage/Demo.java
+						compile: $(JUNIT_LIB)
+							javac $(JFLAGS) -cp $(JUNIT_LIB) src/mypackage/Demo.java
 
 						run: bin/mypackage/Demo.class
-							java -cp bin:$(JUnit_LIB) mypackage/Demo
+							java -cp bin:$(JUNIT_LIB) mypackage/Demo
 
 						clean:
 							rm -f ./bin/**/*.class
@@ -89,6 +89,13 @@
 				</section>
 
 				<section class="left">
+					<aside class="notes">
+						<ul>
+							<li>Reference the previous slide as a template</li>
+							<li>Try using the JFLAGS macro</li>
+							<li>Note that we are not running JUnit tests, so we don't need that macro or lib</li>
+						</ul>
+					</aside>
 					<h3><i class="fa-solid fa-pencil"></i> First Makefile (10 mins)</h3>
 					<ul class="dense-slide">
 						<li>Open VS Code on the course VM and create a make directory.</li>
@@ -394,7 +401,10 @@
 
 				<section class="left">
 					<aside class="notes">
-						java -jar junit-platform-console-standalone-6.0.2.jar execute -cp . --scan-classpath
+						<ul>
+							<li>Use previous slides for examples and command for running the test.</li>
+							<li>java -jar junit-platform-console-standalone-6.0.2.jar execute -cp . --scan-classpath</li>
+						</ul>
 					</aside>
 					<h3><i class="fa-solid fa-pencil"></i> JUnit Practice (10 mins)</h3>
 					<ul>
@@ -402,6 +412,7 @@
 						<li>Create a simple Calculator.java class with an <code>add(int a, int b)</code> method.</li>
 						<li>Write a JUnit 5 test class named CalculatorTest.java.</li>
 						<li>Implement a <code>@BeforeEach</code> method to instantiate the Calculator, and write two <code>@Test</code> methods using <code>assertEquals</code> to verify the addition logic.</li>
+						<li>First argument to <code>assertEquals</code> is expected value; second argument is actual value.</li>
 						<li>Run the tests and verify they both pass.</li>
 					</ul>
 				</section>
@@ -838,9 +849,9 @@
 				</section>
 
 				<section class="left">
-					<h3><i class="fa-solid fa-pencil"></i> Replace Make with Gradle (xx mins)</h3>
+					<h3><i class="fa-solid fa-pencil"></i> Replace Make with Gradle</h3>
 					<ul class="dense-slide">
-						<li>Begin work on the Gradle Assignment in Canvas.</li>
+						<li>Begin work on the Gradle Assignment in the Canvas course.</li>
 					</ul>
 				</section>
 
