@@ -1,0 +1,450 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>CS3667 - Lecture 04 - Unified Modeling Language</title>
+
+		<link rel="stylesheet" href="../reveal-js/dist/reset.css">
+		<link rel="stylesheet" href="../reveal-js/dist/reveal.css">
+		<link rel="stylesheet" href="../reveal-js/dist/theme/black.css">
+		<link rel="stylesheet" href="../layouts/common.css">
+		<link rel="stylesheet" href="../reveal-js/plugin/highlight/monokai.css">
+		<link rel="stylesheet" href="custom.css" />
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+				<div class="header left">
+					CS3667: Software Engineering
+				</div>
+				<div class="header right no-title">
+					<em>Unified Modeling Language</em>
+				</div>
+
+				<section data-state="title-slide">
+					<h1 class="r-fit-text">CS3667: Software Engineering</h1>
+					<h2 class="r-fit-text">Unified Modeling Language</h2>
+				</section>
+
+				<section class="left">
+					<aside class="notes">
+						<ul>
+							<li>Why do we model software?</li>
+							<li>The problem of complexity</li>
+							<li>Physical systems have natural models (like a car engine schematic)</li>
+							<li>But software is abstract and invisible; you cannot see or touch it</li>
+						</ul>
+					</aside>
+					<h3>Modeling Software</h3>
+					<ul>
+						<li class="fragment">A car engine has ~200 moving parts; we use diagrams to understand it.</li>
+						<li class="fragment">An ATM system has thousands of interacting objects; we need models even more.</li>
+						<li class="fragment">Software is invisible and abstract; you cannot see or touch it.</li>
+						<li class="fragment">Models make software visible, discussable, and understandable.</li>
+					</ul>
+				</section>
+
+				<section class="left">
+					<aside class="notes">
+						<ul>
+							<li>Every model belongs to one of three perspectives</li>
+						</ul>
+					</aside>
+					<h3>Unified Modeling Language (UML)</h3>
+					<ul>
+						<li class="fragment">The industry-standard visual language for specifying, constructing, and documenting software systems.</li>
+						<li class="fragment">The Three System Perspectives:
+							<ul>
+								<li class="fragment">Functional Behavior</li>
+								<li class="fragment">Static Structure</li>
+								<li class="fragment">Dynamic Behavior</li>
+							</ul>
+						</li>
+					</ul>
+				</section>
+
+				<section class="left">
+					<aside class="notes">
+						<ul>
+							<li>Functional perspective asks 'what?', view from the outside</li>
+						</ul>
+					</aside>
+					<h3>Functional Perspective</h3>
+					<ul>
+						<li class="fragment">What does the system do?</li>
+						<li class="fragment">Why does someone use it?</li>
+						<li class="fragment">Use Case Diagram, Activity Diagram</li>
+					</ul>
+				</section>
+
+				<section class="left">
+					<aside class="notes">
+						<ul>
+							<li>Static perspective asks 'with what?', what are the building blocks</li>
+						</ul>
+					</aside>
+					<h3>Static Perspective</h3>
+					<ul>
+						<li class="fragment">What objects are involved?</li>
+						<li class="fragment">What are their attributes?</li>
+						<li class="fragment">What operations do they perform?</li>
+						<li class="fragment">How are they related to each other?</li>
+						<li class="fragment">Class Diagram, Object Diagram</li>
+					</ul>
+				</section>
+
+				<section class="left">
+					<aside class="notes">
+						<ul>
+							<li>Dynamic perspective asks 'how?', what happens at runtime</li>
+						</ul>
+					</aside>
+					<h3>Dynamic Perspective</h3>
+					<ul>
+						<li class="fragment">How do objects interact over time?</li>
+						<li class="fragment">Sequence/State Diagram, Activity Diagram</li>
+					</ul>
+				</section>
+
+				<section class="left">
+					<aside class="notes">
+						<ul>
+							<li>Functional: A customer withdraws money from an account</li>
+							<li>Static: A `Customer` object has an `Account` object</li>
+							<li>Dynamic: When withdraw() is called, the system checks the Account balance before deducting money for the Customer</li>
+						</ul>
+					</aside>
+					<h3><i class="fa-solid fa-pencil"></i> The ATM System (5 minutes)</h3>
+					<ul>
+						<li>Write down one item to describe an ATM system from each of the three perspectives:
+							<ul>
+								<li>Functional (what?)</li>
+								<li>Static (with what?)</li>
+								<li>Dynamic (how?)</li>
+							</ul>
+						</li>
+					</ul>
+				</section>
+
+				<section class="left">
+					<aside class="notes">
+						<ul>
+							<li>In an object-oriented system, objects are the “first class” members, so let’s start there.</li>
+							<li>When you have requirements, documentation, or a conversation about a system, use these two techniques to find your candidate classes.</li>
+							<li>Noun extraction: Read any description of the system. Underline every noun. Each noun is a candidate object.</li>
+						</ul>
+					</aside>
+					<h3>Candidate Object Identification</h3>
+					<ul>
+						<li class="fragment">Techniques to find candidate classes:
+							<ul>
+								<li class="fragment">Noun Extraction</li>
+								<li class="fragment">Observation</li>
+							</ul>
+						</li>
+					</ul>
+				</section>
+
+				<section class="left">
+					<h3>Turning Candidate Objects into Classes</h3>
+					<ul>
+						<li class="fragment">For each candidate, evaluate it using the E.A.R. framework:
+							<ul>
+								<li class="fragment">Entity: What "thing" is it? Does it contain component parts?</li>
+								<li class="fragment">Attributes: What attributes describe the entity? Note that while these become fields, not all fields (like flags or counters) are attributes.</li>
+								<li class="fragment">Relationships: What other entities does this entity need or use?</li>
+							</ul>
+						</li>
+					</ul>
+				</section>
+
+				<section class="left">
+					<aside class="notes">
+						<ul>
+							<li>Customer = Entity</li>
+							<li>ATM = Entity</li>
+							<li>Account = Entity</li>
+							<li>Current balance = Attribute of account</li>
+							<li>Daily withdrawal limit = Attribute of account</li>							
+						</ul>
+					</aside>
+					<h3><i class="fa-solid fa-pencil"></i> Noun Extraction (5 minutes)</h3>
+					<ul>
+						<li>Work in pairs.</li>
+						<li>Extract the nouns from this requirement and classify them as an Entity (Object) or an Attribute.</li>
+						<li><em>A customer interacts with the ATM to make a withdrawal from their account. The account checks the current balance and a daily withdrawal limit.</em></li>
+					</ul>
+				</section>
+
+				<section class="left">
+					<aside class="notes">
+						<ul>
+							<li>For large systems, it can be useful to categorize similar things.</li>
+							<li>Problem: If we put UI, business logic, and data in one class, our system becomes a fragile "God Class."</li>
+							<li>Solution (BEC): Categorize our classes into three types.</li>
+						</ul>
+					</aside>
+					<h3>The BEC Taxonomy</h3>
+					<ul>
+						<li class="fragment">For software systems, we can categorize our classes:
+							<ul>
+								<li class="fragment">Boundary: Interfaces with actors</li>
+								<li class="fragment">Control: Implements system logic and coordinates tasks</li>
+								<li class="fragment">Entity: Stateful objects containing system information</li>
+							</ul>
+						</li>
+						<li class="fragment">The Golden Rule: Boundaries NEVER talk directly to Entities. All communication goes through Control objects.</li>
+					</ul>
+				</section>
+
+				<section class="left">
+					<h3>Boundary Objects</h3>
+					<ul>
+						<li class="fragment">Inside our system, but interface with elements outside the system.</li>
+						<li class="fragment">They are a "portal" or "gateway" between outside and inside.</li>
+					</ul>
+				</section>
+
+				<section class="left">
+					<aside class="notes">
+						<ul>
+							<li>Accepting a card requires writing specific command bit patterns to device driver memory locations (turn on the rollers to accept a card).</li>
+							<li>Initiating that command requires a second write to a separate memory location (to initiate that command request).</li>
+							<li>This is hardware-protocol logic; volatile, vendor-specific, and completely irrelevant to your business logic.</li>
+							<li>The CardReader object is inside our system, but up against the boundary acting as a conduit to the outside world device.</li>
+						</ul>
+					</aside>
+					<h3>Boundary Objects: CardReader Example</h3>
+					<ul>
+						<li class="fragment">The Problem: Hardware devices speak a low-level language your application should never have to know.</li>
+						<li class="fragment">The Solution: Wrap it in a Boundary Object.</li>
+					</ul>
+					<pre class="fragment"><code class="language-java" data-line-numbers="" data-trim>
+					// The rest of the system never sees device registers or bit patterns.
+					// It only knows one thing:
+					cardReader.acceptCard();
+					</code></pre>
+				</section>
+
+				<section class="left">
+					<h3>Entity Objects</h3>
+					<ul>
+						<li class="fragment">Represent information, data, and state needed by the system; not boundary objects.</li>
+						<li class="fragment">They are not just data containers; they provide methods that act on their own data.</li>
+					</ul>
+				</section>
+
+				<section class="left">
+					<aside class="notes">
+						<ul>
+							<li>When your ATM transaction is completed, you get a receipt printed out.</li>
+							<li>The Receipt is not a boundary object. It never touches anything external.</li>
+							<li>As you progress through the transation, we build up this entity object.</li>
+							<li>Its entire job is to accumulate and hold the meaningful data that represents a completed transaction.</li>
+							<li>That’s the hallmark of an entity object: it models something real and stateful within your business domain.</li>
+						</ul>
+					</aside>
+					<h3>Entity Objects: Receipt Example</h3>
+					<ul>
+						<li class="fragment">The printer is a boundary object, but the receipt is likely an entity object.</li>
+						<li class="fragment">The Receipt Entity is build up incrementally.</li>
+					</ul>
+					<pre class="fragment"><code class="language-java" data-line-numbers="" data-trim>
+					// State accumulates as the transaction progresses
+					receipt.setDateTime(LocalDateTime.now());
+					receipt.setAccountNumber(account.getAccountNumber());
+					receipt.setFinalBalance(account.getBalance());
+
+					// The Entity is passed to Boundary objects as needed
+					printer.print(receipt);      // Output to hardware
+					transactionLog.archive(receipt); // Output to local storage
+					</code></pre>
+				</section>
+
+				<section class="left">
+					<aside class="notes">
+						<ul>
+							<li>Control objects manage behavior; they coordinate the other objects so neither entity nor boundary objects have to.</li>
+						</ul>
+					</aside>
+					<h3>Control Objects</h3>
+					<ul>
+						<li class="fragment">Orchestrate the flow and manage behavior.</li>
+						<li class="fragment">Coordinate the other objects so neither entity nor boundary objects have to interact directly.</li>
+						<li class="fragment">One main controller initializes everything; separate controllers per major use case.</li>
+					</ul>
+				</section>
+
+				<section class="left">
+					<aside class="notes">
+						<ul>
+							<li>The AtmController object instantiates boundary objects.</li>
+							<li>Its main menu would create a WithdrawCashController object when the user indicates they want to make a withdrawal.</li>
+							<li>The WithdrawCashController object manages the flow of the transation.</li>
+							<li>When the transation is complete, the WithdrawCashController object is done an not re-used.</li>
+							<li>A subsequent withdrawal will get a new WithdrawCashController object, you cannot accidentally carry a balance from one withdrawal into the next.</li>
+						</ul>
+					</aside>
+					<h3>Control Objects: ATM Example</h3>
+					<ul>
+						<li class="fragment">Application Scope vs. Transaction Scope:
+							<ul>
+								<li class="fragment">AtmController: Handles system startup, main menus, and hardware initialization; lives until the ATM shuts down.</li>
+								<li class="fragment">WithdrawCashController: Manages a single withdrawal flow; created dynamically and destroyed when transaction finishes.</li>
+							</ul>
+						</li>
+						<li class="fragment">Architectural Value: Each transaction gets its own controller, state, and lifecycle, ensuring no shared mutable state between transactions.</li>
+					</ul>
+				</section>
+
+				<section class="left">
+					<aside class="notes">
+						<ul>
+						</ul>
+					</aside>
+					<h3>Use Case Diagrams</h3>
+					<p>A Use Case diagram answers the question: "What does this system do for whom?"</p>
+					<ul>
+						<li class="fragment">High-level view, no implementation details</li>
+						<li class="fragment">Shows the services a system provides and who uses them</li>
+						<li class="fragment">Starting point for every other model</li>
+					</ul>
+					<ul>
+					</ul>
+				</section>
+
+				<section class="left">
+					<aside class="notes">
+						<ul>
+							<li>Primary actors are on the left; they initiate the interaction.</li>
+							<li>Secondary actors are on the right; they react to the interaction.</li>
+							<li>Actors are not part of the system.</li>
+						</ul>
+					</aside>
+					<h3>Use Case Diagrams</h3>
+					<div style="display: flex; align-items: center; gap: 2rem; height: 100%;">
+						<div style="flex: 1;">
+							<ul class="dense-slide">
+								<li class="fragment">Actors (Stick Figures): External entities interacting with the system.</li>
+								<li class="fragment">Use Cases (Ovals): Major system functionalities, start with a verb.</li>
+								<li class="fragment">Relationships:
+									<ul>
+										<li class="fragment">Association (Solid Line): Connects an actor to a use case.</li>
+									</ul>
+								</li>
+							</ul>
+						</div>
+						<div style="flex: 1; text-align: center;">
+						<!-- Clicking this image opens it in a fullscreen overlay -->
+						<img 
+							src="imgs/use-case-1.png" data-preview-image 
+							alt="Use case diagram"
+							aria-describedby="usecase-caption">
+						<div id="usecase-caption" class="sr-only">A use case diagram showing the Customer on the left with interaction lines to use cases Login to App, Check Balance, and Transfer Funds, which are all contained in the System. The Bank is on the right with interaction lines to Check Balance and Transfer Funds.</div>
+						</div>
+					</div>
+				</section>
+
+				<section class="left">
+					<aside class="notes">
+						<ul>
+							<li>Think of it as the base case reaches out to grab the included behavior.</li>
+							<li>The arrow direction says WithdrawCash calls Authenticate.</li>
+							<li>Typically returns back to originating use case.</li>
+						</ul>
+					</aside>
+					<h3>Relationships: Include</h3>
+					<p>Always happens (dotted line)</p>
+					<ul>
+						<li class="fragment">Arrow points FROM base case TO included case.</li>
+						<li class="fragment">Models mandatory sub-behavior factored out to eliminate duplication.</li>
+						<li class="fragment">Example: Every transaction <em>always</em> includes Authentication.</li>
+					</ul>
+				</section>
+
+				<section class="left">
+					<aside class="notes">
+						<ul>
+							<li>Think of it as the exception is extneding or adding to the base.</li>
+							<li>NSF -> WithdrawCash, the exception hangs off the base.</li>
+							<li>May not return to originating use case.</li>
+						</ul>
+					</aside>
+					<h3>Relationships: Extend</h3>
+					<p>Sometimes happens (dotted line)</p>
+					<ul>
+						<li class="fragment">Arrow points FROM extending case TO base case.</li>
+						<li class="fragment">Models exceptional flows that may or may not occur.</li>
+						<li class="fragment">Example: WithdrawCash <em>may</em> extend with "Non-Sufficient Funds".</li>
+					</ul>
+				</section>
+
+				<section class="left">
+					<h3>Relationships: Generalization</h3>
+					<p>Generalization (Solid Arrow with Open Triangle): Is a kind of</p>
+					<ul>
+						<li class="fragment">Similar to abstract classes.</li>
+						<li class="fragment">Child use case (or actor) is a specialized version of the parent.</li>
+						<li class="fragment">Arrow goes FROM child TO parent.</li>
+						<li class="fragment">Example: Transfer to Another Account IS A kind of Transfer Funds.</li>
+					</ul>
+				</section>
+
+				<section class="left">
+					<aside class="notes">
+						<p>Include and Extend</p>
+						<ul>
+							<li>Login to App is base use case</li>
+							<li>Verify Password is the included use case (always happens)</li>
+							<li>Display Login Erro is the extended use case (sometimes happens)</li>
+						</ul>
+						<p>Generalization</p>
+						<ul>
+							<li>Adult Customer and Minor Customer are child actors of Customer</li>
+							<li>Transfer Funds is the generalized or parent use case. Transfer to Another Account and Transfer to Another User are specialized use cases, children of Transfer Funds.</li>
+						</ul>
+					</aside>
+					<h3>Advanced Relationships</h3>
+					<div style="display: flex; align-items: center; gap: 2rem; height: 100%;">
+						<div style="flex: 1; text-align: center;">
+							<!-- Clicking this image opens it in a fullscreen overlay -->
+							<img 
+								src="imgs/include-extend.png" data-preview-image 
+								alt="Use case diagram include and extend relationships"
+								aria-describedby="includeextend-caption">
+							<div id="includeextend-caption" class="sr-only">A use case diagram showing the Customer on the left with a solid line to the Login to App use case, which has a dotted line pointing to the Verify Password use case. The Display Login Error has a dotted line pointing to Login to App.</div>
+						</div>
+						<div style="flex: 1; text-align: center;">
+							<!-- Clicking this image opens it in a fullscreen overlay -->
+							<img 
+								src="imgs/generalization.png" data-preview-image 
+								alt="Use case diagram generalization relationship"
+								aria-describedby="generalization-caption">
+							<div id="generalization-caption" class="sr-only">A use case diagram showing the Customer on the left with child actors Adult Customer and Minor Customer. Customer is associated with Transfer Funds use case, which has Transfer to Another Account and Transfer to Another User as child use cases.</div>
+						</div>
+					</div>
+				</section>
+
+			</div>
+		</div>
+
+		<script src="../reveal-js/dist/reveal.js"></script>
+		<script src="../reveal-js/plugin/math/math.js"></script>
+		<script src="../reveal-js/plugin/notes/notes.js"></script>
+		<script src="../reveal-js/plugin/markdown/markdown.js"></script>
+		<script src="../reveal-js/plugin/highlight/highlight.js"></script>
+		<script>
+			Reveal.initialize({
+				hash: true,
+				slideNumber: true,
+				transition: 'slide',
+				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes, RevealMath.KaTeX ],
+				showNotes: false,
+				pdfSeparateFragments: false
+			});
+		</script>
+	</body>
+</html>
