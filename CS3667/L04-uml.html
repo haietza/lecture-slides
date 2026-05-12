@@ -322,6 +322,10 @@
 							<li>Primary actors are on the left; they initiate the interaction.</li>
 							<li>Secondary actors are on the right; they react to the interaction.</li>
 							<li>Actors are not part of the system.</li>
+							<li>What do these use cases share?</li>
+							<li>They all need to authenticate the user.</li>
+							<li>In software, we hate duplication.</li>
+							<li>So we factor out the common steps into another use case with a different relationship.</li>
 						</ul>
 					</aside>
 					<h3>Use Case Diagrams</h3>
@@ -428,6 +432,26 @@
 					</div>
 				</section>
 
+				<section class="left">
+					<aside class="notes">
+						<ul>
+							<li>Think about how Authenticate use case should be added</li>
+							<li>Think about what can go wrong during a withdrawal</li>
+							<li>Answer key: /Users/michellemelton/development/cs3667/cs3667-materials/uml/active-learning/ATM-active-learning.png</li>
+							<li>Answer review discussion: The Customer should NOT connect directly to Authenticate. Use case diagrams model intentions. If Customer → Authenticate is drawn, the diagram says "the Customer's primary intention for using this ATM is to authenticate." That's wrong — authentication is a mechanism, not a goal.</li>
+						</ul>
+					</aside>
+					<h3><i class="fa-solid fa-pencil"></i> ATM Use Case Diagram (10 minutes)</h3>
+					<ul>
+						<li>Work in pairs to build the ATM use case diagram:
+							<ul>
+								<li>Include Customer and Bank actors</li>
+								<li>Include Check Balance, Transfer Funds, Withdraw Cash use cases</li>
+								<li>Add the Authenticate use case as an include relationship</li>
+								<li>Add at least two extend use cases for Withdraw Cash</li>
+							</ul>
+						</li>
+					</ul>
 			</div>
 		</div>
 
