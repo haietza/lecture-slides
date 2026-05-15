@@ -437,14 +437,14 @@
 						<ul>
 							<li>Think about how Authenticate use case should be added</li>
 							<li>Think about what can go wrong during a withdrawal</li>
-							<li>Answer key: /Users/michellemelton/development/cs3667/cs3667-materials/uml/active-learning/ATM-active-learning.png</li>
+							<li>Answer key: /Users/michellemelton/development/cs3667/cs3667-materials/uml/active-learning/ATM-use-case.png</li>
 							<li>Answer review discussion: The Customer should NOT connect directly to Authenticate. Use case diagrams model intentions. If Customer → Authenticate is drawn, the diagram says "the Customer's primary intention for using this ATM is to authenticate." That's wrong — authentication is a mechanism, not a goal.</li>
 						</ul>
 					</aside>
-					<h3><i class="fa-solid fa-pencil"></i> ATM Use Case Diagram (10 minutes)</h3>
+					<h3><i class="fa-solid fa-pencil"></i> Use Case Diagram (10 minutes)</h3>
 					<ul>
 						<li>Work in pairs to build the ATM use case diagram:
-							<ul>
+							<ul class="dense-slide">
 								<li>Include Customer and Bank actors</li>
 								<li>Include Check Balance, Transfer Funds, Withdraw Cash use cases</li>
 								<li>Add the Authenticate use case as an include relationship</li>
@@ -452,6 +452,106 @@
 							</ul>
 						</li>
 					</ul>
+				</section>
+
+				<section class="left">
+					<aside class="notes">
+						<ul>
+							<li>Now that we know what the system does, we need to design the objects that will do it.</li>
+							<li>Class diagrams depict the static structure of the system: What objects exist, what data do they hold, and what can they do?</li>
+							<li>Class diagrams map almost 1-to-1 with Java code.</li>
+							<li>Encapsulation is a core tenet of object-oriented design.</li>
+							<li>This means our attributes (the middle box) should almost always be marked with a minus sign for private, and our operations (the bottom box) with a plus sign for public.</li>
+						</ul>
+					</aside>
+					<h3>Class Diagrams</h3>
+					<ul>
+						<li class="fragment">Divided into three compartments:
+							<ul>
+								<li class="fragment">Name</li>
+								<li class="fragment">Attributes/State</li>
+								<li class="fragment">Operations/Behavior</li>
+							</ul>
+						</li>
+						<li class="fragment">Visibility modifiers:
+							<ul>
+								<li class="fragment">+ Public</li>
+								<li class="fragment">- Private</li>
+								<li class="fragment"># Protected</li>
+							</ul>
+						</li>
+					</ul>
+				</section>
+
+				<section class="left">
+					<aside class="notes">
+						<ul>
+							<li>Cat is an abstract class with private fields and public methods. It implements the Hunter interface.</li>
+							<li>Barn Cat is a class that inherits from Cat. It has an association guards Barn.</li>
+							<li>Barn is a class with a composition relationship to the Stall class where one Barn contains zero to many Stalls.</li>
+							<li>Lion is a class that inherits from Cat with an aggregation relationship to the Pride class, seen in the lions field, which is a list of Lion objects.</li>
+							<li>Color is an enumeration used in Barn.</li>
+						</ul>
+					</aside>
+					<h3>Class Diagrams</h3>
+					<!-- Clicking this image opens it in a fullscreen overlay -->
+					<img 
+						src="imgs/class-diagram.png" data-preview-image 
+						alt="Class diagram example"
+						aria-describedby="classdiagram-caption">
+					<div id="classdiagram-caption" class="sr-only">A UML class diagram containing the following classes, enumerations, and relationships. Class: Cat, an abstract class with private attributes age of type int and weight of type double, and public methods eat taking a food parameter of type String returning boolean, getAge returning int, and getWeight returning double. Class: Barn Cat with private attribute name of type String and public method getName returning String. Interface: Hunter with public method pounce returning boolean. Class: Lion with private attribute maneLength of type double and public method getManeLength returning double. Class: Barn with private attributes location of type String, wallColor of type Color, and roofColor of type Color, and public method getLocation returning String. Class: Stall with private attribute size of type double and public method getSize returning double. Class: Pride with private attribute lions as an array of Lion and public method getLocation returning String. Enumeration: Color with values RED, BLUE, and GREEN; a note states it is not necessary to connect an enumerated type to classes that use it. Relationships: Barn Cat inherits from Cat; Lion inherits from Cat; Cat implements the Hunter interface shown with a dashed inheritance arrow; Barn Cat has an association labeled guards pointing to Barn; Barn has a composition relationship to Stall where one Barn contains zero to many Stalls (multiplicity 1 on the Barn side and 0..* on the Stall side); Lion has an aggregation relationship to Pride. Legend - Relationship Key: Inheritance is shown as a solid line with an open arrowhead; Association is shown as a solid line; Aggregation is shown as a solid line with an open diamond; Composition is shown as a solid line with a filled diamond. Legend - Multiplicity Key: 0..1 means zero to one (optional); n means a specific number; 0..* means zero to many; 1..* means one to many; m..n means a specific range.</div>
+				</section>
+
+				<section class="left">
+					<aside class="notes">
+						<ul>
+							<li>We identified currentBalance and dailyWithdrawalLimit as attributes of Account.</li>
+							<li>Add 1–2 reasonable attributes to Customer and ATM on your own.</li>
+							<li>Add one realistic method per class; think about what behavior each object owns.</li>
+							<li>Answer key: /Users/michellemelton/development/cs3667/cs3667-materials/uml/active-learning/ATM-class.png</li>
+							<li>One customer has many accounts.</li>
+							<li>ATM uses Account (dependency) but does not own it.</li>
+							<li>This example is just a start of exploring design decisions. We would also have to think about how the ATM would validate the customer PIN, etc.</li>
+						</ul>
+					</aside>
+					<h3><i class="fa-solid fa-pencil"></i> Class Diagram (10 minutes)</h3>
+					<ul>
+						<li>Use the objects identified in the BEC activity to build a class diagram.</li>
+						<li>Include all 3 classes: Customer, ATM, Account.</li>
+						<li>Complete name, 1-2 fields, and 1 method for each.</li>
+						<li>Draw association lines between classes where appropriate.</li>
+					</ul>
+				</section>
+
+				<section class="left">
+					<aside class="notes">
+						<ul>
+							<li>If a Class Diagram is the architectural blueprint of a house, an Object Diagram is a photograph of a specific room on a Tuesday afternoon.</li>
+							<li>It shows us exactly what is happening in memory at runtime.</li>
+							<li>While you will draw Class Diagrams for almost every project, you only pull out Object Diagrams when you need to understand a very specific, complex state.</li>
+							<li>Data structures like linked lists, trees, or intricate design patterns.</li>
+						</ul>
+					</aside>
+					<h3>Object Diagrams</h3>
+					<ul>
+						<li class="fragment">Focus on concrete instances of objects (vs. class definitions).</li>
+						<li class="fragment">Capture the state of a system object and its relationships at a specific moment in time.</li>
+						<li class="fragment">Used less frequently than Class Diagrams.</li>
+						<li class="fragment">Useful for depicting an isolated part of a complex system.</li>
+						<li class="fragment">Often used to visualize the current state of complex data structures.</li>
+					</ul>
+				</section>
+
+				<section class="left">
+					<h3>Object Diagrams</h3>
+					<!-- Clicking this image opens it in a fullscreen overlay -->
+					<img 
+						src="imgs/object-diagram.png" data-preview-image 
+						alt="Object diagram example"
+						aria-describedby="objectdiagram-caption">
+					<div id="objectdiagram-caption" class="sr-only">The object diagram shows two Cat objects, one named Yuri age 1 with a weight of 10.5 and another named Merida age 1 with a weight of 7. Both have an association with a Barn object with a location of Foscoe.</div>
+				</section>
+
 			</div>
 		</div>
 
