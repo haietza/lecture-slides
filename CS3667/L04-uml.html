@@ -552,6 +552,85 @@
 					<div id="objectdiagram-caption" class="sr-only">The object diagram shows two Cat objects, one named Yuri age 1 with a weight of 10.5 and another named Merida age 1 with a weight of 7. Both have an association with a Barn object with a location of Foscoe.</div>
 				</section>
 
+				<section class="left">
+					<aside class="notes">
+						<ul>
+							<li>A state diagram shows how an object moves and changes over time</li>
+							<li>A "movie" vs. the object diagram's "photograph"</li>
+							<li>Every state is a moment where the object is doing something or waiting</li>
+							<li>Rule: If it takes time → it's a state</li>
+							<li>The end state is optional because some objects never truly terminate (e.g. a running server)</li>
+							<li>Transitions are instantaneous, and usually occur based on specific conditions/events</li>
+						</ul>
+					</aside>
+					<h3>State Diagrams</h3>
+					<ul>
+						<li class="fragment">Models behavior of a single object.</li>
+						<li class="fragment">Models one part of the system.</li>
+						<li class="fragment">Similar to state machine diagrams.</li>
+						<li class="fragment">Notation:
+							<ul>
+								<li class="fragment">Start (solid circle) required</li>
+								<li class="fragment">End (circle with solid circle inside) optional</li>
+								<li class="fragment">States (rounded rectangles)</li>
+								<li class="fragment">Transitions (arrows between states)</li>
+							</ul>
+						</li>
+					</ul>
+				</section>
+
+				<section class="left">
+					<aside class="notes">
+						<ul>
+							<li>Inside each state are 3 hooks</li>
+							<li>Entry is like walking through a door (fires once)</li>
+							<li>Do is everything you do in the room</li>
+							<li>Exit fires the moment you leave</li>
+						</ul>
+					</aside>
+					<h3>Inside a State</h3>
+					<ul>
+						<li class="fragment">Name (required, descriptive)</li>
+						<li class="fragment">Attributes (values associated with a state)</li>
+						<li class="fragment">Activities (actions the state performs)
+							<ul>
+								<li class="fragment">Entry: Fires when state is entered</li>
+								<li class="fragment">Do: Runs while inside the state</li>
+								<li class="fragment">Exit: Fires when state is left</li>
+							</ul>
+						</li>
+					</ul>
+				</section>
+
+				<section class="left">
+					<h3>State Diagrams</h3>
+					<!-- Clicking this image opens it in a fullscreen overlay -->
+					<img 
+						src="imgs/state-diagram.png" data-preview-image 
+						alt="State diagram example"
+						aria-describedby="statediagram-caption">
+					<div id="statediagram-caption" class="sr-only">This state diagram models the behavior of a cat using five distinct states: Eating, Hungry, Playing, Sleeping, and Playful. Each state describes what the cat is doing during that period, and labeled arrows between states represent the conditions or events that cause the cat to transition from one state to another. The start is triggered by the start of the day and moves to the Sleeping state. The Sleeping state has three internal actions. On entry, the cat lies down. While in the state, the cat snores. On exit, the cat opens its eyes. From the Sleeping state, the cat transitions to the Hungry state when it feels hungry, and it transitions to the Playful state when it is feeling playful. The Hungry state has two internal actions. On entry, the cat finds a human. While in the state, the cat meows. From the Hungry state, the cat transitions back to the Eating state when it is fed. The transition between Hungry and Eating is bidirectional, meaning a cat that is eating can run out of food and return to Hungry, and a cat that is Hungry can be fed and return to Eating. The Eating state has three internal actions. On entry, the cat purrs. While in the state, the cat meows. On exit, the cat licks its lips. From the Eating state, the cat can transition to three other states. If the cat runs out of food, it transitions to the Hungry state. If the cat becomes tired and full, it transitions to the Sleeping state. If the cat is full and feeling playful, it transitions to the Playful state. The Playful state has two internal actions. While in the state, the cat drags a toy to a human and meows. From the Playful state, the cat transitions to the Hungry state when it feels hungry, and it transitions to the Playing state when it no longer receives attention from a human. The Playing state has two internal actions. While in the state, the cat zooms around. On exit, the cat lies down. From the Playing state, the cat transitions to the Sleeping state when it becomes tired and full, it transitions to the Playful state when it receives attention from a human, and it transitions to the Hungry state when it feels hungry. The end state is transitioned to from the Sleeping state after 10pm.</div>
+				</section>
+
+				<section class="left">
+					<aside class="notes">
+						<ul>
+							<li>You are given the five states of an ATM system.</li>
+							<li>Using your knowledge of how an ATM works, draw all transitions between states.</li>
+							<li>Label each arrow with the event or condition that triggers it. Include the starting point and any valid ending points.</li>
+							<li>Answer key: /Users/michellemelton/development/cs3667/cs3667-materials/uml/active-learning/state-diagram.png</li>
+
+						</ul>
+					</aside>
+					<h3><i class="fa-solid fa-pencil"></i> State Diagram (10 minutes)</h3>
+					<!-- Clicking this image opens it in a fullscreen overlay -->
+					<img 
+						src="imgs/state-diagram-activity.png" data-preview-image 
+						alt="State diagram activity"
+						aria-describedby="statediagramactivity-caption">
+					<div id="statediagramactivity-caption" class="sr-only">This is a partially completed UML state diagram for an ATM system. The diagram contains five states and two pseudostate markers. No transitions between states are shown. Students are expected to draw and label all transitions as part of a class activity. The two pseudostate markers appear on the left side of the diagram. One represents the initial pseudostate, indicating where the system begins. The other represents the final pseudostate, indicating where the system ends. The five states are as follows. The Idle state has three internal actions: on entry the system displays a welcome screen, while active the system waits for a card to be inserted, and on exit the system clears the welcome screen. The Authenticating state has three internal actions: on entry the system reads the card data and displays a PIN prompt, while active the system validates the card and PIN, and on exit the system clears all data from the display. The Session Active state has three internal actions: on entry the system displays the transaction menu, while active the system waits for a user selection and processes the transaction, and on exit the system logs the transaction result. The Dispensing state has three internal actions: on entry the system activates the cash mechanism and printer, while active the system dispenses cash and prints a receipt, and on exit the system confirms that the cash and receipt have been taken. The Ejecting Card state has three internal actions: on entry the system activates the card motor, while active the system waits for the customer to remove the card, and on exit the system confirms the card has been removed.</div>
+				</section>
+
 			</div>
 		</div>
 
