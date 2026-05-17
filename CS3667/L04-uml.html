@@ -113,7 +113,7 @@
 					<aside class="notes">
 						<ul>
 							<li>Functional: A customer withdraws money from an account</li>
-							<li>Static: A `Customer` object has an `Account` object</li>
+							<li>Static: A `Customer` has an `Account`</li>
 							<li>Dynamic: When withdraw() is called, the system checks the Account balance before deducting money for the Customer</li>
 						</ul>
 					</aside>
@@ -142,13 +142,22 @@
 						<li class="fragment">Techniques to find candidate classes:
 							<ul>
 								<li class="fragment">Noun Extraction</li>
-								<li class="fragment">Observation</li>
+								<li class="fragment">BEC Taxonomy</li>
 							</ul>
 						</li>
 					</ul>
 				</section>
 
 				<section class="left">
+					<aside class="notes">
+						<ul>
+							<li>Once we have identified the nouns, we can use EAR to determine which should become classes.</li>
+							<li>First, we determine if it has independent identity in the system (e.g. not an actor or the system itself).</li>
+							<li>Then, we consider if it has at least one persistent attribute.</li>
+							<li>Finally, we consider if it has relationships to other entities.</li>
+							<li>If it has each of these qualities, we should consider making it a class.</li>
+						</ul>
+					</aside>
 					<h3>Turning Candidate Objects into Classes</h3>
 					<ul>
 						<li class="fragment">For each candidate, evaluate it using the E.A.R. framework:
@@ -164,24 +173,30 @@
 				<section class="left">
 					<aside class="notes">
 						<ul>
-							<li>Customer = Entity</li>
-							<li>ATM = Entity</li>
-							<li>Account = Entity</li>
+							<li>Customer = Actor</li>
+							<li>ATM = System itself</li>
+							<li>Account = Entity (identity in system; attribues like balance, accountId; needs/uses other entities, like receipt)</li>
 							<li>Current balance = Attribute of account</li>
-							<li>Daily withdrawal limit = Attribute of account</li>							
+							<li>Daily withdrawal limit = Attribute of account</li>		
+							<li>Cash = No attributes</li>
+							<li>Receipt = Entity (identity in system, attributes like date, time; needs/uses other entities, like account)</li>					
 						</ul>
 					</aside>
 					<h3><i class="fa-solid fa-pencil"></i> Noun Extraction (5 minutes)</h3>
 					<ul>
 						<li>Work in pairs.</li>
 						<li>Extract the nouns from this requirement and classify them as an Entity (Object) or an Attribute.</li>
-						<li><em>A customer interacts with the ATM to make a withdrawal from their account. The account checks the current balance and a daily withdrawal limit.</em></li>
+						<li><em>A customer interacts with the ATM to make a withdrawal from their account. The account checks the current balance and a daily withdrawal limit. The cash is then dispensed and a receipt is printed.</em></li>
 					</ul>
 				</section>
 
 				<section class="left">
 					<aside class="notes">
 						<ul>
+							<li>EAR gets us most of the way there, but can only see things that store data.</li>
+							<li>The objects responsible for actually running a withdrawal — checking the balance, calling the bank, telling the dispenser to release cash — those don't store anything. They just orchestrate.</li>
+							<li>EAR will never surface them because they fail the attributes test.</li>
+							<li>So we need one more step that answers a different question: not 'what data does this class hold,' but 'what role does this class play in the system.'</li>
 							<li>For large systems, it can be useful to categorize similar things.</li>
 							<li>Problem: If we put UI, business logic, and data in one class, our system becomes a fragile "God Class."</li>
 							<li>Solution (BEC): Categorize our classes into three types.</li>
@@ -230,6 +245,11 @@
 				</section>
 
 				<section class="left">
+					<aside class="notes">
+						<ul>
+							<li>Entity objects are the nouns we extracted that passed the EAR test.</li>
+						</ul>
+					</aside>
 					<h3>Entity Objects</h3>
 					<ul>
 						<li class="fragment">Represent information, data, and state needed by the system; not boundary objects.</li>
@@ -268,6 +288,7 @@
 					<aside class="notes">
 						<ul>
 							<li>Control objects manage behavior; they coordinate the other objects so neither entity nor boundary objects have to.</li>
+							<li>Where Entity objects are the nouns, Control objects are the verbs (withdraw, authorize, deposit).</li>
 						</ul>
 					</aside>
 					<h3>Control Objects</h3>
@@ -282,10 +303,10 @@
 					<aside class="notes">
 						<ul>
 							<li>The AtmController object instantiates boundary objects.</li>
-							<li>Its main menu would create a WithdrawCashController object when the user indicates they want to make a withdrawal.</li>
-							<li>The WithdrawCashController object manages the flow of the transation.</li>
-							<li>When the transation is complete, the WithdrawCashController object is done an not re-used.</li>
-							<li>A subsequent withdrawal will get a new WithdrawCashController object, you cannot accidentally carry a balance from one withdrawal into the next.</li>
+							<li>Its main menu would create a WithdrawController object when the user indicates they want to make a withdrawal.</li>
+							<li>The WithdrawController object manages the flow of the transation.</li>
+							<li>When the transation is complete, the WithdrawController object is done an not re-used.</li>
+							<li>A subsequent withdrawal will get a new WithdrawController object, you cannot accidentally carry a balance from one withdrawal into the next.</li>
 						</ul>
 					</aside>
 					<h3>Control Objects: ATM Example</h3>
@@ -293,7 +314,7 @@
 						<li class="fragment">Application Scope vs. Transaction Scope:
 							<ul>
 								<li class="fragment">AtmController: Handles system startup, main menus, and hardware initialization; lives until the ATM shuts down.</li>
-								<li class="fragment">WithdrawCashController: Manages a single withdrawal flow; created dynamically and destroyed when transaction finishes.</li>
+								<li class="fragment">WithdrawController: Manages a single withdrawal flow; created dynamically and destroyed when transaction finishes.</li>
 							</ul>
 						</li>
 						<li class="fragment">Architectural Value: Each transaction gets its own controller, state, and lifecycle, ensuring no shared mutable state between transactions.</li>
@@ -444,7 +465,7 @@
 					<h3><i class="fa-solid fa-pencil"></i> Use Case Diagram (10 minutes)</h3>
 					<ul>
 						<li>Work in pairs to build the ATM use case diagram:
-							<ul class="dense-slide">
+							<ul>
 								<li>Include Customer and Bank actors</li>
 								<li>Include Check Balance, Transfer Funds, Withdraw Cash use cases</li>
 								<li>Add the Authenticate use case as an include relationship</li>
@@ -488,6 +509,7 @@
 						<ul>
 							<li>Cat is an abstract class with private fields and public methods. It implements the Hunter interface.</li>
 							<li>Barn Cat is a class that inherits from Cat. It has an association guards Barn.</li>
+							<li>The inheritance lets us factor out the duplication of age and weight for Barn Cat and Lion.</li>
 							<li>Barn is a class with a composition relationship to the Stall class where one Barn contains zero to many Stalls.</li>
 							<li>Lion is a class that inherits from Cat with an aggregation relationship to the Pride class, seen in the lions field, which is a list of Lion objects.</li>
 							<li>Color is an enumeration used in Barn.</li>
@@ -602,7 +624,7 @@
 					</ul>
 				</section>
 
-				<section class="left">
+				<section class="left dense-slide">
 					<h3>State Diagrams</h3>
 					<!-- Clicking this image opens it in a fullscreen overlay -->
 					<img 
@@ -612,7 +634,7 @@
 					<div id="statediagram-caption" class="sr-only">This state diagram models the behavior of a cat using five distinct states: Eating, Hungry, Playing, Sleeping, and Playful. Each state describes what the cat is doing during that period, and labeled arrows between states represent the conditions or events that cause the cat to transition from one state to another. The start is triggered by the start of the day and moves to the Sleeping state. The Sleeping state has three internal actions. On entry, the cat lies down. While in the state, the cat snores. On exit, the cat opens its eyes. From the Sleeping state, the cat transitions to the Hungry state when it feels hungry, and it transitions to the Playful state when it is feeling playful. The Hungry state has two internal actions. On entry, the cat finds a human. While in the state, the cat meows. From the Hungry state, the cat transitions back to the Eating state when it is fed. The transition between Hungry and Eating is bidirectional, meaning a cat that is eating can run out of food and return to Hungry, and a cat that is Hungry can be fed and return to Eating. The Eating state has three internal actions. On entry, the cat purrs. While in the state, the cat meows. On exit, the cat licks its lips. From the Eating state, the cat can transition to three other states. If the cat runs out of food, it transitions to the Hungry state. If the cat becomes tired and full, it transitions to the Sleeping state. If the cat is full and feeling playful, it transitions to the Playful state. The Playful state has two internal actions. While in the state, the cat drags a toy to a human and meows. From the Playful state, the cat transitions to the Hungry state when it feels hungry, and it transitions to the Playing state when it no longer receives attention from a human. The Playing state has two internal actions. While in the state, the cat zooms around. On exit, the cat lies down. From the Playing state, the cat transitions to the Sleeping state when it becomes tired and full, it transitions to the Playful state when it receives attention from a human, and it transitions to the Hungry state when it feels hungry. The end state is transitioned to from the Sleeping state after 10pm.</div>
 				</section>
 
-				<section class="left">
+				<section class="left dense-slide">
 					<aside class="notes">
 						<ul>
 							<li>You are given the five states of an ATM system.</li>
@@ -629,6 +651,99 @@
 						alt="State diagram activity"
 						aria-describedby="statediagramactivity-caption">
 					<div id="statediagramactivity-caption" class="sr-only">This is a partially completed UML state diagram for an ATM system. The diagram contains five states and two pseudostate markers. No transitions between states are shown. Students are expected to draw and label all transitions as part of a class activity. The two pseudostate markers appear on the left side of the diagram. One represents the initial pseudostate, indicating where the system begins. The other represents the final pseudostate, indicating where the system ends. The five states are as follows. The Idle state has three internal actions: on entry the system displays a welcome screen, while active the system waits for a card to be inserted, and on exit the system clears the welcome screen. The Authenticating state has three internal actions: on entry the system reads the card data and displays a PIN prompt, while active the system validates the card and PIN, and on exit the system clears all data from the display. The Session Active state has three internal actions: on entry the system displays the transaction menu, while active the system waits for a user selection and processes the transaction, and on exit the system logs the transaction result. The Dispensing state has three internal actions: on entry the system activates the cash mechanism and printer, while active the system dispenses cash and prints a receipt, and on exit the system confirms that the cash and receipt have been taken. The Ejecting Card state has three internal actions: on entry the system activates the card motor, while active the system waits for the customer to remove the card, and on exit the system confirms the card has been removed.</div>
+				</section>
+
+				<section class="left">
+					<aside class="notes">
+						<ul>
+							<li>Shows what happens, not who does it.</li>
+							<li>A fork is where your program says 'do both of these at the same time'.</li>
+							<li>The join is where you say 'wait until both are done before moving on.'</li>
+							<li>Diamonds are your if-statements made visual.</li>
+							<li>Always label both paths out of a diamond — typically something like [yes]/[no] or [valid]/[invalid].</li>
+							<li>Activity diagrams are great for modeling business logic, use case flows, or any algorithm before you write the code. Think of it as pseudocode you can draw.</li>
+						</ul>
+					</aside>
+					<h3>Activity Diagrams</h3>
+					<ul>
+						<li class="fragment">Model workflow or process flow of a system.</li>
+						<li class="fragment">Notation:
+							<ul>
+								<li class="fragment">Start (solid circle) required</li>
+								<li class="fragment">End (circle with solid circle inside)</li>
+								<li class="fragment">Activities (rounded rectangles)</li>
+								<li class="fragment">Flow between activities (arrows)</li>
+								<li class="fragment">Conditions (diamonds)</li>
+								<li class="fragment">Forks (horizontal bars, 1 in many out)</li>
+								<li class="fragment">Joins (horizontal bars, many in 1 out)</li>
+							</ul>
+						</li>
+					</ul>
+				</section>
+
+				<section class="left dense-slide">
+					<h3>Activity Diagrams</h3>
+					<!-- Clicking this image opens it in a fullscreen overlay -->
+					<img 
+						style="display: block; margin: 0 auto;"
+						class="r-stretch"
+						src="imgs/activity-diagram.png" data-preview-image 
+						alt="Activity diagram example"
+						aria-describedby="activitydiagram-caption">
+					<div id="activitydiagram-caption" class="sr-only">This is a UML activity diagram modeling the workflow of an ATM transaction. The diagram begins at the top with an initial pseudostate, represented by a solid filled circle, which immediately transitions down to the first action. The first action is Insert Card. From Insert Card, the flow moves down to Input PIN. From Input PIN, the flow moves down to a decision node, represented by a diamond shape. The decision node has two outgoing paths. If the card is accepted, the flow moves right to Select Action. If the card is rejected, the flow moves left to a synchronization join bar. From Select Action, the flow moves down to Fulfill Action. The synchronization join bar on the left side of the diagram receives two incoming flows when the card is rejected: one from Terminate Transaction and one from Notify Bank. These two actions both receive their incoming flow from the same join bar. Terminate Transaction receives flow from the left side of the join bar, and Notify Bank receives flow from the right side of the join bar. Both Terminate Transaction and Notify Bank then flow down into a second, wider synchronization join bar near the bottom of the diagram. Fulfill Action also flows down into this second wide synchronization join bar at the bottom. From the second synchronization join bar, a single flow exits downward to the Eject Card action. From Eject Card, the flow moves down to the final pseudostate, represented by a solid filled circle enclosed within a hollow circle, indicating the end of the activity.</div>
+				</section>
+
+				<section class="left">
+					<aside class="notes">
+						<ul>
+							<li>Shows who talks to whom, in what order, what they say</li>
+							<li>Reads top to bottom — time flows downward</li>
+							<li>Lifelines are displayed below each participant, means object exists</li>
+							<li>Messages are shown between lifelines</li>
+							<li>Activation bars show when active, object currently doing work</li>
+						</ul>
+					</aside>
+					<h3>Sequence Diagrams</h3>
+					<ul>
+						<li class="fragment">Model interactions between objects over time.</li>
+						<li class="fragment">Can be high-level (system overview) or low-level (method calls).</li>
+						<li class="fragment">Can include conditionals and loops.</li>
+						<li class="fragment">Notation:
+							<ul>
+								<li class="fragment">Objects (boxes across top)</li>
+								<li class="fragment">Lifelines (dashed vertical lines)</li>
+								<li class="fragment">Messages (horizontal arrows)</li>
+								<li class="fragment">Activation bars (thin rectangles)</li>
+							</ul>
+						</li>
+					</ul>
+				</section>
+
+				<section class="left dense-slide">
+					<aside class="notes">
+						<ul>
+							<li>Messages and returns
+								<ul>
+									<li>Solid arrow is method call / message sent</li>
+									<li>Dashed arrow is return value</li>
+								</ul>
+							</li>
+							<li>Conditionals and loops
+								<ul>
+									<li>Wrapped in a fragment box with alt (if/else), opt (optional, single if), loop (repeating interaction)</li>
+								</ul>
+							</li>
+						</ul>
+					</aside>
+					<h3>Sequence Diagrams</h3>
+					<!-- Clicking this image opens it in a fullscreen overlay -->
+					<img 
+						style="display: block; margin: 0 auto;"
+						class="r-stretch"
+						src="imgs/sequence-diagram.png" data-preview-image 
+						alt="Sequence diagram example"
+						aria-describedby="sequencediagram-caption">
+					<div id="sequencediagram-caption" class="sr-only">This is a UML sequence diagram modeling the message interactions between three participants during a retail point-of-sale card payment transaction. The diagram reads from left to right across the top, where participants are listed in the following order: an unnamed customer represented by a stick figure actor, Cashier, Card Reader, and Bank. Each participant has a vertical dashed lifeline extending downward. Two axis labels appear on the diagram: a horizontal arrow at the top labeled Sequence Order, indicating that time flows left to right across participants, and a vertical arrow on the left side labeled Time, indicating that the sequence of events flows from top to bottom. First, the customer sends a synchronous message labeled checks out to the Cashier, indicating the customer is ready to pay. Second, the Cashier sends a return message labeled asks for card back to the customer, requesting the customer present their payment card. Third, the customer sends an asynchronous message labeled provides card to the Cashier. Fourth, the Cashier sends a synchronous message labeled runs card to the Card Reader, activating the Card Reader lifeline. Fifth, the Card Reader sends a synchronous message labeled verifies card to the Bank, activating the Bank lifeline. Sixth, the Bank sends a return message labeled card ok back to the Card Reader, confirming the card is valid. At this point the diagram enters the first Alternative combined fragment, which models two mutually exclusive scenarios based on whether the card is valid. Under the condition labeled if card is valid, the Card Reader sends a synchronous message labeled request authorization to the Cashier. The Cashier sends a synchronous message labeled authorize to the Card Reader, completing the authorization path. Under the condition labeled else, meaning the card is not valid, the Bank sends a return message labeled card decline to the Card Reader. The Card Reader sends a return message labeled display declined to the Cashier. The Cashier then sends a return message labeled inform customer to the customer. After the first Alternative fragment, the Cashier sends a synchronous message labeled make payment to the Card Reader, activating a new Bank lifeline segment. The Bank sends a return message labeled payment succeeds or payment fails depending on the outcome, which is modeled in the second Alternative combined fragment. The second Alternative combined fragment models two mutually exclusive scenarios based on whether the payment is successful. Under the condition labeled if payment successful, the Bank sends a return message labeled payment succeeds to the Card Reader. The Card Reader sends a return message labeled dispense receipt to the Cashier. The Cashier then sends a return message labeled hand customer receipt to the customer. Under the condition labeled else, meaning the payment failed, the Bank sends a return message labeled payment fails to the Card Reader. The Card Reader sends a return message labeled display error to the Cashier. The Cashier then sends a return message labeled inform customer to the customer. All lifelines terminate at the bottom of the diagram after the second Alternative fragment is resolved.</div>
 				</section>
 
 			</div>
