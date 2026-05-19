@@ -132,198 +132,7 @@
 				<section class="left">
 					<aside class="notes">
 						<ul>
-							<li>In an object-oriented system, objects are the “first class” members, so let’s start there.</li>
-							<li>When you have requirements, documentation, or a conversation about a system, use these two techniques to find your candidate classes.</li>
-							<li>Noun extraction: Read any description of the system. Underline every noun. Each noun is a candidate object.</li>
-						</ul>
-					</aside>
-					<h3>Candidate Object Identification</h3>
-					<ul>
-						<li class="fragment">Techniques to find candidate classes:
-							<ul>
-								<li class="fragment">Noun Extraction</li>
-								<li class="fragment">BEC Taxonomy</li>
-							</ul>
-						</li>
-					</ul>
-				</section>
-
-				<section class="left">
-					<aside class="notes">
-						<ul>
-							<li>Once we have identified the nouns, we can use EAR to determine which should become classes.</li>
-							<li>First, we determine if it has independent identity in the system (e.g. not an actor or the system itself).</li>
-							<li>Then, we consider if it has at least one persistent attribute.</li>
-							<li>Finally, we consider if it has relationships to other entities.</li>
-							<li>If it has each of these qualities, we should consider making it a class.</li>
-						</ul>
-					</aside>
-					<h3>Turning Candidate Objects into Classes</h3>
-					<ul>
-						<li class="fragment">For each candidate, evaluate it using the E.A.R. framework:
-							<ul>
-								<li class="fragment">Entity: What "thing" is it? Does it contain component parts?</li>
-								<li class="fragment">Attributes: What attributes describe the entity? Note that while these become fields, not all fields (like flags or counters) are attributes.</li>
-								<li class="fragment">Relationships: What other entities does this entity need or use?</li>
-							</ul>
-						</li>
-					</ul>
-				</section>
-
-				<section class="left">
-					<aside class="notes">
-						<ul>
-							<li>Customer = Actor</li>
-							<li>ATM = System itself</li>
-							<li>Account = Entity (identity in system; attribues like balance, accountId; needs/uses other entities, like receipt)</li>
-							<li>Current balance = Attribute of account</li>
-							<li>Daily withdrawal limit = Attribute of account</li>		
-							<li>Cash = No attributes</li>
-							<li>Receipt = Entity (identity in system, attributes like date, time; needs/uses other entities, like account)</li>					
-						</ul>
-					</aside>
-					<h3><i class="fa-solid fa-pencil"></i> Noun Extraction (5 minutes)</h3>
-					<ul>
-						<li>Work in pairs.</li>
-						<li>Extract the nouns from this requirement and classify them as an Entity (Object) or an Attribute.</li>
-						<li><em>A customer interacts with the ATM to make a withdrawal from their account. The account checks the current balance and a daily withdrawal limit. The cash is then dispensed and a receipt is printed.</em></li>
-					</ul>
-				</section>
-
-				<section class="left">
-					<aside class="notes">
-						<ul>
-							<li>EAR gets us most of the way there, but can only see things that store data.</li>
-							<li>The objects responsible for actually running a withdrawal — checking the balance, calling the bank, telling the dispenser to release cash — those don't store anything. They just orchestrate.</li>
-							<li>EAR will never surface them because they fail the attributes test.</li>
-							<li>So we need one more step that answers a different question: not 'what data does this class hold,' but 'what role does this class play in the system.'</li>
-							<li>For large systems, it can be useful to categorize similar things.</li>
-							<li>Problem: If we put UI, business logic, and data in one class, our system becomes a fragile "God Class."</li>
-							<li>Solution (BEC): Categorize our classes into three types.</li>
-						</ul>
-					</aside>
-					<h3>The BEC Taxonomy</h3>
-					<ul>
-						<li class="fragment">For software systems, we can categorize our classes:
-							<ul>
-								<li class="fragment">Boundary: Interfaces with actors</li>
-								<li class="fragment">Control: Implements system logic and coordinates tasks</li>
-								<li class="fragment">Entity: Stateful objects containing system information</li>
-							</ul>
-						</li>
-						<li class="fragment">The Golden Rule: Boundaries NEVER talk directly to Entities. All communication goes through Control objects.</li>
-					</ul>
-				</section>
-
-				<section class="left">
-					<h3>Boundary Objects</h3>
-					<ul>
-						<li class="fragment">Inside our system, but interface with elements outside the system.</li>
-						<li class="fragment">They are a "portal" or "gateway" between outside and inside.</li>
-					</ul>
-				</section>
-
-				<section class="left">
-					<aside class="notes">
-						<ul>
-							<li>Accepting a card requires writing specific command bit patterns to device driver memory locations (turn on the rollers to accept a card).</li>
-							<li>Initiating that command requires a second write to a separate memory location (to initiate that command request).</li>
-							<li>This is hardware-protocol logic; volatile, vendor-specific, and completely irrelevant to your business logic.</li>
-							<li>The CardReader object is inside our system, but up against the boundary acting as a conduit to the outside world device.</li>
-						</ul>
-					</aside>
-					<h3>Boundary Objects: CardReader Example</h3>
-					<ul>
-						<li class="fragment">The Problem: Hardware devices speak a low-level language your application should never have to know.</li>
-						<li class="fragment">The Solution: Wrap it in a Boundary Object.</li>
-					</ul>
-					<pre class="fragment"><code class="language-java" data-line-numbers="" data-trim>
-					// The rest of the system never sees device registers or bit patterns.
-					// It only knows one thing:
-					cardReader.acceptCard();
-					</code></pre>
-				</section>
-
-				<section class="left">
-					<aside class="notes">
-						<ul>
-							<li>Entity objects are the nouns we extracted that passed the EAR test.</li>
-						</ul>
-					</aside>
-					<h3>Entity Objects</h3>
-					<ul>
-						<li class="fragment">Represent information, data, and state needed by the system; not boundary objects.</li>
-						<li class="fragment">They are not just data containers; they provide methods that act on their own data.</li>
-					</ul>
-				</section>
-
-				<section class="left">
-					<aside class="notes">
-						<ul>
-							<li>When your ATM transaction is completed, you get a receipt printed out.</li>
-							<li>The Receipt is not a boundary object. It never touches anything external.</li>
-							<li>As you progress through the transation, we build up this entity object.</li>
-							<li>Its entire job is to accumulate and hold the meaningful data that represents a completed transaction.</li>
-							<li>That’s the hallmark of an entity object: it models something real and stateful within your business domain.</li>
-						</ul>
-					</aside>
-					<h3>Entity Objects: Receipt Example</h3>
-					<ul>
-						<li class="fragment">The printer is a boundary object, but the receipt is likely an entity object.</li>
-						<li class="fragment">The Receipt Entity is build up incrementally.</li>
-					</ul>
-					<pre class="fragment"><code class="language-java" data-line-numbers="" data-trim>
-					// State accumulates as the transaction progresses
-					receipt.setDateTime(LocalDateTime.now());
-					receipt.setAccountNumber(account.getAccountNumber());
-					receipt.setFinalBalance(account.getBalance());
-
-					// The Entity is passed to Boundary objects as needed
-					printer.print(receipt);      // Output to hardware
-					transactionLog.archive(receipt); // Output to local storage
-					</code></pre>
-				</section>
-
-				<section class="left">
-					<aside class="notes">
-						<ul>
-							<li>Control objects manage behavior; they coordinate the other objects so neither entity nor boundary objects have to.</li>
-							<li>Where Entity objects are the nouns, Control objects are the verbs (withdraw, authorize, deposit).</li>
-						</ul>
-					</aside>
-					<h3>Control Objects</h3>
-					<ul>
-						<li class="fragment">Orchestrate the flow and manage behavior.</li>
-						<li class="fragment">Coordinate the other objects so neither entity nor boundary objects have to interact directly.</li>
-						<li class="fragment">One main controller initializes everything; separate controllers per major use case.</li>
-					</ul>
-				</section>
-
-				<section class="left">
-					<aside class="notes">
-						<ul>
-							<li>The AtmController object instantiates boundary objects.</li>
-							<li>Its main menu would create a WithdrawController object when the user indicates they want to make a withdrawal.</li>
-							<li>The WithdrawController object manages the flow of the transation.</li>
-							<li>When the transation is complete, the WithdrawController object is done an not re-used.</li>
-							<li>A subsequent withdrawal will get a new WithdrawController object, you cannot accidentally carry a balance from one withdrawal into the next.</li>
-						</ul>
-					</aside>
-					<h3>Control Objects: ATM Example</h3>
-					<ul>
-						<li class="fragment">Application Scope vs. Transaction Scope:
-							<ul>
-								<li class="fragment">AtmController: Handles system startup, main menus, and hardware initialization; lives until the ATM shuts down.</li>
-								<li class="fragment">WithdrawController: Manages a single withdrawal flow; created dynamically and destroyed when transaction finishes.</li>
-							</ul>
-						</li>
-						<li class="fragment">Architectural Value: Each transaction gets its own controller, state, and lifecycle, ensuring no shared mutable state between transactions.</li>
-					</ul>
-				</section>
-
-				<section class="left">
-					<aside class="notes">
-						<ul>
+							<li>Use Case diagrams are one way we model the functional perspective.</li>
 						</ul>
 					</aside>
 					<h3>Use Case Diagrams</h3>
@@ -332,8 +141,6 @@
 						<li class="fragment">High-level view, no implementation details</li>
 						<li class="fragment">Shows the services a system provides and who uses them</li>
 						<li class="fragment">Starting point for every other model</li>
-					</ul>
-					<ul>
 					</ul>
 				</section>
 
@@ -393,7 +200,7 @@
 				<section class="left">
 					<aside class="notes">
 						<ul>
-							<li>Think of it as the exception is extneding or adding to the base.</li>
+							<li>Think of it as the exception is extending or adding to the base.</li>
 							<li>NSF -> WithdrawCash, the exception hangs off the base.</li>
 							<li>May not return to originating use case.</li>
 						</ul>
@@ -424,7 +231,7 @@
 						<ul>
 							<li>Login to App is base use case</li>
 							<li>Verify Password is the included use case (always happens)</li>
-							<li>Display Login Erro is the extended use case (sometimes happens)</li>
+							<li>Display Login Error is the extended use case (sometimes happens)</li>
 						</ul>
 						<p>Generalization</p>
 						<ul>
@@ -478,8 +285,258 @@
 				<section class="left">
 					<aside class="notes">
 						<ul>
-							<li>Now that we know what the system does, we need to design the objects that will do it.</li>
-							<li>Class diagrams depict the static structure of the system: What objects exist, what data do they hold, and what can they do?</li>
+							<li>Activity diagrams are another way we model the functional perspective (what does the system do, what happens in the system).</li>
+							<li>They actually straddle functional (documenting workflows and use case flows) and dynamic (showing control flow during execution).</li>
+							<li>But we will study them here, since they show what happens, not who does it, slightly different from some dynamic perspective models we will explore.</li>
+							<li>A fork is where your program says 'do both of these at the same time'.</li>
+							<li>The join is where you say 'wait until both are done before moving on.'</li>
+							<li>Diamonds are your if-statements made visual.</li>
+							<li>Always label both paths out of a diamond — typically something like [yes]/[no] or [valid]/[invalid].</li>
+							<li>Activity diagrams are great for modeling business logic, use case flows, or any algorithm before you write the code. Think of it as pseudocode you can draw.</li>
+						</ul>
+					</aside>
+					<h3>Activity Diagrams</h3>
+					<ul>
+						<li class="fragment">Model workflow or process flow of a system.</li>
+						<li class="fragment">Notation:
+							<ul>
+								<li class="fragment">Start (solid circle) required</li>
+								<li class="fragment">End (circle with solid circle inside)</li>
+								<li class="fragment">Activities (rounded rectangles)</li>
+								<li class="fragment">Flow between activities (arrows)</li>
+								<li class="fragment">Conditions (diamonds)</li>
+								<li class="fragment">Forks (horizontal bars, 1 in many out)</li>
+								<li class="fragment">Joins (horizontal bars, many in 1 out)</li>
+							</ul>
+						</li>
+					</ul>
+				</section>
+
+				<section class="left dense-slide">
+					<h3>Activity Diagrams</h3>
+					<!-- Clicking this image opens it in a fullscreen overlay -->
+					<img 
+						style="display: block; margin: 0 auto;"
+						class="r-stretch"
+						src="imgs/activity-diagram.png" data-preview-image 
+						alt="Activity diagram example"
+						aria-describedby="activitydiagram-caption">
+					<div id="activitydiagram-caption" class="sr-only">This is a UML activity diagram modeling the workflow of an ATM transaction. The diagram begins at the top with an initial pseudostate, represented by a solid filled circle, which immediately transitions down to the first action. The first action is Insert Card. From Insert Card, the flow moves down to Input PIN. From Input PIN, the flow moves down to a decision node, represented by a diamond shape. The decision node has two outgoing paths. If the card is accepted, the flow moves right to Select Action. If the card is rejected, the flow moves left to a synchronization join bar. From Select Action, the flow moves down to Fulfill Action. The synchronization join bar on the left side of the diagram receives two incoming flows when the card is rejected: one from Terminate Transaction and one from Notify Bank. These two actions both receive their incoming flow from the same join bar. Terminate Transaction receives flow from the left side of the join bar, and Notify Bank receives flow from the right side of the join bar. Both Terminate Transaction and Notify Bank then flow down into a second, wider synchronization join bar near the bottom of the diagram. Fulfill Action also flows down into this second wide synchronization join bar at the bottom. From the second synchronization join bar, a single flow exits downward to the Eject Card action. From Eject Card, the flow moves down to the final pseudostate, represented by a solid filled circle enclosed within a hollow circle, indicating the end of the activity.</div>
+				</section>
+
+				<section class="left">
+					<aside class="notes">
+						<ul>
+							<li>Now we move on to modeling the static perspective (what objects are involved, what are their attributes, what operations do they perform).</li>
+							<li>In an object-oriented system, objects are the 'first class' members, so these models should be somewhat famiilar to us.</li>
+							<li>When you have requirements, documentation, or a conversation about a system, use these two techniques to find your candidate classes.</li>
+							<li>Noun extraction: Read any description of the system. Underline every noun. Each noun is a candidate object.</li>
+						</ul>
+					</aside>
+					<h3>Candidate Object Identification</h3>
+					<ul>
+						<li class="fragment">Techniques to find candidate classes:
+							<ul>
+								<li class="fragment">Noun Extraction</li>
+								<li class="fragment">BCE Taxonomy</li>
+							</ul>
+						</li>
+					</ul>
+				</section>
+
+				<section class="left">
+					<aside class="notes">
+						<ul>
+							<li>Once we have identified the nouns, we can use EAR to determine which should become classes.</li>
+							<li>First, we determine if it has independent identity in the system (e.g. not an actor or the system itself).</li>
+							<li>Then, we consider if it has at least one persistent attribute.</li>
+							<li>Finally, we consider if it has relationships to other entities.</li>
+							<li>If it has each of these qualities, we should consider making it a class.</li>
+						</ul>
+					</aside>
+					<h3>Turning Candidate Objects into Classes</h3>
+					<ul>
+						<li class="fragment">For each candidate, evaluate it using the E.A.R. framework:
+							<ul>
+								<li class="fragment">Entity: What "thing" is it? Does it contain component parts?</li>
+								<li class="fragment">Attributes: What attributes describe the entity? Note that while these become fields, not all fields (like flags or counters) are attributes.</li>
+								<li class="fragment">Relationships: What other entities does this entity need or use?</li>
+							</ul>
+						</li>
+					</ul>
+				</section>
+
+				<section class="left">
+					<aside class="notes">
+						<ul>
+							<li>Customer = Actor</li>
+							<li>ATM = System itself</li>
+							<li>Account = Entity (identity in system; attribues like balance, accountId; needs/uses other entities, like receipt)</li>
+							<li>Current balance = Attribute of account</li>
+							<li>Daily withdrawal limit = Attribute of account</li>		
+							<li>Cash = No attributes</li>
+							<li>Receipt = Entity (identity in system, attributes like date, time; needs/uses other entities, like account)</li>					
+						</ul>
+					</aside>
+					<h3><i class="fa-solid fa-pencil"></i> Noun Extraction (5 minutes)</h3>
+					<ul>
+						<li>Work in pairs.</li>
+						<li>Extract the nouns from this requirement and classify them as an Entity (Object) or an Attribute.</li>
+						<li><em>A customer interacts with the ATM to make a withdrawal from their account. The account checks the current balance and a daily withdrawal limit. The cash is then dispensed and a receipt is printed.</em></li>
+					</ul>
+				</section>
+
+				<section class="left">
+					<aside class="notes">
+						<ul>
+							<li>EAR gets us most of the way there, but can only see things that store data.</li>
+							<li>The objects responsible for actually running a withdrawal — checking the balance, calling the bank, telling the dispenser to release cash — those don't store anything. They just orchestrate.</li>
+							<li>EAR will never surface them because they fail the attributes test.</li>
+							<li>So we need one more step that answers a different question: not 'what data does this class hold,' but 'what role does this class play in the system.'</li>
+							<li>For large systems, it can be useful to categorize similar things.</li>
+							<li>Problem: If we put UI, business logic, and data in one class, our system becomes a fragile "God Class."</li>
+							<li>Solution (BCE): Categorize our classes into three types.</li>
+						</ul>
+					</aside>
+					<h3>The BCE Taxonomy</h3>
+					<ul>
+						<li class="fragment">For software systems, we can categorize our classes:
+							<ul>
+								<li class="fragment">Boundary: Interfaces with actors</li>
+								<li class="fragment">Control: Implements system logic and coordinates tasks</li>
+								<li class="fragment">Entity: Stateful objects containing system information</li>
+							</ul>
+						</li>
+						<li class="fragment">The Golden Rule: Boundaries NEVER talk directly to Entities. All communication goes through Control objects.</li>
+					</ul>
+				</section>
+
+				<section class="left">
+					<h3>Boundary Objects</h3>
+					<ul>
+						<li class="fragment">Inside our system, but interface with elements outside the system.</li>
+						<li class="fragment">They are a "portal" or "gateway" between outside and inside.</li>
+					</ul>
+				</section>
+
+				<section class="left">
+					<aside class="notes">
+						<ul>
+							<li>Accepting a card requires writing specific command bit patterns to device driver memory locations (turn on the rollers to accept a card).</li>
+							<li>Initiating that command requires a second write to a separate memory location (to initiate that command request).</li>
+							<li>This is hardware-protocol logic; volatile, vendor-specific, and completely irrelevant to your business logic.</li>
+							<li>The CardReader object is inside our system, but up against the boundary acting as a conduit to the outside world device.</li>
+						</ul>
+					</aside>
+					<h3>Boundary Objects: CardReader Example</h3>
+					<ul>
+						<li class="fragment">The Problem: Hardware devices speak a low-level language your application should never have to know.</li>
+						<li class="fragment">The Solution: Wrap it in a Boundary Object.</li>
+					</ul>
+					<pre class="fragment"><code class="language-java" data-line-numbers="" data-trim>
+					// The rest of the system never sees device registers or bit patterns.
+					// It only knows one thing:
+					cardReader.acceptCard();
+					</code></pre>
+				</section>
+
+				<section class="left">
+					<aside class="notes">
+						<ul>
+							<li>Control objects manage behavior; they coordinate the other objects so neither entity nor boundary objects have to.</li>
+							<li>Where Entity objects are the nouns, Control objects are the verbs (withdraw, authorize, deposit).</li>
+						</ul>
+					</aside>
+					<h3>Control Objects</h3>
+					<ul>
+						<li class="fragment">Orchestrate the flow and manage behavior.</li>
+						<li class="fragment">Coordinate the other objects so neither entity nor boundary objects have to interact directly.</li>
+						<li class="fragment">One main controller initializes everything; separate controllers per major use case.</li>
+					</ul>
+				</section>
+
+				<section class="left">
+					<aside class="notes">
+						<ul>
+							<li>The AtmController object instantiates boundary objects.</li>
+							<li>Its main menu would create a WithdrawController object when the user indicates they want to make a withdrawal.</li>
+							<li>The WithdrawController object manages the flow of the transation.</li>
+							<li>When the transation is complete, the WithdrawController object is done an not re-used.</li>
+							<li>A subsequent withdrawal will get a new WithdrawController object, you cannot accidentally carry a balance from one withdrawal into the next.</li>
+						</ul>
+					</aside>
+					<h3>Control Objects: ATM Example</h3>
+					<ul>
+						<li class="fragment">Application Scope vs. Transaction Scope:
+							<ul>
+								<li class="fragment">AtmController: Handles system startup, main menus, and hardware initialization; lives until the ATM shuts down.</li>
+								<li class="fragment">WithdrawController: Manages a single withdrawal flow; created dynamically and destroyed when transaction finishes.</li>
+							</ul>
+						</li>
+						<li class="fragment">Architectural Value: Each transaction gets its own controller, state, and lifecycle, ensuring no shared mutable state between transactions.</li>
+					</ul>
+				</section>
+
+				<section class="left">
+					<aside class="notes">
+						<ul>
+							<li>Entity objects are the nouns we extracted that passed the EAR test.</li>
+						</ul>
+					</aside>
+					<h3>Entity Objects</h3>
+					<ul>
+						<li class="fragment">Represent information, data, and state needed by the system; not boundary objects.</li>
+						<li class="fragment">They are not just data containers; they provide methods that act on their own data.</li>
+					</ul>
+				</section>
+
+				<section class="left">
+					<aside class="notes">
+						<ul>
+							<li>When your ATM transaction is completed, you get a receipt printed out.</li>
+							<li>The Receipt is not a boundary object. It never touches anything external.</li>
+							<li>As you progress through the transation, we build up this entity object.</li>
+							<li>Its entire job is to accumulate and hold the meaningful data that represents a completed transaction.</li>
+							<li>That’s the hallmark of an entity object: it models something real and stateful within your business domain.</li>
+						</ul>
+					</aside>
+					<h3>Entity Objects: Receipt Example</h3>
+					<ul>
+						<li class="fragment">The printer is a boundary object, but the receipt is likely an entity object.</li>
+						<li class="fragment">The Receipt Entity is build up incrementally.</li>
+					</ul>
+					<pre class="fragment"><code class="language-java" data-line-numbers="" data-trim>
+					// State accumulates as the transaction progresses
+					receipt.setDateTime(LocalDateTime.now());
+					receipt.setAccountNumber(account.getAccountNumber());
+					receipt.setFinalBalance(account.getBalance());
+
+					// The Entity is passed to Boundary objects as needed
+					printer.print(receipt);      // Output to hardware
+					transactionLog.archive(receipt); // Output to local storage
+					</code></pre>
+				</section>
+
+				<section class="left">
+					<aside class="notes">
+						<ul>
+							<li>Answer key: /Users/michellemelton/development/cs3667/cs3667-materials/uml/active-learning/ATM-bce.txt</li>
+						</ul>
+					</aside>
+					<h3><i class="fa-solid fa-pencil"></i> BCE Identification (5 minutes)</h3>
+					<ul>
+						<li>List every noun you can extract from the description (aim for at least 12).</li>
+						<li>For each noun, classify it as Boundary (B), Control (C), Entity (E), or Not a class (N).</li>
+						<li>Identify at least one Control class that is implied but not explicitly stated in the description.</li>
+						<li><em>A bank offers ATM services to its customers. Customers insert a debit card and enter a PIN to authenticate. After successful authentication, customers can withdraw cash, deposit funds, transfer money between accounts, or check a balance. The ATM machine includes a card reader, a cash dispenser, a deposit slot, a printer for receipts, and a camera for security. All transactions are verified with the bank's authorization service. Unrecognized cards are rejected. A logger records all transaction events.</em></li>
+					</ul>
+				</section>
+
+				<section class="left">
+					<aside class="notes">
+						<ul>
+							<li>Now that we know what the system does, and we have identified candidate objects, we need to design the classes for those objects.</li>
+							<li>Class diagrams model the static perspective of the system: What objects exist, what data do they hold, and what can they do?</li>
 							<li>Class diagrams map almost 1-to-1 with Java code.</li>
 							<li>Encapsulation is a core tenet of object-oriented design.</li>
 							<li>This means our attributes (the middle box) should almost always be marked with a minus sign for private, and our operations (the bottom box) with a plus sign for public.</li>
@@ -538,7 +595,7 @@
 					</aside>
 					<h3><i class="fa-solid fa-pencil"></i> Class Diagram (10 minutes)</h3>
 					<ul>
-						<li>Use the objects identified in the BEC activity to build a class diagram.</li>
+						<li>Use the objects identified in the BCE activity to build a class diagram.</li>
 						<li>Include all 3 classes: Customer, ATM, Account.</li>
 						<li>Complete name, 1-2 fields, and 1 method for each.</li>
 						<li>Draw association lines between classes where appropriate.</li>
@@ -577,6 +634,7 @@
 				<section class="left">
 					<aside class="notes">
 						<ul>
+							<li>Now we know what our system does (functional) and what objects are involved (static); finally, we explore modeling the dynamic perspective (how those objects interact over time).</li>
 							<li>A state diagram shows how an object moves and changes over time</li>
 							<li>A "movie" vs. the object diagram's "photograph"</li>
 							<li>Every state is a moment where the object is doing something or waiting</li>
@@ -651,46 +709,6 @@
 						alt="State diagram activity"
 						aria-describedby="statediagramactivity-caption">
 					<div id="statediagramactivity-caption" class="sr-only">This is a partially completed UML state diagram for an ATM system. The diagram contains five states and two pseudostate markers. No transitions between states are shown. Students are expected to draw and label all transitions as part of a class activity. The two pseudostate markers appear on the left side of the diagram. One represents the initial pseudostate, indicating where the system begins. The other represents the final pseudostate, indicating where the system ends. The five states are as follows. The Idle state has three internal actions: on entry the system displays a welcome screen, while active the system waits for a card to be inserted, and on exit the system clears the welcome screen. The Authenticating state has three internal actions: on entry the system reads the card data and displays a PIN prompt, while active the system validates the card and PIN, and on exit the system clears all data from the display. The Session Active state has three internal actions: on entry the system displays the transaction menu, while active the system waits for a user selection and processes the transaction, and on exit the system logs the transaction result. The Dispensing state has three internal actions: on entry the system activates the cash mechanism and printer, while active the system dispenses cash and prints a receipt, and on exit the system confirms that the cash and receipt have been taken. The Ejecting Card state has three internal actions: on entry the system activates the card motor, while active the system waits for the customer to remove the card, and on exit the system confirms the card has been removed.</div>
-				</section>
-
-				<section class="left">
-					<aside class="notes">
-						<ul>
-							<li>Shows what happens, not who does it.</li>
-							<li>A fork is where your program says 'do both of these at the same time'.</li>
-							<li>The join is where you say 'wait until both are done before moving on.'</li>
-							<li>Diamonds are your if-statements made visual.</li>
-							<li>Always label both paths out of a diamond — typically something like [yes]/[no] or [valid]/[invalid].</li>
-							<li>Activity diagrams are great for modeling business logic, use case flows, or any algorithm before you write the code. Think of it as pseudocode you can draw.</li>
-						</ul>
-					</aside>
-					<h3>Activity Diagrams</h3>
-					<ul>
-						<li class="fragment">Model workflow or process flow of a system.</li>
-						<li class="fragment">Notation:
-							<ul>
-								<li class="fragment">Start (solid circle) required</li>
-								<li class="fragment">End (circle with solid circle inside)</li>
-								<li class="fragment">Activities (rounded rectangles)</li>
-								<li class="fragment">Flow between activities (arrows)</li>
-								<li class="fragment">Conditions (diamonds)</li>
-								<li class="fragment">Forks (horizontal bars, 1 in many out)</li>
-								<li class="fragment">Joins (horizontal bars, many in 1 out)</li>
-							</ul>
-						</li>
-					</ul>
-				</section>
-
-				<section class="left dense-slide">
-					<h3>Activity Diagrams</h3>
-					<!-- Clicking this image opens it in a fullscreen overlay -->
-					<img 
-						style="display: block; margin: 0 auto;"
-						class="r-stretch"
-						src="imgs/activity-diagram.png" data-preview-image 
-						alt="Activity diagram example"
-						aria-describedby="activitydiagram-caption">
-					<div id="activitydiagram-caption" class="sr-only">This is a UML activity diagram modeling the workflow of an ATM transaction. The diagram begins at the top with an initial pseudostate, represented by a solid filled circle, which immediately transitions down to the first action. The first action is Insert Card. From Insert Card, the flow moves down to Input PIN. From Input PIN, the flow moves down to a decision node, represented by a diamond shape. The decision node has two outgoing paths. If the card is accepted, the flow moves right to Select Action. If the card is rejected, the flow moves left to a synchronization join bar. From Select Action, the flow moves down to Fulfill Action. The synchronization join bar on the left side of the diagram receives two incoming flows when the card is rejected: one from Terminate Transaction and one from Notify Bank. These two actions both receive their incoming flow from the same join bar. Terminate Transaction receives flow from the left side of the join bar, and Notify Bank receives flow from the right side of the join bar. Both Terminate Transaction and Notify Bank then flow down into a second, wider synchronization join bar near the bottom of the diagram. Fulfill Action also flows down into this second wide synchronization join bar at the bottom. From the second synchronization join bar, a single flow exits downward to the Eject Card action. From Eject Card, the flow moves down to the final pseudostate, represented by a solid filled circle enclosed within a hollow circle, indicating the end of the activity.</div>
 				</section>
 
 				<section class="left">
