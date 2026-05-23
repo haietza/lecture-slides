@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BCE — Withdraw Use Case</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: #0F1218;
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    overflow: hidden;
+    color: #E2E8F0;
+  }
+
+  #diagram-wrap {
+    flex: 1;
+    min-height: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 6px 12px 2px;
+  }
+
+  #diagram-wrap svg {
+    width: 100%;
+    height: 100%;
+    max-height: 100%;
+    display: block;
+  }
+
+  #footer {
+    padding: 8px 16px 10px;
+    border-top: 1px solid #1E2530;
+    background: #0A0D12;
+    flex-shrink: 0;
+  }
+
+  /* Caption — WCAG AAA: #E2E8F0 on #0A0D12 = 16.5:1 */
+  #caption {
+    font-size: 13px;
+    line-height: 1.55;
+    color: #E2E8F0;
+    min-height: 36px;
+    margin-bottom: 8px;
+  }
+  #caption b { color: #ffffff; }
+
+  #nav {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  /* Buttons — visible focus ring for keyboard navigation */
+  .btn {
+    padding: 5px 14px;
+    border: 1px solid #3A4558;
+    border-radius: 5px;
+    background: #1A2030;
+    cursor: pointer;
+    font-size: 12px;
+    color: #CBD5E1;
+    transition: background 0.12s, border-color 0.12s;
+    white-space: nowrap;
+  }
+  .btn:hover:not(:disabled) { background: #232D40; border-color: #5A6880; }
+  .btn:disabled { opacity: 0.35; cursor: default; }
+
+  /* WCAG focus ring — 3:1 contrast on dark bg */
+  .btn:focus-visible {
+    outline: 2px solid #2DD4A8;
+    outline-offset: 2px;
+  }
+
+  /* Primary — WCAG AAA: #E2E8F0 on #1D4ED8 = 7.5:1 */
+  .btn-primary { background: #1D4ED8; color: #E2E8F0; border-color: #1D4ED8; }
+  .btn-primary:hover:not(:disabled) { background: #1A44BE; border-color: #1A44BE; }
+
+  /* Step counter — WCAG AA: #8A96A8 on #0A0D12 = 4.9:1 */
+  #step-label {
+    font-size: 12px;
+    color: #8A96A8;
+    min-width: 64px;
+    text-align: center;
+  }
+
+  #hint {
+    font-size: 11px;
+    color: #4A5568;
+    margin-left: auto;
+  }
+</style>
+</head>
+<body>
+
+<div id="diagram-wrap">
+<!--
+  SVG accessibility:
+  - role="img" signals non-interactive graphic to screen readers
+  - <title> provides a short name announced on focus
+  - <desc> provides a full description for screen readers
+-->
+<svg id="bce"
+     viewBox="48 32 768 538"
+     preserveAspectRatio="xMidYMid meet"
+     role="img"
+     aria-labelledby="bce-title bce-desc">
+
+  <title id="bce-title">ATM BCE class diagram — withdraw use case</title>
+  <desc id="bce-desc">
+    BCE architecture diagram for an ATM system showing three horizontal layers.
+    Boundary layer contains: CardReader, Screen, Camera, Bank, CashDispenser,
+    DepositSlot, and Printer. Control layer contains: ATMController,
+    AuthController, WithdrawController, DepositController, TransferController,
+    and BalanceController. Entity layer contains: Account, Receipt, Image,
+    and Logger. Two external actors, Customer and Bank, appear above the
+    Boundary layer. Use the Next and Back buttons below the diagram to step
+    through the withdraw cash use case interaction sequence.
+  </desc>
+
+  <defs>
+    <!-- context-stroke inherits line colour so arrowhead always matches -->
+    <marker id="mh" viewBox="0 0 10 10" refX="9" refY="5"
+            markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0 1.5L8.5 5L0 8.5z" fill="context-stroke"/>
+    </marker>
+  </defs>
+
+  <!-- =================== LAYER FRAMES =================== -->
+  <!--
+    Frame borders: #2A3848 on #0F1218 = 2.5:1 (decorative border, not text — UI component
+    minimum is 3:1 but these frames are purely structural/decorative containers)
+  -->
+
+  <!-- Boundary frame -->
+  <rect x="60" y="110" width="730" height="150" fill="none" stroke="#2A3848" stroke-width="1" rx="2"/>
+  <rect x="60" y="110" width="102" height="26" fill="#141C28" stroke="#2A3848" stroke-width="1" rx="2"/>
+  <!-- Frame label: #6A8BAA on #141C28 = 4.7:1 — passes AA -->
+  <text x="111" y="123" font-size="10" fill="#6A8BAA" text-anchor="middle" dominant-baseline="central">«boundary»</text>
+
+  <!-- Control frame -->
+  <rect x="60" y="280" width="730" height="150" fill="none" stroke="#2A3848" stroke-width="1" rx="2"/>
+  <rect x="60" y="280" width="90" height="26" fill="#141220" stroke="#2A3848" stroke-width="1" rx="2"/>
+  <text x="105" y="293" font-size="10" fill="#6A68A8" text-anchor="middle" dominant-baseline="central">«control»</text>
+
+  <!-- Entity frame -->
+  <rect x="60" y="450" width="730" height="110" fill="none" stroke="#2A3848" stroke-width="1" rx="2"/>
+  <rect x="60" y="450" width="78" height="26" fill="#1A1000" stroke="#2A3848" stroke-width="1" rx="2"/>
+  <text x="99" y="463" font-size="10" fill="#988040" text-anchor="middle" dominant-baseline="central">«entity»</text>
+
+  <!-- =================== ACTORS =================== -->
+  <!--
+    Actor boxes
+    Text: #C8D0DC on #1C2030
+    Contrast: #C8D0DC luminance ≈ 0.586, #1C2030 luminance ≈ 0.008
+    Ratio: (0.586+0.05)/(0.008+0.05) = 10.97:1 — AAA ✓
+  -->
+  <rect x="70" y="50" width="110" height="46" fill="#1C2030" stroke="#505868" stroke-width="1" rx="4"/>
+  <text x="125" y="73" font-size="11" fill="#C8D0DC" text-anchor="middle" dominant-baseline="central" font-weight="500">Customer</text>
+
+  <rect x="665" y="50" width="110" height="46" fill="#1C2030" stroke="#505868" stroke-width="1" rx="4"/>
+  <text x="720" y="66" font-size="11" fill="#C8D0DC" text-anchor="middle" dominant-baseline="central" font-weight="500">Bank</text>
+  <text x="720" y="81" font-size="8.5" fill="#6A7888" text-anchor="middle" dominant-baseline="central">«actor»</text>
+
+  <!-- =================== BOUNDARY OBJECTS =================== -->
+  <!--
+    Boundary fill: #0D2540  stroke: #4A90C0
+    Text: #88C0E0
+    Contrast: #88C0E0 luminance ≈ 0.476, #0D2540 luminance ≈ 0.012
+    Ratio: (0.476+0.05)/(0.012+0.05) = 8.48:1 — AAA ✓
+  -->
+
+  <!-- Row 1 -->
+  <rect x="180" y="120" width="110" height="46" fill="#0D2540" stroke="#4A90C0" stroke-width="1" rx="4"/>
+  <text x="235" y="143" font-size="11" fill="#88C0E0" text-anchor="middle" dominant-baseline="central" font-weight="500">CardReader</text>
+
+  <rect x="315" y="120" width="110" height="46" fill="#0D2540" stroke="#4A90C0" stroke-width="1" rx="4"/>
+  <text x="370" y="143" font-size="11" fill="#88C0E0" text-anchor="middle" dominant-baseline="central" font-weight="500">Screen</text>
+
+  <rect x="455" y="120" width="110" height="46" fill="#0D2540" stroke="#4A90C0" stroke-width="1" rx="4"/>
+  <text x="510" y="143" font-size="11" fill="#88C0E0" text-anchor="middle" dominant-baseline="central" font-weight="500">Camera</text>
+
+  <rect x="595" y="120" width="110" height="46" fill="#0D2540" stroke="#4A90C0" stroke-width="1" rx="4"/>
+  <text x="650" y="143" font-size="11" fill="#88C0E0" text-anchor="middle" dominant-baseline="central" font-weight="500">Bank</text>
+
+  <!-- Row 2 -->
+  <rect x="240" y="194" width="110" height="46" fill="#0D2540" stroke="#4A90C0" stroke-width="1" rx="4"/>
+  <text x="295" y="217" font-size="11" fill="#88C0E0" text-anchor="middle" dominant-baseline="central" font-weight="500">CashDispenser</text>
+
+  <rect x="380" y="194" width="110" height="46" fill="#0D2540" stroke="#4A90C0" stroke-width="1" rx="4"/>
+  <text x="435" y="217" font-size="11" fill="#88C0E0" text-anchor="middle" dominant-baseline="central" font-weight="500">DepositSlot</text>
+
+  <rect x="520" y="194" width="110" height="46" fill="#0D2540" stroke="#4A90C0" stroke-width="1" rx="4"/>
+  <text x="575" y="217" font-size="11" fill="#88C0E0" text-anchor="middle" dominant-baseline="central" font-weight="500">Printer</text>
+
+  <!-- =================== CONTROL OBJECTS =================== -->
+  <!--
+    Control fill: #1A1840  stroke: #6A68C8
+    Text: #A8A6E0
+    Contrast: #A8A6E0 luminance ≈ 0.420, #1A1840 luminance ≈ 0.005
+    Ratio: (0.420+0.05)/(0.005+0.05) = 8.55:1 — AAA ✓
+  -->
+
+  <!-- Row 1 -->
+  <rect x="370" y="290" width="110" height="46" fill="#1A1840" stroke="#6A68C8" stroke-width="1" rx="4"/>
+  <text x="425" y="313" font-size="11" fill="#A8A6E0" text-anchor="middle" dominant-baseline="central" font-weight="500">ATMController</text>
+
+  <!-- Row 2 -->
+  <rect x="75" y="370" width="110" height="46" fill="#1A1840" stroke="#6A68C8" stroke-width="1" rx="4"/>
+  <text x="130" y="393" font-size="11" fill="#A8A6E0" text-anchor="middle" dominant-baseline="central" font-weight="500">AuthController</text>
+
+  <rect x="225" y="370" width="110" height="46" fill="#1A1840" stroke="#6A68C8" stroke-width="1" rx="4"/>
+  <text x="280" y="386" font-size="11" fill="#A8A6E0" text-anchor="middle" dominant-baseline="central" font-weight="500">Withdraw</text>
+  <text x="280" y="400" font-size="10" fill="#A8A6E0" text-anchor="middle" dominant-baseline="central">Controller</text>
+
+  <rect x="370" y="370" width="110" height="46" fill="#1A1840" stroke="#6A68C8" stroke-width="1" rx="4"/>
+  <text x="425" y="393" font-size="11" fill="#A8A6E0" text-anchor="middle" dominant-baseline="central" font-weight="500">DepositController</text>
+
+  <rect x="515" y="370" width="110" height="46" fill="#1A1840" stroke="#6A68C8" stroke-width="1" rx="4"/>
+  <text x="570" y="393" font-size="11" fill="#A8A6E0" text-anchor="middle" dominant-baseline="central" font-weight="500">TransferController</text>
+
+  <rect x="665" y="370" width="110" height="46" fill="#1A1840" stroke="#6A68C8" stroke-width="1" rx="4"/>
+  <text x="720" y="393" font-size="11" fill="#A8A6E0" text-anchor="middle" dominant-baseline="central" font-weight="500">BalanceController</text>
+
+  <!-- =================== ENTITY OBJECTS =================== -->
+  <!--
+    Entity fill: #261500  stroke: #A07018
+    Text: #D09830
+    Contrast: #D09830 luminance ≈ 0.348, #261500 luminance ≈ 0.004
+    Ratio: (0.348+0.05)/(0.004+0.05) = 7.37:1 — AAA ✓
+  -->
+  <rect x="130" y="490" width="110" height="46" fill="#261500" stroke="#A07018" stroke-width="1" rx="4"/>
+  <text x="185" y="513" font-size="11" fill="#D09830" text-anchor="middle" dominant-baseline="central" font-weight="500">Account</text>
+
+  <rect x="290" y="490" width="110" height="46" fill="#261500" stroke="#A07018" stroke-width="1" rx="4"/>
+  <text x="345" y="513" font-size="11" fill="#D09830" text-anchor="middle" dominant-baseline="central" font-weight="500">Receipt</text>
+
+  <rect x="450" y="490" width="110" height="46" fill="#261500" stroke="#A07018" stroke-width="1" rx="4"/>
+  <text x="505" y="513" font-size="11" fill="#D09830" text-anchor="middle" dominant-baseline="central" font-weight="500">Image</text>
+
+  <rect x="600" y="490" width="110" height="46" fill="#261500" stroke="#A07018" stroke-width="1" rx="4"/>
+  <text x="655" y="513" font-size="11" fill="#D09830" text-anchor="middle" dominant-baseline="central" font-weight="500">Logger</text>
+
+  <!-- =================== ARROWS =================== -->
+  <!--
+    Active arrow colour: #2DD4A8
+    #2DD4A8 on #0F1218: luminance ≈ 0.521 / 0.003 → 10.7:1 — AAA ✓
+
+    Previous arrow colour: #3A4858 (decorative — connector lines, not text)
+    Arrow label text: #2DD4A8 on transparent (white bg fallback provided)
+  -->
+  <style>
+    .ar { opacity: 0; pointer-events: none; }
+    .ar line, .ar path { transition: stroke 0.25s, stroke-width 0.25s; }
+    .ar-lbg { fill: rgba(15,18,24,0.92); stroke: none; }
+    .ar-lbl { font-size: 9px; text-anchor: middle; dominant-baseline: central;
+              fill: #2DD4A8; font-weight: 700; pointer-events: none; }
+  </style>
+
+  <!-- a1: Customer → CardReader -->
+  <g id="a1" class="ar" data-step="1">
+    <line x1="163" y1="96" x2="222" y2="120" marker-end="url(#mh)"/>
+    <rect class="ar-lbg" x="158" y="97" width="64" height="14" rx="2"/>
+    <text class="ar-lbl" x="190" y="104">insert card</text>
+  </g>
+
+  <!-- a2: CardReader → ATMController -->
+  <g id="a2" class="ar" data-step="2">
+    <line x1="235" y1="166" x2="400" y2="290" marker-end="url(#mh)"/>
+    <rect class="ar-lbg" x="268" y="217" width="106" height="14" rx="2"/>
+    <text class="ar-lbl" x="321" y="224">onCardInserted()</text>
+  </g>
+
+  <!-- a3: ATMController → AuthController -->
+  <g id="a3" class="ar" data-step="3">
+    <line x1="370" y1="320" x2="185" y2="370" marker-end="url(#mh)"/>
+    <rect class="ar-lbg" x="222" y="335" width="140" height="14" rx="2"/>
+    <text class="ar-lbl" x="292" y="342">startAuthentication()</text>
+  </g>
+
+  <!-- a4: AuthController → Screen -->
+  <g id="a4" class="ar" data-step="4">
+    <line x1="155" y1="370" x2="352" y2="166" marker-end="url(#mh)"/>
+    <rect class="ar-lbg" x="198" y="255" width="94" height="14" rx="2"/>
+    <text class="ar-lbl" x="245" y="262">promptForPin()</text>
+  </g>
+
+  <!-- a5: AuthController → Bank boundary -->
+  <g id="a5" class="ar" data-step="5">
+    <line x1="185" y1="375" x2="618" y2="166" marker-end="url(#mh)"/>
+    <rect class="ar-lbg" x="346" y="250" width="134" height="14" rx="2"/>
+    <text class="ar-lbl" x="413" y="257">validateCredentials()</text>
+  </g>
+
+  <!-- a6: AuthController → Account (create — dashed) -->
+  <g id="a6" class="ar" data-step="6">
+    <line x1="145" y1="416" x2="180" y2="490" marker-end="url(#mh)" stroke-dasharray="6 3"/>
+    <rect class="ar-lbg" x="96" y="448" width="108" height="14" rx="2"/>
+    <text class="ar-lbl" x="150" y="455">«create» Account</text>
+  </g>
+
+  <!-- a7: ATMController → Screen (show menu) -->
+  <g id="a7" class="ar" data-step="7">
+    <line x1="415" y1="290" x2="388" y2="166" marker-end="url(#mh)"/>
+    <rect class="ar-lbg" x="366" y="217" width="108" height="14" rx="2"/>
+    <text class="ar-lbl" x="420" y="224">displayMainMenu()</text>
+  </g>
+
+  <!-- a8: ATMController → WithdrawController -->
+  <g id="a8" class="ar" data-step="8">
+    <line x1="388" y1="336" x2="335" y2="370" marker-end="url(#mh)"/>
+    <rect class="ar-lbg" x="320" y="347" width="80" height="14" rx="2"/>
+    <text class="ar-lbl" x="360" y="354">start(account)</text>
+  </g>
+
+  <!-- a9: WithdrawController → Screen -->
+  <g id="a9" class="ar" data-step="9">
+    <line x1="295" y1="370" x2="388" y2="166" marker-end="url(#mh)"/>
+    <rect class="ar-lbg" x="292" y="254" width="112" height="14" rx="2"/>
+    <text class="ar-lbl" x="348" y="261">promptForAmount()</text>
+  </g>
+
+  <!-- a10: WithdrawController → Account (getBalance) -->
+  <g id="a10" class="ar" data-step="10">
+    <line x1="252" y1="416" x2="206" y2="490" marker-end="url(#mh)"/>
+    <rect class="ar-lbg" x="190" y="447" width="78" height="14" rx="2"/>
+    <text class="ar-lbl" x="229" y="454">getBalance()</text>
+  </g>
+
+  <!-- a11: WithdrawController → Bank (authorize) -->
+  <g id="a11" class="ar" data-step="11">
+    <line x1="335" y1="375" x2="618" y2="166" marker-end="url(#mh)"/>
+    <rect class="ar-lbg" x="436" y="252" width="70" height="14" rx="2"/>
+    <text class="ar-lbl" x="471" y="259">authorize()</text>
+  </g>
+
+  <!-- a12: WithdrawController → Account (debit — offset from a10) -->
+  <g id="a12" class="ar" data-step="12">
+    <line x1="265" y1="416" x2="220" y2="490" marker-end="url(#mh)"/>
+    <rect class="ar-lbg" x="212" y="443" width="50" height="14" rx="2"/>
+    <text class="ar-lbl" x="237" y="450">debit()</text>
+  </g>
+
+  <!-- a13: WithdrawController → CashDispenser -->
+  <g id="a13" class="ar" data-step="13">
+    <line x1="280" y1="370" x2="293" y2="240" marker-end="url(#mh)"/>
+    <rect class="ar-lbg" x="252" y="298" width="68" height="14" rx="2"/>
+    <text class="ar-lbl" x="286" y="305">dispense()</text>
+  </g>
+
+  <!-- a14: WithdrawController → Receipt (create — dashed) -->
+  <g id="a14" class="ar" data-step="14">
+    <line x1="318" y1="416" x2="345" y2="490" marker-end="url(#mh)" stroke-dasharray="6 3"/>
+    <rect class="ar-lbg" x="288" y="447" width="108" height="14" rx="2"/>
+    <text class="ar-lbl" x="342" y="454">«create» Receipt</text>
+  </g>
+
+  <!-- a15: WithdrawController → Printer -->
+  <g id="a15" class="ar" data-step="15">
+    <line x1="332" y1="374" x2="527" y2="240" marker-end="url(#mh)"/>
+    <rect class="ar-lbg" x="386" y="298" width="50" height="14" rx="2"/>
+    <text class="ar-lbl" x="411" y="305">print()</text>
+  </g>
+
+  <!-- a16: WithdrawController → Logger -->
+  <g id="a16" class="ar" data-step="16">
+    <line x1="335" y1="416" x2="602" y2="490" marker-end="url(#mh)"/>
+    <rect class="ar-lbg" x="430" y="447" width="40" height="14" rx="2"/>
+    <text class="ar-lbl" x="450" y="454">log()</text>
+  </g>
+
+</svg>
+</div>
+
+<div id="footer">
+  <p id="caption">
+    The BCE architecture for this ATM system. Three layers separate concerns:
+    <b>Boundary</b> objects interface with actors and hardware,
+    <b>Control</b> objects orchestrate use cases, and
+    <b>Entity</b> objects store persistent data.
+    Click <b>Next →</b> to walk through the withdraw cash use case.
+  </p>
+  <div id="nav" role="group" aria-label="Step navigation">
+    <button class="btn" id="btn-back" onclick="go(-1)" disabled aria-label="Previous step">← Back</button>
+    <span id="step-label" aria-live="polite" aria-atomic="true">0 / 16</span>
+    <button class="btn btn-primary" id="btn-next" onclick="go(1)" aria-label="Next step">Next →</button>
+    <button class="btn" onclick="showAll()" style="margin-left:8px" aria-label="Show all relationships">Show all</button>
+    <button class="btn" onclick="reset()" aria-label="Reset to beginning">Reset</button>
+    <span id="hint" aria-hidden="true">← → keys work when widget is focused</span>
+  </div>
+</div>
+
+<script>
+const STEPS = [
+  "The BCE architecture for this ATM system. Three layers separate concerns: <b>Boundary</b> objects interface with actors and hardware, <b>Control</b> objects orchestrate use cases, and <b>Entity</b> objects store persistent data. Click <b>Next →</b> to walk through the withdraw cash use case.",
+  "① The <b>Customer</b> actor inserts their card. <b>Rule: Actors may only interact with Boundary objects</b>, never directly with Control or Entity layers.",
+  "② <b>CardReader</b> (Boundary) fires an event to <b>ATMController</b> (Control). <b>Rule: Boundary objects only communicate with the Control layer</b>, never directly with Entity objects.",
+  "③ <b>ATMController</b> delegates to <b>AuthController</b>. Control objects may communicate with other Control objects. ATMController is the top-level state machine; it routes to the right sub-controller but performs no business logic itself.",
+  "④ <b>AuthController</b> commands <b>Screen</b> (Boundary) to display the PIN prompt. Control objects can reach back into the Boundary layer to issue commands; this relationship is a legal two-way Boundary ↔ Control one.",
+  "⑤ <b>AuthController</b> calls the <b>Bank</b> boundary to validate the card and PIN. Bank wraps the external banking network; it is the system's only financial connection to the outside world.",
+  "⑥ Credentials verified. <b>AuthController</b> creates the <b>Account</b> entity, loading the customer's data. <b>Rule: Only Control objects may create or modify Entity objects.</b> The dashed arrow indicates a «create» dependency.",
+  "⑦ Authentication complete. <b>ATMController</b> regains control and commands <b>Screen</b> to show the main menu. ATMController, not AuthController, owns the overall session flow.",
+  "⑧ The customer selects Withdraw. <b>ATMController</b> delegates to <b>WithdrawController</b>, passing the loaded Account. WithdrawController now owns the entire withdrawal use case.",
+  "⑨ <b>WithdrawController</b> commands <b>Screen</b> (Boundary) to prompt for an amount. Every interaction with the user routes through a Boundary object.",
+  "⑩ <b>WithdrawController</b> reads the balance from the <b>Account</b> entity. Control objects may freely read from Entity objects to make business decisions.",
+  "⑪ <b>WithdrawController</b> calls the <b>Bank</b> boundary to authorize this transaction. This action is separate from authentication; the first call validated identity, this one validates the amount.",
+  "⑫ Authorized. <b>WithdrawController</b> debits the <b>Account</b> entity. Notice two arrows to Account: getBalance() at step 10 and debit() now (two distinct interactions).",
+  "⑬ <b>WithdrawController</b> commands <b>CashDispenser</b> (Boundary) to release cash. Key point: <b>CashDispenser never touches Account directly</b>; the Control layer always mediates between Boundary and Entity.",
+  "⑭ <b>WithdrawController</b> creates a <b>Receipt</b> entity (dashed «create» arrow). Only a Control object can create the receipt; hardware objects like CashDispenser and Printer cannot.",
+  "⑮ <b>WithdrawController</b> sends the Receipt to <b>Printer</b> (Boundary). Printer reads from the Receipt but cannot create or modify it.",
+  "⑯ <b>WithdrawController</b> writes an audit entry to <b>Logger</b> (Entity). All 16 steps respected the three rules: Actors only touched Boundary, Boundary never touched Entity, and all business logic lived in the Control layer."
+];
+
+const TOTAL   = STEPS.length - 1;
+let   cur     = 0;
+
+const arrows  = [...document.querySelectorAll('.ar')];
+const caption = document.getElementById('caption');
+const stepLbl = document.getElementById('step-label');
+const btnBack = document.getElementById('btn-back');
+const btnNext = document.getElementById('btn-next');
+
+const PREV_STROKE   = '#3A4858';
+const ACTIVE_STROKE = '#2DD4A8';
+const PREV_W        = '1.5';
+const ACTIVE_W      = '3';
+
+function render() {
+  arrows.forEach(g => {
+    const step  = parseInt(g.dataset.step);
+    const lineEl = g.querySelector('line') || g.querySelector('path');
+    const lbg   = g.querySelector('.ar-lbg');
+    const lbl   = g.querySelector('.ar-lbl');
+
+    if (step > cur) {
+      g.style.opacity = '0';
+    } else if (step === cur) {
+      g.style.opacity = '1';
+      if (lineEl) {
+        lineEl.setAttribute('stroke', ACTIVE_STROKE);
+        lineEl.setAttribute('stroke-width', ACTIVE_W);
+      }
+      if (lbg) lbg.style.display = '';
+      if (lbl) lbl.style.display = '';
+    } else {
+      g.style.opacity = '1';
+      if (lineEl) {
+        lineEl.setAttribute('stroke', PREV_STROKE);
+        lineEl.setAttribute('stroke-width', PREV_W);
+      }
+      if (lbg) lbg.style.display = 'none';
+      if (lbl) lbl.style.display = 'none';
+    }
+  });
+
+  caption.innerHTML = STEPS[cur];
+  stepLbl.textContent = cur + ' / ' + TOTAL;
+  btnBack.disabled = cur === 0;
+  btnNext.disabled = cur === TOTAL;
+  btnNext.textContent = cur === TOTAL ? '✓ Complete' : 'Next →';
+  btnNext.className = cur === TOTAL ? 'btn' : 'btn btn-primary';
+  btnNext.setAttribute('aria-label', cur === TOTAL ? 'Sequence complete' : 'Next step');
+}
+
+function go(dir) {
+  cur = Math.max(0, Math.min(TOTAL, cur + dir));
+  render();
+}
+
+function showAll() { cur = TOTAL; render(); }
+function reset()   { cur = 0;     render(); }
+
+document.addEventListener('keydown', e => {
+  if (e.key === 'ArrowRight' || e.key === 'Enter') { e.preventDefault(); go(1);  }
+  if (e.key === 'ArrowLeft')                        { e.preventDefault(); go(-1); }
+});
+
+render();
+</script>
+</body>
+</html>
