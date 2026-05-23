@@ -150,10 +150,6 @@
 							<li>Primary actors are on the left; they initiate the interaction.</li>
 							<li>Secondary actors are on the right; they react to the interaction.</li>
 							<li>Actors are not part of the system.</li>
-							<li>What do these use cases share?</li>
-							<li>They all need to authenticate the user.</li>
-							<li>In software, we hate duplication.</li>
-							<li>So we factor out the common steps into another use case with a different relationship.</li>
 						</ul>
 					</aside>
 					<h3>Use Case Diagrams</h3>
@@ -183,6 +179,95 @@
 				<section class="left">
 					<aside class="notes">
 						<ul>
+							<li>The next step in our modeling is to dive deeper into each use case by considering an activity diagram.</li>
+							<li>Activity diagrams are another way we model the functional perspective (what does the system do, what happens in the system).</li>
+							<li>They actually straddle functional (documenting workflows and use case flows) and dynamic (showing control flow during execution).</li>
+							<li>But we will study them here, since they show what happens, not who does it, slightly different from some dynamic perspective models we will explore.</li>
+							<li>A fork is where your program says 'do both of these at the same time'.</li>
+							<li>The join is where you say 'wait until both are done before moving on.'</li>
+							<li>Diamonds are your if-statements made visual.</li>
+							<li>Always label both paths out of a diamond — typically something like [yes]/[no] or [valid]/[invalid].</li>
+							<li>Activity diagrams are great for modeling business logic, use case flows, or any algorithm before you write the code. Think of it as pseudocode you can draw.</li>
+						</ul>
+					</aside>
+					<h3>Activity Diagrams</h3>
+					<ul>
+						<li class="fragment">Model workflow or process flow of a system.</li>
+						<li class="fragment">Notation:
+							<ul>
+								<li class="fragment">Start (solid circle) required</li>
+								<li class="fragment">End (circle with solid circle inside)</li>
+								<li class="fragment">Activities (rounded rectangles)</li>
+								<li class="fragment">Flow between activities (arrows)</li>
+								<li class="fragment">Conditions (diamonds)</li>
+								<li class="fragment">Forks (horizontal bars, 1 in many out)</li>
+								<li class="fragment">Joins (horizontal bars, many in 1 out)</li>
+							</ul>
+						</li>
+					</ul>
+				</section>
+
+				<section class="left dense-slide">
+
+					<aside class="notes">
+						<ul>
+							<li>This activity diagram models the Withdraw Cash use case.</li>
+						</ul>
+					</aside>
+					<h3>Activity Diagrams</h3>
+					<!-- Clicking this image opens it in a fullscreen overlay -->
+					<img 
+						style="display: block; margin: 0 auto;"
+						class="r-stretch"
+						src="imgs/activity-withdraw.png" data-preview-image 
+						alt="Activity diagram withdraw example"
+						aria-describedby="activitywithdrawdiagram-caption">
+					<div id="activitywithdrawdiagram-caption" class="sr-only">The Withdraw Cash activity diagram flows top to bottom. The diagram begins with an initial pseudostate, represented as a solid filled circle, at the top center. Flow moves down to an activity labeled Insert Card, then continues down to Input PIN. From Input PIN, flow moves down to a decision node labeled "card accepted?" If the answer is yes, flow moves right to Select Action, then down to Withdraw Cash, then down to an abbreviated activity labeled "…and so on… (verify funds, dispense, receipt, etc.)," which represents the remainder of the withdrawal sub-process. That path then leads down to a wide horizontal join bar near the bottom of the diagram. If the card is not accepted, flow moves left from the "card accepted?" decision to a second decision node labeled "tried 3 times?" If the answer is yes, flow moves down to a thick horizontal fork bar, which splits into two concurrent parallel flows. The left branch leads to Terminate Transaction and the right branch leads to Notify Bank. Both branches flow down and converge at the same wide horizontal join bar that also receives the successful withdrawal path. If the answer to "tried 3 times?" is no, flow curves back up and returns to Input PIN, allowing the customer to try again. All paths — the two parallel branches from the failed authentication route and the completion of the successful withdrawal route — synchronize at the join bar before flow continues down to Eject Card. From there, flow moves down to the final pseudostate, represented as a solid filled circle inside an outer ring, which marks the end of the activity.</div>
+				</section>
+
+				<section class="left dense-slide">
+					<aside class="notes">
+						<ul>
+							<li>Then we think about the Deposit Funds use case.</li>
+							<li>Here we notice quite a bit of repetition/duplication between the two activity diagrams.</li>
+							<li>A general software development principle is to eliminate duplication. But, how?</li>
+							<li>You're probably familiar with a similar situation regarding classes.</li>
+							<li>If two classes havve common fields we can "factor out" the commonalities into a super class and then inherit them in subclasses.</li>
+							<li>Similarly, here, we can "factor out" the authentication activities that are repeated into their own activity diagram (hence into their own use case!)</li>
+						</ul>
+					</aside>
+					<h3>Activity Diagrams</h3>
+					<!-- Clicking this image opens it in a fullscreen overlay -->
+					<img 
+						style="display: block; margin: 0 auto;"
+						class="r-stretch"
+						src="imgs/activity-deposit.png" data-preview-image 
+						alt="Activity diagram deposit example"
+						aria-describedby="activitydepositdiagram-caption">
+					<div id="activitydepositdiagram-caption" class="sr-only">The Deposit Cash activity diagram flows top to bottom. The diagram begins with an initial pseudostate, represented as a solid filled circle, at the top center. Flow moves down to an activity labeled Insert Card, then continues down to Input PIN. From Input PIN, flow moves down to a decision node labeled "card accepted?" If the answer is yes, flow moves right to Select Action, then down to Deposit Funds, then down to an abbreviated activity labeled "…and so on… (read checks, receipt, etc.)," which represents the remainder of the deposit sub-process. That path then leads down to a wide horizontal join bar near the bottom of the diagram. If the card is not accepted, flow moves left from the "card accepted?" decision to a second decision node labeled "tried 3 times?" If the answer is yes, flow moves down to a thick horizontal fork bar, which splits into two concurrent parallel flows. The left branch leads to Terminate Transaction and the right branch leads to Notify Bank. Both branches flow down and converge at the same wide horizontal join bar that also receives the successful deposit path. If the answer to "tried 3 times?" is no, flow curves back up and returns to Input PIN, allowing the customer to try again. All paths — the two parallel branches from the failed authentication route and the completion of the successful deposit route — synchronize at the join bar before flow continues down to Eject Card. From there, flow moves down to the final pseudostate, represented as a solid filled circle inside an outer ring, which marks the end of the activity.</div>
+				</section>
+
+				<section class="left dense-slide">
+					<aside class="notes">
+						<ul>
+							<li>We have now factored out the duplication into a separate authenticate activity and withdraw cash and deposit funds are separate activity diagrams.</li>
+							<li>Knowing that this is occurring in ALL of our four primary use cases, we can revision our use case diagram to "include" this new Authenticate use case.</li>
+						</ul>
+					</aside>
+					<h3>Activity Diagrams</h3>
+					<!-- Clicking this image opens it in a fullscreen overlay -->
+					<img 
+						style="display: block; margin: 0 auto;"
+						class="r-stretch"
+						src="imgs/activity-auth-withdraw.png" data-preview-image 
+						alt="Activity diagram authenticate withdraw example"
+						aria-describedby="activityauthwithdiagram-caption">
+					<div id="activityauthwithdiagram-caption" class="sr-only">The authenticate activity diagram flows top to bottom. The diagram begins with an initial pseudostate, represented as a solid filled circle, at the top center. Flow moves down to an activity labeled Insert Card, then continues down to Input PIN. From Input PIN, flow moves down to a decision node labeled "card accepted?" If the answer is yes, flow moves down to the final pseudostate, represented as a solid filled circle inside an outer ring, which marks the end of the authenticate activity. If the card is not accepted, flow moves left from the "card accepted?" decision to a second decision node labeled "tried 3 times?" If the answer is yes, flow moves down to a thick horizontal fork bar, which splits into two concurrent parallel flows. The left branch leads to Terminate Transaction and the right branch leads to Notify Bank. Both branches flow down and converge at the same wide horizontal join bar that also receives the successful withdrawal path. If the answer to "tried 3 times?" is no, flow curves back up and returns to Input PIN, allowing the customer to try again. The two parallel branches from the failed authentication route  synchronize at the join bar before flow continues down to Eject Card. From there, flow moves down to the final pseudostate, represented as a solid filled circle inside an outer ring, which marks the end of the authenticate activity. The new withdraw cash activity diagram flows top to bottom. The diagram begins with an initial pseudostate, represented as a solid filled circle, at the top center. Flow moves down to an activity labeled Select Action, then down to Withdraw Cash, then down to an abbreviated activity labeled "…and so on… (verify funds, dispense, receipt, etc.)," which represents the remainder of the withdrawal sub-process. That path then leads down to a wide horizontal join bar near the bottom of the diagram.</div>
+				</section>
+
+				<section class="left">
+					<aside class="notes">
+						<ul>
 							<li>Think of it as the base case reaches out to grab the included behavior.</li>
 							<li>The arrow direction says WithdrawCash calls Authenticate.</li>
 							<li>Typically returns back to originating use case.</li>
@@ -195,6 +280,62 @@
 						<li class="fragment">Models mandatory sub-behavior factored out to eliminate duplication.</li>
 						<li class="fragment">Example: Every transaction <em>always</em> includes Authentication.</li>
 					</ul>
+				</section>
+
+				<section class="left dense-slide">
+					<aside class="notes">
+						<ul>
+							<li>This is kind of messy though. Lots of crossing lines. Can we simplify this?</li>
+						</ul>
+					</aside>
+					<h3>Relationships: Include</h3>
+					<!-- Clicking this image opens it in a fullscreen overlay -->
+					<img 
+						style="display: block; margin: 0 auto;"
+						class="r-stretch"
+						src="imgs/use-case-include.png" data-preview-image 
+						alt="Use case diagram include example"
+						aria-describedby="usecaseincludediagram-caption">
+					<div id="usecaseincludediagram-caption" class="sr-only">A use case diagram showing the Customer on the left of the system box and the bank on the right. The system box includes four use cases: Withdraw Cash, Transfer Funds, Balnce Inquiry, and Deposit Funds. A dashed include arrow extends from each of the four use cases to a fifth use case for Authenticate. The customer has a solid line relationship to all four use cases, the bank has one to all five, including Authenticate.</div>
+				</section>
+
+				<section class="left dense-slide">
+					<aside class="notes">
+						<ul>
+							<li>BUT this diagram is actually "saying" the wrong thing.</li>
+							<li>This models a system that says the customer's intention  is to authenticate.</li>
+							<li>Many times one model might be a bit more clear than another, but this is definitely WRONG.</li>
+							<li>Another approach is to show the included (factored out) Authenticate use case on a separate, more-detailed page.</li>
+						</ul>
+					</aside>
+					<h3>Relationships: Include</h3>
+					<!-- Clicking this image opens it in a fullscreen overlay -->
+					<img 
+						style="display: block; margin: 0 auto;"
+						class="r-stretch"
+						src="imgs/use-case-include-auth.png" data-preview-image 
+						alt="Use case diagram include auth example"
+						aria-describedby="usecaseincludeauthdiagram-caption">
+					<div id="usecaseincludeauthdiagram-caption" class="sr-only">A use case diagram showing the customer on the left of the system and the bank on the right. The customer has a relationship with the authenticate use case. The bank has a relationship with four use cases: withdraw cash, transfer funds, balance inquiry, and deposit funds. Each of these four use cases has a dashed include arrow relationshp with authenticate.</div>
+				</section>
+
+				<section class="left dense-slide">
+					<aside class="notes">
+						<ul>
+							<li>The more detailed version of the Withdraw Cash use case has the advantage that we can also begin to model other advanced relationships.</li>
+							<li>Modeling helps us gain better understanding, things we need to consider, debate worthiness to converge on best model before starting to write code.</li>
+							<li>Imagine trying to think of all these use cases/components/flows in the middle of lines and lines of code!</li>
+						</ul>
+					</aside>
+					<h3>Relationships: Include</h3>
+					<!-- Clicking this image opens it in a fullscreen overlay -->
+					<img 
+						style="display: block; margin: 0 auto;"
+						class="r-stretch"
+						src="imgs/use-case-include-detail.png" data-preview-image 
+						alt="Use case diagram detail example"
+						aria-describedby="usecasedetaildiagram-caption">
+					<div id="usecasedetaildiagram-caption" class="sr-only">A use case diagram showing a customer on the left of the system and the bank on the right. The customer has a relationship with the withdraw cash use case, which has a dashed include arrow going to the authenticate use case. Bank has an association with withdraw cash and authenticate. A copy of the use case diagram is also represented for Deposit Funds instead of Withdraw Cash.</div>
 				</section>
 
 				<section class="left">
@@ -225,13 +366,13 @@
 					</ul>
 				</section>
 
-				<section class="left">
+				<section class="left dense-slide">
 					<aside class="notes">
 						<p>Include and Extend</p>
 						<ul>
-							<li>Login to App is base use case</li>
-							<li>Verify Password is the included use case (always happens)</li>
-							<li>Display Login Error is the extended use case (sometimes happens)</li>
+							<li>Withdraw Cash is base use case</li>
+							<li>Authorize is the included use case (always happens)</li>
+							<li>Non Sufficient Funds is the extended use case (sometimes happens)</li>
 						</ul>
 						<p>Generalization</p>
 						<ul>
@@ -240,88 +381,36 @@
 						</ul>
 					</aside>
 					<h3>Advanced Relationships</h3>
-					<div style="display: flex; align-items: center; gap: 2rem; height: 100%;">
-						<div style="flex: 1; text-align: center;">
-							<!-- Clicking this image opens it in a fullscreen overlay -->
-							<img 
-								src="imgs/include-extend.png" data-preview-image 
-								alt="Use case diagram include and extend relationships"
-								aria-describedby="includeextend-caption">
-							<div id="includeextend-caption" class="sr-only">A use case diagram showing the Customer on the left with a solid line to the Login to App use case, which has a dotted line pointing to the Verify Password use case. The Display Login Error has a dotted line pointing to Login to App.</div>
-						</div>
-						<div style="flex: 1; text-align: center;">
-							<!-- Clicking this image opens it in a fullscreen overlay -->
-							<img 
-								src="imgs/generalization.png" data-preview-image 
-								alt="Use case diagram generalization relationship"
-								aria-describedby="generalization-caption">
-							<div id="generalization-caption" class="sr-only">A use case diagram showing the Customer on the left with child actors Adult Customer and Minor Customer. Customer is associated with Transfer Funds use case, which has Transfer to Another Account and Transfer to Another User as child use cases.</div>
-						</div>
-					</div>
-				</section>
-
-				<section class="left">
-					<aside class="notes">
-						<ul>
-							<li>Think about how Authenticate use case should be added</li>
-							<li>Think about what can go wrong during a withdrawal</li>
-							<li>Answer key: /Users/michellemelton/development/cs3667/cs3667-materials/uml/active-learning/ATM-use-case.png</li>
-							<li>Answer review discussion: The Customer should NOT connect directly to Authenticate. Use case diagrams model intentions. If Customer → Authenticate is drawn, the diagram says "the Customer's primary intention for using this ATM is to authenticate." That's wrong — authentication is a mechanism, not a goal.</li>
-						</ul>
-					</aside>
-					<h3><i class="fa-solid fa-pencil"></i> Use Case Diagram (10 minutes)</h3>
-					<ul>
-						<li>Work in pairs to build the ATM use case diagram:
-							<ul>
-								<li>Include Customer and Bank actors</li>
-								<li>Include Check Balance, Transfer Funds, Withdraw Cash use cases</li>
-								<li>Add the Authenticate use case as an include relationship</li>
-								<li>Add at least two extend use cases for Withdraw Cash</li>
-							</ul>
-						</li>
-					</ul>
-				</section>
-
-				<section class="left">
-					<aside class="notes">
-						<ul>
-							<li>Activity diagrams are another way we model the functional perspective (what does the system do, what happens in the system).</li>
-							<li>They actually straddle functional (documenting workflows and use case flows) and dynamic (showing control flow during execution).</li>
-							<li>But we will study them here, since they show what happens, not who does it, slightly different from some dynamic perspective models we will explore.</li>
-							<li>A fork is where your program says 'do both of these at the same time'.</li>
-							<li>The join is where you say 'wait until both are done before moving on.'</li>
-							<li>Diamonds are your if-statements made visual.</li>
-							<li>Always label both paths out of a diamond — typically something like [yes]/[no] or [valid]/[invalid].</li>
-							<li>Activity diagrams are great for modeling business logic, use case flows, or any algorithm before you write the code. Think of it as pseudocode you can draw.</li>
-						</ul>
-					</aside>
-					<h3>Activity Diagrams</h3>
-					<ul>
-						<li class="fragment">Model workflow or process flow of a system.</li>
-						<li class="fragment">Notation:
-							<ul>
-								<li class="fragment">Start (solid circle) required</li>
-								<li class="fragment">End (circle with solid circle inside)</li>
-								<li class="fragment">Activities (rounded rectangles)</li>
-								<li class="fragment">Flow between activities (arrows)</li>
-								<li class="fragment">Conditions (diamonds)</li>
-								<li class="fragment">Forks (horizontal bars, 1 in many out)</li>
-								<li class="fragment">Joins (horizontal bars, many in 1 out)</li>
-							</ul>
-						</li>
-					</ul>
-				</section>
-
-				<section class="left dense-slide">
-					<h3>Activity Diagrams</h3>
 					<!-- Clicking this image opens it in a fullscreen overlay -->
 					<img 
 						style="display: block; margin: 0 auto;"
 						class="r-stretch"
-						src="imgs/activity-diagram.png" data-preview-image 
-						alt="Activity diagram example"
-						aria-describedby="activitydiagram-caption">
-					<div id="activitydiagram-caption" class="sr-only">This is a UML activity diagram modeling the workflow of an ATM transaction. The diagram begins at the top with an initial pseudostate, represented by a solid filled circle, which immediately transitions down to the first action. The first action is Insert Card. From Insert Card, the flow moves down to Input PIN. From Input PIN, the flow moves down to a decision node, represented by a diamond shape. The decision node has two outgoing paths. If the card is accepted, the flow moves right to Select Action. If the card is rejected, the flow moves left to a synchronization join bar. From Select Action, the flow moves down to Fulfill Action. The synchronization join bar on the left side of the diagram receives two incoming flows when the card is rejected: one from Terminate Transaction and one from Notify Bank. These two actions both receive their incoming flow from the same join bar. Terminate Transaction receives flow from the left side of the join bar, and Notify Bank receives flow from the right side of the join bar. Both Terminate Transaction and Notify Bank then flow down into a second, wider synchronization join bar near the bottom of the diagram. Fulfill Action also flows down into this second wide synchronization join bar at the bottom. From the second synchronization join bar, a single flow exits downward to the Eject Card action. From Eject Card, the flow moves down to the final pseudostate, represented by a solid filled circle enclosed within a hollow circle, indicating the end of the activity.</div>
+						src="imgs/use-case-extend-general.png" data-preview-image 
+						alt="Use case diagram extend and generalization relationships example"
+						aria-describedby="usecaseextendgeneraldiagram-caption">
+					<div id="usecaseextendgeneraldiagram-caption" class="sr-only">A use case diagram showing the Customer on the left with a solid line to the Withdraw Cash use case, which has a dotted include line pointing to the Authenticate use case. The Non Sufficient Funds use case has a dotted extend line pointing to Withdraw Cash use case. A second use case diagram showing the Customer on the left with child actors Adult Customer and Minor Customer. Customer is associated with Transfer Funds use case, which has Transfer to Another Account and Transfer to Another User as child use cases.</div>
+				</section>
+
+				<section class="left dense-slide-extra">
+					<aside class="notes">
+						<ul>
+							<li>Tell students they will see five short ATM scenarios. For each one they must do two things: name the relationship type (include, extend, or generalization) and write one sentence explaining why.</li>
+							<li>1 is extend. The base use case Withdraw Cash completes successfully without the SMS notification. The behavior is conditional — it only fires when the customer has opted in — and the base use case has no knowledge of it.</li>
+							<li>2 is extend. Authenticate completes successfully in the normal flow without card retention. The fraud flag is a specific condition that triggers the extending behavior, and the base use case is unaware of it.</li>
+							<li>3 is generalization. International Withdrawal is not a conditional addition — it is a specialized version of Withdraw Cash that inherits the complete base behavior and replaces or augments specific steps. It is always an international withdrawal when it occurs, not sometimes.</li>
+							<li>4 is generalization at the actor level. Corporate Account Holder is-a Customer. It inherits all customer capabilities and adds specific ones. The arrow points from the specialized actor toward the general actor, the same direction as a class hierarchy in Java.</li>
+							<li>5 is include. The account freeze check is mandatory, always occurs, and is shared across multiple use cases. There is no condition under which Withdraw Cash or Deposit Funds proceeds without it.</li>
+						</ul>
+					</aside>
+					<h3><i class="fa-solid fa-pencil"></i> Relationshp Types (10 minutes)</h3>
+					<p>Work in pairs. Name and explain the relationship type:</p>
+					<ol>
+						<li>After a customer withdraws cash, if SMS notifications are enabled, the ATM may send a text message confirming the amount withdrawn.</li>
+						<li>When a customer enters an incorrect PIN, if the card has been flagged by the bank's fraud detection service, the ATM may retain the card.</li>
+						<li>An International Withdrawal follows all the steps of a standard Withdraw Cash transaction but additionally performs a live currency conversion before dispensing cash.</li>
+						<li>A Corporate Account Holder can perform all the same ATM transactions as a standard Customer but is also permitted to initiate same-day wire transfers above the standard daily limit.</li>
+						<li>Every time a customer initiates a Deposit Funds transaction, the system must first verify that the account is not frozen before allowing the transaction to proceed.</li>
+					</ol>
 				</section>
 
 				<section class="left">
@@ -517,7 +606,7 @@
 					</code></pre>
 				</section>
 
-				<section class="left">
+				<section class="left dense-slide-extra">
 					<aside class="notes">
 						<ul>
 							<li>Answer key: /Users/michellemelton/development/cs3667/cs3667-materials/uml/active-learning/ATM-bce.txt</li>

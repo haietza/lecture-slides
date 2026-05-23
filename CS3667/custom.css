@@ -22,6 +22,10 @@
   font-size: 36px;
 }
 
+.dense-slide-extra li {
+  font-size: 28px;
+}
+
 /* Inline code (backtick snippets) */
 code {
   color:rgba(66, 175, 250);
