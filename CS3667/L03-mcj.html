@@ -40,9 +40,9 @@
 					</aside>
 					<h3>Build Automation: Make & Makefiles</h3>
 					<ul>
-						<li class="fragment">GNU Make is a tool which controls the generation of executables and other non-source files of a program from the program's source files.</li>
-						<li class="fragment">It is especially useful in C and C++ which have complex builds, but we will use it for Java.</li>
-						<li class="fragment">We will use Make to compile our Java projects, run Checkstyle, run tests, and run demos.</li>
+						<li class="fragment">GNU Make is a tool which controls the <em>generation</em> of executables and other non-source files of a program from the program's source files.</li>
+						<li class="fragment">It is especially useful in C and C++ which have complex builds, but we will use it for <em>Java</em>.</li>
+						<li class="fragment">We will use Make to <em>compile</em> our Java projects, <em>run</em> Checkstyle, tests, and demos.</li>
 					</ul>
 				</section>
 
@@ -121,8 +121,8 @@
 					</aside>
 					<h3>What is Checkstyle?</h3>
 					<ul>
-						<li class="fragment">Checkstyle is a development tool to help programmers write Java code that adheres to a coding standard.</li>
-						<li class="fragment">It automates the process of checking Java code.</li>
+						<li class="fragment">Checkstyle is a development tool to help programmers write Java code that adheres to a coding <em>standard</em>.</li>
+						<li class="fragment">It <em>automates</em> the process of checking Java code.</li>
 						<li class="fragment">To run Checkstyle, you need Java, a checkstyle jar file, an xml file describing the styles, and Java files to check.</li>
 					</ul>
 				</section>
@@ -235,13 +235,13 @@
 					</aside>
 					<h3>Isolating from the System</h3>
 					<ul class="dense-slide">
-						<li class="fragment">For integration / unit testing, tests need to isolate from parts of the system not being tested.</li>
-						<li class="fragment">These parts of the system need to be "faked":
+						<li class="fragment">For integration / unit testing, tests need to <em>isolate</em> from parts of the system not being tested.</li>
+						<li class="fragment">These parts of the system need to be <em>"faked"</em>:
 						<ul>
-							<li class="fragment">Stubs: Extremely simple, use hard-coded values, with all logic removed.</li>
-							<li class="fragment">Spies: "Watch" method calls to get information (how often called or arguments passed).</li>
-							<li class="fragment">Mocks: A cross between a stub and a spy; can dynamically change behavior and asserts validity of method calls.</li>
-							<li class="fragment">Fakes: Have a full implementation of the dependency, a simplified version of production code.</li>
+							<li class="fragment">Stubs: Extremely simple, use <em>hard-coded values</em>, with all logic removed.</li>
+							<li class="fragment">Spies: <em>"Watch"</em> method calls to get information (how often called or arguments passed).</li>
+							<li class="fragment">Mocks: A cross between a stub and a spy; can <em>dynamically</em> change behavior and asserts <em>validity</em> of method calls.</li>
+							<li class="fragment">Fakes: Have a full implementation of the dependency, a <em>simplified</em> version of production code.</li>
 						</ul>
 						</li>
 					</ul>
@@ -250,9 +250,9 @@
 				<section class="left">
 					<h3>Unit Testing</h3>
 					<ul>
-						<li class="fragment">We will only work on Unit Testing (no integration or e2e).</li>
-						<li class="fragment">We will use JUnit for Unit Testing.</li>
-						<li class="fragment">We will use stubs, but not spies, mocks, or fakes.</li>
+						<li class="fragment">We will only work on <em>Unit Testing</em> (no integration or e2e).</li>
+						<li class="fragment">We will use <em>JUnit</em> for Unit Testing.</li>
+						<li class="fragment">We will use <em>stubs</em>, but not spies, mocks, or fakes.</li>
 					</ul>
 				</section>
 
@@ -267,19 +267,19 @@
 					</aside>
 					<h3>Unit Testing Parts</h3>
 					<ul>
-						<li class="fragment">Test Suite: A collection of related tests</li>
-						<li class="fragment">Test: Determines whether or not the code is working properly; contains one or more assertions</li>
-						<li class="fragment">Assertion: A statement that should return true if the code is working properly and false otherwise</li>
-						<li class="fragment">Lifecycle Hooks: Special points in the testing cycle during which we can insert code to run</li>
+						<li class="fragment">Test Suite: A <em>collection</em> of related tests</li>
+						<li class="fragment">Test: Determines whether or not the code is working properly; contains one or more <em>assertions</em></li>
+						<li class="fragment">Assertion: A statement that should return <code>true</code> if the code is working properly and <code>false</code> otherwise</li>
+						<li class="fragment">Lifecycle Hooks: Special points in the testing cycle during which we can <em>insert</em> code to run</li>
 					</ul>
 				</section>
 
 				<section class="left">
 					<h3>JUnit Test Files</h3>
 					<ul>
-						<li class="fragment">Regular Java classes</li>
-						<li class="fragment">Regular fields and methods</li>
-						<li class="fragment">Addition of some imported decorators and methods from JUnit</li>
+						<li class="fragment">Regular <em>Java</em> classes</li>
+						<li class="fragment">Regular <em>fields</em> and <em>methods</em></li>
+						<li class="fragment">Addition of some imported decorators and methods from <em>JUnit</em></li>
 						<li class="fragment">Class name does not matter</li>
 						<li class="fragment">Method and field names do not matter</li>
 					</ul>
@@ -353,13 +353,13 @@
 						<li class="fragment"><code>BeforeEach</code> Runs before each test
 							<ul>
 								<li class="fragment">Use to set up the testing environment</li>
-								<li class="fragment">Ensures a clean environment from test-to-test</li>
+								<li class="fragment">Ensures a <em>clean</em> environment from test-to-test</li>
 								<li class="fragment">Tests should not interfere with each other</li>
 							</ul>
 						</li>
 						<li class="fragment"><code>AfterEach</code> Runs after each test
 							<ul>
-								<li class="fragment">Use to reset changes a test may have made</li>
+								<li class="fragment">Use to <em>reset</em> changes a test may have made</li>
 								<li class="fragment">Can be done in BeforeEach, the choice of where to put code is semantic</li>
 							</ul>
 						</li>
@@ -377,12 +377,12 @@
 					<ul>
 						<li class="fragment"><code>BeforeAll</code> Runs once, before any test
 							<ul>
-								<li class="fragment">Use to set things needed by all tests, but cannot change from test-to-test</li>
+								<li class="fragment">Use to set things needed by <em>all</em> tests, but cannot change from test-to-test</li>
 							</ul>
 						</li>
 						<li class="fragment"><code>AfterAll</code> Runs once, after all tests
 							<ul>
-								<li class="fragment">Run to clean up the environment when testing is over</li>
+								<li class="fragment">Run to <em>clean up</em> the environment when testing is over</li>
 							</ul>
 						</li>
 					</ul>
@@ -693,10 +693,10 @@
 					</aside>
 					<h3>The Evolution of Build Tools</h3>
 					<ul>
-						<li class="fragment">While Make is powerful, Java enterprise applications require dependency resolution and convention-over-configuration.</li>
-						<li class="fragment">Gradle is a modern build automation tool that uses a Groovy or Kotlin Domain Specific Language (DSL).</li>
-						<li class="fragment">A build.gradle file defines the project's plugins, repositories, dependencies, and custom tasks.</li>
-						<li class="fragment">Gradle uses a Directed Acyclic Graph (DAG) to determine the exact order tasks must execute.</li>
+						<li class="fragment">While Make is powerful, Java enterprise applications require <em>dependency resolution</em> and <em>convention-over-configuration</em>.</li>
+						<li class="fragment">Gradle is a <em>modern</em> build automation tool that uses a Groovy or Kotlin Domain Specific Language (DSL).</li>
+						<li class="fragment">A build.gradle file <em>defines</em> the project's plugins, repositories, dependencies, and custom tasks.</li>
+						<li class="fragment">Gradle uses a <em>Directed Acyclic Graph (DAG)</em> to determine the exact order tasks must execute.</li>
 					</ul>
 				</section>
 

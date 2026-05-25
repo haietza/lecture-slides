@@ -1,3 +1,7 @@
+h1, em {
+  color: #a7cced !important;
+}
+
 .sr-only {
   position: absolute;
   width: 1px;
@@ -10,12 +14,10 @@
   border: 0;
 }
 
-.dense-slide {
-  padding-top: 50px;
-}
-
-.dense-slide img {
-  max-width: 80%;
+.reveal section img {
+  max-height: calc(var(--slide-height) * 0.70) !important;
+  width: auto;
+  object-fit: contain;
 }
 
 .dense-slide li {

@@ -37,7 +37,7 @@
 					</aside>
 					<h3>Abstraction</h3>
 					<ul>
-						<li class="fragment">Simplifying complexity by focusing on what matters and hiding what doesn’t.</li>
+						<li class="fragment"><em>Simplifying complexity</em> by focusing on what matters and hiding what doesn’t.</li>
 						<li class="fragment">Real-world Analogy: A refrigerator. You know how to use it without understanding coolant cycles or compressors.</li>
 					</ul>
 				</section>
@@ -86,14 +86,14 @@
 					<h3>Polymorphism</h3>
 					<ul>
 						<li class="fragment">A single interface, function, or operation working with different types of data.</li>
-						<li class="fragment">Subtype Polymorphism (OOP): A parent class reference pointing to a child class object.</li>
-						<li class="fragment">Dynamic Dispatch: In Java, instance method calls look at the runtime object to decide which method to execute.</li>
+						<li class="fragment">Subtype Polymorphism (OOP): A <em>parent</em> class reference pointing to a <em>child</em> class object.</li>
+						<li class="fragment">Dynamic Dispatch: In Java, instance method calls look at the <em>runtime</em> object to decide which method to execute.</li>
 						<pre class="fragment java">
 							<code data-trim>
 								Animal a = new Dog();
 								a.foo(); // Dog's foo() method called, not Animal's
 							</code>
-							</pre>							
+							</pre>
 						</li>
 					</ul>
 				</section>
@@ -134,12 +134,12 @@
 					</aside>
 					<h3>Expanded Polymorphism</h3>
 					<ul>
-						<li class="fragment">Parametric Polymorphism: Functions or data structures that work with any type.
+						<li class="fragment">Parametric Polymorphism: Functions or data structures that work with <em>any</em> type.
 							<ul>
 								<li>Example: Generics like <code>List&lt;T&gt;</code> in Java.</li>
 							</ul>
 						</li>
-						<li class="fragment">Ad Hoc Polymorphism: Multiple functions share the same name but differ in parameters (function overloading).</li>
+						<li class="fragment">Ad Hoc Polymorphism: Multiple functions share the same <em>name</em> but differ in <em>parameters</em> (function overloading).</li>
 						<li class="fragment">Can Java static methods be dynamically dispatched?</li>
 					</ul>
 				</section>
@@ -165,8 +165,8 @@
 					</aside>
 					<h3>Encapsulation & Information Hiding</h3>
 					<ul>
-						<li class="fragment">Encapsulation: Enclosing data and operations into a single syntactic unit (e.g., a Java class).</li>
-						<li class="fragment">Information Hiding: Restricting access to certain class elements from other code elements.</li>
+						<li class="fragment">Encapsulation: Enclosing data and operations into a <em>single</em> syntactic unit (e.g., a Java class).</li>
+						<li class="fragment">Information Hiding: Restricting <em>access</em> to certain class elements from other code elements.</li>
 					</ul>
 				</section>
 
@@ -250,7 +250,7 @@
 					<h3>Packages, Interfaces, & Abstract Classes</h3>
 					<ul>
 						<li class="fragment">Interfaces: A <em>behavior contract</em>. Any class implementing an interface is contractually obligated to implement its methods.</li>
-						<li class="fragment">Abstract Classes vs Interfaces: Abstract classes can define instance fields and implement methods.
+						<li class="fragment">Abstract Classes vs Interfaces: Abstract classes can define instance <em>fields</em> and implement <em>methods</em>.
 							<ul>
 								<li>They act as higher-level abstractions in hierarchies (e.g., Animal < Dog < Poodle).</li>
 							</ul>

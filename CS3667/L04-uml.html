@@ -40,10 +40,10 @@
 					</aside>
 					<h3>Modeling Software</h3>
 					<ul>
-						<li class="fragment">A car engine has ~200 moving parts; we use diagrams to understand it.</li>
-						<li class="fragment">An ATM system has thousands of interacting objects; we need models even more.</li>
-						<li class="fragment">Software is invisible and abstract; you cannot see or touch it.</li>
-						<li class="fragment">Models make software visible, discussable, and understandable.</li>
+						<li class="fragment">A car engine has <em>~200</em> moving parts; we use diagrams to understand it.</li>
+						<li class="fragment">An ATM system has <em>thousands</em> of interacting objects; we need models even more.</li>
+						<li class="fragment">Software is <em>invisible</em> and <em>abstract</em>; you cannot see or touch it.</li>
+						<li class="fragment">Models make software <em>visible</em>, <em>discussable</em>, and <em>understandable</em>.</li>
 					</ul>
 				</section>
 
@@ -55,7 +55,7 @@
 					</aside>
 					<h3>Unified Modeling Language (UML)</h3>
 					<ul>
-						<li class="fragment">The industry-standard visual language for specifying, constructing, and documenting software systems.</li>
+						<li class="fragment">The industry-standard <em>visual language</em> for specifying, constructing, and documenting software systems.</li>
 						<li class="fragment">The Three System Perspectives:
 							<ul>
 								<li class="fragment">Functional Behavior</li>
@@ -74,8 +74,8 @@
 					</aside>
 					<h3>Functional Perspective</h3>
 					<ul>
-						<li class="fragment">What does the system do?</li>
-						<li class="fragment">Why does someone use it?</li>
+						<li class="fragment">What does the system <em>do</em>?</li>
+						<li class="fragment">Why does someone <em>use</em> it?</li>
 						<li class="fragment">Use Case Diagram, Activity Diagram</li>
 					</ul>
 				</section>
@@ -88,10 +88,10 @@
 					</aside>
 					<h3>Static Perspective</h3>
 					<ul>
-						<li class="fragment">What objects are involved?</li>
-						<li class="fragment">What are their attributes?</li>
-						<li class="fragment">What operations do they perform?</li>
-						<li class="fragment">How are they related to each other?</li>
+						<li class="fragment">What <em>objects</em> are involved?</li>
+						<li class="fragment">What are their <em>attributes</em>?</li>
+						<li class="fragment">What <em>operations</em> do they perform?</li>
+						<li class="fragment">How are they <em>related</em> to each other?</li>
 						<li class="fragment">Class Diagram, Object Diagram</li>
 					</ul>
 				</section>
@@ -104,7 +104,7 @@
 					</aside>
 					<h3>Dynamic Perspective</h3>
 					<ul>
-						<li class="fragment">How do objects interact over time?</li>
+						<li class="fragment">How do objects <em>interact</em> over <em>time</em>?</li>
 						<li class="fragment">Sequence/State Diagram, Activity Diagram</li>
 					</ul>
 				</section>
@@ -139,7 +139,7 @@
 					<p>A Use Case diagram answers the question: "What does this system do for whom?"</p>
 					<ul>
 						<li class="fragment">High-level view, no implementation details</li>
-						<li class="fragment">Shows the services a system provides and who uses them</li>
+						<li class="fragment">Shows the <em>services</em> a system provides and <em>who</em> uses them</li>
 						<li class="fragment">Starting point for every other model</li>
 					</ul>
 				</section>
@@ -156,11 +156,11 @@
 					<div style="display: flex; align-items: center; gap: 2rem; height: 100%;">
 						<div style="flex: 1;">
 							<ul class="dense-slide">
-								<li class="fragment">Actors (Stick Figures): External entities interacting with the system.</li>
-								<li class="fragment">Use Cases (Ovals): Major system functionalities, start with a verb.</li>
+								<li class="fragment">Actors (Stick Figures): <em>External</em> entities interacting with the system.</li>
+								<li class="fragment">Use Cases (Ovals): Major system <em>functionalities</em>, start with a verb.</li>
 								<li class="fragment">Relationships:
 									<ul>
-										<li class="fragment">Association (Solid Line): Connects an actor to a use case.</li>
+										<li class="fragment">Association (Solid Line): <em>Connects</em> an actor to a use case.</li>
 									</ul>
 								</li>
 							</ul>
@@ -171,7 +171,7 @@
 							src="imgs/use-case.png" data-preview-image 
 							alt="Use case diagram"
 							aria-describedby="usecase-caption">
-						<div id="usecase-caption" class="sr-only">A use case diagram showing the Customer on the left with interaction lines to use cases Withdraw Cash, Balance Inquiry, Transfer Funds, and Deposit Funds, which are all contained in the System. The Bank is on the right with interaction lines to each of the four use cases.</div>
+						<div id="usecase-caption" class="sr-only">A use case diagram showing the Customer on the left with interaction lines to use cases Withdraw Cash, Check Balance, Transfer Funds, and Deposit Funds, which are all contained in the System. The Bank is on the right with interaction lines to each of the four use cases.</div>
 						</div>
 					</div>
 				</section>
@@ -183,16 +183,16 @@
 							<li>Activity diagrams are another way we model the functional perspective (what does the system do, what happens in the system).</li>
 							<li>They actually straddle functional (documenting workflows and use case flows) and dynamic (showing control flow during execution).</li>
 							<li>But we will study them here, since they show what happens, not who does it, slightly different from some dynamic perspective models we will explore.</li>
-							<li>A fork is where your program says 'do both of these at the same time'.</li>
-							<li>The join is where you say 'wait until both are done before moving on.'</li>
 							<li>Diamonds are your if-statements made visual.</li>
 							<li>Always label both paths out of a diamond — typically something like [yes]/[no] or [valid]/[invalid].</li>
+							<li>A fork is where your program says 'do both of these at the same time'.</li>
+							<li>The join is where you say 'wait until both are done before moving on.'</li>
 							<li>Activity diagrams are great for modeling business logic, use case flows, or any algorithm before you write the code. Think of it as pseudocode you can draw.</li>
 						</ul>
 					</aside>
 					<h3>Activity Diagrams</h3>
 					<ul>
-						<li class="fragment">Model workflow or process flow of a system.</li>
+						<li class="fragment">Model <em>workflow</em> or process flow of a system.</li>
 						<li class="fragment">Notation:
 							<ul>
 								<li class="fragment">Start (solid circle) required</li>
@@ -218,7 +218,6 @@
 					<!-- Clicking this image opens it in a fullscreen overlay -->
 					<img 
 						style="display: block; margin: 0 auto;"
-						class="r-stretch"
 						src="imgs/activity-withdraw.png" data-preview-image 
 						alt="Activity diagram withdraw example"
 						aria-describedby="activitywithdrawdiagram-caption">
@@ -240,7 +239,6 @@
 					<!-- Clicking this image opens it in a fullscreen overlay -->
 					<img 
 						style="display: block; margin: 0 auto;"
-						class="r-stretch"
 						src="imgs/activity-deposit.png" data-preview-image 
 						alt="Activity diagram deposit example"
 						aria-describedby="activitydepositdiagram-caption">
@@ -258,7 +256,6 @@
 					<!-- Clicking this image opens it in a fullscreen overlay -->
 					<img 
 						style="display: block; margin: 0 auto;"
-						class="r-stretch"
 						src="imgs/activity-auth-withdraw.png" data-preview-image 
 						alt="Activity diagram authenticate withdraw example"
 						aria-describedby="activityauthwithdiagram-caption">
@@ -276,8 +273,8 @@
 					<h3>Relationships: Include</h3>
 					<p>Always happens (dotted line)</p>
 					<ul>
-						<li class="fragment">Arrow points FROM base case TO included case.</li>
-						<li class="fragment">Models mandatory sub-behavior factored out to eliminate duplication.</li>
+						<li class="fragment">Arrow points <em>from</em> base case <em>to</em> included case.</li>
+						<li class="fragment">Models mandatory sub-behavior <em>factored out</em> to eliminate duplication.</li>
 						<li class="fragment">Example: Every transaction <em>always</em> includes Authentication.</li>
 					</ul>
 				</section>
@@ -292,7 +289,6 @@
 					<!-- Clicking this image opens it in a fullscreen overlay -->
 					<img 
 						style="display: block; margin: 0 auto;"
-						class="r-stretch"
 						src="imgs/use-case-include.png" data-preview-image 
 						alt="Use case diagram include example"
 						aria-describedby="usecaseincludediagram-caption">
@@ -312,11 +308,10 @@
 					<!-- Clicking this image opens it in a fullscreen overlay -->
 					<img 
 						style="display: block; margin: 0 auto;"
-						class="r-stretch"
 						src="imgs/use-case-include-auth.png" data-preview-image 
 						alt="Use case diagram include auth example"
 						aria-describedby="usecaseincludeauthdiagram-caption">
-					<div id="usecaseincludeauthdiagram-caption" class="sr-only">A use case diagram showing the customer on the left of the system and the bank on the right. The customer has a relationship with the authenticate use case. The bank has a relationship with four use cases: withdraw cash, transfer funds, balance inquiry, and deposit funds. Each of these four use cases has a dashed include arrow relationshp with authenticate.</div>
+					<div id="usecaseincludeauthdiagram-caption" class="sr-only">A use case diagram showing the customer on the left of the system and the bank on the right. The customer has a relationship with the authenticate use case. The bank has a relationship with four use cases: withdraw cash, transfer funds, Check Balance, and deposit funds. Each of these four use cases has a dashed include arrow relationshp with authenticate.</div>
 				</section>
 
 				<section class="left dense-slide">
@@ -331,7 +326,6 @@
 					<!-- Clicking this image opens it in a fullscreen overlay -->
 					<img 
 						style="display: block; margin: 0 auto;"
-						class="r-stretch"
 						src="imgs/use-case-include-detail.png" data-preview-image 
 						alt="Use case diagram detail example"
 						aria-describedby="usecasedetaildiagram-caption">
@@ -349,8 +343,8 @@
 					<h3>Relationships: Extend</h3>
 					<p>Sometimes happens (dotted line)</p>
 					<ul>
-						<li class="fragment">Arrow points FROM extending case TO base case.</li>
-						<li class="fragment">Models exceptional flows that may or may not occur.</li>
+						<li class="fragment">Arrow points <em>from</em> extending case <em>to</em> base case.</li>
+						<li class="fragment">Models <em>exceptional</em> flows that may or may not occur.</li>
 						<li class="fragment">Example: WithdrawCash <em>may</em> extend with "Non-Sufficient Funds".</li>
 					</ul>
 				</section>
@@ -359,10 +353,10 @@
 					<h3>Relationships: Generalization</h3>
 					<p>Generalization (Solid Arrow with Open Triangle): Is a kind of</p>
 					<ul>
-						<li class="fragment">Similar to abstract classes.</li>
-						<li class="fragment">Child use case (or actor) is a specialized version of the parent.</li>
-						<li class="fragment">Arrow goes FROM child TO parent.</li>
-						<li class="fragment">Example: Transfer to Another Account IS A kind of Transfer Funds.</li>
+						<li class="fragment">Similar to <em>abstract classes</em>.</li>
+						<li class="fragment">Child use case (or actor) is a <em>specialized version</em> of the parent.</li>
+						<li class="fragment">Arrow goes <em>from</em> child <em>to</em> parent.</li>
+						<li class="fragment">Example: Transfer to Another Account <em>is a</em> kind of Transfer Funds.</li>
 					</ul>
 				</section>
 
@@ -371,7 +365,7 @@
 						<p>Include and Extend</p>
 						<ul>
 							<li>Withdraw Cash is base use case</li>
-							<li>Authorize is the included use case (always happens)</li>
+							<li>Authenticate is the included use case (always happens)</li>
 							<li>Non Sufficient Funds is the extended use case (sometimes happens)</li>
 						</ul>
 						<p>Generalization</p>
@@ -403,28 +397,31 @@
 						</ul>
 					</aside>
 					<h3><i class="fa-solid fa-pencil"></i> Relationshp Types (10 minutes)</h3>
-					<p>Work in pairs. Name and explain the relationship type:</p>
-					<ol>
-						<li>After a customer withdraws cash, if SMS notifications are enabled, the ATM may send a text message confirming the amount withdrawn.</li>
-						<li>When a customer enters an incorrect PIN, if the card has been flagged by the bank's fraud detection service, the ATM may retain the card.</li>
-						<li>An International Withdrawal follows all the steps of a standard Withdraw Cash transaction but additionally performs a live currency conversion before dispensing cash.</li>
-						<li>A Corporate Account Holder can perform all the same ATM transactions as a standard Customer but is also permitted to initiate same-day wire transfers above the standard daily limit.</li>
-						<li>Every time a customer initiates a Deposit Funds transaction, the system must first verify that the account is not frozen before allowing the transaction to proceed.</li>
-					</ol>
+					<ul>
+						<li>Work in pairs. Name and explain the relationship type:
+							<ol>
+								<li>After a customer withdraws cash, if SMS notifications are enabled, the ATM may send a text message confirming the amount withdrawn.</li>
+								<li>When a customer enters an incorrect PIN, if the card has been flagged by the bank's fraud detection service, the ATM may retain the card.</li>
+								<li>An International Withdrawal follows all the steps of a standard Withdraw Cash transaction but additionally performs a live currency conversion before dispensing cash.</li>
+								<li>A Corporate Account Holder can perform all the same ATM transactions as a standard Customer but is also permitted to initiate same-day wire transfers above the standard daily limit.</li>
+								<li>Every time a customer initiates a Deposit Funds transaction, the system must first verify that the account is not frozen before allowing the transaction to proceed.</li>
+							</ol>
+						</li>
+					</ul>
 				</section>
 
 				<section class="left">
 					<aside class="notes">
 						<ul>
 							<li>Now we move on to modeling the static perspective (what objects are involved, what are their attributes, what operations do they perform).</li>
-							<li>In an object-oriented system, objects are the 'first class' members, so these models should be somewhat famiilar to us.</li>
+							<li>In an object-oriented system, objects are the 'first class' members, so these models should be somewhat familiar to us.</li>
 							<li>When you have requirements, documentation, or a conversation about a system, use these two techniques to find your candidate classes.</li>
 							<li>Noun extraction: Read any description of the system. Underline every noun. Each noun is a candidate object.</li>
 						</ul>
 					</aside>
 					<h3>Candidate Object Identification</h3>
 					<ul>
-						<li class="fragment">Techniques to find candidate classes:
+						<li class="fragment">Techniques to find <em>candidate classes</em>:
 							<ul>
 								<li class="fragment">Noun Extraction</li>
 								<li class="fragment">BCE Taxonomy</li>
@@ -444,12 +441,12 @@
 						</ul>
 					</aside>
 					<h3>Turning Candidate Objects into Classes</h3>
-					<ul>
+					<ul class="dense-slide">
 						<li class="fragment">For each candidate, evaluate it using the E.A.R. framework:
 							<ul>
-								<li class="fragment">Entity: What "thing" is it? Does it contain component parts?</li>
-								<li class="fragment">Attributes: What attributes describe the entity? Note that while these become fields, not all fields (like flags or counters) are attributes.</li>
-								<li class="fragment">Relationships: What other entities does this entity need or use?</li>
+								<li class="fragment">Entity: What <em>"thing"</em> is it? Does it contain component parts?</li>
+								<li class="fragment">Attributes: What <em>attributes</em> describe the entity? Note that while these become fields, not all fields (like flags or counters) are attributes.</li>
+								<li class="fragment">Relationships: What other entities does this entity need or <em>use</em>?</li>
 							</ul>
 						</li>
 					</ul>
@@ -470,8 +467,8 @@
 					<h3><i class="fa-solid fa-pencil"></i> Noun Extraction (5 minutes)</h3>
 					<ul>
 						<li>Work in pairs.</li>
-						<li>Extract the nouns from this requirement and classify them as an Entity (Object) or an Attribute.</li>
-						<li><em>A customer interacts with the ATM to make a withdrawal from their account. The account checks the current balance and a daily withdrawal limit. The cash is then dispensed and a receipt is printed.</em></li>
+						<li>Extract the <em>nouns</em> from this requirement and classify them as an <em>Entity</em> (Object) or an <em>Attribute</em>.</li>
+						<li>A customer interacts with the ATM to make a withdrawal from their account. The account checks the current balance and a daily withdrawal limit. The cash is then dispensed and a receipt is printed.</li>
 					</ul>
 				</section>
 
@@ -491,20 +488,20 @@
 					<ul>
 						<li class="fragment">For software systems, we can categorize our classes:
 							<ul>
-								<li class="fragment">Boundary: Interfaces with actors</li>
-								<li class="fragment">Control: Implements system logic and coordinates tasks</li>
-								<li class="fragment">Entity: Stateful objects containing system information</li>
+								<li class="fragment">Boundary: <em>Interfaces</em> with actors</li>
+								<li class="fragment">Control: <em>Implements</em> system logic and coordinates tasks</li>
+								<li class="fragment">Entity: <em>Stateful</em> objects containing system information</li>
 							</ul>
 						</li>
-						<li class="fragment">The Golden Rule: Boundaries NEVER talk directly to Entities. All communication goes through Control objects.</li>
+						<li class="fragment">The Golden Rule: Boundaries <em>never</em> talk directly to Entities. All communication goes through Control objects.</li>
 					</ul>
 				</section>
 
 				<section class="left">
 					<h3>Boundary Objects</h3>
 					<ul>
-						<li class="fragment">Inside our system, but interface with elements outside the system.</li>
-						<li class="fragment">They are a "portal" or "gateway" between outside and inside.</li>
+						<li class="fragment">Inside our system, but <em>interface</em> with elements outside the system.</li>
+						<li class="fragment">They are a "portal" or "gateway" <em>between</em> outside and inside.</li>
 					</ul>
 				</section>
 
@@ -533,14 +530,14 @@
 					<aside class="notes">
 						<ul>
 							<li>Control objects manage behavior; they coordinate the other objects so neither entity nor boundary objects have to.</li>
-							<li>Where Entity objects are the nouns, Control objects are the verbs (withdraw, authorize, deposit).</li>
+							<li>Where Entity objects are the nouns, Control objects are the verbs (withdraw, authenticate, deposit).</li>
 						</ul>
 					</aside>
 					<h3>Control Objects</h3>
 					<ul>
-						<li class="fragment">Orchestrate the flow and manage behavior.</li>
-						<li class="fragment">Coordinate the other objects so neither entity nor boundary objects have to interact directly.</li>
-						<li class="fragment">One main controller initializes everything; separate controllers per major use case.</li>
+						<li class="fragment">Orchestrate the flow and manage <em>behavior</em>.</li>
+						<li class="fragment"><em>Coordinate</em> the other objects so neither entity nor boundary objects have to interact directly.</li>
+						<li class="fragment">One <em>main</em> controller initializes everything; separate controllers per major <em>use case</em>.</li>
 					</ul>
 				</section>
 
@@ -555,14 +552,14 @@
 						</ul>
 					</aside>
 					<h3>Control Objects: ATM Example</h3>
-					<ul>
+					<ul class="dense-slide">
 						<li class="fragment">Application Scope vs. Transaction Scope:
 							<ul>
-								<li class="fragment">AtmController: Handles system startup, main menus, and hardware initialization; lives until the ATM shuts down.</li>
-								<li class="fragment">WithdrawController: Manages a single withdrawal flow; created dynamically and destroyed when transaction finishes.</li>
+								<li class="fragment">AtmController: Handles <em>system startup</em>, main menus, and hardware initialization; lives until the ATM shuts down.</li>
+								<li class="fragment">WithdrawController: Manages a <em>single withdrawal</em> flow; created dynamically and destroyed when transaction finishes.</li>
 							</ul>
 						</li>
-						<li class="fragment">Architectural Value: Each transaction gets its own controller, state, and lifecycle, ensuring no shared mutable state between transactions.</li>
+						<li class="fragment">Architectural Value: Each transaction gets its <em>own</em> controller, state, and lifecycle, ensuring no shared mutable state between transactions.</li>
 					</ul>
 				</section>
 
@@ -574,8 +571,8 @@
 					</aside>
 					<h3>Entity Objects</h3>
 					<ul>
-						<li class="fragment">Represent information, data, and state needed by the system; not boundary objects.</li>
-						<li class="fragment">They are not just data containers; they provide methods that act on their own data.</li>
+						<li class="fragment">Represent <em>information</em>, <em>data</em>, and <em>state</em> needed by the system; not boundary objects.</li>
+						<li class="fragment">They are not just data containers; they provide <em>methods</em> that act on their own data.</li>
 					</ul>
 				</section>
 
@@ -587,6 +584,10 @@
 							<li>As you progress through the transation, we build up this entity object.</li>
 							<li>Its entire job is to accumulate and hold the meaningful data that represents a completed transaction.</li>
 							<li>That’s the hallmark of an entity object: it models something real and stateful within your business domain.</li>
+							<li>The Receipt entity carries the what.</li>
+							<li>The Printer and TransactionLog boundary objects handle the how of interacting with the outside world.</li>
+							<li>Neither needs to know anything about the other’s domain.</li>
+							<li>Also: The Entity object is simpler to grasp: it holds system information. But don't confuse it with a plain data structure. Your Account object doesn't just store a balance — it has a debit() method, a credit() method, validation logic. It's an object in the full OO sense.</li>
 						</ul>
 					</aside>
 					<h3>Entity Objects: Receipt Example</h3>
@@ -617,7 +618,7 @@
 						<li>List every noun you can extract from the description (aim for at least 12).</li>
 						<li>For each noun, classify it as Boundary (B), Control (C), Entity (E), or Not a class (N).</li>
 						<li>Identify at least one Control class that is implied but not explicitly stated in the description.</li>
-						<li><em>A bank offers ATM services to its customers. Customers insert a debit card and enter a PIN on the screen to authenticate. After successful authentication, customers can withdraw cash, deposit funds, transfer money between accounts, or check a balance. The ATM machine includes a card reader, a cash dispenser, a deposit slot, a printer for receipts, and a camera for security. All transactions are verified with the bank's authorization service. Unrecognized cards are rejected. A logger records all transaction events.</em></li>
+						<li>A bank offers ATM services to its customers. Customers insert a debit card and enter a PIN on the screen to authenticate. After successful authentication, customers can withdraw cash, deposit funds, transfer money between accounts, or check a balance. The ATM machine includes a card reader, a cash dispenser, a deposit slot, a printer for receipts, and a camera for security. All transactions are verified with the bank's authorization service. Unrecognized cards are rejected. A logger records all transaction events.</li>
 					</ul>
 				</section>
 
@@ -656,7 +657,7 @@
 					</aside>
 					<h3>Class Diagrams</h3>
 					<ul>
-						<li class="fragment">Divided into three compartments:
+						<li class="fragment">Divided into three <em>compartments</em>:
 							<ul>
 								<li class="fragment">Name</li>
 								<li class="fragment">Attributes/State</li>
@@ -725,11 +726,11 @@
 					</aside>
 					<h3>Object Diagrams</h3>
 					<ul>
-						<li class="fragment">Focus on concrete instances of objects (vs. class definitions).</li>
-						<li class="fragment">Capture the state of a system object and its relationships at a specific moment in time.</li>
+						<li class="fragment">Focus on <em>concrete</em> instances of objects (vs. class definitions).</li>
+						<li class="fragment">Capture the state of a system object and its relationships at a <em>specific moment</em> in time.</li>
 						<li class="fragment">Used less frequently than Class Diagrams.</li>
-						<li class="fragment">Useful for depicting an isolated part of a complex system.</li>
-						<li class="fragment">Often used to visualize the current state of complex data structures.</li>
+						<li class="fragment">Useful for depicting an <em>isolated</em> part of a complex system.</li>
+						<li class="fragment">Often used to visualize the <em>current state</em> of complex data structures.</li>
 					</ul>
 				</section>
 
@@ -756,9 +757,9 @@
 					</aside>
 					<h3>Sequence Diagrams</h3>
 					<ul>
-						<li class="fragment">Model interactions between objects over time.</li>
-						<li class="fragment">Can be high-level (system overview) or low-level (method calls).</li>
-						<li class="fragment">Can include conditionals and loops.</li>
+						<li class="fragment">Model <em>interactions</em> between objects over time.</li>
+						<li class="fragment">Can be <em>high-level</em> (system overview) or <em>low-level</em> (method calls).</li>
+						<li class="fragment">Can include <em>conditionals</em> and <em>loops</em>.</li>
 						<li class="fragment">Notation:
 							<ul>
 								<li class="fragment">Objects (boxes across top)</li>
@@ -796,7 +797,6 @@
 					<!-- Clicking this image opens it in a fullscreen overlay -->
 					<img 
 						style="display: block; margin: 0 auto;"
-						class="r-stretch"
 						src="imgs/sequence-auth.png" data-preview-image 
 						alt="Sequence diagram example"
 						aria-describedby="sequencediagram-caption">
@@ -811,7 +811,7 @@
 					</aside>
 					<h3><i class="fa-solid fa-pencil"></i> Sequence Diagrams (25 minutes)</h3>
 					<ul>
-						<li>Organize into small groups.</li>
+						<li>Organize into small groups (3-4).</li>
 						<li>Begin work on the Sequence Diagram Assignment in the Canvas course.</li>
 					</ul>
 				</section>
@@ -832,9 +832,9 @@
 					</aside>
 					<h3>State Diagrams</h3>
 					<ul>
-						<li class="fragment">Models behavior of a single object.</li>
-						<li class="fragment">Models one part of the system.</li>
-						<li class="fragment">Similar to state machine diagrams.</li>
+						<li class="fragment">Models behavior of a <em>single object</em>.</li>
+						<li class="fragment">Models <em>one part</em> of the system.</li>
+						<li class="fragment">Similar to state machine diagrams (from Theory).</li>
 						<li class="fragment">Notation:
 							<ul>
 								<li class="fragment">Start (solid circle) required</li>
@@ -861,9 +861,9 @@
 						<li class="fragment">Attributes (values associated with a state)</li>
 						<li class="fragment">Activities (actions the state performs)
 							<ul>
-								<li class="fragment">Entry: Fires when state is entered</li>
-								<li class="fragment">Do: Runs while inside the state</li>
-								<li class="fragment">Exit: Fires when state is left</li>
+								<li class="fragment">Entry: Fires when state is <em>entered</em></li>
+								<li class="fragment">Do: Runs while <em>inside</em> the state</li>
+								<li class="fragment">Exit: Fires when state is <em>left</em></li>
 							</ul>
 						</li>
 					</ul>
@@ -872,7 +872,6 @@
 				<section class="left dense-slide">
 					<aside class="notes">
 						<ul>
-							<li>We are going to revisit the cat system for the state diagram.</li>
 							<li>As we just said a state diagram models state changes of a single object.</li>
 							<li>Let's revisit the Cat example we used (class and object diagrams) in the context of a smart pet monitoring app.</li>
 							<li>It might need to:
