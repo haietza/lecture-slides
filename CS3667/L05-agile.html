@@ -1,0 +1,353 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>CS3667 - Lecture 05 - Agile Software Development</title>
+
+		<link rel="stylesheet" href="../reveal-js/dist/reset.css">
+		<link rel="stylesheet" href="../reveal-js/dist/reveal.css">
+		<link rel="stylesheet" href="../reveal-js/dist/theme/black.css">
+		<link rel="stylesheet" href="../layouts/common.css">
+		<link rel="stylesheet" href="../reveal-js/dist/plugin/highlight/monokai.css">
+		<link rel="stylesheet" href="custom.css" />
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+				<div class="header left">
+					CS3667: Software Engineering
+				</div>
+				<div class="header right no-title">
+					<em>Agile Software Development</em>
+				</div>
+
+				<section data-state="title-slide">
+					<h1 class="r-fit-text">CS3667: Software Engineering</h1>
+					<h2 class="r-fit-text">Agile Software Development</h2>
+				</section>
+
+				<section class="left">
+					<aside class="notes">
+						<ul>
+							<li>Before we talk about what Agile is, we need to understand what it was reacting to.</li>
+							<li>In the 1950s and 60s, use of computers and software development increased rapidly.</li>
+							<li>Problems arose due to the inadequacy of the existing methods to solve increasingly complex problems.</li>
+							<li>In 1968, the industry created the NATO conference to address these chronic and systemic problems.</li>
+							<li>Software development was modeled after civil engineering — you wouldn't pour concrete before the blueprints were done, right?</li>
+							<li>So Waterfall made intuitive sense. But software is fundamentally different from a bridge.</li>
+						</ul>
+					</aside>
+					<h3>Why Does Agile Exist?</h3>
+					<p class="fragment">The Problem With Building Software Like a Bridge</p>
+					<ul>
+						<li class="fragment">1968 NATO Conference: <em>Software Crisis</em>
+							<ul>
+								<li class="fragment">Best practices for software</li>
+								<li class="fragment">Acceptance of term <em>software engineering</em></li>
+							</ul>
+						</li>
+						<li class="fragment">1970 Waterfall (Royce)
+							<ul>
+								<li class="fragment">Original process model</li>
+								<li class="fragment">Linear and sequential: Requirements → Design → Code → Test → Deploy</li>
+								<li class="fragment">Limited to no return to <em>earlier phases</em></li>
+							</ul>
+						</li>
+					</ul>
+				</section>
+
+				<section class="left">
+					<aside class="notes">
+						<ul>
+							<li>A bridge's requirements don't change after the foundation is poured.</li>
+							<li>Software requirements change constantly — the business learns something, the market shifts, the user tells you what they actually wanted.</li>
+							<li>Waterfall left no room for that. By 2001, a critical mass of practitioners had enough evidence that something different was needed, and they wrote it down in four sentences.</li>	    
+						</ul>
+					</aside>
+					<h3>Why Does Agile Exist?</h3>
+					<ul>
+						<li class="fragment">The flaw: Requirements <em>always change</em></li>
+						<li class="fragment">~2001 17 practitioners, Snowbird Utah
+							<ul>
+								<li class="fragment">XP, Scrum, Crystal thought-leaders align</li>
+								<li class="fragment">→ The Agile Manifesto</li>
+							</ul>
+						</li>
+					</ul>
+				</section>
+
+				<section class="left">
+					<aside class="notes">
+						<ul>
+							<li>This slide is frequently misunderstood.</li>
+							<li>The manifesto does NOT say 'processes and tools have no value.'</li>
+							<li>It says we value interactions more. That distinction matters enormously.</li>
+							<li>'Working software over documentation' doesn't mean write no docs.</li>
+							<li>It means: if you're behind on a deadline, ship the working feature before writing the 40-page design document for it.</li>
+							<li>The right-side items still have value — they just lose the tie-breaker.</li>
+						</ul>
+					</aside>
+					<h3>The Agile Manifesto</h3>
+					<table>
+						<thead>
+							<tr>
+							<th scope="col">We value more...</th>
+							<th scope="col">Over...</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr class="fragment">
+								<td>Individuals & interactions</td>
+								<td>Processes & tools</td>
+							</tr>
+							<tr class="fragment">
+								<td>Working software</td>
+								<td>Comprehensive documentation</td>
+							</tr>
+							<tr class="fragment">
+								<td>Customer collaboration</td>
+								<td>Contract negotiation</td>
+							</tr>
+							<tr class="fragment">
+								<td>Responding to change</td>
+								<td>Following a plan</td>
+							</tr>
+						</tbody>
+					</table>
+				</section>
+
+				<section class="left">
+					<aside class="notes">
+						<ul>
+							<li>Twelve is a lot to memorize, so we group them.</li>
+							<li>A few are worth highlighting. Principle 3 — deliver working software frequently, preference to shorter timescales — is the heartbeat of Scrum sprints.</li>
+							<li>Every sprint ends with a shippable Increment; that's this principle in action.</li>
+						</ul>
+					</aside>
+					<h3>12 Principles</h3>
+					<p>Customer Value</p>
+					<ul>
+						<li class="fragment">Satisfy customers through early, continuous delivery</li>
+						<li class="fragment">Welcome changing requirements, even late</li>
+						<li class="fragment">Deliver working software frequently; prefer shorter timescales</li>
+						<li class="fragment">Working software = primary measure of progress</li>
+					</ul>
+				</section>
+
+				<section class="left">
+					<aside class="notes">
+						<ul>
+							<li>Principle 6 — face-to-face conversation is the most efficient method — gets misread as 'everyone in one big meeting.'</li>
+							<li>It actually means the right people talking directly rather than routing everything through email chains or tickets.</li>
+						</ul>
+					</aside>
+					<h3>12 Principles</h3>
+					<p>Team & Communication</p>
+					<ul>
+						<li class="fragment">Business + devs work together daily</li>
+						<li class="fragment">Trust motivated individuals; give them support</li>
+						<li class="fragment">Face-to-face conversation = most efficient and effective method</li>
+						<li class="fragment">Best designs emerge from self-organizing teams</li>
+					</ul>
+				</section>
+
+				<section class="left">
+					<aside class="notes">
+						<ul>
+							<li>Principle 10 — maximizing the work not done — is counterintuitive.</li>
+							<li>In a traditional environment, more work means more value.</li>
+							<li>In agile, doing less work that's exactly right beats doing more work that's partially right.</li>
+							<li>That's lean thinking applied to software.</li>    
+						</ul>
+					</aside>
+					<h3>12 Principles</h3>
+					<p>Engineering Excellence</p>
+					<ul>
+						<li class="fragment">Continuous attention to technical excellence</li>
+						<li class="fragment">Simplicity; maximize the work not done</li>
+					</ul>
+				</section>
+
+				<section class="left">
+					<aside class="notes">
+						<ul>
+							<li>Principle 11 — best architectures emerge from self-organizing teams — directly challenges the idea that one senior architect hands down a design.</li>
+						</ul>
+					</aside>
+					<h3>12 Principles</h3>
+					<p>Sustainability & Reflection</p>
+					<ul>
+						<li class="fragment">Maintain a constant, indefinite pace</li>
+						<li class="fragment">Reflect at regular intervals; tune accordingly</li>
+					</ul>
+				</section>
+
+				<section class="left">
+					<aside class="notes">
+						<ul>
+							<li>This three-layer model is one of the most important frameworks in this course because it lets you evaluate any practice you encounter on the job.</li>
+							<li>Principles is the bridge between values and practices</li>
+							<li>Practices are the implementation of pinciples</li>
+						</ul>
+					</aside>
+					<h3>Three Layers, One System</h3>
+					<ul>
+						<li class="fragment">Values: Abstract beliefs</li>
+						<li class="fragment">Principles: Guiding rules</li>
+						<li class="fragment">Practices: Concrete actions</li>
+					</ul>
+				</section>
+
+				<section class="left">
+					<aside class="notes">
+						<ul>
+							<li>When someone tells you 'we do daily standups,' the right question isn't 'is that the rule?' — it's 'what value and principle does this serve?'</li>
+							<li>If your team communicates constantly and is co-located, a mandatory daily standup might actually violate the principle it was designed to serve.</li>
+							<li>Practices disconnected from their values become cargo cult — you're doing the ritual without understanding the reason.</li>
+							<li>Strong engineers understand the why so they can adapt the how.</li>
+							<li>A persona — a fictional user profile — is a great example of a practice: it implements the principle of understanding users, which is rooted in the value of customer collaboration</li>
+						</ul>   
+					</aside>
+					<h3>Three Layers, One System</h3>
+					<table>
+						<thead>
+							<th scope="col">Value</th>
+							<th scope="col">Principle</th>
+							<th scope="col">Practice</th>
+						</thead>
+						<tbody>
+							<tr class="fragment">
+								<td>Courage</td>
+								<td>Reflect & adjust regularly</td>
+								<td>Sprint Retrospective</td>
+							</tr>
+							<tr class="fragment">
+								<td>Customer collaboration</td>
+								<td>Business + devs work daily</td>
+								<td>Product Owner in Sprint Planning</td>
+							</tr>
+							<tr class="fragment">
+								<td>Customer collaboration</td>
+								<td>Understand users deeply</td>
+								<td>Persona (user profile)</td>
+							</tr>
+						</tbody>
+					</table>
+				</section>
+
+				<section class="left">
+					<aside class="notes">
+						<ul>
+						</ul>
+					</aside>
+					<h3><i class="fa-solid fa-pencil"></i> Manifesto Stress Test (15 minutes)</h3>
+					<p>Scenario: Your company claims to be "Agile." For each decision below, determine:</p>
+					<ul>
+						<li>Does it align with or violate the Agile Manifesto?</li>
+						<li>Cite the specific value statement or principle number.</li>
+						<li>If it violates, write a one-sentence better alternative.</li>
+					</ul>
+				</section>
+
+				<section class="left">
+					<aside class="notes">
+						<p>Solution in /Users/meltonml/development/cs3667-materials/agile/active-learning/manifesto-stress-test.txt</p>
+					</aside>
+					<h3><i class="fa-solid fa-pencil"></i> Manifesto Stress Test (15 minutes)</h3>
+					<ol class="dense-slide">
+						<li>The PM freezes requirements after the design phase: "Change is risky."</li>
+						<li>The team skips unit tests this sprint to hit the demo deadline: "We'll write them next sprint."</li>
+						<li>A 14-developer Scrum team runs 2-hour daily standups so "everyone is heard."</li>
+						<li>A Product Owner writes an 80-page requirements doc, hands it to the team, then exits the project.</li>
+						<li>The dev team and client hold weekly 30-minute video calls demonstrating a working prototype, and feedback is added to the backlog.</li>
+					</ol>
+				</section>
+
+				<section class="left">
+					<aside class="notes">
+						<ul>
+							<li>We often talk about 'going Agile' as if it's a single thing, but there are actually dozens of agile methodologies.</li>
+							<li>The three you're most likely to encounter on the job are Scrum, XP, and Kanban.</li>
+							<li>The crucial framing from the source material is that none of these is universally better than the others — they solve different problems.</li>
+							<li>Scrum is the most common in enterprise software because it provides the most structure around planning and coordination: who is doing what, by when.</li>
+							<li>XP is laser-focused on code quality — it emerged because teams were shipping working software that was a nightmare to maintain.</li>
+							<li>Kanban came from manufacturing and is best suited for teams doing continuous, flow-based work — think ops, support, or maintenance teams where work arrives unpredictably.</li>
+						</ul>   
+					</aside>
+					<h3>Three Top Agile Methodologies</h3>
+					<table>
+						<thead>
+							<th scope="col">Methodology</th>
+							<th scope="col">Emphasizes</th>
+							<th scope="col">Focus Area</th>
+						</thead>
+						<tbody>
+							<tr class="fragment">
+								<td>Scrum</td>
+								<td>Project management</td>
+								<td><em>What</em> work is getting done</td>
+							</tr>
+							<tr class="fragment">
+								<td>XP (Extreme Programming)</td>
+								<td>Software development</td>
+								<td><em>How</em> code is written</td>
+							</tr>
+							<tr class="fragment">
+								<td>Kanban</td>
+								<td>Continual improvement</td>
+								<td><em>Flow</em> of work</td>
+							</tr>
+						</tbody>
+					</table>
+				</section>
+
+				<section class="left">
+					<aside class="notes">
+						<ul>
+							<li>You'll also see teams blend these: Scrum's sprint cadence combined with XP's engineering practices is one of the most common combinations in the industry.</li>	      
+						</ul>
+					</aside>
+					<h3>Three Top Agile Methodologies</h3>
+					<div class="two-col">
+						<div>
+							<p>What they share</p>
+							<ul class="dense-slide">
+								<li>All values have significant overlap</li>
+								<li>All built on Agile values & principles</li>
+								<li>None is better than another; they address different parts of the SDP</li>
+							</ul>
+						</div>
+						<div>
+							<p>What differs</p>
+							<ul class="dense-slide">
+								<li>Practices reflect each methodology's focus area</li>
+								<li>You don't have to follow every practice</li>
+								<li>Many teams blend practices from multiple methodologies</li>
+							</ul>
+						</div>
+					</div>
+				</section>
+				
+			</div>
+		</div>
+
+		<script src="../reveal-js/dist/reveal.js"></script>
+		<script src="../reveal-js/dist/plugin/math.js"></script>
+		<script src="../reveal-js/dist/plugin/notes.js"></script>
+		<script src="../reveal-js/dist/plugin/markdown.js"></script>
+		<script src="../reveal-js/dist/plugin/highlight.js"></script>
+		<script>
+			Reveal.initialize({
+				hash: true,
+				slideNumber: true,
+				transition: 'slide',
+				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes, RevealMath.KaTeX ],
+				showNotes: false,
+				pdfSeparateFragments: false
+			});
+		</script>
+	</body>
+</html>
