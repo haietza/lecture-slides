@@ -64,18 +64,15 @@
 						<ul>
 							<li>A bridge's requirements don't change after the foundation is poured.</li>
 							<li>Software requirements change constantly — the business learns something, the market shifts, the user tells you what they actually wanted.</li>
-							<li>Waterfall left no room for that. By 2001, a critical mass of practitioners had enough evidence that something different was needed, and they wrote it down in four sentences.</li>	    
+							<li>Waterfall left no room for that. If you are in the testing phase and discover a fundamental flaw in the original analysis, Waterfall makes it incredibly slow and expensive to go backward.</li>
+							<li>By 2001, a critical mass of practitioners had enough evidence that something different was needed, and they wrote it down in four sentences.</li>	    
 						</ul>
 					</aside>
-					<h3>Why Does Agile Exist?</h3>
+					<h3>The Agile Shift</h3>
 					<ul>
-						<li class="fragment">The flaw: Requirements <em>always change</em></li>
-						<li class="fragment">~2001 17 practitioners, Snowbird Utah
-							<ul>
-								<li class="fragment">XP, Scrum, Crystal thought-leaders align</li>
-								<li class="fragment">→ The Agile Manifesto</li>
-							</ul>
-						</li>
+						<li class="fragment">The Catalyst: "Lightweight" process advocates met in Snowbird, Utah (2001).</li>
+						<li class="fragment">The Focus: Addressing chronic, industry-wide deployment failures.</li>
+						<li class="fragment">The Solution: Shifting focus from rigid structural compliance to an <em>adaptive framework mindset</em>.</li>
 					</ul>
 				</section>
 
@@ -94,8 +91,8 @@
 					<table>
 						<thead>
 							<tr>
-							<th scope="col">We value more...</th>
-							<th scope="col">Over...</th>
+								<th scope="col">We value more...</th>
+								<th scope="col">Over...</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -334,82 +331,6 @@
 				<section class="left">
 					<aside class="notes">
 						<ul>
-							<li>Scrum's defining characteristic is tight project management structure — you always know what's being built, who owns what, and when every coordination point happens.</li>
-							<li>The 3-5-3 is the skeleton.</li>
-							<li>The Product Owner manages the backlog — not the people.</li>
-							<li>The Scrum Master is a leader who serves — they remove impediments and protect the team (some teams rotate scrum master each sprint); they are not a project manager.</li>
-							<li>Developers are self-managing: no one assigns tasks to them.</li>
-							<li>GASP = Generally Accepted Scrum Practice</li>
-							    
-						</ul>
-					</aside>
-					<h3>Scrum</h3>
-					<ul>
-						<li class="fragment">A <em>lightweight</em> framework for developing and sustaining <em>complex</em> products.</li>
-						<li class="fragment">The <em>3-5-3</em>:
-							<ul>
-								<li class="fragment">3 Roles: Product Owner, Scrum Master, Developers</li>
-								<li class="fragment">5 Events: Sprint, Sprint Planning, Daily Scrum, Sprint Review, Retrospective</li>
-								<li class="fragment">3 Artifacts: Product Backlog, Sprint Backlog, Increment</li>
-							</ul>
-						</li>
-					</ul>
-				</section>
-
-				<section class="left">
-					<aside class="notes">
-						<ul>
-							<li>Five events are all timeboxed</li>
-							<li>The Sprint Planning's three topics matter: Why produces the Sprint Goal, What is selected based on velocity and capacity, and How belongs entirely to the Developers — no one dictates implementation.</li>
-							<li>The Daily Scrum is a 15-minute synchronization, not a status report to management.</li>
-							<li>The most common antipattern: the Scrum Master goes around the room collecting updates, turning it into a 40-minute meeting.</li>
-							<li>Surface blockers, identify who helps, solve it after.</li>
-							<li>The Definition of Done is what separates genuine completion from 'done on my machine' — a strong DoD includes peer review, passing tests, and at minimum a staging deployment.</li>
-							<li>The Review/Retro distinction trips students up on assessments: Review is external-facing, shows the product to stakeholders.</li>
-							<li>Retrospective is internal — how do we work better? It's the first event cut under pressure, which is exactly backwards.</li>   
-						</ul>
-					</aside>
-					<h3>Scrum Events</h3>
-					<ul>
-						<li class="fragment">Sprint <em>(1–4 weeks)</em>: Container; fixed cadence</li>
-						<li class="fragment">Sprint Planning <em>(≤ 4 hrs)</em>: Why? / What? / How? (Devs own "How")</li>
-						<li class="fragment">Daily Scrum <em>(15 min)</em>: Sync toward Sprint Goal; surface blockers, not a status report</li>
-						<li class="fragment">Sprint Review <em>(≤ 2 hrs)</em>: Inspect the product with stakeholders</li>
-						<li class="fragment">Sprint Retrospective <em>(≤ 1.5 hrs)</em>: Inspect the process, team only</li>
-					</ul>
-				</section>
-
-				<section class="left">
-					<aside class="notes">
-						<ul>
-						</ul>
-					</aside>
-					<h3>Scrum Artifacts</h3>
-					<table>
-						<thead>
-							<th scope="col">Artifact</th>
-							<th scope="col">Commitment</th>
-						</thead>
-						<tbody>
-							<tr class="fragment">
-								<td>Product Backlog <em>(ordered, living list of all work)</em></td>
-								<td>Product Goal</td>
-							</tr>
-							<tr class="fragment">
-								<td>Sprint Backlog <em>(Sprint Goal + selected items + plan)</em></td>
-								<td>Sprint Goal</td>
-							</tr>
-							<tr class="fragment">
-								<td>Increment <em>(usable result; must meet DoD)</em></td>
-								<td>Definition of Done</td>
-							</tr>
-						</tbody>
-					</table>
-				</section>
-
-				<section class="left">
-					<aside class="notes">
-						<ul>
 							<li>The five values aren't decorative — Courage is what makes the Daily Scrum honest; Focus is what makes the Sprint Goal meaningful.</li>
 							<li>Many organizations adapt the titles, but the functions must be present.</li>  
 						</ul>
@@ -432,9 +353,9 @@
 					</aside>
 					<h3>Scrum Principles</h3>
 					<ul>
-						<li class="fragment"><em>Transparency:</em> Process visibility, shared codebase repo, daily scrums, flat teams</li>
-						<li class="fragment"><em>Inspection:</em> Deviation from expectations prevented by frequent inspection; spring review and retrospective</li>
-						<li class="fragment"><em>Adaptation:</em> Sprint retrospective</li>
+						<li class="fragment"><em>Transparency:</em> Process workflows must be visible to everyone involved.</li>
+						<li class="fragment"><em>Inspection:</em> Regularly evaluating artifacts to detect unwanted issues.</li>
+						<li class="fragment"><em>Adaptation:</em> Adjusting the process immediately when variances occur.</li>
 					</ul>
 				</section>
 
@@ -455,35 +376,177 @@
 				<section class="left">
 					<aside class="notes">
 						<ul>
-							<li>Backlog item types: User Story · Epic · Bug · Spike · Chore</li>
-							<li>User stories are a GASP — not formally in the Scrum Guide but nearly universal in industry.</li>
-							<li>The Connextra format forces perspective-taking: you're writing from the user's viewpoint, not the system's.</li>
-							<li>Acceptance criteria in Given-When-Then format make user stories testable before a line of code is written.</li>
+							<li>Scrum's defining characteristic is tight project management structure — you always know what's being built, who owns what, and when every coordination point happens.</li>
+							<li>The 3-5-3 is the skeleton.</li>
+							<li>Ken Schwaber and Jeff Sutherland emphasize that the Scrum framework is immutable. If you only implement bits and pieces, you aren't actually running Scrum.</li>
+						</ul>
+					</aside>
+					<h3>The 3-5-3 of Scrum</h3>
+					<ul>
+						<li class="fragment"><em>3 Roles:</em> Product Owner, Scrum Master, Developers</li>
+						<li class="fragment"><em>5 Events:</em> Sprint, Sprint Planning, Daily Scrum, Sprint Review, Retrospective</li>
+						<li class="fragment"><em>3 Artifacts:</em> Product Backlog, Sprint Backlog, Increment</li>
+					</ul>
+				</section>
 
+				<section class="left">
+					<aside class="notes">
+						<ul>
+							<li>The Product Owner manages the backlog — not the people.</li>
+							<li>The Scrum Master is a leader who serves — they remove impediments and protect the team (some teams rotate scrum master each sprint); they are not a project manager.</li>
+							<li>Developers are self-managing: no one assigns tasks to them.</li>
+						</ul>
+					</aside>
+					<h3>Scrum Roles</h3>
+					<ul>
+						<li class="fragment">One Cohesive Unit: Small team focused on one objective at a time: the Product Goal.</li>
+						<li class="fragment">Flat Architecture: No internal hierarchies or sub-teams.</li>
+						<li class="fragment">Product Owner: Accountable for maximizing product value and managing the Product Backlog.</li>
+						<li class="fragment">Scrum Master: Accountable for team effectiveness and establishing Scrum practices.</li>
+						<li class="fragment">Developers: Accountable for creating a usable, high-quality Increment each Sprint.</li>
+					</ul>
+				</section>
 
-							   Story points are not time. A 5-point story means roughly 2.5× harder than a 2-point story, not 5 hours. Humans are bad at estimating absolute time but good at relative complexity. The Fibonacci sequence's growing gaps prevent false precision — you can't tell the difference between 11 and 12 on a complex story, so you commit to 13 and move on. The simultaneous card flip in Planning Poker is an epistemic tool: if your senior dev plays 2 and your junior plays 13, that gap contains information. The conversation that follows closes the knowledge gap for the whole team.
+				<section class="left">
+					<aside class="notes">
+						<ul>
+							<li>Five events are all timeboxed</li>
+							<li>The spring serves as the baseline container for everything else.</li>
+							<li>The Sprint Planning's three topics matter: Why produces the Sprint Goal, What is selected based on velocity and capacity, and How belongs entirely to the Developers — no one dictates implementation.</li>
+							<li>The Daily Scrum is a 15-minute synchronization, not a status report to management.</li>
+							<li>The most common antipattern: the Scrum Master goes around the room collecting updates, turning it into a 40-minute meeting.</li>
+							<li>Surface blockers, identify who helps, solve it after.</li>
+							<li>The Definition of Done is what separates genuine completion from 'done on my machine' — a strong DoD includes peer review, passing tests, and at minimum a staging deployment.</li>
+							<li>The Review/Retro distinction trips students up on assessments: Review is external-facing, shows the product to stakeholders.</li>
+							<li>Retrospective is internal — how do we work better? It's the first event cut under pressure, which is exactly backwards.</li>   
+						</ul>
+					</aside>
+					<h3>Scrum Events</h3>
+					<ul>
+						<li class="fragment">Sprint <em>(1–4 weeks)</em>: Container event, fixed cadence</li>
+						<li class="fragment">Sprint Planning <em>(≤ 4 hrs)</em>: Why? / What? / How? (Devs own "How")</li>
+						<li class="fragment">Daily Scrum <em>(15 min)</em>: Sync toward Sprint Goal; surface blockers, not a status report</li>
+						<li class="fragment">Sprint Review <em>(≤ 2 hrs)</em>: Inspect the product with stakeholders</li>
+						<li class="fragment">Sprint Retrospective <em>(≤ 1.5 hrs)</em>: Inspect the process, team only</li>
+					</ul>
+				</section>
+
+				<section class="left">
+					<aside class="notes">
+						<ul>
+							<li>The product backlog is the long-term objective and functional target for the team.</li>
+							<li>The spring backlog is the single, focused objective for the active sprint.</li>
+							<li>The Increment is the formal quality bar that a feature must meet to be considered usable.</li>
+							<li>If a feature fails the DoD, it cannot be released or demoed, it goes straight back to the backlog.</li>
+						</ul>
+					</aside>
+					<h3>Scrum Artifacts</h3>
+					<table>
+						<thead>
+							<th scope="col">Artifact</th>
+							<th scope="col">Commitment</th>
+						</thead>
+						<tbody>
+							<tr class="fragment">
+								<td>Product Backlog <em>(ordered, living list of all work)</em></td>
+								<td>Product Goal</td>
+							</tr>
+							<tr class="fragment">
+								<td>Sprint Backlog <em>(Sprint Goal + selected items + plan)</em></td>
+								<td>Sprint Goal</td>
+							</tr>
+							<tr class="fragment">
+								<td>Increment <em>(usable result, must meet DoD)</em></td>
+								<td>Definition of Done</td>
+							</tr>
+						</tbody>
+					</table>
+				</section>
+
+				<section class="left">
+					<aside class="notes">
+						<ul>
+							<li>Epic: A large, high-level block of requirements or features that spans multiple sprints and must be broken down into smaller pieces.</li>  
+							<li>User Story: A customer-focused requirement template that defines who wants a feature, what they want, and why it brings them value.</li>
+							<li>Bug: A backlog item dedicated to identifying, prioritizing, and repairing software defects or unintended errors in the code. </li> 
+							<li>Spike: A time-boxed research or investigative item used by the team to reduce technical uncertainty before active development begins.</li>  
+							<li>Task: A tactical, bite-sized work item of one day or less created by decomposing a larger backlog requirement into explicit technical steps.</li>
+						</ul>
+					</aside>
+					<h3>Backlog Items</h3>
+					<ul>
+						<li class="fragment">User Story: Customer-focused requirement template</li>
+						<li class="fragment">Task: Work item created by breaking down a larger requirement</li>
+						<li class="fragment">Bug: Item dedicated to identifying and repairing software defects or errors</li>
+						<li class="fragment">Spike: Research item used to reduce technical uncertainty before development begins</li>
+						<li class="fragment">Epic: Hgh-level block of requirements that spans multiple sprints</li>
+					</ul>
+				</section>
+				
+				<section class="left">
+					<aside class="notes">
+						<ul>
+							<li>User stories are a GASP (Generally Accepted Scrum Practice) — not formally in the Scrum Guide but nearly universal in industry.</li>
+							<li>As a bank customer, I want to see the balances of each of my accounts, So that I can easily transfer money.</li>
 						</ul>
 					</aside>
 					<h3>User Stories</h3>
 					<ul>
-						<li class="fragment">User Story format: As a <em>[role]</em>, I want <em>[goal]</em>, so that <em>[benefit]</em>.</li>
-						<li class="fragment">Acceptance criteria: Given <em>[context]</em> When <em>[action]</em> Then <em>[outcome]</em></li>
-						<li class="fragment">INVEST checklist: Independent, Negotiable, Valuable, Estimable, Small, Testable</li>
+						<li class="fragment">Structured templates to capture software requirements from an end-user perspective.
+							<ul>
+								<li class="fragment">As a <em>[type of user]</em></li>
+								<li class="fragment">I want <em>[some goal or objective]</em></li>
+								<li class="fragment">so that <em>[benefit, value]</em></li>
+							</ul>
+						</li>
+					</ul>
+				</section>
 
+				<section class="left">
+					<aside class="notes">
+						<ul>
+							<li>Planning Poker is another GASP (Generally Accepted Scrum Practice).</li>
+							<li>Planning Poker is typically conducted on the first day of a sprint during the team's formal planning session.</li>
+							<li>The team examines individual product backlog items presented.</li>
+							<li>The developers discuss the architectural requirements of a story with the Product Owner, vote on the relative effort (story points) using independent cards, and discuss to adjust their perspectives as a group.</li>
+							<li>Story points are (complexity + uncertainty + work), not time. A 5-point story means roughly 2.5× harder than a 2-point story, not 5 hours.</li>
+							<li>It is powerful because it uses relative sizing rather than arbitrary deadlines.</li>
+							<li>The Fibonacci sequence's growing gaps mathematically represent the exponential growth of risk and uncertainty as a feature gets larger.</li>
+							<li>It also stops false precision, wasting time arguing over meaningless intervals (11-hour task vs 12-hour task).</li>
+							<li>It helps surface differing design assumptions before writing any code, ensuring the entire team shares a clear, unified understanding of the technical requirements.</li>
+							<li>The simultaneous card flip in Planning Poker is an epistemic tool: if your senior dev plays 2 and your junior plays 13, that gap contains information. The conversation that follows closes the knowledge gap for the whole team.</li>
+							<li>The process repeats until the developers converge on an agreed-upon estimate, establishing the total effort required to build out that specific user story.</li>
+							<li>Velocity: Points/sprint → forecasting: 100-pt backlog ÷ 20 pts/sprint ≈ 5 sprints</li>
+						</ul>
+					</aside>
+					<h3>Planning Poker</h3>
+					<ul>
+						<li class="fragment">Purpose: To <em>collaboratively</em> estimate the total effort needed to deliver a specific user story.</li>
+						<li class="fragment">Mechanics: Uses a relative scale (often Fibonacci values) to <em>align</em> estimates across the group.</li>
+						<li class="fragment">Value: Avoids early bias, highlights design misunderstandings, and taps into the <em>collective intelligence</em> of the developers.</li>
+					</ul>
+				</section>
 
-
-						Scrum: User Stories, Story Points & Planning Poker
-
-
-
-
-Story Points — relative effort (complexity + uncertainty + work):
-Login page (simple, done before) = 2 pts
-OAuth2 SSO (new, many unknowns)  = 13 pts   ← ratio is reliable; hours are not
-Fibonacci values: 1, 2, 3, 5, 8, 13, 21 — growing gaps force meaningful decisions
-Velocity: Points/sprint → forecasting: 100-pt backlog ÷ 20 pts/sprint ≈ 5 sprints
-Planning Poker: Cards revealed simultaneously (prevents anchoring bias).
-Divergence = information. ? = unclear. ∞ = break it down first.
+				<section class="left">
+					<aside class="notes">
+						<p>Solution in /Users/meltonml/development/cs3667-materials/agile/active-learning/role-mapping.txt</p>
+					</aside>
+					<h3><i class="fa-solid fa-pencil"></i> Role Mapping (15 minutes)</h3>
+					<ul class="dense-slide">
+						<li>Work in pairs. Determine correct Role for each Responsibility (Product Owner, Scrum Master, Developer, Not a Scrum Role)
+							<ul>
+								<li>Order the product backlog</li>
+								<li>Remove impediments</li>
+								<li>Create the sprint backlog</li>
+								<li>Coach on self management</li>
+								<li>Maximize product value</li>
+								<li>Adhere to definition of done</li>
+								<li>Facilitate Scrum events</li>
+								<li>Define sprint goal collaboratively</li>
+								<li>Assign tasks to developers</li>
+								<li>Manage the project timeline</li>
+							</ul>
+						</li>
 					</ul>
 				</section>
 			
