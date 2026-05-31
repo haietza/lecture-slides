@@ -475,11 +475,11 @@
 					</aside>
 					<h3>Backlog Items</h3>
 					<ul>
-						<li class="fragment">User Story: Customer-focused requirement template</li>
-						<li class="fragment">Task: Work item created by breaking down a larger requirement</li>
-						<li class="fragment">Bug: Item dedicated to identifying and repairing software defects or errors</li>
-						<li class="fragment">Spike: Research item used to reduce technical uncertainty before development begins</li>
-						<li class="fragment">Epic: Hgh-level block of requirements that spans multiple sprints</li>
+						<li class="fragment">User Story: <em>Customer-focused</em> requirement template</li>
+						<li class="fragment">Task: Work item created by <em>breaking down</em> a larger requirement</li>
+						<li class="fragment">Bug: Item dedicated to <em>identifying</em> and <em>repairing</em> software defects or errors</li>
+						<li class="fragment">Spike: <em>Research</em> item used to reduce technical uncertainty before development begins</li>
+						<li class="fragment">Epic: Hgh-level block of requirements that spans <em>multiple sprints</em></li>
 					</ul>
 				</section>
 				
@@ -588,6 +588,143 @@
 						<li class="fragment"><em>Coding:</em> Pair Programming, Test-First Programming (TDD), Incremental Design</li>
 						<li class="fragment"><em>Team:</em> Sit Together, Whole Team, Informative Workspace, Energized Work</li>
 						<li class="fragment"><em>Project Management:</em> Ten-Minute Build, Continuous Integration, Stories, Weekly & Quarterly Cycles, Slack</li>
+					</ul>
+				</section>
+
+				<section class="left">
+					<aside class="notes">
+						<ul>
+							<li>Kanban comes from Toyota's manufacturing system</li>
+							<li>A pull system where work is pulled to the next stage only when capacity exists, rather than pushed regardless of readiness.</li>
+							<li>The central principle is visibility: put all work on a board so everyone can see the state of everything.</li>
+							<li>The WIP (work in progress) limit is the most powerful practice.</li>
+							<li>Say your WIP limit on Development is 3 and all slots are full. In most teams, developers pick up more work anyway.</li>
+							<li>In Kanban, that's not allowed — the limit forces the question: why isn't work flowing? Is something blocked? Is there a testing bottleneck? Is someone context-switching?</li>
+							<li>The WIP limit makes invisible problems visible.</li>
+							<li>Kanban has no sprints, no fixed roles, no planning ceremonies. Work arrives continuously and flows through the board.</li>
+							<li>This suits support, operations, or maintenance work where you can't predict what's coming next.</li> 
+							<li>Caution “procrastination” is not the same thing as decide as late as possible!</li>      
+						</ul>
+					</aside>
+					<h3>Kanban Principles</h3>
+					<ul class="dense-slide">
+						<li class="fragment">Eliminate Waste: Remove anything that doesn't add <em>value.</em></li>
+						<li class="fragment">Amplify Learning: Use <em>feedback</em> loops continuously.</li>
+						<li class="fragment">Decide as Late as Possible: Most information exists at the last <em>responsible</em> moment.</li>
+						<li class="fragment">Deliver as Fast as Possible: <em>Reduce</em> cycle time; don't batch unnecessarily.</li>
+						<li class="fragment">Empower the Team: Those <em>closest</em> to the work make the best decisions.</li>
+						<li class="fragment">Build Integrity In: Quality is not a phase; it's <em>continuous</em>.</li>
+						<li class="fragment">See the Whole: Optimize the <em>system</em>, not just individual steps.</li>
+					</ul>
+				</section>
+
+				<section class="left">
+					<h3>Kanban Board</h3>
+					<ul>
+						<li class="fragment">WIP Limits: Column hits limit → stop starting, start <em>finishing</em>.</li>
+						<li class="fragment">Full column = a signal, not a status. Exposes <em>bottlenecks</em> immediately.</li>
+					</ul>
+					<table class="fragment">
+						<thead>
+							<tr>
+								<th scope="col">Backlog</th>
+								<th scope="col">In Progress (WIP: 3)</th>
+								<th scope="col">Done</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td>Story A<br>Story B<br>Story H</td>
+								<td>Story C<br>Story D<br><em>[BLOCKED]</em><br>Story E</td>
+								<td>Story F<br>Story G</td>
+							</tr>
+						</tbody>
+					</table>
+				</section>
+
+				<section class="left">
+					<aside class="notes">
+						<ul>
+							<li>Flow efficiency is the number that shocks most teams — work is actively being processed less than half the time.</li>
+							<li>The rest is waiting: for review, for a dependency, for a decision.</li>
+						</ul>
+					</aside>
+					<h3>Kanban: Flow Metrics</h3>
+					<table>
+						<thead>
+							<tr>
+								<th scope="col">Metric</th>		
+								<th scope="col">Measures</th>
+								<th scope="col">Use to...</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr class="fragment">
+								<td>Cycle Time</td>
+								<td>"Started" → "Done"</td>
+								<td>Predict delivery reliability</td>
+							</tr>
+							<tr class="fragment">
+								<td>Lead Time</td>
+								<td>"Requested" → "Done"</td>
+								<td>Set customer expectations</td>
+							</tr>
+							<tr class="fragment">
+								<td>Flow Efficiency</td>
+								<td>% of time actively worked vs. waiting</td>
+								<td>Expose waste</td>
+							</tr>
+						</tbody>
+					</table>
+				</section>
+
+				<section class="left">
+					<aside class="notes">
+						<ul>
+							<li>Value Stream Mapping makes this visible by tracing the full journey and marking every wait.</li>
+							<li>Once you see that a feature spends 3 days waiting for code review in a 10-day cycle, you have a concrete, measurable target.</li>
+							<li>This is a fundamentally different improvement model from Scrum's retrospective.</li>
+							<li>Scrum builds in a structured reflection at the end of every sprint.</li>
+							<li>Kanban treats improvement as continuous and metrics-driven — change one thing, measure the effect.</li>
+							<li>Neither is better. Scrum's cadence suits teams that need regular forcing functions.</li>
+							<li>Kanban's continuous model suits teams where improvement opportunities emerge unpredictably.</li>      
+						</ul>
+					</aside>
+					<h3>Kanban: Value Stream Mapping</h3>
+					<ul class="dense-slide">
+						<li class="fragment">Value Stream Map example: Requested → Analysis (2d) → <em>[wait 3d]</em> → Dev (5d) → <em>[wait 4d]</em> → Test (2d) → Done</li>
+						<li class="fragment">Lead time: 16 days, Active: 9 days, Flow Efficiency: 56%</li>
+						<li class="fragment">Most teams measure <em>15–40%</em> flow efficiency. The waiting time is the target.</li>
+						<li class="fragment">Improvement model: No sprint boundary, no forced retrospective.</li>
+						<li class="fragment">Change <em>one</em> thing; <em>measure</em> the effect; <em>repeat</em>.</li>
+					</ul>
+				</section>
+
+				<section class="left">
+					<aside class="notes">
+						<ul>
+							<li>The key insight is that the best teams treat these as a toolkit, not laws.</li>
+							<li>The three-layer model from Class 1 Segment 1 is your evaluation framework for any practice you encounter.</li>
+							<li>When someone tells you 'we do planning poker' or 'we have WIP limits' — the right question is what principle does this serve and what value is it rooted in?</li>
+							<li>If you can answer that, you can decide whether it fits your context. If you can't, you're doing cargo cult agile.</li>
+							<li>The ecosystem effect is real: practices from different methodologies reinforce each other.</li>
+							<li>Scrum gives you the cadence and coordination.</li>
+							<li>XP gives you the engineering discipline to produce quality within that cadence.</li>
+							<li>Kanban gives you the flow metrics to see what's actually happening.</li>
+							<li>These aren't competing frameworks — they're complementary lenses on the same problem.</li>	        
+						</ul>
+					</aside>
+					<h3>Blending Methodologies</h3>
+					<ul>
+						<li class="fragment">Real teams mix and match</li>
+						<li class="fragment">None is universally better, they address different parts of the SDP</li>
+						<li class="fragment">Evaluate any practice with the three-layer model:
+							<ul>
+								<li class="fragment">What <em>value</em> does this serve?</li>
+								<li class="fragment">What <em>principle</em> does it implement?</li>
+								<li class="fragment">Does it fit our <em>context</em>?</li>
+							</ul>
+						</li>
 					</ul>
 				</section>
 
