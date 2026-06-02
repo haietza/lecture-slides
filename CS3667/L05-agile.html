@@ -466,7 +466,15 @@
 				<section class="left">
 					<aside class="notes">
 						<ul>
-							<li>Do you see the 3-5-3 elements?</li>
+							<li>Do you see the 3-5-3 elements?
+								<ul>
+									<li>Roles (PO, SM, Developers)</li>
+									<li>5 Events (Sprint, Planning, Daily Scrum, Review, Retrospective)</li>
+									<li>3 Artifacts (Product Backlog, Sprint Backlog, Increment)</li>
+									<li>3 Commitments (Product Goal, Sprint Goal, Definition of Done)</li>
+									<li>Iterative loop (output feeds back into backlog)</li>
+								</ul>
+							</li>
 							<li>The normal flow makes sense from planning to sprint (big cycle) that includes daily cycle to review to retrospective and back to planning.</li>
 							<li>The increment (product) itself also is brought back because we aren’t done with it. We will add more features, and make corrections.</li>
 							<li>The review can identify new features, hence the bottom arrow.</li>
@@ -475,12 +483,73 @@
 					</aside>
 					<h3>Scrum Framework</h3>
 					<!-- Clicking this image opens it in a fullscreen overlay -->
-					<img 
-						src="imgs/scrum-framework.png" data-preview-image 
-						alt="Scrum framework"
-						aria-describedby="scrum-caption">
+					 <figure>
+						<img 
+							src="imgs/scrum-framework.png" data-preview-image 
+							alt="Scrum framework"
+							aria-describedby="scrum-caption">
+							<figcaption>Source: Scrum framework, May 2026. https://www.scrum.org/resources/what-scrum-module</figcaption>
+					</figure>
 					<div id="scrum-caption" class="sr-only">The diagram is titled Scrum Framework © 2020 Scrum.org and illustrates the complete Scrum process as a left-to-right flow with a feedback loop returning to the starting point. On the far left is the Product Backlog, depicted as a tall vertical document with horizontal lines representing individual backlog items. Above the backlog is a circular arrow labeled Product Goal, indicating the long-term objective the backlog serves. To the left of the document, a vertical label reads Product Backlog Refinement, indicating the ongoing activity of grooming and ordering backlog items. A horizontal arrow leads from the Product Backlog to the first event box, Sprint Planning, rendered as a teal rounded rectangle. This rectangle represents the team selecting items from the backlog to work on during the upcoming sprint. From Sprint Planning, another arrow leads to the Sprint Backlog, shown as a grid or task board icon. Above the Sprint Backlog icon is the label Sprint Goal, indicating the single objective the team commits to for the sprint. From the Sprint Backlog, an arrow leads into a large circle representing the Scrum Team. Inside the circle are three figures: Dev in orange on the left representing one or more Developers, SM in blue on the upper right representing the Scrum Master, and PO in green on the lower right representing the Product Owner. Hovering above the circle is a smaller teal circle labeled Daily Scrum, indicating that this event occurs continuously throughout the sprint within the team's working cycle. Arrows exit the right side of the Scrum Team circle and lead to the Increment, depicted as an open cardboard box icon. Above the Increment is the label Definition of Done, indicating that only work meeting the defined quality standard can be considered a completed Increment. From the Increment, an arrow leads to the Sprint Review box on the far right, another teal rounded rectangle, where the team presents the Increment to stakeholders. From the Sprint Review, a curved arrow travels upward and arcs back across the top of the diagram from right to left. Along this return path sits the Sprint Retrospective, shown as a teal rounded rectangle at the top center of the diagram. The retrospective arrow then continues left and feeds back into the Product Backlog, completing the cycle and indicating that the next sprint begins immediately.</div>
+				</section>
 
+				<section class="left">
+					<aside class="notes">
+						<p>Solution in /Users/meltonml/development/cs3667-materials/agile/active-learning/...</p>
+						<ul>
+							<li>Which elements we have discussed are absent?</li>
+							<li>What does this diagram make visually prominent?</li>
+							<li>What's present but hard to find?</li>
+							<li>Does any element misrepresent how Scrum works?</li>
+						</ul>
+					</aside>
+					<h3><i class="fa-solid fa-pencil"></i> Scrum Diagram Analysis (15 minutes)</h3>
+					<p>Work in pairs to analyze the Scrum diagrams:</p>
+					<ul>
+						<li>What's missing?</li>
+						<li>What's emphasized?</li>
+						<li>What's de-emphasized or hard to find?</li>
+						<li>What's potentially misleading?</li>
+					</ul>
+				</section>
+
+				<section class="left">
+					<h3><i class="fa-solid fa-pencil"></i> Scrum Diagram Analysis (15 minutes)</h3>
+					<!-- Clicking this image opens it in a fullscreen overlay -->
+					<figure>
+						<img 
+						src="imgs/scrum-process.png" data-preview-image 
+						alt="Wikipedia Scrum diagram"
+						aria-describedby="wiki-scrum-caption">
+						<figcaption>Source: By Lakeworks - Own work, CC BY-SA 4.0, https://commons.wikimedia.org/w/index.php?curid=3526338</figcaption>
+					</figure>
+					<div id="wiki-scrum-caption" class="sr-only">On the far left is the Product Backlog, represented as a stack of three overlapping gray book or card shapes, suggesting an ordered list of items. The label Product Backlog appears below the stack. An arrow points right from the Product Backlog toward the next element. The next element is the Sprint Backlog, represented as a three-dimensional binder or folder icon rendered in a warm brown tone, with a zigzag tab along the top edge and a stack of parallelogram shapes inside. The label Sprint Backlog appears below. An arrow connects the Sprint Backlog to the central process. The central and largest element is the Sprint, depicted as a large circular sweeping arrow forming a closed loop. Inside this loop the label 30 days appears. Within the sprint loop, a smaller inner circular arrow represents the Daily Scrum, labeled 24 h above it. The label Sprint appears below the main loop. On the right side of the diagram, a second arrow points outward from the sprint loop toward a stack of four colored parallelogram shapes, rendered in graduated gray tones. The label Working increment of the software appears in two lines to the right of this stack.</div>
+				</section>
+
+				<section class="left">
+					<h3><i class="fa-solid fa-pencil"></i> Scrum Diagram Analysis (15 minutes)</h3>
+					<!-- Clicking this image opens it in a fullscreen overlay -->
+					<figure>
+						<img 
+						src="imgs/ms-agile-scrum-lifecycle-diagram.png" data-preview-image 
+						alt="Microsoft Scrum diagram"
+						aria-describedby="ms-scrum-caption">
+						<figcaption>Source: Scrum lifecycle, May 2026. https://learn.microsoft.com/en-us/devops/plan/what-is-scrum</figcaption>
+					</figure>
+					<div id="ms-scrum-caption" class="sr-only">The diagram presents the Scrum lifecycle as a left-to-right horizontal flow with a feedback loop returning from right to left along the top. On the far left is the Product Backlog, depicted as a light blue document icon with horizontal lines representing list items. It is labeled Product Backlog beneath the icon. A right-pointing arrow leads from the Product Backlog to the first active step. The first active step is Sprint Planning, shown as a dark blue rounded square with a circular arrow icon inside it suggesting a refresh or planning cycle. The label Sprint Planning appears inside the box. An arrow leads from Sprint Planning to the next element. Next is the Sprint Backlog, depicted again as a light blue document icon similar to the Product Backlog but styled as a checklist with bullet points. It is labeled Sprint Backlog beneath the icon. An arrow leads from the Sprint Backlog to the next step. The next step is Sprint Execution, shown as a dark blue rounded square with an icon depicting a task board or grid with a downward arrow. Sprint Execution is labeled inside the box. Above Sprint Execution, connected by a small circular double-headed arrow, is a smaller dark blue rounded rectangle labeled Daily Scrum, with an icon showing a circular arrow and a person figure. There is a circular arrow between Daily Scrum and Sprint Execution. From Sprint Execution, an arrow leads right to Sprint Review, a dark blue rounded square with a magnifying glass or inspection icon inside it. Sprint Review is labeled inside the box. From Sprint Review, an arrow leads to the final element on the far right: the Potentially Shippable Increment, shown as a light blue box with a delivery truck icon. It is labeled Potentially Shippable Increment beneath the icon. At the top of the diagram, above the main flow, sits Sprint Retrospective as a dark blue rounded rectangle with a circular arrow and clock icon, labeled Sprint Retrospective. A wide curved gray arrow originates near Sprint Review on the right side of the diagram, travels upward and then sweeps left across the top of the entire diagram, and curves back down on the left side near Sprint Planning.</div>
+				</section>
+
+				<section class="left">
+					<h3><i class="fa-solid fa-pencil"></i> Scrum Diagram Analysis (15 minutes)</h3>
+					<!-- Clicking this image opens it in a fullscreen overlay -->
+					<figure>
+						<img 
+						src="imgs/Scrum-Process.jpg" data-preview-image 
+						alt="Geeks For Geeks Scrum diagram"
+						aria-describedby="gfg-scrum-caption">
+						<figcaption>Source: Scrum process, May 2026. https://www.geeksforgeeks.org/software-engineering/scrum-development-model-in-sdlc/</figcaption>
+					</figure>
+					<div id="gfg-scrum-caption" class="sr-only">The diagram is titled Scrum Process and appears in the lower left corner with the GeeksforGeeks logo in the lower right. On the upper left, a circular avatar icon depicts the Product Owner. Beneath the Product Owner icon is a document icon representing the Product Backlog. On the far left of the main horizontal flow is a lightbulb icon labeled Product Vision below it. A horizontal arrow labeled User Stories leads right from the Product Vision to the Product Backlog icon. From the Product Backlog, the flow continues right to a Planning Meeting icon, depicted as a checklist with a clock, labeled Planning meeting below it. In the upper center of the diagram, a circular avatar icon depicts the Scrum Master. The label Scrum Master appears below the icon. The Scrum Master is positioned above the Planning Meeting icon. From the Planning Meeting, a horizontal arrow labeled Sprint backlog leads right into the central sprint element. The central element is a large circular green arrow forming a closed loop, representing the Sprint. Inside the loop is a group icon depicting three people labeled Dev team below them. Above the team icon, inside the loop, the text Sprint 2-4 weeks indicates the sprint duration. In the upper right of the circular arrow, outside the loop, a smaller curved green arrow points upward and loops back, labeled Daily Stand Up to its right. From the right side of the sprint loop, a wide green arrow points right and is labeled Deployment. Below the Deployment arrow on the lower right is a rating or review icon showing a thumbs-up surrounded by stars, labeled Sprint Review + Sprint Retrospective below it.</div>
 				</section>
 
 				<section class="left">
