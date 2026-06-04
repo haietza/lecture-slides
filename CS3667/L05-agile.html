@@ -236,10 +236,6 @@
 				</section>
 
 				<section class="left">
-					<aside class="notes">
-						<ul>
-						</ul>
-					</aside>
 					<h3><i class="fa-solid fa-pencil"></i> Manifesto Stress Test (15 minutes)</h3>
 					<p>Scenario: Your company claims to be "Agile." For each decision below, determine:</p>
 					<ul>
@@ -466,19 +462,31 @@
 				<section class="left">
 					<aside class="notes">
 						<ul>
-							<li>Do you see the 3-5-3 elements?
+							<li>Do you see the 3-5-3 elements? What's present:
 								<ul>
-									<li>Roles (PO, SM, Developers)</li>
-									<li>5 Events (Sprint, Planning, Daily Scrum, Review, Retrospective)</li>
-									<li>3 Artifacts (Product Backlog, Sprint Backlog, Increment)</li>
+									<li>All 3 roles (SM, PO, Dev)</li>
+									<li>All 5 events (Sprint Planning, Daily Scrum, Sprint Review, Sprint Retrospective; Sprint is the container)</li>
+									<li>All 3 artifacts (Product Backlog, Sprint Backlog, Increment)</li>
+									<li>Product Goal label</li>
 									<li>3 Commitments (Product Goal, Sprint Goal, Definition of Done)</li>
-									<li>Iterative loop (output feeds back into backlog)</li>
+									<li>Iterative loop from Retrospective back to backlog</li>
 								</ul>
 							</li>
-							<li>The normal flow makes sense from planning to sprint (big cycle) that includes daily cycle to review to retrospective and back to planning.</li>
-							<li>The increment (product) itself also is brought back because we aren’t done with it. We will add more features, and make corrections.</li>
-							<li>The review can identify new features, hence the bottom arrow.</li>
-							<li>Upper left corner looping arrow is “backlog refinement” as product owner takes big tasks and breaks them into smaller tasks.</li>
+							<li>What's emphasized?
+								<ul>
+									<li>The Scrum Team circle is the largest, most central element in the diagram.</li>
+									<li>This graphic communicates the team-centric nature of Scrum — the people are the engine, not the process arrows.</li>
+									<li>The Definition of Done is shown as a distinct step between the team and the Increment, reinforcing that it is a quality gate, not an afterthought.</li>
+								</ul>
+							</li>
+							<li>What's missing?
+								<ul>
+									<li>The five Scrum values (Courage, Respect, Openness, Focus, Commitment) are absent.</li>
+									<li>The three empirical pillars (Transparency, Inspection, Adaptation) are absent.</li>
+									<li>The Sprint container is not drawn as an explicit bounding box around the inner events.</li>
+								</ul>
+							</li>
+							<li>This digram is one of the most accurate and complete process-flow representations of the 2020 Scrum Guide available. Its primary weakness is that it captures what Scrum does mechanically but not why; values and pillars are the missing philosophical layer.</li>
 						</ul>
 					</aside>
 					<h3>Scrum Framework</h3>
@@ -495,16 +503,17 @@
 
 				<section class="left">
 					<aside class="notes">
-						<p>Solution in /Users/meltonml/development/cs3667-materials/agile/active-learning/...</p>
 						<ul>
 							<li>Which elements we have discussed are absent?</li>
 							<li>What does this diagram make visually prominent?</li>
 							<li>What's present but hard to find?</li>
 							<li>Does any element misrepresent how Scrum works?</li>
+							<li>Ask one pair from each diagram to share their most interesting finding</li>
+							<li>Solution in /Users/meltonml/development/cs3667-materials/agile/active-learning/scrum-diagram-analysis.md (CMMD-SHFT-V in md file to open in VS Code, or view on GitHub.com)</li>
 						</ul>
 					</aside>
 					<h3><i class="fa-solid fa-pencil"></i> Scrum Diagram Analysis (15 minutes)</h3>
-					<p>Work in pairs to analyze the Scrum diagrams:</p>
+					<p>Work in pairs, select one of the Scrum diagrams to analyze:</p>
 					<ul>
 						<li>What's missing?</li>
 						<li>What's emphasized?</li>
@@ -514,7 +523,7 @@
 				</section>
 
 				<section class="left">
-					<h3><i class="fa-solid fa-pencil"></i> Scrum Diagram Analysis (15 minutes)</h3>
+					<h3><i class="fa-solid fa-pencil"></i> Diagram Analysis (15 minutes)</h3>
 					<!-- Clicking this image opens it in a fullscreen overlay -->
 					<figure>
 						<img 
@@ -527,7 +536,7 @@
 				</section>
 
 				<section class="left">
-					<h3><i class="fa-solid fa-pencil"></i> Scrum Diagram Analysis (15 minutes)</h3>
+					<h3><i class="fa-solid fa-pencil"></i> Diagram Analysis (15 minutes)</h3>
 					<!-- Clicking this image opens it in a fullscreen overlay -->
 					<figure>
 						<img 
@@ -540,7 +549,7 @@
 				</section>
 
 				<section class="left">
-					<h3><i class="fa-solid fa-pencil"></i> Scrum Diagram Analysis (15 minutes)</h3>
+					<h3><i class="fa-solid fa-pencil"></i> Diagram Analysis (15 minutes)</h3>
 					<!-- Clicking this image opens it in a fullscreen overlay -->
 					<figure>
 						<img 
@@ -577,17 +586,23 @@
 						<ul>
 							<li>User stories are a GASP (Generally Accepted Scrum Practice) — not formally in the Scrum Guide but nearly universal in industry.</li>
 							<li>As a bank customer, I want to see the balances of each of my accounts, So that I can easily transfer money.</li>
+							<li>Story points are not time — a 5-point story means roughly 2.5× harder than a 2-point story, not 5 hours. Humans are bad at estimating absolute time but good at relative complexity.</li>
 						</ul>
 					</aside>
 					<h3>User Stories</h3>
-					<ul>
-						<li class="fragment">Structured templates to capture software requirements from an end-user perspective.
+					<ul class="dense-slide">
+						<li class="fragment">Structured templates to capture software requirements from an end-user perspective:
 							<ul>
-								<li class="fragment">As a <em>[type of user]</em></li>
-								<li class="fragment">I want <em>[some goal or objective]</em></li>
-								<li class="fragment">so that <em>[benefit, value]</em></li>
+								<li><span class="fragment">As a <em>[type of user]</em>,</span> <span class="fragment">I want <em>[some goal or objective]</em>,</span> <span class="fragment">so that <em>[benefit, value]</em>.</span></li>
 							</ul>
 						</li>
+						<li class="fragment">Story Points: Relative <em>effort</em> (complexity + uncertainty + work):
+							<ul>
+								<li class="fragment">Login page (<em>simple</em>, done before) = 2 pts</li>
+								<li class="fragment">OAuth2 SSO (new, many <em>unknowns</em>)  = 13 pts</li>
+							</ul>
+						</li>
+						<li class="fragment">Velocity: Points/sprint → <em>forecasting</em>: 100-pt backlog ÷ 20 pts/sprint ≈ 5 sprints</li>
 					</ul>
 				</section>
 
@@ -598,8 +613,6 @@
 							<li>Planning Poker is typically conducted on the first day of a sprint during the team's formal planning session.</li>
 							<li>The team examines individual product backlog items presented.</li>
 							<li>The developers discuss the architectural requirements of a story with the Product Owner, vote on the relative effort (story points) using independent cards, and discuss to adjust their perspectives as a group.</li>
-							<li>Story points are (complexity + uncertainty + work), not time. A 5-point story means roughly 2.5× harder than a 2-point story, not 5 hours.</li>
-							<li>It is powerful because it uses relative sizing rather than arbitrary deadlines.</li>
 							<li>The Fibonacci sequence's growing gaps mathematically represent the exponential growth of risk and uncertainty as a feature gets larger.</li>
 							<li>It also stops false precision, wasting time arguing over meaningless intervals (11-hour task vs 12-hour task).</li>
 							<li>It helps surface differing design assumptions before writing any code, ensuring the entire team shares a clear, unified understanding of the technical requirements.</li>
@@ -613,29 +626,6 @@
 						<li class="fragment">Purpose: To <em>collaboratively</em> estimate the total effort needed to deliver a specific user story.</li>
 						<li class="fragment">Mechanics: Uses a relative scale (often Fibonacci values) to <em>align</em> estimates across the group.</li>
 						<li class="fragment">Value: Avoids early bias, highlights design misunderstandings, and taps into the <em>collective intelligence</em> of the developers.</li>
-					</ul>
-				</section>
-
-				<section class="left">
-					<aside class="notes">
-						<p>Solution in /Users/meltonml/development/cs3667-materials/agile/active-learning/role-mapping.txt</p>
-					</aside>
-					<h3><i class="fa-solid fa-pencil"></i> Role Mapping (15 minutes)</h3>
-					<ul class="dense-slide">
-						<li>Work in pairs. Determine correct Role for each Responsibility (Product Owner, Scrum Master, Developer, Not a Scrum Role)
-							<ul>
-								<li>Order the product backlog</li>
-								<li>Remove impediments</li>
-								<li>Create the sprint backlog</li>
-								<li>Coach on self management</li>
-								<li>Maximize product value</li>
-								<li>Adhere to definition of done</li>
-								<li>Facilitate Scrum events</li>
-								<li>Define sprint goal collaboratively</li>
-								<li>Assign tasks to developers</li>
-								<li>Manage the project timeline</li>
-							</ul>
-						</li>
 					</ul>
 				</section>
 
@@ -665,11 +655,13 @@
 						<ul>
 							<li>The 13 practices fall into three groups.</li>
 							<li>The coding practices are the core of XP's influence on modern software engineering — TDD and CI are now considered standard practice far beyond teams that formally adopt XP.</li>
-							<li>Pair Programming — two devs, one keyboard (Driver + Navigator)</li>
-							<li>Test-First Programming (TDD) — write the test before the code</li>
+							<li>Pair Programming — two devs, one keyboard (Driver + Navigator; Driver types, Navigator reviews, thinks ahead, catches errors live; spreads knowledge, reduces single points of failure)</li>
+							<li>Test-First Programming (TDD) — write the test before the code (forces interface design before implementation)</li>
 							<li>Incremental Design — design evolves; don't over-architect upfront</li>
 							<li>The team practices are about removing friction: sit together, make workspace information visible, protect the team's energy.</li>
 							<li>Project management in XP is lightweight by design because the engineering discipline is doing the heavy lifting.</li>
+							<li>Ten-Minute Build: If tests take > 10 min, developers stop running them.</li>
+							<li>Continuous integration: Integrate to the shared branch multiple times per day; each commit triggers automated build + full test suite; catch conflicts and regressions in minutes, not days</li>
 						</ul>
 					</aside>
 					<h3>XP 13 Primary Practices</h3>
@@ -683,20 +675,42 @@
 				<section class="left">
 					<aside class="notes">
 						<ul>
+							<li>Because XP is less focused on project management there is less of a “flow” to diagram like we had with Scrum.</li>
+							<li>Instead, diagrams tend to focus on how the programmer is involved.</li>
+							<li>Starts with a daily standup meeting, much like Scrum's scrum</li>
+							<li>Notice the unit scales: seconds to minutes to hours, and so on</li>
+							<li>Notice the constant iterations.</li>
+							<li>The “most significant bit” (seconds of coding) is constantly iterating and contributing to the iteration of minutes (testing) which is also contributing to the even more slowly moving hours (changing partners or tasks), etc.</li>
 						</ul>
 					</aside>
-					<h3><i class="fa-solid fa-pencil"></i> User Story Workshop (15 minutes)</h3>
-					<p>Working in pairs, you have received the following product description:</p>
-					<p>A local gym wants a mobile app for members. Members should be able to book classes, manage their membership, and track their workout history. Staff need to manage the class schedule and monitor attendance.</p>
-					<ul>
-						<li>Part 1 — Write (8 min): Write 3 user stories using the As a / I want / So that template — one for a gym member, one for a staff member, and one of your choice.</li>
-						<li>Part 2 — Review (7 min): Swap with the pair next to you. For each of their stories, answer two questions:
-							<ul>
-								<li>Is the benefit ("so that…") clear? If not, suggest a rewrite.</li>
-								<li>Can you verify each acceptance criterion — is it specific enough to test? If not, suggest a more concrete version.</li>
-							</ul>
-						</li>
-					</ul>
+					<h3>XP Planning/Feedback</h3>
+					<!-- Clicking this image opens it in a fullscreen overlay -->
+					 <figure>
+						<img 
+							src="imgs/Extreme_Programming.png" data-preview-image 
+							alt="XP diagram"
+							aria-describedby="xp-caption">
+							<figcaption>Source: By DonWells - Own work based on: XP-feedback.gif, CC BY-SA 3.0, https://commons.wikimedia.org/w/index.php?curid=27448045</figcaption>
+					</figure>
+					<div id="xp-caption" class="sr-only">The diagram is titled Planning/feedback loops. It illustrates the nested feedback cycles of Extreme Programming across multiple time scales. The right side of the diagram presents eight labeled activities arranged vertically from top to bottom, connected by a cascade of downward-pointing arrows. Each arrow has a time duration label to its right indicating how frequently that feedback cycle operates. The sequence from top to bottom is as follows. Release plan is at the top, connected by a downward arrow labeled Months to Iteration plan. From Iteration plan, a downward arrow labeled Weeks leads to Acceptance test. From Acceptance test, a downward arrow labeled Days leads to Stand-up meeting. From Stand-up meeting, a downward arrow labeled One day leads to Pair negotiation. From Pair negotiation, a downward arrow labeled Hours leads to Unit test. From Unit test, a downward arrow labeled Minutes leads to Pair programming. From Pair programming, a downward arrow labeled Seconds leads to Code at the bottom. The left side of the diagram contains eight large curved arrows arranged as a series of nested arcs. Each arc originates from the lower-left area of the diagram and sweeps upward and to the right, pointing its arrowhead at one of the eight labeled activities. The outermost and largest arc points to Release plan at the top. Each successive arc is smaller and points to the next activity down the list, with the innermost and smallest arc pointing to Code at the bottom. Together these arcs create the visual impression of concentric loops, communicating that each activity both receives feedback from and sends feedback to the others.</div>
+				</section>
+
+				<section class="left">
+					<aside class="notes">
+						<ul>
+							<li>The diagram communicates that XP organizes work into repeated iterations, each beginning with planning, executed through concurrent development and testing under the practice of pair programming, continuously integrated into a shared codebase, verified through automated tests, submitted for customer acceptance, and released in small increments rather than large batches.</li>
+						</ul>
+					</aside>
+					<h3>XP Process</h3>
+					<!-- Clicking this image opens it in a fullscreen overlay -->
+					 <figure>
+						<img 
+							src="imgs/extreme-programming-process.png" data-preview-image 
+							alt="XP Process"
+							aria-describedby="xpproc-caption">
+							<figcaption>Source: XP, May 2026. https://www.visual-paradigm.com/scrum/extreme-programming-vs-scrum/</figcaption>
+					</figure>
+					<div id="xpproc-caption" class="sr-only">The diagram is titled with four phase labels arranged horizontally across the top: Exploration on the far left, Iteration Planning second from the left, Iteration spanning the large central section, and Small Releases on the far right. Three vertical dashed lines separate these four phases. In the Exploration phase on the far left, a stack of three overlapping rectangular cards is labeled Stories. Below the Stories stack, the label Architectural Spikes appears with an arrow pointing right labeled System Metaphor. In the Iteration Planning phase, another stack of overlapping cards is again labeled Stories. Above this stack, an upward-pointing arrow is labeled Estimates, and below the stack a downward-pointing arrow points to the label Spikes. A bidirectional relationship is shown between the Stories stack and Spikes. The System Metaphor arrow from the Exploration phase enters this section at the bottom, feeding into the planning process. The Iteration phase occupies the largest portion of the diagram. In the upper portion of this phase, a wide horizontal box labeled Pair Programming spans the full width. Directly below Pair Programming, two side-by-side boxes labeled Development and Testing sit together. An arrow leads right from Development and Testing toward Acceptance Tests. Below the Development and Testing boxes, a downward arrow labeled Continuous Integration points to two boxes in the lower portion of the Iteration phase. On the lower left is a box labeled Tests and on the lower right is a box labeled Collective Codebase. An arrow points left from Collective Codebase to Tests, and arrows lead back upward from Tests toward the Development and Testing level, forming a continuous loop between coding, integration, the collective codebase, and the test suite. In the Small Releases phase on the far right, Customer Approval appears at the top with a downward arrow pointing to Acceptance Tests. An arrow then leads right from Acceptance Tests to a box labeled Release.</div>
 				</section>
 
 				<section class="left">
@@ -727,27 +741,28 @@
 				</section>
 
 				<section class="left">
+					<aside class="notes">
+						<ul>
+							<li>The MOST well known aspect of Kanban. Built into lots of tools including GitHub (as GitHub “projects”).</li>
+							<li>Both Analysis and Development are at their WIP limits — the amber WIP 2/2 and WIP 3/3 badges signal that no new work should enter those columns until something exits.</li>
+							<li>Testing has capacity at 1/2, which is the correct visual cue that work should be pulled there first.</li>
+							<li>Backlog and Done have no limits, which is standard practice.</li>
+							<li>The blocked card in Development uses a red border and a locked badge.</li>
+							<li>In a real Kanban conversation, this card would prompt the question from Slide 4-1: why isn't work flowing out of Development?</li>
+							<li>The team cannot pull from Analysis into the full Development column until the blocker is resolved — which is exactly the bottleneck the WIP limit is designed to make visible.</li>
+						</ul>
+					</aside>
 					<h3>Kanban Board</h3>
 					<ul>
 						<li class="fragment">WIP Limits: Column hits limit → stop starting, start <em>finishing</em>.</li>
 						<li class="fragment">Full column = a signal, not a status. Exposes <em>bottlenecks</em> immediately.</li>
 					</ul>
-					<table class="fragment">
-						<thead>
-							<tr>
-								<th scope="col">Backlog</th>
-								<th scope="col">In Progress (WIP: 3)</th>
-								<th scope="col">Done</th>
-							</tr>
-						</thead>
-						<tbody>
-							<tr>
-								<td>Story A<br>Story B<br>Story H</td>
-								<td>Story C<br>Story D<br><em>[BLOCKED]</em><br>Story E</td>
-								<td>Story F<br>Story G</td>
-							</tr>
-						</tbody>
-					</table>
+					<!-- Clicking this image opens it in a fullscreen overlay -->
+					<img 
+						src="imgs/kanban-board.png" data-preview-image 
+						alt="Kanban board"
+						aria-describedby="kanbanboard-caption">
+					<div id="kanbanboard-caption" class="sr-only">The graphic depicts a Kanban board with five columns arranged horizontally from left to right: Backlog, Analysis, Development, Testing, and Done. Each column has a header bar with a colored top border accent and displays a WIP notation badge alongside an item count. Below each header, task cards are stacked vertically within the column. The Backlog column has a gray top border accent. Its header shows 3 items and a badge labeled No limit, indicating no WIP restriction applies. The column contains three cards. The first is a Story type card worth 3 points titled Registration form. The second is a Story type card worth 5 points titled Dashboard layout. The third is a Spike type card worth 2 points titled Payment gateway research. Story badges appear in light purple, Spike badges in light amber, and Chore badges in light gray throughout the board. The Analysis column has a blue top border accent. Its header shows 2 items and an amber badge labeled WIP 2/2, indicating the column is at its maximum capacity of 2 items. The column contains two cards. The first is a Story type card worth 3 points titled Wireframe login flow. The second is a Chore type card worth 2 points titled Define API endpoints. The Development column has a purple top border accent. Its header shows 3 items and an amber badge labeled WIP 3/3, indicating this column is also at its maximum capacity of 3 items. The column contains three cards. The first is a Story type card worth 8 points titled Auth service. The second card is visually distinct from all others on the board: it has a red border on all sides, indicating a blocked status. It is a Story type card worth 5 points titled Search feature, and it displays a small red badge with a lock icon labeled Blocked. The third card is a Chore type card worth 3 points titled Database migration. The Testing column has an amber top border accent. Its header shows 1 item and a neutral badge labeled WIP 1/2, indicating this column has available capacity and can accept additional work. The column contains one card, a Story type card worth 3 points titled Checkout flow tests. The Done column has a green top border accent. Its header shows 2 items and a badge labeled No limit. The column contains two completed cards. Both display a green checkmark icon and have their titles rendered in strikethrough text to indicate completion. The first is a Chore type card titled CI pipeline setup. The second is a Chore type card titled Database schema.</div>
 				</section>
 
 				<section class="left">
@@ -811,6 +826,24 @@
 				<section class="left">
 					<aside class="notes">
 						<ul>
+							<li>The overall visual metaphor of a three-dimensional box suggests that principles and practices are two faces of a single unified framework rather than separate or independent concepts, with the application domains running along the top connecting them both.</li>
+						</ul>
+					</aside>
+					<h3>Kanban Principles and Practices</h3>
+					<!-- Clicking this image opens it in a fullscreen overlay -->
+					 <figure>
+						<img 
+							src="imgs/kanbanprinciplespractices.png" data-preview-image 
+							alt="Kanban principles and practices"
+							aria-describedby="kanban-caption">
+							<figcaption>Source: Kanban principles and practices, May 2026. https://djaa.com/kanbans-change-management-principles/</figcaption>
+					</figure>
+					<div id="kanban-caption" class="sr-only">The diagram presents a three-dimensional box oriented at an angle so that two of its front faces are visible simultaneously, along with the top face. The word KANBAN is printed in large diagonal block letters across the top face of the box. Running along the top edge of the box, wrapping around the upper rim, is a horizontal line of smaller text listing application domains: STRATEGY, OPERATIONS, RISK, SERVICE DELIVERY, DEPLOYMENT, IMPLEMENTATION, and additional terms continuing around the edge. At the base of the box, two flat rectangular surfaces extend outward like a floor or platform beneath the structure. The left platform is labeled PRINCIPLES in large uppercase text, and the right platform is labeled PRACTICES in large uppercase text, anchoring each visible face of the box to its corresponding category. The left face of the box contains the Kanban principles, organized into two distinct groups separated by a horizontal line. The upper group is headed CHANGE MANAGEMENT in orange text. Beneath this heading, four principles are listed. The first reads: Start with what you do NOW, with the word NOW emphasized in large orange text. The second reads: Agree to pursue improvement through EVOLUTIONARY CHANGE, with EVOLUTIONARY CHANGE emphasized in large green text. The third reads: Encourage acts of LEADERSHIP at every level, with LEADERSHIP emphasized in large blue text. The lower group on the left face is headed SERVICE DELIVERY in orange text. Beneath this heading, three principles are listed. The first reads: Understand and focus on CUSTOMER needs and expectations, with CUSTOMER emphasized in orange. The second reads: Manage the WORK, organize self, organize around it, with WORK emphasized. The third reads: Policies control SERVICE DELIVERY, with SERVICE DELIVERY emphasized in orange. The right face of the box contains the Kanban practices, listed vertically as a single column of six items in clean handwritten-style text. From top to bottom the practices are: Visualize, Limit WiP, Manage flow, Make policies explicit, Feedback loops, and Improve and evolve.</div>
+				</section>
+
+				<section class="left">
+					<aside class="notes">
+						<ul>
 							<li>The key insight is that the best teams treat these as a toolkit, not laws.</li>
 							<li>The three-layer model from Class 1 Segment 1 is your evaluation framework for any practice you encounter.</li>
 							<li>When someone tells you 'we do planning poker' or 'we have WIP limits' — the right question is what principle does this serve and what value is it rooted in?</li>
@@ -819,7 +852,9 @@
 							<li>Scrum gives you the cadence and coordination.</li>
 							<li>XP gives you the engineering discipline to produce quality within that cadence.</li>
 							<li>Kanban gives you the flow metrics to see what's actually happening.</li>
-							<li>These aren't competing frameworks — they're complementary lenses on the same problem.</li>	        
+							<li>These aren't competing frameworks — they're complementary lenses on the same problem.</li>	     
+							<li>Don't expect a silver bullet to solve all our problems</li>
+							<li>Agile practices are currently considered "best practices", but best practices do change.</li>
 						</ul>
 					</aside>
 					<h3>Blending Methodologies</h3>

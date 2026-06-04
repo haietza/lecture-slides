@@ -18,6 +18,12 @@ h1, em {
   max-height: calc(var(--slide-height) * 0.70) !important;
   width: auto;
   object-fit: contain;
+  display: block;
+  margin: 0 auto;
+}
+
+figcaption {
+  margin-top: 10px;
 }
 
 .dense-slide li {
