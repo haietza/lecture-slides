@@ -1,0 +1,258 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>CS3667 - Lecture 05 - Strategy Design Pattern</title>
+
+		<link rel="stylesheet" href="../reveal-js/dist/reset.css">
+		<link rel="stylesheet" href="../reveal-js/dist/reveal.css">
+		<link rel="stylesheet" href="../reveal-js/dist/theme/black.css">
+		<link rel="stylesheet" href="../layouts/common.css">
+		<link rel="stylesheet" href="../reveal-js/dist/plugin/highlight/monokai.css">
+		<link rel="stylesheet" href="custom.css" />
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+				<div class="header left">
+					CS3667: Software Engineering
+				</div>
+				<div class="header right no-title">
+					<em>Strategy Design Pattern</em>
+				</div>
+
+				<section data-state="title-slide">
+					<h1 class="r-fit-text">CS3667: Software Engineering</h1>
+					<h2 class="r-fit-text">Strategy Design Pattern</h2>
+				</section>
+
+				<section class="left">
+					<aside class="notes">
+						<ul>
+							<li>Here's our destination.</li>
+							<li>By the end of next class, you'll be able to say exactly what this definition means in code — and you'll have deployed it into a codebase you already know.</li>
+							<li>For now, just let it land. We'll earn this definition by working through the problem that made it necessary.</li> 
+						</ul>
+					</aside>
+					<h3>The Strategy Design Pattern</h3>
+					<blockquote class="fragment"><em>Strategy defines a family of algorithms, encapsulates each one, and makes them interchangeable. Strategy lets the algorithm vary independently from clients that use it.</em> — Gang of Four, Design Patterns (1994)</blockquote>
+					<ul class="dense-slide">
+						<li class="fragment"><em>Encapsulate</em> what varies</li>
+						<li class="fragment">Favor <em>composition</em> over inheritance</li>
+						<li class="fragment">Program to <em>interfaces</em> (abstractions), not implementations</li>
+					</ul>
+				</section>
+
+				<section class="left">
+					<aside class="notes">
+						<ul>
+							<li>This is the classic OOP setup you've seen before.</li>
+							<li>We have a Duck superclass that handles the shared behavior.</li>
+							<li>Subclasses inherit everything and just override display() to look different. Elegant. Works great. The team is happy.</li>
+							<li>Notice: fly() is in the superclass. That means every duck — every single concrete Duck subclass — inherits the exact same flying behavior.</li>
+							<li>At the time this code was written, that seemed fine. All ducks fly, right?</li>
+						</ul>
+					</aside>
+					<h3>In the Beginning...</h3>
+					<!-- Clicking this image opens it in a fullscreen overlay -->
+					 <figure>
+						<img 
+							src="imgs/duck.jpg" data-preview-image 
+							alt="Duck UML"
+							aria-describedby="duckuml-caption">
+							<figcaption>UML class diagram for the Duck implementation. (Source: Eric Freeman and Elisabeth Robson, Head First Design Patterns, O'Reilly Media).</figcaption>
+					</figure>
+					<div id="duckuml-caption" class="sr-only">UML class diagram showing the Duck superclass after Joe added fly(). A superclass named Duck contains the methods quack(), swim(), display() (italicized), and fly() (bold, indicating it was added). A handwritten annotation on the right points to fly() and reads: What Joe added. Two subclasses inherit from Duck via inheritance arrows: MallardDuck (overrides display() to show it looks like a mallard) and RedheadDuck (overrides display() to show it looks like a redhead). A handwritten annotation on the left reads: All subclasses inherit fly(). A handwritten annotation on the right near the subclasses reads: Other Duck types...</div>
+				</section>
+
+				<section class="left">
+					<aside class="notes">
+						<ul>
+							<li>Someone on another team, quite reasonably, adds a RubberDuck class. It extends Duck. It inherits fly(). And now rubber ducks are zooming across the screen.</li>
+							<li>No bug in any single method. No compiler warning, only discovered at runtime. This is a design defect — a problem baked into the structure of the code.</li>
+							<li>In production software, this exact kind of inheritance-driven surprise causes real failures.</li>
+							<li>Think about what happens in a banking system when a new Account subclass inherits a chargeOverdraftFee() method it should never execute.</li>
+							<li>The lesson: We didn't anticipate this use of our code. Our design "broke" because inheritance tied all subclasses to one implementation of fly().</li>
+						</ul>
+					</aside>
+					<h3>All Is Fine... Until It's Not</h3>
+					<!-- Clicking this image opens it in a fullscreen overlay -->
+					 <figure>
+						<img 
+							src="imgs/duck-2.jpg" data-preview-image 
+							alt="Duck UML iteration"
+							aria-describedby="duckuml2-caption">
+							<figcaption>UML class diagram for the Duck implementation. (Source: Eric Freeman and Elisabeth Robson, Head First Design Patterns, O'Reilly Media).</figcaption>
+					</figure>
+					<div id="duckuml2-caption" class="sr-only">UML class diagram showing the Duck inheritance hierarchy with a bug introduced by adding fly(). A superclass named Duck contains the methods quack(), swim(), display() (italicized), fly(), and a note indicating other duck-like methods. Three subclasses inherit from Duck via inheritance arrows: MallardDuck (overrides display() to show it looks like a mallard), RedheadDuck (overrides display() to show it looks like a redhead), and RubberDuck (overrides both quack() to squeak and display() to show it looks like a rubber duck). A handwritten annotation on the left reads: By putting fly() in the superclass, he gave the flying ability to ALL ducks, including those that shouldnt fly. A handwritten annotation on the right reads: Notice too, that rubber ducks dont quack, so quack() is overridden to Squeak.</div>
+				</section>
+
+				<section class="left">
+					<aside class="notes">
+						<ul>
+						</ul>
+					</aside>
+					<h3>We Embrace Change</h3>
+					<ul>
+						<li class="fragment">We should try to make our designs <em>“goof proof”</em></li>
+						<li class="fragment">But...
+							<ul>
+								<li class="fragment">We can’t anticipate every possible thing</li>
+								<li class="fragment">We shouldn’t add <em>unneeded complexity</em>
+									<ul>
+										<li class="fragment">YAGNI: You Aren’t Gonna Need It</li>
+									</ul>
+								</li>
+							</ul>
+						</li>
+					</ul>
+				</section>
+
+				<section class="left">
+					<aside class="notes">
+						<ul>
+							<li>We hadn’t thought about this contingency</li>
+							<li>It’s okay though: We “embrace change”</li>
+						</ul>
+					</aside>
+					<h3>We Embrace Change</h3>
+					<ul>
+						<li class="fragment"><code>RubberDuck</code> subclass wants to <code>fly()</code> in a different way</li>
+						<li class="fragment">The “fix” must <em>minimize changes needed</em> as other new Duck subclasses want to <code>fly()</code> in different ways</li>
+						<li class="fragment">What are the design options?</li>
+					</ul>
+				</section>
+
+				<section class="left">
+					<aside class="notes">
+						<ul>
+							<li>Three options, all inadequate. We will walk through each one.</li>
+							<li>Option 1 is an empty override. Seems harmless, but imagine you have 40 duck subclasses over two years.</li>
+							<li>Someone adds DecoyDuck. Should it fly? Probably not. Do they remember to override fly() with an empty body? Maybe. One missed override and production is broken.</li>
+							<li>And this approach also violates what I'd call the contract of the superclass — if Duck declares fly(), callers expect it to do something.</li>
+						</ul>
+					</aside>
+					<h3>Option 1: Override fly() with an empty method</h3>
+					<pre class="java">
+						<code data-trim data-id="code" data-line-numbers>
+							class RubberDuck extends Duck {
+								void fly() { /* do nothing */ }  // "degenerate" method
+							}
+						</code>
+					</pre>
+					<ul>
+						<li class="fragment">Empty methods are a <em>code smell</em>; they make a promise they don't keep.</li>
+						<li class="fragment">Every new non-flying subclass must remember to override. You will miss one.</li>
+					</ul>
+				</section>
+
+				<section class="left">
+					<aside class="notes">
+						<ul>
+							<li>Java 8 default interface methods make this option even more tempting.</li>
+							<li>But if 30 of your 40 duck subclasses fly the normal way, and you change the normal flying logic, you just created 30 files to touch.</li>
+							<li>Duplication is always a maintenance liability.</li>	  
+						</ul>
+					</aside>
+					<h3>Option 2: Pull fly() into a Flyable interface</h3>
+					<pre class="java">
+						<code data-trim data-id="code" data-line-numbers>
+							interface Flyable { void fly(); }
+							class MallardDuck extends Duck implements Flyable {
+								public void fly() { /* regular flying */ }
+							}
+						</code>
+					</pre>
+					<ul>
+						<li class="fragment">Every flying subclass must implement <code>fly()</code> itself; <em>duplicate code</em> everywhere.</li>
+						<li class="fragment">Java 8 default methods can reduce this, but only for <em>one shared implementation</em>. A second flying style brings duplication back.</li>
+					</ul>
+				</section>
+
+				<section class="left">
+					<aside class="notes">
+						<ul>
+							<li>Option 3 is the big if-else. Duck.java becomes a graveyard for every flying implementation anyone ever invents.</li>
+							<li>The class grows without limit. Every change requires touching it. This is the opposite of scalable design (open-closed principle states that software entities should be open for extension, but closed for modification).</li>
+							<li>None of these work. Which tells us: the problem is deeper than the solutions we've tried.</li>
+							<li>The root issue is that fly() — a behavior that varies — is trapped inside the class hierarchy.</li>
+							<li>Let's look at the design principle that names this problem and its fix.</li>
+						</ul>
+					</aside>
+					<h3>Option 3: Parameter dispatch in the superclass</h3>
+					<pre class="java">
+						<code data-trim data-id="code" data-line-numbers>
+							class Duck {
+								void fly(int how) {
+									if (how == 1) { /* regular */ }
+									else if (how == 2) { /* none */ }
+									else if (how == 3) { /* fast */ }
+								}
+							}
+						</code>
+					</pre>
+					<ul>
+						<li class="fragment">Duck.java <em>changes every time</em> any new flying style is needed. Violates OCP.</li>
+						<li class="fragment">Every subclass still overrides just to pass the parameter. Nothing is solved.</li>
+					</ul>
+				</section>
+
+				<section class="left">
+					<aside class="notes">
+						<ul>
+							<li>This is the foundational insight: find what varies, pull it out, give it its own home.</li>
+							<li>For us: fly() implementations are the thing that varies. So we're going to extract them.</li>
+							<li>We define a FlyBehavior interface.</li>
+							<li>We create separate classes — FlyWithWings, NoFly, FlySlow, FlyRocketPowered — each implementing that interface in its own way.</li>
+							<li>Now Duck doesn't own the flying algorithm at all. It just references something that knows how to fly.</li>
+						</ul>
+					</aside>
+					<h3>Design Principle 1: Encapsulate What Varies</h3>
+					<blockquote class="fragment">Identify the aspects of your application that vary and separate them from what stays the same.</blockquote>
+					<ul class="dense-slide">
+						<li class="fragment">What stays the same: A Duck is a Duck. It quacks, swims, displays. That's <em>stable</em>.</li>
+						<li class="fragment">What varies: How a duck flies. Multiple implementations needed, <em>more will come</em>.</li>
+						<li class="fragment">The fix: Don't put varying behavior inside the class hierarchy. <em>Encapsulate</em> it separately.</li>
+					</ul>
+				</section>
+
+				<section class="left">
+					<aside class="notes">
+						<ul>
+						</ul>
+					</aside>
+					<h3>Design Principle 1: Encapsulate What Varies</h3>
+					<!-- Clicking this image opens it in a fullscreen overlay -->
+					 <figure>
+						<img 
+							src="imgs/duck-3.jpg" data-preview-image 
+							alt="Duck UML iteration"
+							aria-describedby="duckuml3-caption">
+							<figcaption>UML class diagram for the FlyBehavior interface. (Source: Eric Freeman and Elisabeth Robson, Head First Design Patterns, O'Reilly Media).</figcaption>
+					</figure>
+					<div id="duckuml3-caption" class="sr-only">UML class diagram showing the FlyBehavior interface and its two concrete implementations. At the top, an interface named FlyBehavior (displayed in italics with the stereotype label «interface») declares one method: fly(). Two concrete classes implement this interface via dashed arrows with open triangle arrowheads pointing up to FlyBehavior: FlyWithWings (on the left), which implements fly() with the comment implements duck flying; and FlyNoWay (on the right), which implements fly() with the comment do nothing - cant fly!</div>
+				</section>
+
+			</div>
+		</div>
+
+		<script src="../reveal-js/dist/reveal.js"></script>
+		<script src="../reveal-js/dist/plugin/math.js"></script>
+		<script src="../reveal-js/dist/plugin/notes.js"></script>
+		<script src="../reveal-js/dist/plugin/markdown.js"></script>
+		<script src="../reveal-js/dist/plugin/highlight.js"></script>
+		<script>
+			Reveal.initialize({
+				hash: true,
+				slideNumber: true,
+				transition: 'slide',
+				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes, RevealMath.KaTeX ],
+				showNotes: false,
+				pdfSeparateFragments: false
+			});
+		</script>
+	</body>
+</html>
