@@ -26,7 +26,8 @@ figcaption {
   margin-top: 10px;
 }
 
-.dense-slide li {
+.dense-slide li,
+.dense-slide td {
   font-size: 36px;
 }
 

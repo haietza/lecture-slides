@@ -213,9 +213,9 @@
 					<h3>Design Principle 1: Encapsulate What Varies</h3>
 					<blockquote class="fragment">Identify the aspects of your application that vary and separate them from what stays the same.</blockquote>
 					<ul class="dense-slide">
-						<li class="fragment">What stays the same: A Duck is a Duck. It quacks, swims, displays. That's <em>stable</em>.</li>
-						<li class="fragment">What varies: How a duck flies. Multiple implementations needed, <em>more will come</em>.</li>
-						<li class="fragment">The fix: Don't put varying behavior inside the class hierarchy. <em>Encapsulate</em> it separately.</li>
+						<li class="fragment"><strong>What stays the same:</strong> A Duck is a Duck. It quacks, swims, displays. That's <em>stable</em>.</li>
+						<li class="fragment"><strong>What varies:</strong> How a duck flies. Multiple implementations needed, <em>more will come</em>.</li>
+						<li class="fragment"><strong>The fix:</strong> Don't put varying behavior inside the class hierarchy. <em>Encapsulate</em> it separately.</li>
 					</ul>
 				</section>
 
@@ -234,6 +234,127 @@
 							<figcaption>UML class diagram for the FlyBehavior interface. (Source: Eric Freeman and Elisabeth Robson, Head First Design Patterns, O'Reilly Media).</figcaption>
 					</figure>
 					<div id="duckuml3-caption" class="sr-only">UML class diagram showing the FlyBehavior interface and its two concrete implementations. At the top, an interface named FlyBehavior (displayed in italics with the stereotype label «interface») declares one method: fly(). Two concrete classes implement this interface via dashed arrows with open triangle arrowheads pointing up to FlyBehavior: FlyWithWings (on the left), which implements fly() with the comment implements duck flying; and FlyNoWay (on the right), which implements fly() with the comment do nothing - cant fly!</div>
+				</section>
+
+				<section class="left">
+					<aside class="notes">
+						<ul>
+							<li>We are un-doing the inheritance of fly().</li>
+							<li>Instead of Duck being a flyer, Duck has a flying behavior. That's composition.</li>
+						</ul>
+					</aside>
+					<h3>Design Principle 2: Favor Composition Over Inheritance</h3>
+					<blockquote class="fragment">HAS-A can be better than IS-A.</blockquote>
+					<ul>
+						<li class="fragment">Inheritance → IS-A relationship → tight coupling, <em>fixed</em> at compile time</li>
+						<li class="fragment">Composition → HAS-A relationship → loose coupling, can <em>change</em> at runtime</li>
+					</ul>
+				</section>
+
+				<section class="left">
+					<aside class="notes">
+						<ul>
+							<li>Because myWayToFly is a field — a reference — its value can be assigned at construction time and even changed later at runtime.</li>
+							<li>The class hierarchy is fixed when the code compiles. A composition field is flexible the entire time the program runs.</li>
+							<li>This is a hard shift if you've been writing OOP code for a while. The instinct is always "add a subclass."</li>
+							<li>The Strategy pattern trains you out of that instinct for behaviors that vary.</li>
+						</ul>
+					</aside>
+					<h3>Design Principle 2: Favor Composition Over Inheritance</h3>
+					<ul>
+						<li class="fragment">Duck doesn't know how flying works. It <em>delegates</em> to whatever <code>myWayToFly</code> is holding.</li>
+					</ul>
+					<pre class="java fragment">
+						<code data-trim data-id="code" data-line-numbers>
+							// Duck is no longer implementing fly(), it HAS a flying behavior
+							class Duck {
+								private FlyBehavior myWayToFly;  // ← composition
+
+								public void fly() {
+									myWayToFly.fly();  // ← delegation
+								}
+							}
+						</code>
+					</pre>
+				</section>
+
+				<section class="left">
+					<aside class="notes">
+						<ul>
+							<li>This one sounds obvious, but it has a common misconception attached to it.</li>
+							<li>"Program to an interface" does not specifically mean "use the Java interface keyword."</li>
+							<li>Head First is explicit about this: what it means is "program to a supertype."</li>
+							<li>If FlyBehavior were an abstract class instead of an interface, this principle would be just as satisfied.</li>
+							<li>The point is the declared type of the field. If that field is declared as FlyBehavior, the Duck has no dependency on FlyWithWings or NoFly specifically.</li>
+							<li>It only knows the contract. That's what makes the whole thing swappable.</li>
+						</ul>
+					</aside>
+					<h3>Design Principle 3: Program to Interfaces, Not Implementations</h3>
+					<ul>
+						<li class="fragment">Duck is no longer calling a concrete <code>fly()</code>, it's using the <code>FlyBehavior</code> abstraction.</li>
+						<li class="fragment">Declaring the field type as <code>FlyBehavior</code> (not FlyWithWings) means <em>any concrete implementation</em> can be swapped in, now or in the future.</li>
+					</ul>
+				</section>
+
+				<section class="left">
+					<aside class="notes">
+						<ul>
+							<li>The point is the declared type of the field. If that field is declared as FlyBehavior, the Duck has no dependency on FlyWithWings or NoFly specifically.</li>
+							<li>It only knows the contract. That's what makes the whole thing swappable.</li>
+						</ul>
+					</aside>
+					<h3>Design Principle 3: Program to Interfaces, Not Implementations</h3>
+					<pre class="java fragment">
+						<code data-trim data-id="code" data-line-numbers>
+							class Duck {
+								protected FlyBehavior myWayToFly;  // declared as the INTERFACE type
+
+								public void fly() {
+									myWayToFly.fly();  // Duck has no idea which concrete class is in here
+								}
+							}
+						</code>
+					</pre>
+				</section>
+
+				<section class="left">
+					<aside class="notes">
+						<ul>
+							<li>We've earned the definition now. Let's map it back to what we just built.</li>
+							<li>"Family of algorithms" — that's our FlyBehavior implementations.</li>
+							<li>"Encapsulates each one" — each lives in its own class.</li>
+							<li>"Makes them interchangeable" — they all satisfy the same interface, so the Context doesn't care which one is loaded.</li>
+							<li>"Algorithm varies independently from clients" — Duck has zero lines to change when someone adds FlyRocketPowered.</li>
+							<li>When you name a pattern in a design conversation, you're communicating a whole package of decisions at once.</li>
+							<li>"We use Strategy for the payment processor" tells your teammates: there's a Context, a family of interchangeable algorithms, runtime swapping is supported, and the Context is closed for modification.</li>
+							<li>Four architectural facts in four words. That's the value of learning the vocabulary, not just the structure.</li>
+						</ul>
+					</aside>
+					<h3>The Strategy Pattern Defined</h3>
+					<table class="dense-slide">
+						<thead>
+							<th scope="col">Definition Term</th>
+							<th scope="col">Our Design</th>
+						</thead>
+						<tbody>
+							<tr class="fragment">
+								<td><em>family of algorithms</em></td>
+								<td>FlyWithWings, NoFly, FlySlow, FlyRocketPowered</td>
+							</tr>
+							<tr class="fragment">
+								<td><em>encapsulates each one</em></td>
+								<td>Each in its own class implementing FlyBehavior</td>
+							</tr>
+							<tr class="fragment">
+								<td><em>makes them interchangeable</em></td>
+								<td>All implement the same FlyBehavior interface</td>
+							</tr>
+							<tr class="fragment">
+								<td><em>algorithm varies independently from clients</em></td>
+								<td>Duck changes zero lines when a new flying style is added</td>
+							</tr>
+						</tbody>
+					</table> 
 				</section>
 
 			</div>
