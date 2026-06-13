@@ -357,6 +357,238 @@
 					</table> 
 				</section>
 
+				<section class="left">
+					<aside class="notes">
+						<ul>
+							<li>Here's the fully assembled design.</li>
+							<li>Notice what Duck's fly() method contains: exactly one line — myWayToFly.fly().</li>
+							<li>It doesn't know how flying works. It delegates to whatever concrete behavior is stored in that field. That's delegation.</li>
+						</ul>
+					</aside>
+					<h3>Putting It All Together</h3>
+					
+					<pre class="java fragment">
+						<code data-trim data-id="code" data-line-numbers>
+							class Duck {
+								protected FlyBehavior myWayToFly;  // the strategy delegate
+
+								public void fly() {
+									myWayToFly.fly();                // delegation
+								}
+
+								public void setFlyBehavior(FlyBehavior newFB) {
+									myWayToFly = newFB;              // runtime swap
+								}
+							}
+						</code>
+					</pre>
+				</section>
+
+				<section class="left">
+					<aside class="notes">
+						<ul>
+							<li>The constructors of the concrete Duck subclasses assign which behavior they want at creation time.</li>
+							<li>RubberDuck gets NoFly. MallardDuck gets FlyWithWings.</li>
+							<li>And the setFlyBehavior() setter means that assignment can be changed later — while the Duck object is still alive and in use.</li>
+							<li>That's the runtime flexibility composition gives us that inheritance never could.</li>
+						</ul>
+					</aside>
+					<h3>Putting It All Together</h3>
+					<pre class="java fragment">
+						<code data-trim data-id="code" data-line-numbers>
+							class RubberDuck extends Duck {
+								public RubberDuck() {
+									myWayToFly = new NoFly();        // assigned at construction
+								}
+							}
+
+							class MallardDuck extends Duck {
+								public MallardDuck() {
+									myWayToFly = new FlyWithWings(); // assigned at construction
+								}
+							}
+						</code>
+					</pre>
+				</section>
+
+				<section class="left">
+					<aside class="notes">
+						<ul>
+							<li>fly() is now decoupled from Duck. Duck is loosely coupled with its FlyBehaviors.</li>
+							<li>One note from the textbook worth calling out explicitly: Head First names the Context method performFly() rather than fly().</li>
+							<li>That's deliberate — performFly() is Duck's public API; fly() is the Strategy contract on FlyBehavior.</li>
+							<li>Two layers, two names, so you can always tell which object you're looking at.</li>
+							<li>In StreamNet, our Context method and Strategy method will have matching names but different signatures, which serves the same purpose.</li>
+						</ul>
+					</aside>
+					<h3>Putting It All Together</h3>
+					<!-- Clicking this image opens it in a fullscreen overlay -->
+					 <figure>
+						<img 
+							src="imgs/duck-4.jpg" data-preview-image 
+							alt="Duck UML iteration"
+							aria-describedby="duckuml4-caption">
+							<figcaption>UML class diagram for the Duck implementation. (Source: Eric Freeman and Elisabeth Robson, Head First Design Patterns, O'Reilly Media).</figcaption>
+					</figure>
+					<div id="duckuml4-caption" class="sr-only"></div>
+				</section>
+
+				<section class="left">
+					<aside class="notes">
+						<ul>
+							<li>George is a MallardDuck. His myWayToFly field holds a FlyWithWings object. He flies normally.</li>
+						</ul>
+					</aside>
+					<h3>George!</h3>
+					<ul>
+						<li class="fragment">Meet George, a <code>MallardDuck</code> who lives at the duck pond.</li>
+					</ul>
+					<pre class="java fragment">
+						<code data-trim data-id="code" data-line-numbers>
+							Duck george = new MallardDuck();
+							george.fly();   // delegates to FlyWithWings → "I'm flying!"
+						</code>
+					</pre>
+				</section>
+
+				<section class="left">
+					<aside class="notes">
+						<ul>
+							<li>George gets hurt. In an inheritance-only world, what are your options?</li>
+							<li>Override fly() to do nothing? That's Option 1 — we already know that's bad.</li>
+							<li>Create an InjuredMallardDuck subclass? Now your class hierarchy is modeling a health condition. That's absurd.</li>
+							<li>With Strategy: one line. george.setFlyBehavior(new NoFly()).</li>
+							<li>George is the same Java object. The Duck george reference hasn't changed.</li>
+							<li>What changed is the object that myWayToFly points to. The behavior is swapped. That's the payoff.</li>
+							<li>One thing to notice: in MallardDuck's constructor, we write new FlyWithWings(). This is instantiating a concrete class.</li>
+							<li>A sharp student might ask — doesn't that violate "program to abstractions"?</li>
+							<li>It does, a little. We've pushed that concrete coupling out to the constructor, and further out to Main.</li>
+							<li>Head First acknowledges this tension directly: "Good catch — that's exactly what we're doing... for now."</li>
+							<li>Later in the book, the Factory pattern is covered and shows how to solve this properly.</li>
+							<li>For now, understand the tradeoff: concrete instantiation confined to one place is far better than scattered through every method that needs a behavior.</li>
+						</ul>
+					</aside>
+					<h3>George!</h3>
+					<ul>
+						<li class="fragment">Then George injures his wing. He can't fly anymore.</li>
+						<li class="fragment">With <em>inheritance</em>, you'd need a new subclass <code>InjuredMallardDuck</code>. Or an empty override. Neither is good.</li>
+						<li class="fragment">With <em>Strategy</em>, just swap the delegate.</li>
+						<li class="fragment">George is the <em>same object</em>. His class didn't change. His behavior did.</li>
+					</ul>
+					<pre class="java fragment">
+						<code data-trim data-id="code" data-line-numbers>
+							george.setFlyBehavior(new NoFly());
+							george.fly();   // delegates to NoFly → "I can't fly."
+						</code>
+					</pre>
+				</section>
+
+				<section class="left">
+					<aside class="notes">
+						<ul>
+							<li>Three roles: Context, Strategy Interface, Concrete Strategies.</li>
+							<li>The Context HAS-A strategy reference. It delegates behavioral calls to that reference.</li>
+							<li>The Concrete Strategies IMPLEMENT the interface, each providing a different algorithm.</li>
+							<li>The Context IS-A... well, in our case Duck has subclasses, but the key relationship for the pattern is the HAS-A.</li>
+							<li>HFDP's Big Picture diagram shows something worth noting: the same Context can hold multiple independent strategy delegates (see UML diagram a few slides ago).</li>
+							<li>Duck has both flyBehavior and quackBehavior. Two completely independent variation axes, each encapsulated separately, each swappable independently.</li>
+							<li>In StreamNet, your VideoClip will carry one strategy delegate for rendering.</li>
+							<li>You could — in a future sprint — add a second delegate for encoding. Same Context, two HAS-A relationships, two strategy families. The pattern scales.</li>
+							<li>The right column maps these roles to your assignment.</li>
+							<li>VideoClip is the Context.</li>
+							<li>VideoRenderBehavior is the Strategy interface.</li>
+							<li>SdrRender, HdrRender, and DolbyVisionRender are the Concrete Strategies.</li>
+							<li>That's the work you will do in the assignment.</li>
+						</ul>
+					</aside>
+					<h3>Three Roles</h3>
+					<table>
+						<thead>
+							<th scope="col">Role</th>
+							<th scope="col">Duck Example</th>
+							<th scope="col">StreamNet Example</th>
+						</thead>
+						<tbody>
+							<tr class="fragment">
+								<td><em>Context</em></td>
+								<td>Duck</td>
+								<td>AudioTrack, VideoClip</td>
+							</tr>
+							<tr class="fragment">
+								<td><em>Strategy Interface</em></td>
+								<td>FlyBehavior</td>
+								<td>VideoRenderBehavior</td>
+							</tr>
+							<tr class="fragment">
+								<td><em>Concrete Strategy</em></td>
+								<td>FlyWithWings, NoFly</td>
+								<td>HdrRender</td>
+							</tr>
+						</tbody>
+					</table>
+				</section>
+
+				<section class="left">
+					<aside class="notes">
+						<ul>
+						</ul>
+					</aside>
+					<h3><i class="fa-solid fa-pencil"></i> Strategy Roles Mapping (15 minutes)</h3>
+					<ul class="dense-slide">
+						<li>Work in pairs. Open the StreamNet project from Core CS Review.</li>
+						<li>One partner types, one navigates. Switch at 7 minutes.</li>
+						<li>Step 1 (5 min): In the StreamNet project, open VideoClip.java.</li>
+						<li>Read the existing <code>play()</code> method. Create a new file VideoRenderBehavior.java with the following:</li>
+					</ul>
+					<pre class="java">
+						<code data-trim data-id="code" data-line-numbers>
+							public interface VideoRenderBehavior {
+								void render(String title, String resolution);
+							}
+						</code>
+					</pre>
+				</section>
+
+				<section class="left">
+					<aside class="notes">
+						<ul>
+						</ul>
+					</aside>
+					<h3><i class="fa-solid fa-pencil"></i> Strategy Roles Mapping (15 minutes)</h3>
+					<ul class="dense-slide">
+						<li>Step 2 (5 min): Create SdrRender.java implementing VideoRenderBehavior:
+							<ul>
+								<li><code>render()</code> should print: [SDR] Playing: &lt;title&gt; at &lt;resolution&gt;</li>
+							</ul>
+						</li>
+						<li>Create HdrRender.java implementing VideoRenderBehavior:
+							<ul>
+								<li><code>render()</code> should print: [HDR] Playing: &lt;title&gt; at &lt;resolution&gt;</li>
+							</ul>
+						</li>
+					</ul>
+				</section>
+
+				<section class="left">
+					<aside class="notes">
+						<ul>
+							<li>Solution in /Users/meltonml/development/cs3667/cs3667-materials/strategy/active-learning/...</li>
+						</ul>
+					</aside>
+					<h3><i class="fa-solid fa-pencil"></i> Strategy Roles Mapping (15 minutes)</h3>
+					<ul class="dense-slide-extra">
+						<li>Step 3 (5 min): In a new file StrategyDemo.java, write a <code>main</code> method that:
+							<ul>
+								<li>Declares a variable of type VideoRenderBehavior (the interface, not a concrete class)</li>
+								<li>Assigns it <code>new SdrRender()</code>, calls <code>render("Inception", "1080p")</code></li>
+								<li>Reassigns it to <code>new HdrRender()</code>, calls <code>render("Inception", "4K")</code></li>
+								<li>Compiles and runs: <code>javac *.java && java StrategyDemo</code></li>
+							</ul>
+						</li>
+						<li>Be ready to identify: Which role is VideoRenderBehavior? Which role is SdrRender? Which object would be the Context if VideoClip used this?</li>
+					</ul>
+				</section>
+
 			</div>
 		</div>
 
