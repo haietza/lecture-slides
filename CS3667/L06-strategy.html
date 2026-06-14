@@ -588,6 +588,122 @@
 						<li>Be ready to identify: Which role is VideoRenderBehavior? Which role is SdrRender? Which object would be the Context if VideoClip used this?</li>
 					</ul>
 				</section>
+				
+				<section class="left">
+					<aside class="notes">
+						<ul>
+							<li>This recap slide is worth pausing on because it corrects a misconception students often have: that applying a design pattern means writing a lot more code.</li>
+							<li>It doesn't. The actual structural change to the existing Duck class was two lines.</li>
+							<li>The flying implementations had to be written either way — they just moved from scattered override methods into named classes.</li>
+							<li>The investment in the pattern is in the structure, not the line count.</li>
+							<li>What you're buying is the ability to add FlyRocketPowered — or FlyRocketPowered_v2 — without opening any existing file.</li>
+							<li>That payoff compounds over the lifetime of a codebase.</li>
+						</ul>
+					</aside>
+					<h3>What Did Strategy Actually Do?</h3>
+					<table class="dense-slide">
+						<thead>
+							<th scope="col">Before Strategy</th>
+							<th scope="col">After Strategy</th>
+						</thead>
+						<tbody>
+							<tr class="fragment">
+								<td><code>fly()</code> implemented inside Duck</td>
+								<td><code>fly()</code> moved into FlyWithWings class</td>
+							</tr>
+							<tr class="fragment">
+								<td>Subclasses <em>override</em> to change behavior</td>
+								<td>Subclasses assign a <em>delegate</em> object</td>
+							</tr>
+							<tr class="fragment">
+								<td>New flying style = change <em>existing</em> class</td>
+								<td>New flying style = add <em>new</em> class</td>
+							</tr>
+							<tr class="fragment">
+								<td>Behavior <em>fixed</em> at class definition time</td>
+								<td>Behavior can <em>change</em> at runtime</td>
+							</tr>
+						</tbody>
+					</table>
+				</section>
+
+				<section class="left">
+					<aside class="notes">
+						<ul>
+							<li>SRP: FlyWithWings does one thing. If the way wings work changes, that's the only file that changes.</li>
+							<li>OCP: adding FlyRocketPowered is adding a file, not modifying Duck.</li>
+							<li>LSP: any FlyBehavior implementation can stand in for any other — they share the contract.</li>
+							<li>ISP: FlyBehavior has exactly one method. No concrete strategy is forced to implement anything irrelevant.</li>
+							<li>DIP: Duck's field is typed to the abstraction, not to FlyWithWings.</li>
+						</ul>
+					</aside>
+					<h3>SOLID Principles: Strategy Satisfies All Five</h3>
+					<table class="dense-slide-extra">
+						<thead>
+							<th scope="col">Principle</th>
+							<th scope="col">How Strategy Satisfies It</th>
+						</thead>
+						<tbody>
+							<tr class="fragment">
+								<td>(S)ingle Responsibility</td>
+								<td>Each Concrete Strategy has one job: <em>implement one algorithm</em></td>
+							</tr>
+							<tr class="fragment">
+								<td>(O)pen/Closed</td>
+								<td>New strategies = new files, <em>zero changes to Context or existing strategies</em></td>
+							</tr>
+							<tr class="fragment">
+								<td>(L)iskov Substitution</td>
+								<td>Any Concrete Strategy <em>can replace any other</em>, same interface contract</td>
+							</tr>
+							<tr class="fragment">
+								<td>(I)nterface Segregation</td>
+								<td>Strategy interfaces are <em>narrow</em> (1–2 methods), no forced dependencies</td>
+							</tr>
+							<tr class="fragment">
+								<td>(D)ependency Inversion</td>
+								<td>Context <em>depends on the abstraction</em> (<code>FlyBehavior</code>), not any concrete class</td>
+							</tr>
+						</tbody>
+					</table>
+				</section>
+
+				<section class="left">
+					<aside class="notes">
+						<ul>
+							<li>But, design patterns can be over-applied.</li>
+						</ul>
+					</aside>
+					<h3>Design Tradeoffs: When Strategy Is Right...</h3>
+					<p class="fragment">Use Strategy when:</p>
+					<ul>
+						<li class="fragment">You have a <em>family</em> of algorithms that need to be interchangeable</li>
+						<li class="fragment">The behavior varies per <em>instance</em>, not just per class</li>
+						<li class="fragment">You want <em>runtime</em> swapping without subclassing</li>
+						<li class="fragment">You see if/else or switch chains selecting between <em>algorithm variants</em></li>
+					</ul>
+				</section>
+
+				<section class="left">
+					<aside class="notes">
+						<ul>
+							<li>If your codebase has one sorting algorithm and you have no reason to believe you'll need a second, adding a SortBehavior interface is speculative complexity.</li>
+							<li>YAGNI — You Aren't Gonna Need It — is a real principle that pushes back against premature abstraction.</li>
+							<li>When the pattern fit feels like you're twisting your domain to fit the pattern's shape, that's a signal worth heeding.</li>
+							<li>Sometimes it means the pattern is wrong for this situation.</li>
+							<li>Sometimes it means there's a missing abstraction — like a base class with a delegate method — that would make the fit clean.</li>
+							<li>Always ask yourself: is my use of this pattern clarifying the design or complicating it?</li>
+							<li>If a thoughtful developer reading your code would be confused, you may be over-engineering.</li>
+						</ul>
+					</aside>
+					<h3>...and When It Isn't</h3>
+					<p class="fragment">Be cautious when:</p>
+					<ul>
+						<li class="fragment">You have only <em>one algorithm now</em> with no real anticipation of more (YAGNI)</li>
+						<li class="fragment">The "squeezing and bending" to make the pattern fit feels <em>forced</em></li>
+					</ul>
+					<blockquote class="fragment">Design is an <em>art</em>. Patterns are <em>tools</em>, not mandates.</blockquote>
+				</section>
 
 			</div>
 		</div>
