@@ -30,12 +30,182 @@
 				</section>
 
 				<section class="left">
+					<h3>The Observer Design Pattern</h3>
+					<p class="fragment">The Starting Problem:</p>
+					<ul>
+						<li class="fragment">Weather-O-Rama has a WeatherData object that receives live measurements: <em>temperature</em>, <em>humidity</em>, <em>air pressure</em>.</li>
+						<li class="fragment">They want <em>multiple displays</em> (current conditions panel, statistics view, forecast) to <em>update automatically</em> whenever measurements change.</li>
+					</ul> 
+				</section>
+
+				<section class="left">
+					<aside class="notes">
+						<ul>
+							<li>Weather-O-Rama provides the sensor devices, the weather station, and the WeatherData object.</li>
+							<li>We will need to implement the three different displays, and integrate the WeatherData object with thd display.</li>
+						</ul>
+					</aside>
+					<h3>Weather Monitoring Application</h3>
+					<!-- Clicking this image opens it in a fullscreen overlay -->
+					 <figure>
+						<img 
+							src="imgs/weather0rama.jpg" data-preview-image 
+							alt="Weather-O-Rama app diagram"
+							aria-describedby="weatherorama-caption">
+							<figcaption>Weather-O-Rama app. (Source: Eric Freeman and Elisabeth Robson, Head First Design Patterns, O'Reilly Media).</figcaption>
+					</figure>
+					<div id="duckuml3-caption" class="sr-only">Conceptual diagram of the Weather-O-Rama system architecture. On the left, three sensor devices, labeled Humidity sensor device, Temperature sensor device, and Pressure sensor device, feed data into a Weather Station, annotated as What Weather-O-Rama is providing. The Weather Station pulls data into a WeatherData object, annotated with Well also need to integrate the WeatherData object with the display and What we need to implement. The WeatherData object then sends data to a Display device via a displays arrow. The display device shows a Current Conditions screen with example values: Temp 72°, Humidity 60, and Pressure with a down arrow. A handwritten annotation at the top right reads: The user can view one of three different displays: the current conditions, weather stats, or a forecast.</div>
+				</section>
+
+				<section class="left">
+					<aside class="notes">
+						<ul>
+							<li>Tightly coupled, WeatherData knows every display by name</li>
+							<li>Look at this method — measurementsChanged().</li>
+							<li>Every time the product team wants a new display, a developer has to open this file, add a new variable reference, and add another line.</li>
+							<li>That's a modification to tested, working code every single time.</li>
+							<li>And if they want to remove a display at runtime — say, turn off the TV overlay after midnight — there's no mechanism for that.</li>
+							<li>They'd have to null-check or recompile.</li>    
+						</ul>
+					</aside>
+					<h3>First Attempt</h3>
+					<pre class="java">
+						<code data-trim data-id="code" data-line-numbers>
+							public class WeatherData {
+
+								public void measurementsChanged() {
+									float temp     = getTemperature();
+									float humidity = getHumidity();
+									float pressure = getPressure();
+
+									currentConditionsDisplay.update(temp, humidity, pressure);
+									statisticsDisplay.update(temp, humidity, pressure);
+									forecastDisplay.update(temp, humidity, pressure);
+								}
+							}
+						</code>
+					</pre>
+				</section>
+
+				<section class="left">
+					<aside class="notes">
+						<ul>
+							<li>The textbook is blunt about it: we're coding to concrete implementations, and we have no way to add or remove display elements at runtime without altering this code.</li>
+							<li>Those are some of the problems the Observer pattern solves.</li>
+						</ul>
+					</aside>
+					<h3>Violation 1</h3>
+					<p class="fragment">Coding to implementations, not interfaces</p>
+					<ul>
+						<li class="fragment"><code>WeatherData</code> references concrete display classes directly. It cannot be compiled without them.</li>
+						<li class="fragment">If <code>CurrentConditionsDisplay</code> moves packages, <code>WeatherData</code> breaks.</li>
+					</ul>
+				</section>
+
+				<section class="left">
 					<aside class="notes">
 						<ul>
 						</ul>
 					</aside>
-					<h3>The Observer Design Pattern</h3>
+					<h3>Violation 2</h3>
+					<p class="fragment">No runtime extensibility</p>
 					<ul>
+						<li class="fragment">Adding a <code>HeatIndexDisplay</code> requires opening <code>measurementsChanged()</code> and adding another line; a change to existing, tested code.</li>
+					</ul>
+				</section>
+
+				<section class="left">
+					<aside class="notes">
+						<ul>
+						</ul>
+					</aside>
+					<h3>Violation 3</h3>
+					<p class="fragment">No runtime remove</p>
+					<ul>
+						<li class="fragment">There is no way to stop sending updates to a display at runtime. You would have to add a null-check hack or recompile.</li>
+					</ul>
+				</section>
+
+				<section class="left">
+					<aside class="notes">
+						<ul>
+						</ul>
+					</aside>
+					<h3>Violation 4</h3>
+					<p class="fragment">Open/Closed Principle broken</p>
+					<ul>
+						<li class="fragment">The class is not closed for modification. Every new display type is a new modification to <code>WeatherData</code>.</li>
+					</ul>
+				</section>
+
+				<section class="left">
+					<aside class="notes">
+						<ul>
+							<li>Easy name to remember — we need to observe something, so we use the Observer pattern.</li>
+						</ul>
+					</aside>
+					<h3>Observer Rundown: What We Need</h3>
+					<p class="fragment">The Observer pattern exists precisely for this situation:</p>
+					<ul>
+						<li class="fragment">Some object has <em>data</em> of interest to others</li>
+						<li class="fragment">Others need to <em>react</em> when that data <em>changes</em></li>
+						<li class="fragment"><em>No tight coupling</em> between the data-holder and the reactors</li>
+						<li class="fragment">Multiple reactors supported <em>without changing</em> the data-holder</li>
+						<li class="fragment">Reactors can register and deregister at <em>runtime</em></li>
+					</ul>
+				</section>
+
+				<section class="left">
+					<aside class="notes">
+						<ul>
+							<li>Before I show you the structure, I want you to feel the newspaper analogy. Think about how a print subscription works.</li>
+							<li>Key property: The publisher doesn't know anything about individual subscribers.</li>
+							<li>It just maintains a list and delivers to everyone on it.</li>
+							<li>Subscribers can join or leave at any time without the publisher caring.</li>
+						</ul>
+					</aside>
+					<h3>The Newspaper Analogy</h3>
+					<table>
+						<thead>
+							<th scope="col">Pattern Role</th>
+							<th scope="col">Newspaper World</th>
+						</thead>
+						<tbody>
+							<tr class="fragment">
+								<td>Subject (aka Observable)</td>
+								<td>Publisher</td>
+							</tr>
+							<tr class="fragment">
+								<td>Observer (aka Subscriber)</td>
+								<td>Subscriber</td>
+							</tr>
+							<tr class="fragment">
+								<td><code>addObserver()</code></td>
+								<td>Subscribe</td>
+							</tr>
+							<tr class="fragment">
+								<td><code>removeObserver()</code></td>
+								<td>Cancel subscription</td>
+							</tr>
+							<tr class="fragment">
+								<td><code>notifyObservers()</code></td>
+								<td>Deliver the paper to all subscribers</td>
+							</tr>
+						</tbody>
+					</table>
+				</section>
+
+				<section class="left">
+					<aside class="notes">
+						<ul>
+						</ul>
+					</aside>
+					<h3>Formal Definition</h3>
+					<blockquote class="fragment dense-slide">The Observer Pattern defines a one-to-many dependency between objects so that when one object changes state, all of its dependents are notified and updated automatically.</blockquote>
+					<ul class="dense-slide">
+						<li class="fragment"><em>One-to-many:</em> One Subject, potentially many Observers.</li>
+						<li class="fragment"><em>Dependency:</em> Observers depend on the Subject for their data, but the Subject does not depend on any specific Observer type.</li>
+						<li class="fragment"><em>Automatically:</em> Observers do not poll. The Subject pushes the notification.</li>
 					</ul>
 				</section>
 
