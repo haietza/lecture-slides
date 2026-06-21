@@ -65,7 +65,7 @@
 							<li>Every time the product team wants a new display, a developer has to open this file, add a new variable reference, and add another line.</li>
 							<li>That's a modification to tested, working code every single time.</li>
 							<li>And if they want to remove a display at runtime — say, turn off the TV overlay after midnight — there's no mechanism for that.</li>
-							<li>They'd have to null-check or recompile.</li>    
+							<li>They'd have to null-check or recompile. That's not design, that's a patch.</li>    
 						</ul>
 					</aside>
 					<h3>First Attempt</h3>
@@ -97,8 +97,21 @@
 					<h3>Violation 1</h3>
 					<p class="fragment">Coding to implementations, not interfaces</p>
 					<ul>
-						<li class="fragment"><code>WeatherData</code> references concrete display classes directly. It cannot be compiled without them.</li>
-						<li class="fragment">If <code>CurrentConditionsDisplay</code> moves packages, <code>WeatherData</code> breaks.</li>
+						<li class="fragment"><code>WeatherData</code> references <em>concrete</em> display classes directly. It cannot be compiled without them.</li>
+						<li class="fragment">Any structural change to a display class (a renamed method, a moved package) breaks <code>WeatherData</code> without touching it.</li>
+					</ul>
+				</section>
+
+				<section class="left">
+					<aside class="notes">
+						<ul>
+						</ul>
+					</aside>
+					<h3>Violation 2</h3>
+					<p class="fragment">Open/Closed Principle broken</p>
+					<ul>
+						<li class="fragment"><code>measurementsChanged()</code> must be modified every time a display is added or removed.</li>
+						<li class="fragment">The class is not <em>closed for modification</em>. Every new feature is an edit to working, tested code.</li>
 					</ul>
 				</section>
 
@@ -110,19 +123,9 @@
 					<h3>Violation 2</h3>
 					<p class="fragment">No runtime extensibility</p>
 					<ul>
-						<li class="fragment">Adding a <code>HeatIndexDisplay</code> requires opening <code>measurementsChanged()</code> and adding another line; a change to existing, tested code.</li>
-					</ul>
-				</section>
-
-				<section class="left">
-					<aside class="notes">
-						<ul>
-						</ul>
-					</aside>
-					<h3>Violation 3</h3>
-					<p class="fragment">No runtime remove</p>
-					<ul>
-						<li class="fragment">There is no way to stop sending updates to a display at runtime. You would have to add a null-check hack or recompile.</li>
+						<li class="fragment">There is no way to add or remove a display while the program is <em>running</em>.</li>
+						<li class="fragment">All three displays are instantiated at construction time and <em>fixed</em>.</li>
+						<li class="fragment">Turning off <code>ForecastDisplay</code> at 10 PM would require a null-check hack or a full recompile.</li>
 					</ul>
 				</section>
 
@@ -132,9 +135,10 @@
 						</ul>
 					</aside>
 					<h3>Violation 4</h3>
-					<p class="fragment">Open/Closed Principle broken</p>
+					<p class="fragment">Failure to encapsulate what varies</p>
 					<ul>
-						<li class="fragment">The class is not closed for modification. Every new display type is a new modification to <code>WeatherData</code>.</li>
+						<li class="fragment">The set of displays is exactly the thing that <em>changes most often</em>; product teams add and remove them constantly.</li>
+						<li class="fragment">It is not <em>encapsulated</em> at all; it's hardwired into the method body.</li>
 					</ul>
 				</section>
 
@@ -147,11 +151,11 @@
 					<h3>Observer Rundown: What We Need</h3>
 					<p class="fragment">The Observer pattern exists precisely for this situation:</p>
 					<ul>
-						<li class="fragment">Some object has <em>data</em> of interest to others</li>
-						<li class="fragment">Others need to <em>react</em> when that data <em>changes</em></li>
+						<li class="fragment">Some object has <em>data of interest</em> to others</li>
+						<li class="fragment">Others need to <em>react</em> when that data changes</li>
 						<li class="fragment"><em>No tight coupling</em> between the data-holder and the reactors</li>
-						<li class="fragment">Multiple reactors supported <em>without changing</em> the data-holder</li>
-						<li class="fragment">Reactors can register and deregister at <em>runtime</em></li>
+						<li class="fragment"><em>Multiple reactors</em> supported without changing the data-holder</li>
+						<li class="fragment">Reactors can <em>register and deregister at runtime</em></li>
 					</ul>
 				</section>
 
@@ -196,10 +200,6 @@
 				</section>
 
 				<section class="left">
-					<aside class="notes">
-						<ul>
-						</ul>
-					</aside>
 					<h3>Formal Definition</h3>
 					<blockquote class="fragment dense-slide">The Observer Pattern defines a one-to-many dependency between objects so that when one object changes state, all of its dependents are notified and updated automatically.</blockquote>
 					<ul class="dense-slide">
@@ -207,6 +207,33 @@
 						<li class="fragment"><em>Dependency:</em> Observers depend on the Subject for their data, but the Subject does not depend on any specific Observer type.</li>
 						<li class="fragment"><em>Automatically:</em> Observers do not poll. The Subject pushes the notification.</li>
 					</ul>
+				</section>
+
+				<section class="left">
+
+					<h3>One-to-many</h3>
+					<!-- Clicking this image opens it in a fullscreen overlay -->
+					 <figure>
+						<img 
+							src="imgs/observer-1tomany.jpg" data-preview-image 
+							alt="One-to-many diagram"
+							aria-describedby="observer1tomany-caption">
+							<figcaption>Observer pattern one-to-many diagram. (Source: Eric Freeman and Elisabeth Robson, Head First Design Patterns, O'Reilly Media).</figcaption>
+					</figure>
+					<div id="observer1tomany-caption" class="sr-only">Conceptual diagram titled ONE-TO-MANY RELATIONSHIP illustrating the Observer design pattern. On the left, a single Subject Object, labeled Object that holds state, contains an integer field with the value 8. Four dashed arrows labeled with the value 8 extend from the Subject Object to the right, each pointing to a separate observer object grouped together labeled Observers and collectively labeled Dependent Objects. The four observer objects are: Dog Object (upper left of the group), Cat Object (upper right), Duck Object (center left), and Mouse Object (bottom center). An annotation at the bottom left reads: Automatic update/notification.</div>
+				</section>
+
+				<section class="left">
+					<aside class="notes">
+						<ul>
+							<li>A list?</li>
+							<li>A common method?</li>
+							<li>Register at runtime?</li>
+							<li>Let's look at the formal structure that addresses this redesign.</li>
+						</ul>
+					</aside>
+					<h3>Redesign</h3>
+					<blockquote class="fragment">Without writing any code yet, how would you redesign <code>measurementsChanged()</code> so that <code>WeatherData</code> doesn't know the name of a single display class?</blockquote>
 				</section>
 
 			</div>
