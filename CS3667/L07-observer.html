@@ -184,7 +184,7 @@
 								<td>Subscriber</td>
 							</tr>
 							<tr class="fragment">
-								<td><code>addObserver()</code></td>
+								<td><code>registerObserver()</code></td>
 								<td>Subscribe</td>
 							</tr>
 							<tr class="fragment">
@@ -210,7 +210,6 @@
 				</section>
 
 				<section class="left">
-
 					<h3>One-to-many</h3>
 					<!-- Clicking this image opens it in a fullscreen overlay -->
 					 <figure>
@@ -234,6 +233,128 @@
 					</aside>
 					<h3>Redesign</h3>
 					<blockquote class="fragment">Without writing any code yet, how would you redesign <code>measurementsChanged()</code> so that <code>WeatherData</code> doesn't know the name of a single display class?</blockquote>
+				</section>
+
+				<section class="left">
+					<h3>The Subject Lifecycle</h3>
+					<ul class="dense-slide">
+						<li class="fragment"><em>Subject</em> holds data of interest and maintains a collection of registered Observer objects</li>
+						<li class="fragment">A new object calls <code>registerObserver()</code> → added to the collection</li>
+						<li class="fragment">Subject data changes → Subject calls <code>notifyObservers()</code></li>
+						<li class="fragment"><code>notifyObservers()</code> loops over the collection and calls <code>update()</code> on each Observer</li>
+						<li class="fragment">An object calls <code>removeObserver()</code> → removed from collection; no further notifications</li>
+					</ul>
+				</section>
+
+				<section class="left">
+					<aside class="notes">
+						<ul>
+							<li>The UML gives us two parallel hierarchies — Subject on the left, Observer on the right — connected only through interfaces.</li>
+							<li>As long as both sides honor the interface contracts, they work together. That's loose coupling delivering what it promised.</li> 
+						</ul>
+					</aside>
+					<h3>Observer Design Pattern</h3>
+					<!-- Clicking this image opens it in a fullscreen overlay -->
+					 <figure>
+						<img 
+							src="imgs/observer-uml.jpg" data-preview-image 
+							alt="Observer pattern UML"
+							aria-describedby="observeruml-caption">
+							<figcaption>Observer pattern UML. (Source: Eric Freeman and Elisabeth Robson, Head First Design Patterns, O'Reilly Media).</figcaption>
+					</figure>
+					<div id="observeruml-caption" class="sr-only">UML class diagram showing the Observer design pattern structure with four classes and several annotations. At the top left, an interface named Subject (with label interface) declares three methods: registerObserver(), removeObserver(), and notifyObservers(). A handwritten annotation reads: Heres the Subject interface. Objects use this interface to register as observers and also to remove themselves from being observers. At the top right, an interface named Observer (with label interface) declares one method: update(). A handwritten annotation reads: All potential observers need to implement the Observer interface. This interface has just one method, update(), that is called when the Subjects state changes. A solid line with an open diamond labeled observers connects the Subject interface to the Observer interface along with a handwritten annotation, indicating that each Subject can have many observers. Below, two concrete classes appear. ConcreteSubject implements the Subject interface via a dashed line with an open triangle arrowhead pointing up to Subject. ConcreteSubject declares registerObserver(), removeObserver(), notifyObservers(), getState(), and setState(). A handwritten annotation reads: A concrete subject always implements the Subject interface. In addition to the register and remove methods, the concrete subject implements a notifyObservers() method that is used to update all the current observers whenever state changes. A second annotation reads: The concrete subject may also have methods for setting and getting its state (more about this later). ConcreteObserver implements the Observer interface via a dashed line with an open triangle arrowhead pointing up to Observer. ConcreteObserver declares: update() and a note indicating other Observer-specific methods. A solid line labeled subject connects ConcreteObserver back to ConcreteSubject. A handwritten annotation reads: Concrete observers can be any class that implements the Observer interface. Each observer registers with a concrete subject to receive updates.</div>
+				</section>
+
+				<section class="left">
+					<aside class="notes">
+						<ul>
+							<li>Look at notifyObservers(). It loops over a List&lt;Observer&gt;.</li>
+							<li>It does not call currentConditionsDisplay.update(), it calls o.update().</li>
+							<li>The concrete type behind that reference could be a CurrentConditionsDisplay, a StatisticsDisplay, a HeatIndexDisplay we haven't written yet, or a test spy we only use in unit tests.</li>
+							<li>The Subject has no idea and doesn't need to. That's polymorphism doing exactly its job.</li>
+							<li>Now look at measurementsChanged(). It went from three hardwired display calls to one call to notifyObservers().</li>
+							<li>WeatherData no longer names a single display class.</li>
+						</ul>
+					</aside>
+					<h3>WeatherData + Observer</h3>
+					<pre class="java">
+						<code data-trim data-id="code" data-line-numbers="21-25|27-29">
+							import java.util.ArrayList;
+							import java.util.List;
+
+							public class WeatherData implements Subject {
+								private final List<Observer> observers = new ArrayList<>();
+								private float temperature;
+								private float humidity;
+								private float pressure;
+
+								@Override
+								public void notifyObserver(Observer o) {
+									observers.add(o);
+								}
+
+								@Override
+								public void removeObserver(Observer o) {
+									observers.remove(o);
+								}
+
+								@Override
+								public void notifyObservers() {
+									for (Observer o : observers) {
+										o.update();  // Subject calls update(); Observer decides what to fetch
+									}
+								}
+
+								public void measurementsChanged() {
+									notifyObservers();  // replaces the three hardwired calls
+								}
+
+								// State accessors — available for pull model
+								public float getTemperature() { return temperature; }
+								public float getHumidity()    { return humidity;    }
+								public float getPressure()    { return pressure;    }
+
+								public void setMeasurements(float temperature, float humidity, float pressure) {
+									this.temperature = temperature;
+									this.humidity    = humidity;
+									this.pressure    = pressure;
+									measurementsChanged();
+								}
+							}
+						</code>
+					</pre>
+				</section>
+
+				<section class="left">
+					<h3>Design Principle 4: Minimize Dependencies</h3>
+					<blockquote class="fragment">Strive for loosely coupled designs between objects that interact.</blockquote>
+				</section>
+
+				<section class="left">
+					<aside class="notes">
+						<ul>
+							<li>Think about adding a new display. You write a class, implement Observer, call weatherData.registerObserver(yourNewDisplay) from anywhere in the codebase — even at runtime. Zero existing files change.</li>
+							<li>Compare that to the broken version where you had to open measurementsChanged() every single time.</li>
+							<li>This is the Open/Closed Principle in practice: open for extension, closed for modification.</li>	    
+						</ul>
+					</aside>
+					<h3>Design Principle 4: Minimize Dependencies</h3>
+					<p class="fragment">What this means in Observer:</p>
+					<ul class="dense-slide">
+						<li class="fragment">Subject knows <em>only</em> that observers have an <code>update()</code> method</li>
+						<li class="fragment">A new Observer type can be added <em>without touching Subject code</em></li>
+						<li class="fragment">Observers can come and go at <em>runtime</em> without the Subject caring</li>
+						<li class="fragment">Subject and observer hierarchies are <em>independently changeable</em> and <em>independently reusable</em></li>
+					</ul>
+				</section>
+
+				<section class="left">
+					
+					<h3>SOLID Connections</h3>
+					<ul class="dense-slide">
+						<li class="fragment">Open/Closed Principle: WeatherData is <em>open for extension</em> (add displays) without modification</li>
+						<li class="fragment">Dependency Inversion: Both sides <em>depend on abstractions</em> (Subject, Observer interfaces), neither depends on the other's concrete class</li>
+					</ul>
 				</section>
 
 			</div>
