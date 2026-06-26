@@ -349,11 +349,162 @@
 				</section>
 
 				<section class="left">
-					
 					<h3>SOLID Connections</h3>
-					<ul class="dense-slide">
+					<ul>
 						<li class="fragment">Open/Closed Principle: WeatherData is <em>open for extension</em> (add displays) without modification</li>
 						<li class="fragment">Dependency Inversion: Both sides <em>depend on abstractions</em> (Subject, Observer interfaces), neither depends on the other's concrete class</li>
+					</ul>
+				</section>
+
+				<section class="left">
+					<aside class="notes">
+						<ul>
+							<li>If the answer to all four is yes, Observer is a natural fit.</li>
+							<li>If the data only changes once (at startup), or if there's only one consumer, the pattern may be overkill.</li>
+							<li>Solution in /Users/michellemelton/development/cs3667/cs3667-materials/observer/active-learning/streamnet-observer.md</li>
+						</ul>
+					</aside>
+					<h3><i class="fa-solid fa-pencil"></i> Observer in StreamNet (15 minutes)</h3>
+					<ul class="dense-slide">
+						<li>Work in pairs to identify where the Observer pattern fits in StreamNet.</li>
+						<li>For each candidate, decide: <em>good fit</em>, <em>weak fit</em>, or <em>not a fit</em>, and be ready to <em>justify</em> it.
+						<ul>
+							<li>What data in StreamNet <em>changes over time</em> after the application is running?</li>
+							<li>Who <em>needs to know</em> when that data changes?</li>
+							<li>Are those consumers genuinely <em>independent</em> (do they react differently, or do they all do the same thing)?</li>
+							<li>Would the system benefit from those consumers being <em>addable and removable</em> at runtime?</li>
+						</ul></li>
+						<li>Practice assigning Subject and Observer roles.</li>
+					</ul>
+				</section>
+
+				<section class="left">
+					<h3><i class="fa-solid fa-pencil"></i> Observer in StreamNet (15 minutes)</h3>
+					<h4>Candidate 1: NowPlaying Feature</h4>
+					<p>StreamNet tracks which clip is currently playing. When the playing clip changes, a progress bar display, an "up next" recommendation panel, and a playback analytics tracker all need to update.</p>
+				</section>
+
+				<section class="left">
+					<h3><i class="fa-solid fa-pencil"></i> Observer in StreamNet (15 minutes)</h3>
+					<h4>Candidate 2: Video Collection Library</h4>
+					<p>StreamNetLibrary manages a list of VideoClip objects. When a new clip is added, a library display and a recommendation engine could update.</p>
+				</section>
+
+				<section class="left">
+					<h3><i class="fa-solid fa-pencil"></i> Observer in StreamNet (15 minutes)</h3>
+					<h4>Candidate 3: StreamingQuality Feature</h4>
+					<p>The platform monitors network bandwidth. When quality drops or improves, a quality indicator display, a buffer warning panel, and an adaptive bitrate engine all need to react.</p>
+				</section>
+
+				<section class="left">
+					<h3><i class="fa-solid fa-pencil"></i> Observer in StreamNet (15 minutes)</h3>
+					<h4>Candidate 4: Open-Ended</h4>
+					<p>Can you think of another place in StreamNet (or in any media platform you've used) where Observer would be a natural fit? Describe the Subject, the changing state, and at least two independent Observers.</p>
+				</section>
+
+				<section class="left">
+					<h3>Push vs. Pull</h3>
+					<ul>
+						<li class="fragment">The Observer pattern leaves one key implementation detail open: How does the Observer get the data it needs after <code>update()</code> fires?
+						<ul>
+							<li class="fragment"><em>Push</em> Model: The Subject <em>sends data</em> as parameters of <code>update()</code>.</li>
+							<li class="fragment"><em>Pull</em> Model: The Subject sends only a <em>notification</em> signal. Observers <em>pull</em> what they need.</li>
+						</ul></li>
+					</ul>
+				</section>
+
+				<section class="left">
+					<h3>Push Model</h3>
+					<pre class="java">
+						<code data-trim data-id="code" data-line-numbers>
+							// Subject decides what to send
+							public interface Observer {
+								void update(float temperature, float humidity, float pressure);
+							}
+
+							public void notifyObservers() {
+								for (Observer o : observers) {
+									o.update(temperature, humidity, pressure);
+								}
+							}
+						</code>
+					</pre>
+				</section>
+
+				<section class="left">
+					<h3>Push Model</h3>
+					<ul class="dense-slide">
+						<li class="fragment">Advantage: Observers don't need a reference back to the Subject.</li>
+						<li class="fragment">Problem: The Subject decides what every Observer gets, and <em>sends the same data to all of them</em>. When WeatherData adds <code>windSpeed</code>:
+							<ul>
+								<li class="fragment">Every Observer interface implementation must <em>update</em> its <code>update()</code> signature.</li>
+								<li class="fragment">Every concrete class must add the parameter even if it <em>never</em> uses <code>windSpeed</code>.</li>
+								<li class="fragment">That is a cascading edit across every Observer in the codebase.</li>
+							</ul>
+						</li>
+						<li class="fragment">Best When: All observers need the <em>same</em> small data set.</li>
+					</ul>
+				</section>
+
+				<section class="left">
+					<h3>Pull Model</h3>
+					<pre class="java">
+						<code data-trim data-id="code" data-line-numbers>
+							// Observer decides what to fetch
+							public interface Observer {
+								void update();   // no data — just the signal
+							}
+
+							public void notifyObservers() {
+								for (Observer o : observers) {
+									o.update();
+								}
+							}
+						</code>
+					</pre>
+				</section>
+
+				<section class="left">
+					<h3>Pull Model</h3>
+					<pre class="java">
+						<code data-trim data-id="code" data-line-numbers>
+							// Observer pulls only what it needs
+							public class StatisticsDisplay implements Observer {
+								private final WeatherData subject;   // back-reference — the "subject" arrow on the UML
+
+								@Override
+								public void update() {
+									float temp = subject.getTemperature();   // fetches only what it needs
+									recordTemperature(temp);
+								}
+							}
+						</code>
+					</pre>
+				</section>
+
+				<section class="left">
+					<aside class="notes">
+						<ul>
+							<li>The push/pull question is where pattern knowledge becomes engineering judgment.</li>
+							<li>Push feels simpler — you pass the data right in the update() call.</li>
+							<li>But changing fields in the Subject means you have to change every Observer class in the codebase, even the ones that never use those fields.</li>
+							<li>The pull model avoides that situation. The interface stays stable.</li>
+							<li>update() is a signal that something changed.</li>
+							<li>Each Observer calls the getters it cares about.</li>
+							<li>A change to the fields in the Subject only involves adding a getter. Only the Observers that need it will ever call it.</li>
+							<li>The cost is the back reference to the Subject (so Observer can call those getters).</li>
+							<li>A mild increase in coupling at the concrete level in exchange for a stable interface contract.</li>
+							<li>That trade is almost always worth it.</li>
+						</ul>
+					</aside>
+					<h3>Pull Model</h3>
+					<ul>
+						<li class="fragment">Advantage: When WeatherData adds <code>windSpeed</code>, only the Observers that care call <code>getWindSpeed()</code>.
+							<ul>
+								<li class="fragment">The Observer interface <em>never changes</em>. No cascading edits.</li>
+							</ul></li>
+						<li class="fragment">Cost: Each Observer must hold a reference back to the Subject.</li>
+						<li class="fragment">Best When: Observers <em>vary</em> in what they need.</li>
 					</ul>
 				</section>
 
