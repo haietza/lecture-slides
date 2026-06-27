@@ -95,7 +95,7 @@
 						</ul>
 					</aside>
 					<h3>Violation 1</h3>
-					<p class="fragment">Coding to implementations, not interfaces</p>
+					<p class="fragment"><em>Coding to implementations, not interfaces</em></p>
 					<ul>
 						<li class="fragment"><code>WeatherData</code> references <em>concrete</em> display classes directly. It cannot be compiled without them.</li>
 						<li class="fragment">Any structural change to a display class (a renamed method, a moved package) breaks <code>WeatherData</code> without touching it.</li>
@@ -108,7 +108,7 @@
 						</ul>
 					</aside>
 					<h3>Violation 2</h3>
-					<p class="fragment">Open/Closed Principle broken</p>
+					<p class="fragment"><em>Open/Closed Principle broken</em></p>
 					<ul>
 						<li class="fragment"><code>measurementsChanged()</code> must be modified every time a display is added or removed.</li>
 						<li class="fragment">The class is not <em>closed for modification</em>. Every new feature is an edit to working, tested code.</li>
@@ -120,8 +120,8 @@
 						<ul>
 						</ul>
 					</aside>
-					<h3>Violation 2</h3>
-					<p class="fragment">No runtime extensibility</p>
+					<h3>Violation 3</h3>
+					<p class="fragment"><em>No runtime extensibility</em></p>
 					<ul>
 						<li class="fragment">There is no way to add or remove a display while the program is <em>running</em>.</li>
 						<li class="fragment">All three displays are instantiated at construction time and <em>fixed</em>.</li>
@@ -135,7 +135,7 @@
 						</ul>
 					</aside>
 					<h3>Violation 4</h3>
-					<p class="fragment">Failure to encapsulate what varies</p>
+					<p class="fragment"><em>Failure to encapsulate what varies</em></p>
 					<ul>
 						<li class="fragment">The set of displays is exactly the thing that <em>changes most often</em>; product teams add and remove them constantly.</li>
 						<li class="fragment">It is not <em>encapsulated</em> at all; it's hardwired into the method body.</li>
@@ -143,9 +143,44 @@
 				</section>
 
 				<section class="left">
+					<h3>Design Principle 4: Minimize Dependencies</h3>
+					<blockquote class="fragment">Strive for <em>loosely coupled</em> designs between objects that interact.</blockquote>
+					<ul class="dense-slide">
+						<li class="fragment">WeatherData is <em>tightly coupled</em> to its displays.</li>
+						<li class="fragment">It knows their class names, instantiates them directly, and calls them by name.</li>
+						<li class="fragment">A <em>loosely coupled</em> design would mean WeatherData knows as little as possible about whoever is listening; ideally nothing beyond the fact that they respond to a single method call.</li>
+					</ul>
+				</section>
+
+				<section class="left">
+					<h3>Design Principle 4: Minimize Dependencies</h3>
+					<ul class="dense-slide">
+						<li class="fragment">A loosely coupled Subject knows
+							<ul>
+								<li class="fragment">That its observers have an <code>update()</code> method</li>
+								<li class="fragment">That there are <em>zero or more</em> of them</li>
+							</ul>
+						</li>
+					</ul>
+					<ul class="dense-slide">
+						<li class="fragment">A loosely coupled Subject does <em>not</em> know
+							<ul>
+								<li class="fragment">Any observer's <em>class name</em></li>
+								<li class="fragment">What any observer does in <code>update()</code></li>
+								<li class="fragment"><em>How many</em> observers there are</li>
+								<li class="fragment">Whether a given observer was <em>added</em> at startup or three sprints ago</li>
+							</ul>
+						</li>
+					</ul>
+				</section>
+
+				<section class="left">
 					<aside class="notes">
 						<ul>
 							<li>Easy name to remember — we need to observe something, so we use the Observer pattern.</li>
+							<li>No tight coupling: Subject knows only that observers have an update() method, Subject and observer hierarchies are independently changeable and independently reusable</li>
+							<li>Multiple reactors without changing data-holder: A new Observer type can be added without touching Subject code</li>
+							<li>Reactors can register/de at runtime: Observers can come and go at runtime without the Subject caring</li>
 						</ul>
 					</aside>
 					<h3>Observer Rundown: What We Need</h3>
@@ -201,7 +236,7 @@
 
 				<section class="left">
 					<h3>Formal Definition</h3>
-					<blockquote class="fragment dense-slide">The Observer Pattern defines a one-to-many dependency between objects so that when one object changes state, all of its dependents are notified and updated automatically.</blockquote>
+					<blockquote class="fragment dense-slide">The Observer Pattern defines a <em>one-to-many dependency</em> between objects so that when one object changes state, all of its dependents are notified and updated <em>automatically</em>.</blockquote>
 					<ul class="dense-slide">
 						<li class="fragment"><em>One-to-many:</em> One Subject, potentially many Observers.</li>
 						<li class="fragment"><em>Dependency:</em> Observers depend on the Subject for their data, but the Subject does not depend on any specific Observer type.</li>
@@ -245,7 +280,7 @@
 						<li class="fragment">An object calls <code>removeObserver()</code> → removed from collection; no further notifications</li>
 					</ul>
 				</section>
-
+				
 				<section class="left">
 					<aside class="notes">
 						<ul>
@@ -326,33 +361,34 @@
 				</section>
 
 				<section class="left">
-					<h3>Design Principle 4: Minimize Dependencies</h3>
-					<blockquote class="fragment">Strive for loosely coupled designs between objects that interact.</blockquote>
+					<aside class="notes">
+						<ul>
+							<li>The SOLID connections are worth naming.</li>
+							<li>Think about adding a new display. You write a class, implement Observer, call weatherData.registerObserver(yourNewDisplay) from anywhere in the codebase — even at runtime. Zero existing files change.</li>
+							<li>Compare that to the broken version where you had to open measurementsChanged() every single time.</li>
+							<li>This is the Open/Closed Principle in practice: open for extension, closed for modification.</li>	
+							<li>Both sides depend on abstractions. Neither imports the other's concrete class. That's Dependency Inversion.</li>
+							<li>These aren't incidental properties of the pattern; they're the direct result of the loose coupling principle applied consistently.</li>
+						</ul>
+					</aside>
+					<h3>SOLID Connections</h3>
+					<ul>
+						<li class="fragment">Open/Closed Principle: WeatherData is <em>open for extension</em> (add displays) without modification.</li>
+						<li class="fragment">Dependency Inversion: Both sides <em>depend on abstractions</em> (Subject, Observer interfaces), neither depends on the other's concrete class.</li>
+					</ul>
 				</section>
 
 				<section class="left">
 					<aside class="notes">
 						<ul>
-							<li>Think about adding a new display. You write a class, implement Observer, call weatherData.registerObserver(yourNewDisplay) from anywhere in the codebase — even at runtime. Zero existing files change.</li>
-							<li>Compare that to the broken version where you had to open measurementsChanged() every single time.</li>
-							<li>This is the Open/Closed Principle in practice: open for extension, closed for modification.</li>	    
+							<li>Solution in /Users/michellemelton/development/cs3667/cs3667-materials/observer/active-learning/streamnet-observer.md</li>
 						</ul>
 					</aside>
-					<h3>Design Principle 4: Minimize Dependencies</h3>
-					<p class="fragment">What this means in Observer:</p>
-					<ul class="dense-slide">
-						<li class="fragment">Subject knows <em>only</em> that observers have an <code>update()</code> method</li>
-						<li class="fragment">A new Observer type can be added <em>without touching Subject code</em></li>
-						<li class="fragment">Observers can come and go at <em>runtime</em> without the Subject caring</li>
-						<li class="fragment">Subject and observer hierarchies are <em>independently changeable</em> and <em>independently reusable</em></li>
-					</ul>
-				</section>
-
-				<section class="left">
-					<h3>SOLID Connections</h3>
+					<h3><i class="fa-solid fa-pencil"></i> Observer in StreamNet (15 minutes)</h3>
 					<ul>
-						<li class="fragment">Open/Closed Principle: WeatherData is <em>open for extension</em> (add displays) without modification</li>
-						<li class="fragment">Dependency Inversion: Both sides <em>depend on abstractions</em> (Subject, Observer interfaces), neither depends on the other's concrete class</li>
+						<li>Work in pairs to identify where the Observer pattern fits in StreamNet.</li>
+						<li>Practice assigning Subject and Observer roles.</li>
+						<li>For each candidate, decide: <em>good fit</em>, <em>weak fit</em>, or <em>not a fit</em>, and be ready to <em>justify</em> it.</li>
 					</ul>
 				</section>
 
@@ -361,20 +397,14 @@
 						<ul>
 							<li>If the answer to all four is yes, Observer is a natural fit.</li>
 							<li>If the data only changes once (at startup), or if there's only one consumer, the pattern may be overkill.</li>
-							<li>Solution in /Users/michellemelton/development/cs3667/cs3667-materials/observer/active-learning/streamnet-observer.md</li>
 						</ul>
 					</aside>
 					<h3><i class="fa-solid fa-pencil"></i> Observer in StreamNet (15 minutes)</h3>
-					<ul class="dense-slide">
-						<li>Work in pairs to identify where the Observer pattern fits in StreamNet.</li>
-						<li>For each candidate, decide: <em>good fit</em>, <em>weak fit</em>, or <em>not a fit</em>, and be ready to <em>justify</em> it.
-						<ul>
-							<li>What data in StreamNet <em>changes over time</em> after the application is running?</li>
-							<li>Who <em>needs to know</em> when that data changes?</li>
-							<li>Are those consumers genuinely <em>independent</em> (do they react differently, or do they all do the same thing)?</li>
-							<li>Would the system benefit from those consumers being <em>addable and removable</em> at runtime?</li>
-						</ul></li>
-						<li>Practice assigning Subject and Observer roles.</li>
+					<ul>
+						<li>What data in StreamNet <em>changes over time</em> after the application is running?</li>
+						<li>Who <em>needs to know</em> when that data changes?</li>
+						<li>Are those consumers genuinely <em>independent</em> (do they react differently, or do they all do the same thing)?</li>
+						<li>Would the system benefit from those consumers being <em>addable and removable</em> at runtime?</li>
 					</ul>
 				</section>
 
@@ -435,10 +465,10 @@
 					<h3>Push Model</h3>
 					<ul class="dense-slide">
 						<li class="fragment">Advantage: Observers don't need a reference back to the Subject.</li>
-						<li class="fragment">Problem: The Subject decides what every Observer gets, and <em>sends the same data to all of them</em>. When WeatherData adds <code>windSpeed</code>:
+						<li class="fragment">Problem: The Subject <em>sends the same data to all Observers</em>. When WeatherData adds <code>windSpeed</code>:
 							<ul>
-								<li class="fragment">Every Observer interface implementation must <em>update</em> its <code>update()</code> signature.</li>
-								<li class="fragment">Every concrete class must add the parameter even if it <em>never</em> uses <code>windSpeed</code>.</li>
+								<li class="fragment">Every Observer implementation must <em>update</em> its <code>update()</code> signature.</li>
+								<li class="fragment">Every concrete class must add the parameter even if it <em>never</em> uses it.</li>
 								<li class="fragment">That is a cascading edit across every Observer in the codebase.</li>
 							</ul>
 						</li>
@@ -505,6 +535,96 @@
 							</ul></li>
 						<li class="fragment">Cost: Each Observer must hold a reference back to the Subject.</li>
 						<li class="fragment">Best When: Observers <em>vary</em> in what they need.</li>
+					</ul>
+				</section>
+
+				<section class="left">
+					<h3>Java's Built-In Observer Support</h3>
+					<blockquote class="fragment"><code>java.util.Observable</code> (class) and <code>java.util.Observer</code> (interface) are available Java 1.0 through Java 8, deprecated in Java 9.</blockquote>
+					</ul>
+				</section>
+
+				<section class="left">
+					<aside class="notes">
+						<ul>
+							<li>The deprecation of java.util.Observable is a clean lesson in why we design to interfaces — and it directly reinforces the loose coupling principle.</li>
+							<li>The designers of Java made Observable a class.</li>
+							<li>That single decision meant any Subject had to use its one inheritance slot to extend it.</li>
+							<li>If your domain object already extended something — which is common — you were out of options.</li>
+							<li>The lesson generalizes: when you're designing a base abstraction, prefer interfaces over classes wherever possible.</li>
+							<li>It's the same reasoning that makes our custom Subject and Observer interfaces better than what Java shipped.</li>  
+						</ul>
+					</aside>
+					<h3>Java's Built-In Observer Support</h3>
+					<ul>
+						<li class="fragment"><code>Observable</code> was a <em>class</em>, not an interface.</li>
+						<li class="fragment">Java permits only <em>single inheritance</em> of classes.</li>
+						<li class="fragment">Any class wanting to be a Subject had to extend Observable, consuming its <em>one inheritance slot</em>.</li>
+						<li class="fragment">If your domain model already needed to extend something else, <em>you were stuck</em>.</li>
+						<li class="fragment">You will encounter <code>java.util.Observable</code> in legacy codebases. Know what it is and why it was replaced.</li>
+					</ul>
+				</section>
+
+				<section class="left">
+					<h3><i class="fa-solid fa-pencil"></i> NowPlaying for StreamNet (20 minutes)</h3>
+					<ul>
+						<li><code>NowPlaying</code> emerged as the strongest Observer candidate in StreamNet.</li>
+						<li>StreamNet's player tracks the <em>clip currently playing</em>.</li>
+						<li>This <em>state changes</em> every time a user starts a new clip, resumes after a pause, or the system auto-advances to the next item.</li>
+					</ul>
+				</section>
+
+				<section class="left">
+					<aside class="notes">
+						<ul>
+							<li>Solution in /Users/michellemelton/development/cs3667/cs3667-materials/observer/active-learning/streamnet-observer-2.md</li>
+						</ul>
+					</aside>
+					<h3><i class="fa-solid fa-pencil"></i> NowPlaying for StreamNet (20)</h3>
+					<ul class="dense-slide">
+						<li>Several parts of the platform need to react when the <em>playing clip changes</em>:
+							<ul>
+								<li><code>ProgressBarDisplay</code> shows the current clip's title and a progress bar; resets when the clip changes</li>
+								<li><code>UpNextPanel</code> shows the next recommended clip; recomputes when the current clip changes</li>
+								<li><code>PlaybackAnalyticsTracker</code> logs when each clip starts playing; only active for authenticated users (may need to be added/removed at login/logout)</li>
+							</ul>
+						</li>
+						<li>Work in groups of 3-4 to answer the following design questions.</li>
+					</ul>
+				</section>
+
+				<section class="left">
+					<h3><i class="fa-solid fa-pencil"></i> NowPlaying for StreamNet (20 minutes)</h3>
+					<p>Question 1: <em>Subject identification</em></p>
+					<p>What class is the Subject? What is the state field (or fields) that changes? Write a one-sentence description of the Subject's responsibility in this system.</p>
+				</section>
+
+				<section class="left">
+					<h3><i class="fa-solid fa-pencil"></i> NowPlaying for StreamNet (20 minutes)</h3>
+					<p>Question 2: <em>Observer identification</em></p>
+					<p>For each of the three consumers listed, confirm or deny that it is a good Observer. For any you deny, explain why. For those you confirm, describe in one sentence what it does in <code>update()</code>.</p>
+				</section>
+
+				<section class="left">
+					<h3><i class="fa-solid fa-pencil"></i> NowPlaying for StreamNet (20 minutes)</h3>
+					<p>Question 3: <em>Push or pull?</em></p>
+					<p>The three Observers have different data needs:</p>
+					<ul class="dense-slide">
+						<li><code>ProgressBarDisplay</code> needs the clip's <em>title</em> and <em>duration</em></li>
+						<li><code>UpNextPanel</code> needs the clip's <em>genre</em> to compute recommendations</li>
+						<li><code>PlaybackAnalyticsTracker</code> needs the clip's <em>ID</em> and a <em>timestamp</em></li>
+					</ul>
+					<p>Given that diversity of needs, should this system use <em>push</em> or <em>pull</em>? Justify your answer in two sentences.</p>
+				</section>
+
+				<section class="left">
+					<h3><i class="fa-solid fa-pencil"></i> NowPlaying for StreamNet (20 minutes)</h3>
+					<p>Question 4: <em>Stability check</em></p>
+					<p>Next quarter, the product team wants to add a <code>SubtitleLoader</code> that fetches subtitles whenever the playing clip changes.</p>
+					<ul class="dense-slide">
+						<li>Does <code>NowPlayingObserver</code> need to change? Why or why not?</li>
+						<li>Does <code>NowPlayingSubject</code> need to change? Why or why not?</li>
+						<li>How many existing files need to be modified?</li>
 					</ul>
 				</section>
 

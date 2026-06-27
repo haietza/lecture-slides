@@ -1,21 +1,56 @@
 <!doctype html>
 <html lang="en">
+	<html lang="en">
 	<head>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-		<title>CS3667</title>
+		<title>CS3667 - Software Engineering</title>
+
+		<link rel="stylesheet" href="../reveal-js/dist/reset.css">
+		<link rel="stylesheet" href="../reveal-js/dist/reveal.css">
+		<link rel="stylesheet" href="../reveal-js/dist/theme/black.css">
+		<link rel="stylesheet" href="../layouts/common.css">
+		<link rel="stylesheet" href="../reveal-js/dist/plugin/highlight/monokai.css">
+		<link rel="stylesheet" href="custom.css" />
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 	</head>
 	<body>
-		<h1>CS3667 - Software Engineering</h1>
-		<ul>
-			<li><a href="L00-intro.html">Lecture 00 - Intro</a></li>
-			<li><a href="L01-cs-review.html">Core CS Review</a></li>
-			<li><a href="L02-git-github.html">Git and GitHub</a></li>
-			<li><a href="L03-mcj.html">Make, Checkstyle, & JUnit</a></li>
-			<li><a href="L04-uml.html">Unified Modeling Language</a></li>
-			<li><a href="L05-agile.html">Agile Software Development</a></li>
-			<li><a href="L06-strategy.html">Strategy Design Pattern</a></li>
-		</ul>
+		<div class="reveal">
+			<div class="slides">
+
+				<section class="left">
+					<h3>CS3667 - Software Engineering</h3>
+					<ul>
+						<li><a href="L00-intro.html">Introduction</a></li>
+						<li><a href="L01-cs-review.html">Core CS Review</a></li>
+						<li><a href="L02-git-github.html">Git and GitHub</a></li>
+						<li><a href="L03-mcj.html">Make, Checkstyle, & JUnit</a></li>
+						<li><a href="L04-uml.html">Unified Modeling Language</a></li>
+						<li><a href="L05-agile.html">Agile Software Development</a></li>
+						<li><a href="L06-strategy.html">Strategy Design Pattern</a></li>
+						<li><a href="L07-observer.html">Observer Design Pattern</a></li>
+					</ul>
+				</section>
+
+				
+			</div>
+		</div>
+
+		<script src="../reveal-js/dist/reveal.js"></script>
+		<script src="../reveal-js/dist/plugin/math.js"></script>
+		<script src="../reveal-js/dist/plugin/notes.js"></script>
+		<script src="../reveal-js/dist/plugin/markdown.js"></script>
+		<script src="../reveal-js/dist/plugin/highlight.js"></script>
+		<script>
+			Reveal.initialize({
+				hash: true,
+				slideNumber: true,
+				transition: 'slide',
+				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes, RevealMath.KaTeX ],
+				showNotes: false,
+				pdfSeparateFragments: false
+			});
+		</script>
 	</body>
 </html>
