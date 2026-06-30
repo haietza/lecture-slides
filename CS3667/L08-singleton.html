@@ -1,0 +1,487 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>CS3667 - Lecture 08 - Singleton Design Pattern</title>
+
+		<link rel="stylesheet" href="../reveal-js/dist/reset.css">
+		<link rel="stylesheet" href="../reveal-js/dist/reveal.css">
+		<link rel="stylesheet" href="../reveal-js/dist/theme/black.css">
+		<link rel="stylesheet" href="../layouts/common.css">
+		<link rel="stylesheet" href="../reveal-js/dist/plugin/highlight/monokai.css">
+		<link rel="stylesheet" href="custom.css" />
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+				<div class="header left">
+					CS3667: Software Engineering
+				</div>
+				<div class="header right no-title">
+					<em>Singleton Design Pattern</em>
+				</div>
+
+				<section data-state="title-slide">
+					<h1 class="r-fit-text">CS3667: Software Engineering</h1>
+					<h2 class="r-fit-text">Singleton Design Pattern</h2>
+				</section>
+
+				<section class="left">
+					<aside class="notes">
+						<ul>
+							<li>Unlike Strategy or Observer, Singleton is deceptively simple to state but can be tricky to implement correctly.</li>
+						</ul>
+					</aside>
+					<h3>The Singleton Design Pattern</h3>
+					<blockquote class="fragment">Ensures a class has only <em>one instance</em>, and provides a global point of access to it.</blockquote>
+				</section>
+
+				<section class="left">
+					<aside class="notes">
+						<ul>
+							<li>The textbook's running example for this chapter is the Choc-O-Holic chocolate factory.</li>
+							<li>The chocolate boiler has three operations: fill(), boil(), and drain() — and each one has a guard condition, because doing them out of order is catastrophic.</li>
+							<li>You cannot fill an already-full boiler.</li>
+							<li>You cannot boil an empty one.</li>
+							<li>You cannot drain one that hasn't finished boiling.</li>
+							<li>What happens if two ChocolateBoiler objects get loose in the same application?</li>
+							<li>Two independently-tracked boilers means two independent sets of empty/boiled flags — but they both control the same physical hardware.</li>
+							<li>One object might think the boiler is empty and call fill() while the real boiler — being managed by the other object — is mid-boil.</li>
+							<li>This is the entire motivation for Singleton: when there's exactly one real-world thing being represented, your code should guarantee exactly one object represents it.</li>
+							<li>Now, how do we get instances of classes?</li>
+							<li>Through the constructor — new ChocolateBoiler().</li>
+							<li>So if we need to guarantee only one instance ever exists, what do we need to control? The constructor itself.</li>
+						</ul>
+					</aside>
+					<h3>The ChocolateBoiler Class</h3>
+					<pre class="java">
+						<code data-trim data-id="code" data-line-numbers>
+							public class ChocolateBoiler {
+								private boolean empty;
+								private boolean boiled;
+
+								public ChocolateBoiler() {
+									empty = true;
+									boiled = false;
+								}
+								// ... fill(), boil(), drain(), isEmpty(), isBoiled()
+							}
+						</code>
+					</pre>
+				</section>
+
+				<section class="left">
+					<aside class="notes">
+						<ul>
+							<li>Let's build this exactly the way the book does, one constraint at a time.</li>
+							<li>First constraint: make the constructor private.</li>
+							<li>Done — now literally nobody outside the class, not even your Main class, can write new ChocolateBoiler().</li>
+							<li>But that immediately creates a problem: if nobody can call the constructor, how does anybody ever get a ChocolateBoiler to work with?</li>
+						</ul>
+					</aside>
+					<h3>Building the Classic Singleton</h3>
+					<pre class="java">
+						<code data-trim data-id="code" data-line-numbers="6">
+							// Step 1: lock the constructor
+							public class ChocolateBoiler {
+								private boolean empty;
+								private boolean boiled;
+
+								private ChocolateBoiler() {   // private! No outside class can call new ChocolateBoiler()
+									empty = true;
+									boiled = false;
+								}
+								// ... fill(), boil(), drain(), isEmpty(), isBoiled() unchanged
+							}
+						</code>
+					</pre>
+				</section>
+
+				<section class="left">
+					<aside class="notes">
+						<ul>
+							<li>The answer is the second constraint: a method inside the class can call a private constructor, because access modifiers are about what's visible from outside the class, not inside.</li>
+							<li>So we write a public method, conventionally named getInstance(), that lives inside ChocolateBoiler and is the only code path that can ever call new ChocolateBoiler().</li>
+							<li>Why must getInstance() be static?</li>
+							<li>Because to call a normal instance method, you need an object reference to call it on — someBoiler.getInstance().</li>
+							<li>But we don't have a ChocolateBoiler object yet; that's the whole problem we're solving.</li>
+							<li>static lets us call it directly on the class: ChocolateBoiler.getInstance(), with zero objects required up front.</li>
+							<li>The if-check inside getInstance() is what makes this lazy. The object is only created when it is needed.</li>
+							<li>And the field uniqueInstance — that has to be static too, for a related reason.</li>
+							<li>getInstance() is a static method, and static methods cannot reference instance-level fields.</li>
+							<li>The book makes an important comparison I want you to hold onto: this is similar to a global variable, but better, because we additionally get to choose when the object gets created.</li>
+							<li>We'll discuss lazy-versus-eager initialization soon.</li>
+						</ul>
+					</aside>
+					<h3>Building the Classic Singleton</h3>
+					<pre class="java">
+						<code class="dense-code" data-trim data-id="code" data-line-numbers="14-19|4">
+						// Step 2: but now NO class, including Main, can create one. We need an access point.
+						// Methods INSIDE the class can call a private constructor.
+						public class ChocolateBoiler {
+							private static ChocolateBoiler uniqueInstance;   // static — class-level, not per-object
+
+							private boolean empty;
+							private boolean boiled;
+
+							private ChocolateBoiler() {
+								empty = true;
+								boiled = false;
+							}
+
+							public static ChocolateBoiler getInstance() {     // static — callable without an instance
+								if (uniqueInstance == null) {
+									uniqueInstance = new ChocolateBoiler();
+								}
+								return uniqueInstance;
+							}
+							// ... fill(), boil(), drain(), isEmpty(), isBoiled() unchanged
+						}
+						</code>
+					</pre>
+				</section>
+
+				<section class="left">
+					<aside class="notes">
+						<ul>
+							<li>Solution in /Users/michellemelton/development/cs3667/cs3667-materials/singleton/active-learning/spot-the-bug.md</li>
+						</ul>
+					</aside>
+					<h3><i class="fa-solid fa-pencil"></i> Spot the Bugs (15 minutes)</h3>
+					<p>Review the four broken Singleton implementations of <code>ChocolateBoiler</code>. For each one:</p>
+					<ul>
+						<li>Name the Java concept violated.</li>
+						<li>Explain what symptom that bug would produce at runtime.</li>
+						<li>Write the corrected version.</li>
+					</ul>
+				</section>
+
+				<section class="left">
+					<h3><i class="fa-solid fa-pencil"></i> Spot the Bugs (15 minutes)</h3>
+					<pre class="java">
+						<code class="dense-code" data-trim data-id="code" data-line-numbers>
+							// Version A
+							public class ChocolateBoiler {
+								private static ChocolateBoiler uniqueInstance;
+								private boolean empty;
+								private boolean boiled;
+
+								public ChocolateBoiler() {
+									empty = true;
+									boiled = false;
+								}
+
+								public static ChocolateBoiler getInstance() {
+									if (uniqueInstance == null) {
+										uniqueInstance = new ChocolateBoiler();
+									}
+									return uniqueInstance;
+								}
+							}
+						</code>
+					</pre>
+				</section>
+
+				<section class="left">
+					<h3><i class="fa-solid fa-pencil"></i> Spot the Bugs (15 minutes)</h3>
+					<pre class="java">
+						<code class="dense-code" data-trim data-id="code" data-line-numbers>
+							// Version B
+							public class ChocolateBoiler {
+								private ChocolateBoiler uniqueInstance;
+								private boolean empty;
+								private boolean boiled;
+
+								private ChocolateBoiler() {
+									empty = true;
+									boiled = false;
+								}
+
+								public static ChocolateBoiler getInstance() {
+									if (uniqueInstance == null) {
+										uniqueInstance = new ChocolateBoiler();
+									}
+									return uniqueInstance;
+								}
+							}
+						</code>
+					</pre>
+				</section>
+
+				<section class="left">
+					<h3><i class="fa-solid fa-pencil"></i> Spot the Bugs (15 minutes)</h3>
+					<pre class="java">
+						<code class="dense-code" data-trim data-id="code" data-line-numbers>
+							// Version C
+							public class ChocolateBoiler {
+								private static ChocolateBoiler uniqueInstance;
+								private boolean empty;
+								private boolean boiled;
+
+								private ChocolateBoiler() {
+									empty = true;
+									boiled = false;
+								}
+
+								public ChocolateBoiler getInstance() {
+									if (uniqueInstance == null) {
+										uniqueInstance = new ChocolateBoiler();
+									}
+									return uniqueInstance;
+								}
+							}
+						</code>
+					</pre>
+				</section>
+
+				<section class="left">
+					<h3><i class="fa-solid fa-pencil"></i> Spot the Bugs (15 minutes)</h3>
+					<pre class="java">
+						<code class="dense-code" data-trim data-id="code" data-line-numbers>
+							// Version D
+							public class ChocolateBoiler {
+								private static ChocolateBoiler uniqueInstance;
+								private boolean empty;
+								private boolean boiled;
+
+								private ChocolateBoiler() {
+									empty = true;
+									boiled = false;
+								}
+
+								public static ChocolateBoiler getInstance() {
+									uniqueInstance = new ChocolateBoiler();
+									return uniqueInstance;
+								}
+							}
+						</code>
+					</pre>
+				</section>
+
+				<section class="left">
+					<aside class="notes">
+						<ul>
+							<li>Despite implementing the classic Singleton correctly, ChocolateBoiler's fill() method somehow ran while a batch was already boiling.</li>
+							<li>How is that possible if getInstance() always returns the same object?</li>
+							<li>They'd just added multithreading optimizations to the boiler controller.</li>
+							<li>Thread 1 enters getInstance(). It evaluates uniqueInstance == null as true, since nothing has been constructed yet.</li>
+							<li>Right at that moment, the scheduler pauses Thread 1, hands control to Thread 2.</li>
+							<li>Thread 2 now runs the exact same check. uniqueInstance is still null, because Thread 1 never got far enough to assign anything.</li>
+							<li>So Thread 2 also gets true, constructs a ChocolateBoiler, assigns it, and returns it.</li>
+							<li>Now Thread 1 resumes, but it already evaluated its null-check back at the start. It goes straight to construction and creates a second ChocolateBoiler.</li>
+							<li>Two threads now hold two different boiler objects, each independently tracking its own empty/boiled flags for the same physical hardware.</li>
+							<li>The single-threaded version of this code implicitly assumes that nothing else can run between the null-check and the assignment.</li>
+							<li>That assumption is false the moment you have more than one thread.</li>
+							<li>And notice — from either thread's own point of view, nothing went wrong. The bug only exists in the interleaving between the two.</li>
+							<li>Any application server handling concurrent requests is exactly this situation, at scale, constantly. We need to fix it — and the book gives us three different ways to do it.</li>
+						</ul>
+					</aside>
+					<h3>The Multithreading Problem</h3>
+					<table class="dense-slide-extra">
+						<thead>
+							<th scope="col">Thread 1</th>
+							<th scope="col">Thread 2</th>
+						</thead>
+						<tbody>
+							<tr class="fragment">
+								<td><code>uniqueInstance == null</code>  → TRUE  →  [paused by scheduler here]</td>
+								<td></td>
+							</tr>
+							<tr class="fragment">
+								<td></td>
+								<td><code>uniqueInstance == null</code>  → TRUE</td>
+							</tr>
+							<tr class="fragment">
+								<td></td>
+								<td><code>uniqueInstance = new ChocolateBoiler()</code>  → &lt;object1&gt;</td>
+							</tr>
+							<tr class="fragment">
+								<td>[resumes, already past the check]</td>
+								<td></td>
+							</tr>
+							<tr class="fragment">
+								<td><code>uniqueInstance = new ChocolateBoiler()</code>  → &lt;object2&gt; ← VIOLATION: two boilers exist</td>
+								<td></td>
+							</tr>
+						</tbody>
+					</table>
+				</section>
+
+				<section class="left">
+					<aside class="notes">
+						<ul>
+							<li>Adding the synchronized keyword to the method signature guarantees mutual exclusion — only one thread can be executing inside getInstance() at any moment.</li>
+							<li>Go back to the race condition we just walked through: Thread One enters, the lock is acquired, and even if Thread One gets paused mid-method, it still holds the lock.</li>
+							<li>Thread Two tries to enter and simply cannot — it's blocked until Thread One finishes and releases the lock.</li>
+							<li>Synchronization is expensive (it can decrease performance by a factor of 100) and we only needed the protection during the very first call.</li>
+							<li>Every call after that, uniqueInstance is already set, the null-check will always be false, and yet we're still paying the synchronization tax on every single call forever.</li>
+							<li>That's the motivation for Fix 2 and Fix 3.</li>
+						</ul>
+					</aside>
+					<h3>Fix 1: Synchronize getInstsance()</h3>
+					<pre class="java">
+						<code data-trim data-id="code" data-line-numbers="11-13">
+							public class ChocolateBoiler {
+								private static ChocolateBoiler uniqueInstance;
+								private boolean empty;
+								private boolean boiled;
+
+								private ChocolateBoiler() {
+									empty = true;
+									boiled = false;
+								}
+
+								// 'synchronized' forces every thread to wait its turn before entering this method.
+								// No two threads may be inside getInstance() at the same time.
+								public static synchronized ChocolateBoiler getInstance() {
+									if (uniqueInstance == null) {
+										uniqueInstance = new ChocolateBoiler();
+									}
+									return uniqueInstance;
+								}
+								// ... fill(), boil(), drain() unchanged
+							}
+						</code>
+					</pre>
+				</section>
+
+				<section class="left">
+					<aside class="notes">
+						<ul>
+							<li>Fix number two sidesteps the whole problem differently: don't wait for the first call at all.</li>
+							<li>Construct the object the moment the class is loaded, as part of the field declaration itself.</li>
+							<li>The JVM's class-loading mechanism is single-threaded and happens before any of your application's own threads start running — so this is automatically thread-safe with zero synchronization code written by you.</li>
+							<li>getInstance() shrinks down to a one-line return. No null check needed, because the field is never null after class loading completes.</li>
+							<li>The trade-off: This only makes sense if your application is always going to need the Singleton anyway, or if constructing it is cheap.</li>
+							<li>If construction is expensive — say it opens a file, allocates a large buffer, or sets up an expensive resource — and your application might never actually need it, you've just spent that cost for nothing.</li>
+							<li>For our chocolate boiler, this is a completely reasonable choice; the book confirms the factory always uses exactly one boiler regardless.</li>
+						</ul>
+					</aside>
+					<h3>Fix 2: Eager Initialization</h3>
+					<pre class="java">
+						<code class="dense-code" data-trim data-id="code" data-line-numbers="2-3|14">
+							public class ChocolateBoiler {
+								// Created immediately when the class loads, guaranteed thread-safe by the JVM itself
+								private static ChocolateBoiler uniqueInstance = new ChocolateBoiler();
+
+								private boolean empty;
+								private boolean boiled;
+
+								private ChocolateBoiler() {
+									empty = true;
+									boiled = false;
+								}
+
+								public static ChocolateBoiler getInstance() {
+									return uniqueInstance;   // already exists — just hand it back
+								}
+								// ... fill(), boil(), drain() unchanged
+							}
+						</code>
+					</pre>
+				</section>
+
+				<section class="left">
+					<aside class="notes">
+						<ul>
+							<li>Fix number three: Only pay the synchronization cost during the narrow window where the object might not exist yet, and skip it entirely afterward.</li>
+							<li>The outer if is the fast path. Once uniqueInstance is set, every future call short-circuits past the synchronized block entirely — zero lock overhead, after the first successful construction.</li>
+							<li>The inner if, inside the synchronized block, is the double-check that givese.</li>
+							<li>If two threads both pass the outer check before either one has constructed the object, only one of them will actually get the lock first.</li>
+							<li>That thread does the inner check, sees null, and constructs.</li>
+							<li>The second thread then enters the block, does its own inner check, sees the object is no longer null, and skips construction entirely.</li>
+							<li>The volatile keyword is not optional here. Without it, the JVM and CPU are permitted to reorder operations and cache field reads per-thread.</li>
+							<li>volatile forces every read and write of that field to go through main memory, guaranteeing visibility of the fully-constructed object across all threads.</li>
+							<li>Double-checked locking is correct in Java 5 and later. Earlier JVMs had a flaw in the memory model around volatile that made this implementation unreliable.</li>
+						</ul>
+					</aside>
+					<h3>Fix 3: Double-Checked Locking</h3>
+					<pre class="java">
+						<code class="dense-code" data-trim data-id="code" data-line-numbers="2-3|14|15-16">
+							public class ChocolateBoiler {
+								// volatile: ensures every thread sees the most up-to-date value, not a stale cached copy
+								private volatile static ChocolateBoiler uniqueInstance;
+
+								private boolean empty;
+								private boolean boiled;
+
+								private ChocolateBoiler() {
+									empty = true;
+									boiled = false;
+								}
+
+								public static ChocolateBoiler getInstance() {
+									if (uniqueInstance == null) {  // Check 1 — no lock yet
+										synchronized (ChocolateBoiler.class) {
+											if (uniqueInstance == null) {. // Check 2 — inside the lock
+												uniqueInstance = new ChocolateBoiler();
+											}
+										}
+									}
+									return uniqueInstance;
+								}
+								// ... fill(), boil(), drain() unchanged
+							}
+						</code>
+					</pre>
+				</section>
+
+				<section class="left">
+					<aside class="notes">
+						<ul>
+							<li>None of these fixes are "the best" in some absolute sense.</li>
+							<li>They each need to be evaluated against the specific object being protected.</li>
+							<li>It is an engineering judgement; the righr fix depends on two questions.</li>
+							<li>How expensive is construction?</li>
+							<li>How often is getInstance() called?</li>
+							<li>An object that's cheap to build and always needed → eager.</li>
+							<li>An object whose getInstance() is called rarely → synchronized is fine, the overhead barely matters.</li>
+							<li>An object that's expensive to build and called extremely frequently → double-checked locking earns its complexity.</li>
+						</ul>
+					</aside>
+					<h3>Choosing a Fix</h3>
+					<ul>
+						<li class="fragment">Synchronize <code>getInstance()</code>: No performance concerns with chocolate boiler; this fix would be a <em>good choice</em>.</li>
+						<li class="fragment">Eager instantiation: We are always going to instantiate the chocolate boiler in our code; this fix would work well, but <em>may be less obvious</em> to a developer familiar with synchronize.</li>
+						<li class="fragment">Double-checked locking: No performance concerns; this fix seems like <em>overkill</em>.</li>
+					</ul>
+				</section>
+
+				<section class="left">
+					<aside class="notes">
+						<ul>
+							<li>Solution in /Users/michellemelton/development/cs3667/cs3667-materials/singleton/active-learning/ChocolateBoilderVariants.java</li>
+							<li>You just practiced all three fixes on the book's own example. Your assignment applies these same three strategies to real classes in your StreamNet project.</li>
+						</ul>
+					</aside>
+					<h3><i class="fa-solid fa-pencil"></i> Thread-Safety Fixes (15 minutes)</h3>
+					<ul>
+						<li>Work with a partner to implement all three thread-safety fixes.</li>
+						<li>Partner A codes, Partner B reviews; swap roles partway through.</li>
+						<li>Implement three inner static classes using the starter code from the GitHub repository.</li>
+					</ul>
+				</section>
+
+			</div>
+		</div>
+
+		<script src="../reveal-js/dist/reveal.js"></script>
+		<script src="../reveal-js/dist/plugin/math.js"></script>
+		<script src="../reveal-js/dist/plugin/notes.js"></script>
+		<script src="../reveal-js/dist/plugin/markdown.js"></script>
+		<script src="../reveal-js/dist/plugin/highlight.js"></script>
+		<script>
+			Reveal.initialize({
+				hash: true,
+				slideNumber: true,
+				transition: 'slide',
+				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes, RevealMath.KaTeX ],
+				showNotes: false,
+				pdfSeparateFragments: false
+			});
+		</script>
+	</body>
+</html>

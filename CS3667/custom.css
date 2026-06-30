@@ -50,6 +50,11 @@ pre code {
   padding: 0;
 }
 
+pre code.dense-code {
+  max-height: 500px !important;
+  overflow-y: scroll !important;
+}
+
 .two-col {
   display: grid;
   grid-template-columns: 1fr 1fr; /* 2 equal columns */
