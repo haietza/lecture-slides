@@ -1,0 +1,197 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>CS3667 - Lecture 09 - Null Object</title>
+
+		<link rel="stylesheet" href="../reveal-js/dist/reset.css">
+		<link rel="stylesheet" href="../reveal-js/dist/reveal.css">
+		<link rel="stylesheet" href="../reveal-js/dist/theme/black.css">
+		<link rel="stylesheet" href="../layouts/common.css">
+		<link rel="stylesheet" href="../reveal-js/dist/plugin/highlight/monokai.css">
+		<link rel="stylesheet" href="custom.css" />
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+				<div class="header left">
+					CS3667: Software Engineering
+				</div>
+				<div class="header right no-title">
+					<em>Null Object</em>
+				</div>
+
+				<section data-state="title-slide">
+					<h1 class="r-fit-text">CS3667: Software Engineering</h1>
+					<h2 class="r-fit-text">Null Object</h2>
+				</section>
+
+				<section class="left">
+					<aside class="notes">a
+						<ul>
+							<li>Raise your hand if you've ever seen a NullPointerException.</li>
+							<li>It happens frequently: Some reference that was supposed to point to a real object is instead pointing at nothing, and the first line of code that tries to use it blows up.</li>
+						</ul>
+					</aside>
+					<h3>Null Pointer Exception</h3>
+					<pre class="java fragment">
+						<code data-trim data-id="code" data-line-numbers>
+							void foo(Blah b) {
+								b.yada();
+							}
+						</code>
+					</pre>
+					<!-- Clicking this image opens it in a fullscreen overlay -->
+					<img 
+						class="fragment"
+						src="imgs/nullpointerexception.jpg" data-preview-image 
+						alt="java.lang.NullPointerException Object reference not set to an instance of an object.">
+				</section>
+
+				<section class="left">
+					<aside class="notes">a
+						<ul>
+							<li>The obvious fix is the null guard; check before you call.</li>
+							<li>And it works, but the problem is scale.</li>
+							<li>It only takes one developer forgetting one guard, one time, to bring the crash back.</li>
+							<li>We're solving a correctness problem with something that depends on everyone remembering, forever.</li>
+							<li>That should feel fragile; the same instinct that got us to Strategy and Singleton: if a design depends on every caller doing the right thing by memory, the design is asking to fail.</li>
+						</ul>
+					</aside>
+					<h3>The Standard Fix</h3>
+					<pre class="java fragment">
+						<code data-trim data-id="code" data-line-numbers>
+							void foo(Blah b) {
+								if (b != null) {
+									b.yada();
+								}
+							}
+						</code>
+					</pre>
+					<p class="fragment">Guard clauses work, but:</p>
+					<ul class="dense-slide">
+						<li class="fragment"><em>Every</em> caller has to remember to write the guard</li>
+						<li class="fragment">One missed guard anywhere in the codebase <em>reintroduces the crash</em></li>
+						<li class="fragment">Linked structures (lists, trees) end up <em>covered</em> in these checks</li>
+					</ul>
+				</section>
+
+				<section class="left">
+					<aside class="notes">a
+						<ul>
+							<li>If we can guarantee that Blah b is an object, we can eliminate the guard.</li>
+						</ul>
+					</aside>
+					<h3>A Better Fix</h3>
+					<ul>
+						<li class="fragment">What if <code>Blah b</code> was guaranteed to be either:
+						<ul>
+							<li class="fragment">An actual <code>Blah</code> object reference (that could call <code>yada()</code>), or</li>
+						<li class="fragment">A special object reference (that would <em>do nothing</em>)</li>
+						</ul></li>
+						<li class="fragment">Two things have to happen:
+							<ul>
+								<li class="fragment">A <code>Blah NullObject</code> object is needed to pass to <code>foo()</code></li>
+								<li class="fragment">The client code needs to use this <code>NullObject</code> instead of just <code>null</code></li>
+							</ul>
+						</li>
+					</ul>
+				</section>
+
+				<section class="left">
+					<aside class="notes">a
+						<ul>
+							<li>Head First doesn't give the Null Object a full chapter (it's an 'honorable mention' tucked into the Command chapter).</li>
+						</ul>
+					</aside>
+					<h3>The Null Object</h3>
+					<blockquote class="fragment">A Null Object is a stand-in used when there's <em>no meaningful object to return</em>, so the responsibility for handling the missing case moves <em>off the client</em> and <em>onto the object</em> itself. <br><br>— paraphrased from Head First Design Patterns</blockquote>
+				</section>
+
+				<section class="left">
+					<aside class="notes">a
+						<ul>
+							<li>It can be built on an abstract class or an interface.</li>
+							<li>The Null Object implementation overrides the methods in "safe" and "nullish" ways.</li>
+							<li>The key idea is always the same: The client only ever talks to the abstract type, so it can never tell (and never needs to tell) whether it's holding the real implementation or the null one.</li>
+							<li>All client code using Blah will need to be examined. Where it is using null references, it now needs to use the Blah Null Object.</li>
+						</ul>
+					</aside>
+					<h3>The Structure</h3>
+					<pre class="java fragment">
+						<code data-trim data-id="code" class="dense-code" data-line-numbers>
+							public interface Blah {
+								void operation();
+							}
+
+							public class RealBlah implements Blah {
+								@Override
+								public void operation() {
+									System.out.println("doing the real thing");
+								}
+							}
+
+							public class NullBlah implements Blah {
+								@Override
+								public void operation() {
+									// does nothing
+								}
+							}
+						</code>
+					</pre>
+				</section>
+
+				<section class="left">
+					<aside class="notes">a
+						<ul>
+							<li>Three classic uses, plus a fourth one that should look very familiar: any time you've got a Strategy-style field that might not be set yet — like a VideoRenderBehavior before a VideoClip knows how it should render — a Null Object is a natural default.</li>
+						</ul>
+					</aside>
+					<h3>In Practice</h3>
+					<ul class="dense-slide">
+						<li class="fragment">Placeholders in collections: Loop through an array calling methods on every element, with <em>no "is this slot empty" check</em></li>
+						<li class="fragment">Terminators in linked structures: A list or tree's null object <em>safely ends recursion</em> instead of crashing on it</li>
+						<li class="fragment">Borders in 2-D grids: Image-processing or cellular-automata code that needs "virtual" neighbor cells at the <em>edges of a grid</em></li>
+						<li class="fragment">Default strategies: A Strategy field (sound familiar?) that <em>hasn't been assigned a real behavior yet</em> can default to a do-nothing strategy instead of null</li>
+					</ul>
+				</section>
+
+				<section class="left">
+					<aside class="notes">a
+						<ul>
+							<li>Null Object is elegant when the 'do nothing' behavior is obvious and safe.</li>
+							<li>It gets shaky when there's no honest neutral value.</li>
+							<li>Don't force the pattern where a real null check, or a different design entirely, is actually the clearer answer.</li>
+						</ul>
+					</aside>
+					<h3>Honest Caveat</h3>
+					<p class="fragment">Not every method can <em>do nothing</em> safely.</p>
+					<ul>
+						<li class="fragment">A linked list's <code>length()</code> → Null Object returns 0.</li>
+						<li class="fragment">A polygon's <code>area()</code> → What would a "null polygon" honestly return?</li>
+					</ul>
+				</section>
+
+			</div>
+		</div>
+
+		<script src="../reveal-js/dist/reveal.js"></script>
+		<script src="../reveal-js/dist/plugin/math.js"></script>
+		<script src="../reveal-js/dist/plugin/notes.js"></script>
+		<script src="../reveal-js/dist/plugin/markdown.js"></script>
+		<script src="../reveal-js/dist/plugin/highlight.js"></script>
+		<script>
+			Reveal.initialize({
+				hash: true,
+				slideNumber: true,
+				transition: 'slide',
+				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes, RevealMath.KaTeX ],
+				showNotes: false,
+				pdfSeparateFragments: false
+			});
+		</script>
+	</body>
+</html>

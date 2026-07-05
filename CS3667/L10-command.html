@@ -4,7 +4,7 @@
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-		<title>CS3667 - Lecture 09 - Command Design Pattern</title>
+		<title>CS3667 - Lecture 10 - Command Design Pattern</title>
 
 		<link rel="stylesheet" href="../reveal-js/dist/reset.css">
 		<link rel="stylesheet" href="../reveal-js/dist/reveal.css">
@@ -226,7 +226,33 @@
 				<section class="left">
 					<aside class="notes">
 						<ul>
-							<li>We left the remote control problem unsolved. Let's use exactly the roles from the diner to build it — starting with one button, one device.</li>
+							<li>Let's get back to the remote control problem.</li>
+							<li>We have vendor objects with methods: on() and off()</li>
+							<li>We encapsulate the livingRoomLight's (Light object) on() method into a livingRoomLightOn (LightOnComand object).</li>
+							<li>We then put that object into the remote's upper left button slot.</li>
+							<li>Later, when the button is pressed, our method is invoked and LIGHT is ON.</li>
+							<li>RemoteControl device is the Invoker (asks for something to happen, doesn't know how it is done).</li>
+							<li>Vendor classes are the Receivers (knows how to do the work).</li>
+							<li>We build Command objects (the actions) to wrap the Receivers.</li>
+							<li>We connect commands to the Invoker. And wait!</li>
+						</ul>
+					</aside>
+					<h3>Remote Control</h3>
+					<!-- Clicking this image opens it in a fullscreen overlay -->
+					 <figure>
+						<img 
+							src="imgs/remote.jpg" data-preview-image 
+							alt="Remote diagram"
+							aria-describedby="remote2-caption">
+							<figcaption>Remote diagram. (Source: Eric Freeman and Elisabeth Robson, Head First Design Patterns, O'Reilly Media).</figcaption>
+					</figure>
+					<div id="remote2-caption" class="sr-only">Diagram illustrating how the Command design pattern maps to a physical seven-slot remote control, labeled as The Invoker. The remote control has seven labeled rows: Living Room Light, Kitchen Light, Living Room Ceiling Fan, Garage Door, Stereo, All Lights, and Party Mode. Each row has an ON button on the left and an OFF button on the right, plus a single UNDO button at the bottom. Three numbered annotations explain the flow. Annotation 1 reads: Each slot gets a command. Annotation 2 reads: When the button is pressed, the execute() method is called on the corresponding command. Annotation 3 reads: In the execute() method, actions are invoked on the receiver. On the left side of the remote, five ON-slot command objects are shown connected to their respective buttons, each labeled with execute(): LightOnCommand (for Living Room Light), LightOnCommand (for Kitchen Light), CeilingFanHigh (for Living Room Ceiling Fan), GarageDoorOpen (for Garage Door), and StereoOnForCD (for Stereo). A handwritten annotation reads: Well worry about the remaining slots in a bit. On the right side, five OFF-slot command objects are shown connected to their respective buttons, each labeled with execute(): LightOffCommand (for Living Room Light), LightOffCommand (for Kitchen Light), CeilingFanOff (for Living Room Ceiling Fan), GarageDoorClose (for Garage Door), and StereoOff (for Stereo). A final arrow points from StereoOff down to a Receiver object labeled Stereo, showing the methods off() and on() being invoked. A bottom-left annotation reads: In our code youll find that each command name has Command appended to it, but in print, weve unfortunately run out of space for a few of them.</div>
+				</section>
+
+				<section class="left">
+					<aside class="notes">
+						<ul>
+							<li>Let's use exactly the roles from the diner to build it the remote control, starting with one button, one device.</li>
 							<li>This is the diner's orderUp(), generalized. Every Command, no matter what it does, exposes exactly this.</li>
 						</ul>
 					</aside>
@@ -271,7 +297,7 @@
 						<ul>
 							<li>This is the Waitress. There is no Light anywhere in this class. It cannot see the vendor classes at all.</li>
 							<li>We have one slot to hold our command, which controls one device.</li>
-							<li>We have a method for setting the command the slit is going to control.</li>
+							<li>We have a method for setting the command the slot is going to control.</li>
 							<li>We have a method that is called when the button is pressed; it just takes the current command bound to the slot and calls its execute() method.</li>
 						</ul>
 					</aside>
@@ -325,6 +351,134 @@
 							}
 						</code>
 					</pre>
+				</section>
+
+				<section class="left">
+					<aside class="notes">
+						<p>This code is for the GarageDoor object.</p>
+					</aside>
+					<h3><i class="fa-solid fa-pencil"></i> Build GarageDoorOpenCommand (15 minutes)</h3>
+					<pre class="java">
+						<code data-trim data-id="code" data-line-numbers>
+							public class GarageDoor {
+								public void up() {
+									System.out.println("Garage Door is Open");
+								}
+								public void down() {
+									System.out.println("Garage Door is Closed");
+								}
+								public void stop() {
+									System.out.println("Garage Door has Stopped");
+								}
+							}
+						</code>
+					</pre>
+				</section>
+
+				<section class="left">
+					<aside class="notes">
+						<p>This code is the wiring of GarageDoorOpenCommand into SimpleRemoteControl.</p>
+					</aside>
+					<h3><i class="fa-solid fa-pencil"></i> Build GarageDoorOpenCommand (15 minutes)</h3>
+					<pre class="java">
+						<code data-trim data-id="code" class="dense-code" data-line-numbers>
+							public class RemoteControlTest {
+								public static void main(String[] args) {
+									SimpleRemoteControl remote = new SimpleRemoteControl();
+									Light light = new Light();
+									GarageDoor garageDoor = new GarageDoor();
+									LightOnCommand lightOn = new LightOnCommand(light);
+									GarageDoorOpenCommand garageOpen = new GarageDoorOpenCommand(garageDoor);
+
+									remote.setCommand(lightOn);
+									remote.buttonWasPressed();
+									remote.setCommand(garageOpen);
+									remote.buttonWasPressed();
+								}
+							}
+						</code>
+					</pre>
+				</section>
+
+				<section class="left">
+					<aside class="notes">
+						<ul>
+							<li>Solution in /Users/michellemelton/development/cs3667/cs3667-materials/command/active-learning/GarageDoorOpenCommand.java</li>
+						</ul>
+					</aside>
+					<h3><i class="fa-solid fa-pencil"></i> Build GarageDoorOpenCommand (15 minutes)</h3>
+					<ul class="dense-slide">
+						<li>Work in pairs.</li>
+						<li>Implement <code>GarageDoorOpenCommand implements Command</code>, wrapping a <code>GarageDoor</code> and calling <code>up()</code> from <code>execute()</code>.</li>
+						<li>Predict the console output of wiring it into a <code>SimpleRemoteControl</code> and pressing the button.</li>
+						<li>If the spec had asked for a <code>GarageDoorStopCommand</code> too, what new files would you need, and what existing files would need zero changes?</li>
+					</ul>
+				</section>
+
+				<section class="left">
+					<h3>Delivering the Full Request</h3>
+					<p class="fragment">Now that we have turned methods into objects, we can do other things too.</p>
+					<ul>
+						<li class="fragment"><em>Undo</em> a command</li>
+						<li class="fragment"><em>Queue</em> up a large set of commands</li>
+						<li class="fragment"><em>Log</em> a sequence of commands</li>
+					</ul>
+				</section>
+
+				<section class="left">
+					<aside class="notes">
+						<ul>
+							<li>Many receivers can undo their action</li>
+							<li>undo() is not automatic — the ConcreteCommand author has to think through the true inverse of what execute() did.</li>
+							<li>For LightOnCommand, that's easy: call off().</li>
+							<li>It's not always this clean; a Cook's undo might be donate it to charity, or eat it himself.</li>
+							<li>Sometimes reversing an action requires real design judgment, not just a mirrored method call.</li>  
+						</ul>
+					</aside>
+					<h3>Undo</h3>
+					<pre class="java">
+						<code data-trim data-id="code" data-line-numbers>
+							public interface Command {
+								public void execute();
+								public void undo();
+							}
+
+							public class LightOnCommand implements Command {
+								Light light;
+								public LightOnCommand(Light light) { this.light = light; }
+								public void execute() { light.on(); }
+								public void undo() { light.off(); }
+							}
+						</code>
+					</pre>
+				</section>
+
+				<section class="left">
+					<aside class="notes">a
+						<ul>
+							<li>Commands can pile up faster than the system processes them.</li>
+							<li>Queue them and work through the backlog when it can.</li>
+						</ul>
+					</aside>
+					<h3>Queuing Requests</h3>
+					<!-- Clicking this image opens it in a fullscreen overlay -->
+					 <figure>
+						<img 
+							src="imgs/queue.jpg" data-preview-image 
+							alt="Queue diagram"
+							aria-describedby="queue-caption">
+							<figcaption>Queue illustration. (Source: Eric Freeman and Elisabeth Robson, Head First Design Patterns, O'Reilly Media).</figcaption>
+					</figure>
+					<div id="queue-caption" class="sr-only">At the top right, a curved queue of command objects is labeled Commands and Job queue. Each command object is a sphere labeled with execute() and a specific job name. The visible job names include: DistributedComputation, DownloadRequest, FinancialComputation, NetworkFetch, CompilerTask, RayTrace, FinancialComputation, DownloadRequest, CompilerTask, RayTrace, NetworkFetch, and FinancialComputation. A handwritten annotation reads: Objects implementing the command interface are added to the queue. In the center, a physical metal funnel represents the queue mechanism that controls the flow of commands to a fixed number of threads. A handwritten annotation reads: This gives us an effective way to limit computation to a fixed number of threads. At the bottom, four thread objects are shown executing commands pulled from the funnel, collectively labeled Threads computing jobs. Each thread sphere is labeled with execute() and a job name: CompilerTask (Thread 1), RayTrace (Thread 2), DownloadRequest (Thread 3), and NetworkFetch (Thread 4). A handwritten annotation on the left reads: Threads remove commands from the queue one by one and call their execute() method. Once complete, they go back for a new command object.</div>
+				</section>
+
+				<section class="left">
+					<h3>Logging Commands</h3>
+					<ul>
+						<li class="fragment">The <em>Invoker</em> keeps a <code>List&lt;Command&gt;</code> of everything executed.</li>
+						<li class="fragment"><em>Prior to executing</em> a specific Command object, add the object reference to the list.</li>
+						<li class="fragment">Enables undoing a whole <em>sequence</em>, or replaying after a crash.</li>
+					</ul>
 				</section>
 
 			</div>
