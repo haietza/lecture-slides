@@ -1,0 +1,349 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>CS3667 - Lecture 09 - Command Design Pattern</title>
+
+		<link rel="stylesheet" href="../reveal-js/dist/reset.css">
+		<link rel="stylesheet" href="../reveal-js/dist/reveal.css">
+		<link rel="stylesheet" href="../reveal-js/dist/theme/black.css">
+		<link rel="stylesheet" href="../layouts/common.css">
+		<link rel="stylesheet" href="../reveal-js/dist/plugin/highlight/monokai.css">
+		<link rel="stylesheet" href="custom.css" />
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+				<div class="header left">
+					CS3667: Software Engineering
+				</div>
+				<div class="header right no-title">
+					<em>Command Design Pattern</em>
+				</div>
+
+				<section data-state="title-slide">
+					<h1 class="r-fit-text">CS3667: Software Engineering</h1>
+					<h2 class="r-fit-text">Command Design Pattern</h2>
+				</section>
+
+				<section class="left">
+					<h3>Home Automation Remote Control</h3>
+					<blockquote class="fragment">You've been hired to design the API for a universal home-automation remote. It has <em>seven programmable slots</em>, <em>on/off</em> buttons for each, and one global <em>undo</em> button. <em>Vendors</em> will supply the actual devices (lights, hot tubs, garage doors, stereos) and you don't get to control what <em>methods</em> those classes expose.</blockquote>
+				</section>
+
+				<section class="left">
+					<aside class="notes">a
+						<ul>
+							<li>These interfaces have almost nothing in common.</li>
+							<li>There's no shared activate()/deactivate() you can lean on.</li>
+							<li>And the spec says more vendor classes are coming later; you don't even get to see all of them now.</li> 
+						</ul>
+					</aside>
+					<h3>Vendor Classes</h3>
+					<!-- Clicking this image opens it in a fullscreen overlay -->
+					 <figure>
+						<img 
+							src="imgs/remote-job.jpg" data-preview-image 
+							alt="Vendor classes diagram"
+							aria-describedby="remote-caption">
+							<figcaption>Vendor classes diagram. (Source: Eric Freeman and Elisabeth Robson, Head First Design Patterns, O'Reilly Media).</figcaption>
+					</figure>
+					<div id="remote-caption" class="sr-only">Diagram showing twelve vendor-supplied device classes with no common interface. Two handwritten annotations read: Wow, lots of different kinds of devices that were going to need to be able to control and And some very different kinds of interfaces across these devices. The twelve classes and their methods are as follows. ApplianceControl declares on() and off(). Stereo declares on(), off(), setCd(), setDvd(), setRadio(), and setVolume(). CeilingLight declares on(), off(), and dim(). OutdoorLight declares on() and off(). TV declares on(), off(), setInputChannel(), and setVolume(). FaucetControl declares openValve() and closeValve(). CeilingFan declares high(), medium(), low(), off(), and getSpeed(). GarageDoor declares up(), down(), stop(), lightOn(), and lightOff(). Hottub declares circulate(), jetsOn(), jetsOff(), and setTemperature(). Thermostat declares setTemperature(). GardenLight declares setDuskTime(), setDawnTime(), manualOn(), and manualOff(). Sprinkler declares waterOn() and waterOff(). Light declares on() and off(). SecurityControl declares arm() and disarm().</div>
+				</section>
+
+				<section class="left">
+					<h3>The Naive First Attempt</h3>
+					<pre class="java">
+						<code data-trim data-id="code" data-line-numbers>
+							public void onButtonWasPushed(int slot) {
+								if (slot == 1) {
+									light.on();
+								} else if (slot == 2) {
+									hottub.jetsOn();
+								} else if (slot == 3) {
+									garageDoor.up();
+								}
+								// ...and one more else-if for every slot, forever
+							}
+						</code>
+					</pre>
+				</section>
+
+				<section class="left">
+					<aside class="notes">
+						<ul>
+							<li>You've got seven slots, an unknown and growing list of vendor classes, and a due date.</li>
+							<li>The if/else version works. It compiles, it runs, the demo goes fine.</li>
+							<li>The problem shows up six months later when Vendor #8 ships a SecurityControl class with arm()/disarm(), and you have to reopen RemoteControl.java, add a branch, retest the whole method, and hope you didn't break anything while you were in there.</li>
+							<li>The real insight — and this is the one the pattern is built around — is this: the remote doesn't need to know what a button does.</li>
+							<li>It only needs to know that pressing a button triggers something.</li>
+						</ul>
+					</aside>
+					<h3>Why The Naive Attempt Breaks</h3>
+					<ul>
+						<li class="fragment">Every <em>new vendor class</em> means editing this method again.</li>
+						<li class="fragment">The remote's own source code now <em>depends</em> on every vendor class that exists.</li>
+						<li class="fragment"><em>Separation of concerns failure</em>: The remote should know how to interpret a button press; it should not need to know how a hot tub works.</li>
+					</ul>
+				</section>
+
+				<section class="left">
+					<aside class="notes">
+						<ul>
+							<li>What if every slot just held an object whose entire job was do the one thing it was configured to do, and the remote's only responsibility was calling that object's one method?</li>
+							<li>Then the remote's code never changes again, no matter how many vendors show up.</li>
+							<li>We're going to borrow a mental model from a diner to make it concrete, and then we're going to come back and actually build this remote.</li>
+						</ul>
+					</aside>
+					<h3>The Command Design Pattern</h3>
+					<blockquote class="fragment">Encapsulates a <em>request as an object</em>, thereby letting you parameterize other objects with <em>different</em> requests, <em>queue</em> or <em>log</em> requests, and support <em>undoable operations</em>.</blockquote>
+				</section>
+
+				<section class="left">
+					<aside class="notes">
+						<ul>
+							<li>Let's start with a real-world analogy: the Objectville Diner from the textbook.</li>
+							<li>The interaction between a customer, a waitress, and a cook has exactly the same decoupling shape we just described.</li>
+							<li>In our OO mindset, we look for the nouns as objects of classes.</li>
+						</ul>
+					</aside>
+					<h3>Objectville Diner</h3>
+					<!-- Clicking this image opens it in a fullscreen overlay -->
+					 <figure>
+						<img 
+							src="imgs/diner.jpg" data-preview-image 
+							alt="Objectville Diner diagram"
+							aria-describedby="diner-caption">
+							<figcaption>Objectville Diner diagram. (Source: Eric Freeman and Elisabeth Robson, Head First Design Patterns, O'Reilly Media).</figcaption>
+					</figure>
+					<div id="diner-caption" class="sr-only">Circular flow diagram illustrating the Command design pattern using a diner analogy with three numbered steps. Step 1 (bottom left): A Customer hands an Order slip to the Waitress. The caption reads: You, the Customer, give the Waitress your Order. Step 2 (right): The Waitress takes the Order, places it on the order counter, and says Order up! Step 3 (bottom center): The Short-Order Cook receives the Order and prepares the meal, shown as a burger, fries, and a drink. Arrows connect the three steps in a clockwise circular flow: from Customer to Order slip to Waitress, from Waitress to Short-Order Cook, and from Short-Order Cook to the prepared meal.</div>
+				</section>
+
+				<section class="left">
+					<aside class="notes">
+						<ul>
+							<li>Step 1: Customer creates Order (createOrder()).</li>
+							<li>Sometimes "dictates" to waitress, who writes it down — but not always. An order sheet with a pencil at the table is not uncommon.</li>
+							<li>Step 2: Customer gives Order object to the waitress (takeOrder()).</li>
+						</ul>
+					</aside>
+					<h3>Objectville Diner</h3>
+					<!-- Clicking this image opens it in a fullscreen overlay -->
+					 <figure>
+						<img 
+							src="imgs/diner-a.jpg" data-preview-image 
+							alt="Create order diagram"
+							aria-describedby="diner1-caption">
+							<figcaption>Objectville Diner diagram. (Source: Eric Freeman and Elisabeth Robson, Head First Design Patterns, O'Reilly Media).</figcaption>
+					</figure>
+					<div id="diner1-caption" class="sr-only">At the top right, a Customer is seated with a thought bubble reading: Ill have a Burger with Cheese and a Malt Shake. A Start Here arrow points to the Customer, and a caption reads: The Customer knows what he wants and creates an Order. An arrow labeled createOrder() points left to an Order slip showing Burger with Cheese and Malt Shake written on it. A handwritten annotation reads: The Order consists of an Order Slip and the Customers menu items that are written on it. A second arrow labeled takeOrder() points down-right from the Order slip to the Waitress. A caption reads: The Waitress takes the Order, and when she gets around to it, she calls its orderUp() method to begin the Orders preparation.</div>
+				</section>
+
+				<section class="left">
+					<aside class="notes">
+						<ul>
+							<li>Step 3: Waitress carries the order to the kitchen counter and calls order up; she does this the same way regardless of what's actually on the order (orderUp()).</li>
+							<li>Step 4: Order tells kitchen cook what to do. Cook does the actual order cooking work (makeBurger(), makeShake()).</li>
+							<li>Customer gets the result of the cooking.</li>
+						</ul>
+					</aside>
+					<h3>Objectville Diner</h3>
+					<!-- Clicking this image opens it in a fullscreen overlay -->
+					 <figure>
+						<img 
+							src="imgs/diner-b.jpg" data-preview-image 
+							alt="Create order object diagram"
+							aria-describedby="diner2-caption">
+							<figcaption>Objectville Diner diagram. (Source: Eric Freeman and Elisabeth Robson, Head First Design Patterns, O'Reilly Media).</figcaption>
+					</figure>
+					<div id="diner2-caption" class="sr-only">At the top, the Waitress calls orderUp() on the Order, shown as an arrow labeled orderUp() pointing down-left to the Order slip. A caption reads: The Waitress takes the Order, and when she gets around to it, she calls its orderUp() method to begin the Orders preparation. A handwritten annotation on the left reads: The Order has all the instructions needed to prepare the meal. The Order directs the Short-Order Cook with methods like makeBurger(). An arrow labeled makeBurger(), makeShake() points right from the Order slip to the Short-Order Cook. A caption reads: The Short-Order Cook follows the instructions of the Order and produces the meal. A final arrow labeled output points down-left from the Short-Order Cook to the prepared meal, shown as a burger, fries, and a malt shake.</div>
+				</section>
+
+				<section class="left">
+					<aside class="notes">
+						<ul>
+						</ul>
+					</aside>
+					<h3>The Order Object</h3>
+					<ul>
+						<li class="fragment">The order has exactly <em>one relevant method</em> from the waitress's point of view: <code>orderUp()</code>.</li>
+						<li class="fragment">The order also holds a <em>reference</em> to whoever needs to <em>do the work</em> (the Cook).</li>
+						<li class="fragment">The waitress never needs to know <em>what</em> is being cooked, or <em>how</em>. She only knows every order she's handed supports <code>orderUp()</code>.</li>
+					</ul>
+				</section>
+
+				<section class="left">
+					<aside class="notes">
+						<ul>
+					
+						</ul>
+					</aside>
+					<h3>The Command Pattern</h3>
+					<!-- Clicking this image opens it in a fullscreen overlay -->
+					 <figure>
+						<img 
+							src="imgs/command-diagram.jpg" data-preview-image 
+							alt="Command class diagram"
+							aria-describedby="command-caption">
+							<figcaption>Command Pattern class diagram. (Source: Eric Freeman and Elisabeth Robson, Head First Design Patterns, O'Reilly Media).</figcaption>
+					</figure>
+					<div id="command-caption" class="sr-only">UML class diagram showing the Command design pattern structure. Client (top left) has no fields or methods shown. A handwritten annotation reads: The Client is responsible for creating a ConcreteCommand and setting its Receiver. Invoker (top center) declares one method: setCommand(). A solid arrow connects Invoker to the Command interface. A handwritten annotation reads: The Invoker holds a command and at some point asks the command to carry out a request by calling its execute() method. Command (top right) is an interface (with  label interface) declaring two methods: execute() and undo(), both italicized. A handwritten annotation reads: Command declares an interface for all commands. A command is invoked through its execute() method, which asks a receiver to perform an action. Youll also notice this interface has an undo() method, which well cover a bit later in the chapter. ConcreteCommand (center right) implements the Command interface via a dashed line with an open triangle arrowhead pointing up to Command. ConcreteCommand declares two methods: execute() and undo(). A dotted line connects execute() to a code snippet showing: public void execute() { receiver.action() }. A handwritten annotation reads: The execute() method invokes the action(s) on the receiver needed to fulfill the request. A second handwritten annotation reads: The ConcreteCommand defines a binding between an action and a Receiver. The Invoker makes a request by calling execute() and the ConcreteCommand carries it out by calling one or more actions on the Receiver. Receiver (center left) declares one method: action(). A solid arrow connects ConcreteCommand to Receiver. A handwritten annotation reads: The Receiver knows how to perform the work needed to carry out the request. Any class can act as a Receiver. A solid arrow also connects Client to both Receiver and ConcreteCommand, indicating the Client creates and wires them together.</div>
+				</section>
+
+				<section class="left">
+					<aside class="notes">
+						<ul>
+						</ul>
+					</aside>
+					<h3>Command Pattern Roles</h3>
+					<ul>
+						<li class="fragment">The <em>Client</em> decides what Command to create.</li>
+						<li class="fragment">The <em>Invoker</em> asks for something to happen, without knowing how it happens.</li>
+						<li class="fragment">The <em>Command</em> is a stand-in for the action, that can be handed around and triggered later.</li>
+						<li class="fragment">The <em>Receiver</em> is the one who actually knows how to do the work.</li>
+						<li class="fragment">The <em>ConcreteCommand</em> is the specific kind of Command.</li>
+					</ul>
+				</section>
+
+				<section class="left">
+					<aside class="notes">
+						<ul>
+							<li>Solution in /Users/michellemelton/development/cs3667/cs3667-materials/command/active-learning/diner-roles.md</li>
+						</ul>
+					</aside>
+					<h3><i class="fa-solid fa-pencil"></i> Map the Diner (15 minutes)</h3>
+					<p>Map the diner element to its Command Pattern role.</p>
+					<ul>
+						<li>Diner elements: Customer, Waitress, Order, Short-Order Cook</li>
+						<li>Command Pattern roles: Client, Invoker, Command, Receiver, ConcreteCommand</li>
+					</ul>
+					<p>Which object does the <code>orderUp()</code> method belong to?</p>
+				</section>
+
+				<section class="left">
+					<aside class="notes">
+						<ul>
+							<li>We left the remote control problem unsolved. Let's use exactly the roles from the diner to build it — starting with one button, one device.</li>
+							<li>This is the diner's orderUp(), generalized. Every Command, no matter what it does, exposes exactly this.</li>
+						</ul>
+					</aside>
+					<h3>The Command Interface</h3>
+					<pre class="java">
+						<code data-trim data-id="code" data-line-numbers>
+							public interface Command {
+								public void execute();
+							}
+						</code>
+					</pre>
+				</section>
+
+				<section class="left">
+					<aside class="notes">
+						<ul>
+							<li>This is a specific Order (Command)</li>
+							<li>It knows which Receiver (Light) it's bound to (passed in the constructor)</li>
+							<li>And it knows what to tell it to do (turn on the light in the light instance variable).</li>
+						</ul>
+					</aside>
+					<h3>A Concrete Command</h3>
+					<pre class="java">
+						<code data-trim data-id="code" data-line-numbers="1-11|4|8-10">
+							public class LightOnCommand implements Command {
+								Light light;
+
+								public LightOnCommand(Light light) {
+									this.light = light;
+								}
+
+								public void execute() {
+									light.on();
+								}
+							}
+						</code>
+					</pre>
+				</section>
+
+				<section class="left">
+					<aside class="notes">
+						<ul>
+							<li>This is the Waitress. There is no Light anywhere in this class. It cannot see the vendor classes at all.</li>
+							<li>We have one slot to hold our command, which controls one device.</li>
+							<li>We have a method for setting the command the slit is going to control.</li>
+							<li>We have a method that is called when the button is pressed; it just takes the current command bound to the slot and calls its execute() method.</li>
+						</ul>
+					</aside>
+					<h3>The Invoker</h3>
+					<pre class="java">
+						<code data-trim data-id="code" data-line-numbers="1-13|2|6-8|10-12">
+							public class SimpleRemoteControl {
+								Command slot;
+
+								public SimpleRemoteControl() {}
+
+								public void setCommand(Command command) {
+									slot = command;
+								}
+
+								public void buttonWasPressed() {
+									slot.execute();
+								}
+							}
+						</code>
+					</pre>
+				</section>
+
+				<section class="left">
+					<aside class="notes">
+						<ul>
+							<li>This is the Customer: The only piece of code that knows about both the Command and the Receiver at once.</li>
+							<li>The remote is our Invoker, it will be passed a command object that can be used to make requests.</li>
+							<li>We create a light object, which will be the Receiver of the request.</li>
+							<li>We create a LightOnCommand and pass the Receiver to it.</li>
+							<li>We pass the command to the Invoker in setCommand.</li>
+							<li>And then we simulate the button being pressed.</li>
+							<li>If Vendor #8 ships SecurityControl with arm()/disarm(), what has to change?</li>
+							<li>Command — no. SimpleRemoteControl — no.</li>
+							<li>You write one new class, SecurityArmCommand implements Command, and you're done.</li>
+							<li>SimpleRemoteControl depends on the Command abstraction, never on the concrete vendor type; that's the Dependency Inversion Principle.</li>
+						</ul>
+					</aside>
+					<h3>Putting It All Together</h3>
+					<pre class="java">
+						<code data-trim data-id="code" data-line-numbers="1-10|3|4|5|7|8">
+							public class RemoteControlTest {
+								public static void main(String[] args) {
+									SimpleRemoteControl remote = new SimpleRemoteControl();
+									Light light = new Light();
+									LightOnCommand lightOn = new LightOnCommand(light);
+
+									remote.setCommand(lightOn);
+									remote.buttonWasPressed();
+								}
+							}
+						</code>
+					</pre>
+				</section>
+
+			</div>
+		</div>
+
+		<script src="../reveal-js/dist/reveal.js"></script>
+		<script src="../reveal-js/dist/plugin/math.js"></script>
+		<script src="../reveal-js/dist/plugin/notes.js"></script>
+		<script src="../reveal-js/dist/plugin/markdown.js"></script>
+		<script src="../reveal-js/dist/plugin/highlight.js"></script>
+		<script>
+			Reveal.initialize({
+				hash: true,
+				slideNumber: true,
+				transition: 'slide',
+				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes, RevealMath.KaTeX ],
+				showNotes: false,
+				pdfSeparateFragments: false
+			});
+		</script>
+	</body>
+</html>
