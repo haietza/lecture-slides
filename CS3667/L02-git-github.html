@@ -70,6 +70,7 @@
 						<ul>
 							<li>Use https://git-scm.com/book/en/v2/Git-Basics-Getting-a-Git-Repository if needed.</li>
 							<li>After activity, run through steps on course VM to demonstrate to students.</li>
+							<li>Solution is in /Users/michellemelton/development/cs3667/cs3667-materials/git-github/active-learning/git-lab-1</li>
 						</ul>
 					</aside>
 					<h3><i class="fa-solid fa-pencil"></i> Initialization (10 mins)</h3>
@@ -109,9 +110,9 @@
 					</aside>
 					<h3>The Basic Git Workflow</h3>
 					<ul>
-						<li class="fragment">Edit files in the working directory.</li>
-						<li class="fragment"><code>git add [filename(s)]</code>: Puts files in the staging area.</li>
-						<li class="fragment"><code>git commit -m "[commit message]"</code>: Puts files that are in the staging area into the repository.</li>
+						<li class="fragment"><em>Edit</em> files in the <em>working directory</em>.</li>
+						<li class="fragment"><code>git add [filename(s)]</code>: Puts files in the <em>staging area</em>.</li>
+						<li class="fragment"><code>git commit -m "[commit message]"</code>: Puts files that are in the staging area into the <em>repository</em>.</li>
 					</ul>
 				</section>
 
@@ -130,6 +131,7 @@
 							<li>Tell students to continue working in the git-lab-1 directory on the course VM.</li>
 							<li>Use https://git-scm.com/book/en/v2/Git-Basics-Getting-a-Git-Repository if needed.</li>
 							<li>Recreate User.java on course VM with git repo so students can see working example after activity.</li>
+							<li>Solution is in /Users/michellemelton/development/cs3667/cs3667-materials/git-github/active-learning/git-lab-1</li>
 						</ul>
 					</aside>
 					<h3><i class="fa-solid fa-pencil"></i> The Commit Cycle (15 mins)</h3>
@@ -156,6 +158,7 @@
 						<ul>
 							<li>Use https://git-scm.com/book/en/v2/Git-Branching-Branches-in-a-Nutshell if needed.</li>
 							<li>Recreate steps on course VM after students complete activity.</li>
+							<li>Solution is in /Users/michellemelton/development/cs3667/cs3667-materials/git-github/active-learning/git-lab-1</li>
 						</ul>
 					</aside>
 					<h3><i class="fa-solid fa-pencil"></i> Branching Context Switch (15 mins)</h3>
@@ -178,8 +181,14 @@
 					</aside>
 					<h3>Types of Merges</h3>
 					<ul>
-						<li class="fragment">Fast-forward merge: The "commit path" from the merging branch intersects the tip of the source branch. Git simply <em>moves</em> the pointer forward.</li>
-						<li class="fragment">Two-way merge (Recursive): Changes have occurred on both branches. Git creates a <em>new commit</em> object with 2 parents.</li>
+						<li class="fragment">Fast-forward merge: The "commit path" from the merging branch <em>intersects the tip of the source branch</em>.
+							<ul>
+								<li class="fragment">Git simply <em>moves</em> the pointer forward.</li>
+							</ul></li>
+						<li class="fragment">Two-way merge (Recursive): Changes have occurred on <em>both branches</em>.
+							<ul>
+								<li class="fragment">Git creates a <em>new commit</em> object with 2 parents.</li>
+							</ul></li>
 					</ul>
 				</section>
 
@@ -209,7 +218,7 @@
 					</aside>
 					<h3>Merge Conflicts</h3>
 					<ul>
-						<li class="fragment">Occurs when changes <em>conflict</em> (e.g., same line edited in both branches).</li>
+						<li class="fragment">Occurs when <em>changes conflict</em> (e.g., same line edited in both branches).</li>
 						<li class="fragment">Git pauses the merge. You must <em>manually</em> resolve conflicts in files marked by Git.</li>
 						<li class="fragment">Use VS Code's merge conflict editor to Accept Current, Accept Incoming, or Accept Both.</li>
 					</ul>
@@ -229,6 +238,7 @@
 						<ul>
 							<li>Use https://git-scm.com/book/en/v2/Git-Branching-Basic-Branching-and-Merging if needed.</li>
 							<li>Recreate steps on course VM after students complete activity.</li>
+							<li>Solution is in /Users/michellemelton/development/cs3667/cs3667-materials/git-github/active-learning/git-lab-1</li>
 						</ul>
 					</aside>
 					<h3><i class="fa-solid fa-pencil"></i> Engineering a Conflict (15 mins)</h3>
@@ -350,9 +360,9 @@
 					</aside>
 					<h3>Fixing Mistakes</h3>
 					<ul>
-						<li class="fragment">Discard working directory changes: <code>git restore [filename]</code> (Removes uncommitted changes).</li>
+						<li class="fragment">Discard working directory changes: <code>git restore [filename]</code> (removes uncommitted changes).</li>
 						<li class="fragment">Unstage a file: <code>git restore --staged [filename]</code>.</li>
-						<li class="fragment">Modify last commit: <code>git commit --amend</code> (Use to fix typos in the last commit message or add missed files).</li>
+						<li class="fragment">Modify last commit: <code>git commit --amend</code> (use to fix typos in the last commit message or add missed files).</li>
 						<li class="fragment">DO NOT rewrite history on branches that have already been pushed to a remote repository!</li>
 					</ul>
 				</section>
