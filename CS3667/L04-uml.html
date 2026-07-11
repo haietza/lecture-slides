@@ -112,9 +112,7 @@
 				<section class="left">
 					<aside class="notes">
 						<ul>
-							<li>Functional: A customer withdraws money from an account</li>
-							<li>Static: A `Customer` has an `Account`</li>
-							<li>Dynamic: When withdraw() is called, the system checks the Account balance before deducting money for the Customer</li>
+							<li>Solution in /Users/michellemelton/development/cs3667/cs3667-materials/uml/active-learning/atm-system.md</li>
 						</ul>
 					</aside>
 					<h3><i class="fa-solid fa-pencil"></i> The ATM System (5 minutes)</h3>
@@ -389,11 +387,7 @@
 					<aside class="notes">
 						<ul>
 							<li>Tell students they will see five short ATM scenarios. For each one they must do two things: name the relationship type (include, extend, or generalization) and write one sentence explaining why.</li>
-							<li>1 is extend. The base use case Withdraw Cash completes successfully without the SMS notification. The behavior is conditional — it only fires when the customer has opted in — and the base use case has no knowledge of it.</li>
-							<li>2 is extend. Authenticate completes successfully in the normal flow without card retention. The fraud flag is a specific condition that triggers the extending behavior, and the base use case is unaware of it.</li>
-							<li>3 is generalization. International Withdrawal is not a conditional addition — it is a specialized version of Withdraw Cash that inherits the complete base behavior and replaces or augments specific steps. It is always an international withdrawal when it occurs, not sometimes.</li>
-							<li>4 is generalization at the actor level. Corporate Account Holder is-a Customer. It inherits all customer capabilities and adds specific ones. The arrow points from the specialized actor toward the general actor, the same direction as a class hierarchy in Java.</li>
-							<li>5 is include. The account freeze check is mandatory, always occurs, and is shared across multiple use cases. There is no condition under which Withdraw Cash or Deposit Funds proceeds without it.</li>
+							<li>Solution in /Users/michellemelton/development/cs3667/cs3667-materials/uml/active-learning/atm-scenarios.md</li>
 						</ul>
 					</aside>
 					<h3><i class="fa-solid fa-pencil"></i> Relationshp Types (10 minutes)</h3>
@@ -455,13 +449,7 @@
 				<section class="left">
 					<aside class="notes">
 						<ul>
-							<li>Customer = Actor</li>
-							<li>ATM = System itself</li>
-							<li>Account = Entity (identity in system; attribues like balance, accountId; needs/uses other entities, like receipt)</li>
-							<li>Current balance = Attribute of account</li>
-							<li>Daily withdrawal limit = Attribute of account</li>		
-							<li>Cash = No attributes</li>
-							<li>Receipt = Entity (identity in system, attributes like date, time; needs/uses other entities, like account)</li>					
+							<li>Solution in /Users/michellemelton/development/cs3667/cs3667-materials/uml/active-learning/noun-extraction.md</li>
 						</ul>
 					</aside>
 					<h3><i class="fa-solid fa-pencil"></i> Noun Extraction (5 minutes)</h3>
@@ -610,7 +598,7 @@
 				<section class="left dense-slide-extra">
 					<aside class="notes">
 						<ul>
-							<li>Answer key: /Users/michellemelton/development/cs3667/cs3667-materials/uml/active-learning/ATM-bce.md (CMMD-SHFT-V to open in VS Code or view on GitHub.com repo)</li>
+							<li>Solution in /Users/michellemelton/development/cs3667/cs3667-materials/uml/active-learning/ATM-bce.md (CMMD-SHFT-V to open in VS Code or view on GitHub.com repo)</li>
 						</ul>
 					</aside>
 					<h3><i class="fa-solid fa-pencil"></i> BCE Identification (5 minutes)</h3>
@@ -899,7 +887,7 @@
 							<li>You are given the five states of an ATM system.</li>
 							<li>Using your knowledge of how an ATM works, draw all transitions between states.</li>
 							<li>Label each arrow with the event or condition that triggers it. Include the starting point and any valid ending points.</li>
-							<li>Answer key: /Users/michellemelton/development/cs3667/cs3667-materials/uml/active-learning/state-diagram.png</li>
+							<li>Solution in /Users/michellemelton/development/cs3667/cs3667-materials/uml/active-learning/state-diagram.png</li>
 						</ul>
 					</aside>
 					<h3><i class="fa-solid fa-pencil"></i> State Diagram (10 minutes)</h3>
