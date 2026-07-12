@@ -40,8 +40,8 @@
 					</aside>
 					<h3>Modeling Software</h3>
 					<ul>
-						<li class="fragment">A car engine has <em>~200</em> moving parts; we use diagrams to understand it.</li>
-						<li class="fragment">An ATM system has <em>thousands</em> of interacting objects; we need models even more.</li>
+						<li class="fragment">A car engine has <em>~200 moving parts</em>; we use diagrams to <em>understand</em> it.</li>
+						<li class="fragment">An ATM system has <em>thousands of interacting objects</em>; we need models even more.</li>
 						<li class="fragment">Software is <em>invisible</em> and <em>abstract</em>; you cannot see or touch it.</li>
 						<li class="fragment">Models make software <em>visible</em>, <em>discussable</em>, and <em>understandable</em>.</li>
 					</ul>
@@ -55,7 +55,7 @@
 					</aside>
 					<h3>Unified Modeling Language (UML)</h3>
 					<ul>
-						<li class="fragment">The industry-standard <em>visual language</em> for specifying, constructing, and documenting software systems.</li>
+						<li class="fragment">The industry-standard <em>visual language</em> for <em>specifying</em>, <em>constructing</em>, and <em>documenting</em> software systems.</li>
 						<li class="fragment">The Three System Perspectives:
 							<ul>
 								<li class="fragment">Functional Behavior</li>
@@ -104,7 +104,7 @@
 					</aside>
 					<h3>Dynamic Perspective</h3>
 					<ul>
-						<li class="fragment">How do objects <em>interact</em> over <em>time</em>?</li>
+						<li class="fragment">How do objects <em>interact over time</em>?</li>
 						<li class="fragment">Sequence/State Diagram, Activity Diagram</li>
 					</ul>
 				</section>
@@ -134,9 +134,9 @@
 						</ul>
 					</aside>
 					<h3>Use Case Diagrams</h3>
-					<p>A Use Case diagram answers the question: "What does this system do for whom?"</p>
+					<p>A Use Case diagram answers the question: <em>What does this system do for whom?</em></p>
 					<ul>
-						<li class="fragment">High-level view, no implementation details</li>
+						<li class="fragment">High-level view, <em>no implementation details</em></li>
 						<li class="fragment">Shows the <em>services</em> a system provides and <em>who</em> uses them</li>
 						<li class="fragment">Starting point for every other model</li>
 					</ul>
@@ -154,11 +154,11 @@
 					<div style="display: flex; align-items: center; gap: 2rem; height: 100%;">
 						<div style="flex: 1;">
 							<ul class="dense-slide">
-								<li class="fragment">Actors (Stick Figures): <em>External</em> entities interacting with the system.</li>
-								<li class="fragment">Use Cases (Ovals): Major system <em>functionalities</em>, start with a verb.</li>
+								<li class="fragment">Actors (Stick Figures): <em>External</em> entities interacting with the system</li>
+								<li class="fragment">Use Cases (Ovals): Major system <em>functionalities</em>, start with a verb</li>
 								<li class="fragment">Relationships:
 									<ul>
-										<li class="fragment">Association (Solid Line): <em>Connects</em> an actor to a use case.</li>
+										<li class="fragment">Association (Solid Line): <em>Connects</em> an actor to a use case</li>
 									</ul>
 								</li>
 							</ul>
@@ -190,7 +190,7 @@
 					</aside>
 					<h3>Activity Diagrams</h3>
 					<ul>
-						<li class="fragment">Model <em>workflow</em> or process flow of a system.</li>
+						<li class="fragment">Model <em>workflow</em> or process flow of a system</li>
 						<li class="fragment">Notation:
 							<ul>
 								<li class="fragment">Start (solid circle) required</li>
@@ -229,7 +229,7 @@
 							<li>Here we notice quite a bit of repetition/duplication between the two activity diagrams.</li>
 							<li>A general software development principle is to eliminate duplication. But, how?</li>
 							<li>You're probably familiar with a similar situation regarding classes.</li>
-							<li>If two classes havve common fields we can "factor out" the commonalities into a super class and then inherit them in subclasses.</li>
+							<li>If two classes have common fields we can "factor out" the commonalities into a super class and then inherit them in subclasses.</li>
 							<li>Similarly, here, we can "factor out" the authentication activities that are repeated into their own activity diagram (hence into their own use case!)</li>
 						</ul>
 					</aside>
@@ -261,25 +261,21 @@
 				</section>
 
 				<section class="left">
-					<aside class="notes">
-						<ul>
-							<li>Think of it as the base case reaches out to grab the included behavior.</li>
-							<li>The arrow direction says WithdrawCash calls Authenticate.</li>
-							<li>Typically returns back to originating use case.</li>
-						</ul>
-					</aside>
 					<h3>Relationships: Include</h3>
 					<p>Always happens (dotted line)</p>
 					<ul>
-						<li class="fragment">Arrow points <em>from</em> base case <em>to</em> included case.</li>
-						<li class="fragment">Models mandatory sub-behavior <em>factored out</em> to eliminate duplication.</li>
-						<li class="fragment">Example: Every transaction <em>always</em> includes Authentication.</li>
+						<li class="fragment">Arrow points <em>from</em> base case <em>to</em> included case</li>
+						<li class="fragment">Models mandatory sub-behavior <em>factored out</em> to eliminate duplication</li>
+						<li class="fragment">Example: Every transaction <em>always</em> includes Authentication</li>
 					</ul>
 				</section>
 
 				<section class="left dense-slide">
 					<aside class="notes">
 						<ul>
+							<li>Think of it as the base case reaches out to grab the included behavior.</li>
+							<li>The arrow direction says WithdrawCash calls Authenticate.</li>
+							<li>Typically returns back to originating use case.</li>
 							<li>This is kind of messy though. Lots of crossing lines. Can we simplify this?</li>
 						</ul>
 					</aside>
@@ -341,9 +337,9 @@
 					<h3>Relationships: Extend</h3>
 					<p>Sometimes happens (dotted line)</p>
 					<ul>
-						<li class="fragment">Arrow points <em>from</em> extending case <em>to</em> base case.</li>
-						<li class="fragment">Models <em>exceptional</em> flows that may or may not occur.</li>
-						<li class="fragment">Example: WithdrawCash <em>may</em> extend with "Non-Sufficient Funds".</li>
+						<li class="fragment">Arrow points <em>from</em> extending case <em>to</em> base case</li>
+						<li class="fragment">Models <em>exceptional</em> flows that may or may not occur</li>
+						<li class="fragment">Example: WithdrawCash <em>may</em> extend with "Non-Sufficient Funds"</li>
 					</ul>
 				</section>
 
@@ -351,10 +347,10 @@
 					<h3>Relationships: Generalization</h3>
 					<p>Generalization (Solid Arrow with Open Triangle): Is a kind of</p>
 					<ul>
-						<li class="fragment">Similar to <em>abstract classes</em>.</li>
-						<li class="fragment">Child use case (or actor) is a <em>specialized version</em> of the parent.</li>
-						<li class="fragment">Arrow goes <em>from</em> child <em>to</em> parent.</li>
-						<li class="fragment">Example: Transfer to Another Account <em>is a</em> kind of Transfer Funds.</li>
+						<li class="fragment">Similar to <em>abstract classes</em></li>
+						<li class="fragment">Child use case (or actor) is a <em>specialized version</em> of the parent</li>
+						<li class="fragment">Arrow goes <em>from</em> child <em>to</em> parent</li>
+						<li class="fragment">Example: Transfer to Another Account <em>is a</em> kind of Transfer Funds</li>
 					</ul>
 				</section>
 
@@ -391,17 +387,14 @@
 						</ul>
 					</aside>
 					<h3><i class="fa-solid fa-pencil"></i> Relationshp Types (10 minutes)</h3>
-					<ul>
-						<li>Work in pairs. Name and explain the relationship type:
-							<ol>
-								<li>After a customer withdraws cash, if SMS notifications are enabled, the ATM may send a text message confirming the amount withdrawn.</li>
-								<li>When a customer enters an incorrect PIN, if the card has been flagged by the bank's fraud detection service, the ATM may retain the card.</li>
-								<li>An International Withdrawal follows all the steps of a standard Withdraw Cash transaction but additionally performs a live currency conversion before dispensing cash.</li>
-								<li>A Corporate Account Holder can perform all the same ATM transactions as a standard Customer but is also permitted to initiate same-day wire transfers above the standard daily limit.</li>
-								<li>Every time a customer initiates a Deposit Funds transaction, the system must first verify that the account is not frozen before allowing the transaction to proceed.</li>
-							</ol>
-						</li>
-					</ul>
+					<p>Work in pairs. Name and explain the relationship type (include, extend, generalization):</p>
+					<ol>
+						<li>After a customer withdraws cash, if SMS notifications are enabled, the ATM may send a text message confirming the amount withdrawn.</li>
+						<li>When a customer enters an incorrect PIN, if the card has been flagged by the bank's fraud detection service, the ATM may retain the card.</li>
+						<li>An International Withdrawal follows all the steps of a standard Withdraw Cash transaction but additionally performs a live currency conversion before dispensing cash.</li>
+						<li>A Corporate Account Holder can perform all the same ATM transactions as a standard Customer but is also permitted to initiate same-day wire transfers above the standard daily limit.</li>
+						<li>Every time a customer initiates a Deposit Funds transaction, the system must first verify that the account is not frozen before allowing the transaction to proceed.</li>
+					</ol>
 				</section>
 
 				<section class="left">
@@ -435,14 +428,11 @@
 						</ul>
 					</aside>
 					<h3>Turning Candidate Objects into Classes</h3>
+					<p class="fragment">For each candidate, evaluate it using the <em>E.A.R. framework</em>:</p>
 					<ul class="dense-slide">
-						<li class="fragment">For each candidate, evaluate it using the E.A.R. framework:
-							<ul>
-								<li class="fragment">Entity: What <em>"thing"</em> is it? Does it contain component parts?</li>
-								<li class="fragment">Attributes: What <em>attributes</em> describe the entity? Note that while these become fields, not all fields (like flags or counters) are attributes.</li>
-								<li class="fragment">Relationships: What other entities does this entity need or <em>use</em>?</li>
-							</ul>
-						</li>
+						<li class="fragment">Entity: What <em>"thing"</em> is it? Does it contain <em>component parts</em>?</li>
+						<li class="fragment">Attributes: What <em>attributes</em> describe the entity? Note that while these become fields, not all fields (like flags or counters) are attributes.</li>
+						<li class="fragment">Relationships: What other entities does this entity <em>>need or use</em>?</li>
 					</ul>
 				</section>
 
@@ -456,8 +446,8 @@
 					<ul>
 						<li>Work in pairs.</li>
 						<li>Extract the <em>nouns</em> from this requirement and classify them as an <em>Entity</em> (Object) or an <em>Attribute</em>.</li>
-						<li>A customer interacts with the ATM to make a withdrawal from their account. The account checks the current balance and a daily withdrawal limit. The cash is then dispensed and a receipt is printed.</li>
 					</ul>
+					<blockquote>A customer interacts with the ATM to make a withdrawal from their account. The account checks the current balance and a daily withdrawal limit. The cash is then dispensed and a receipt is printed.</blockquote>
 				</section>
 
 				<section class="left">
@@ -474,11 +464,11 @@
 					</aside>
 					<h3>The BCE Taxonomy</h3>
 					<ul>
-						<li class="fragment">For software systems, we can categorize our classes:
+						<li class="fragment">For software systems, we can <em>categorize our classes</em>:
 							<ul>
 								<li class="fragment">Boundary: <em>Interfaces</em> with actors</li>
 								<li class="fragment">Control: <em>Implements</em> system logic and coordinates tasks</li>
-								<li class="fragment">Entity: <em>Stateful</em> objects containing system information</li>
+								<li class="fragment">Entity: <em>Stateful objects</em> containing system information</li>
 							</ul>
 						</li>
 						<li class="fragment">The Golden Rule: Boundaries <em>never</em> talk directly to Entities. All communication goes through Control objects.</li>
@@ -504,8 +494,8 @@
 					</aside>
 					<h3>Boundary Objects: CardReader Example</h3>
 					<ul>
-						<li class="fragment">The Problem: Hardware devices speak a low-level language your application should never have to know.</li>
-						<li class="fragment">The Solution: Wrap it in a Boundary Object.</li>
+						<li class="fragment">The Problem: Hardware devices speak a <em>low-level language</em> your application should never have to know.</li>
+						<li class="fragment">The Solution: Wrap it in a <em>Boundary Object</em>.</li>
 					</ul>
 					<pre class="fragment"><code class="language-java" data-line-numbers="" data-trim>
 					// The rest of the system never sees device registers or bit patterns.
@@ -523,9 +513,9 @@
 					</aside>
 					<h3>Control Objects</h3>
 					<ul>
-						<li class="fragment">Orchestrate the flow and manage <em>behavior</em>.</li>
-						<li class="fragment"><em>Coordinate</em> the other objects so neither entity nor boundary objects have to interact directly.</li>
-						<li class="fragment">One <em>main</em> controller initializes everything; separate controllers per major <em>use case</em>.</li>
+						<li class="fragment">Orchestrate the flow and <em>manage behavior</em></li>
+						<li class="fragment"><em>Coordinate</em> the other objects so neither entity nor boundary objects have to interact directly</li>
+						<li class="fragment">One <em>main controller</em> initializes everything; separate controllers per major <em>use case</em></li>
 					</ul>
 				</section>
 
@@ -541,13 +531,13 @@
 					</aside>
 					<h3>Control Objects: ATM Example</h3>
 					<ul class="dense-slide">
-						<li class="fragment">Application Scope vs. Transaction Scope:
+						<li class="fragment"><em>Application</em> Scope vs. <em>Transaction</em> Scope:
 							<ul>
 								<li class="fragment">AtmController: Handles <em>system startup</em>, main menus, and hardware initialization; lives until the ATM shuts down.</li>
 								<li class="fragment">WithdrawController: Manages a <em>single withdrawal</em> flow; created dynamically and destroyed when transaction finishes.</li>
 							</ul>
 						</li>
-						<li class="fragment">Architectural Value: Each transaction gets its <em>own</em> controller, state, and lifecycle, ensuring no shared mutable state between transactions.</li>
+						<li class="fragment">Architectural Value: Each transaction gets its <em>own</em> controller, state, and lifecycle, ensuring <em>no shared mutable state</em> between transactions.</li>
 					</ul>
 				</section>
 
@@ -559,8 +549,8 @@
 					</aside>
 					<h3>Entity Objects</h3>
 					<ul>
-						<li class="fragment">Represent <em>information</em>, <em>data</em>, and <em>state</em> needed by the system; not boundary objects.</li>
-						<li class="fragment">They are not just data containers; they provide <em>methods</em> that act on their own data.</li>
+						<li class="fragment">Represent <em>information</em>, <em>data</em>, and <em>state</em> needed by the system; not boundary objects</li>
+						<li class="fragment">They are not just data containers; they provide <em>methods that act on their own data</em></li>
 					</ul>
 				</section>
 
@@ -580,8 +570,8 @@
 					</aside>
 					<h3>Entity Objects: Receipt Example</h3>
 					<ul>
-						<li class="fragment">The printer is a boundary object, but the receipt is likely an entity object.</li>
-						<li class="fragment">The Receipt Entity is build up incrementally.</li>
+						<li class="fragment">The printer is a <em>boundary</em> object, but the receipt is likely an <em>entity</em> object.</li>
+						<li class="fragment">The Receipt Entity is built up <em>incrementally</em>.</li>
 					</ul>
 					<pre class="fragment"><code class="language-java" data-line-numbers="" data-trim>
 					// State accumulates as the transaction progresses
@@ -602,12 +592,12 @@
 						</ul>
 					</aside>
 					<h3><i class="fa-solid fa-pencil"></i> BCE Identification (5 minutes)</h3>
-					<ul>
-						<li>List every noun you can extract from the description (aim for at least 12).</li>
-						<li>For each noun, classify it as Boundary (B), Control (C), Entity (E), or Not a class (N).</li>
-						<li>Identify at least one Control class that is implied but not explicitly stated in the description.</li>
-						<li>A bank offers ATM services to its customers. Customers insert a debit card and enter a PIN on the screen to authenticate. After successful authentication, customers can withdraw cash, deposit funds, transfer money between accounts, or check a balance. The ATM machine includes a card reader, a cash dispenser, a deposit slot, a printer for receipts, and a camera for security. All transactions are verified with the bank's authorization service. Unrecognized cards are rejected. A logger records all transaction events.</li>
+					<ul class="dense-slide-extra">
+						<li>Extract every noun you can from the description (aim for 12).</li>
+						<li>For each, classify it as (B)oundary, (C)ontrol, (E)ntity, or (N)ot a class.</li>
+						<li>Identify one Control class that is implied but not explicitly stated.</li>
 					</ul>
+					<blockquote>A bank offers ATM services to its customers. Customers insert a debit card and enter a PIN on the screen to authenticate. After successful authentication, customers can withdraw cash, deposit funds, transfer money between accounts, or check a balance. The ATM machine includes a card reader, a cash dispenser, a deposit slot, a printer for receipts, and a camera for security. All transactions are verified with the bank's authorization service. Unrecognized cards are rejected. A logger records all transaction events.</blockquote>
 				</section>
 
 				<section 
@@ -714,11 +704,11 @@
 					</aside>
 					<h3>Object Diagrams</h3>
 					<ul>
-						<li class="fragment">Focus on <em>concrete</em> instances of objects (vs. class definitions).</li>
-						<li class="fragment">Capture the state of a system object and its relationships at a <em>specific moment</em> in time.</li>
-						<li class="fragment">Used less frequently than Class Diagrams.</li>
-						<li class="fragment">Useful for depicting an <em>isolated</em> part of a complex system.</li>
-						<li class="fragment">Often used to visualize the <em>current state</em> of complex data structures.</li>
+						<li class="fragment">Focus on <em>concrete instances</em> of objects (vs. class definitions)</li>
+						<li class="fragment">Capture the <em>state</em> of a system object and its <em>relationships</em> at a <em>specific moment</em> in time</li>
+						<li class="fragment">Used less frequently than Class Diagrams</li>
+						<li class="fragment">Useful for depicting an <em>isolated</em> part of a complex system</li>
+						<li class="fragment">Often used to visualize the <em>current state</em> of complex data structures</li>
 					</ul>
 				</section>
 
@@ -745,9 +735,9 @@
 					</aside>
 					<h3>Sequence Diagrams</h3>
 					<ul>
-						<li class="fragment">Model <em>interactions</em> between objects over time.</li>
-						<li class="fragment">Can be <em>high-level</em> (system overview) or <em>low-level</em> (method calls).</li>
-						<li class="fragment">Can include <em>conditionals</em> and <em>loops</em>.</li>
+						<li class="fragment">Model <em>interactions</em> between objects over time</li>
+						<li class="fragment">Can be <em>high-level</em> (system overview) or <em>low-level</em> (method calls)</li>
+						<li class="fragment">Can include <em>conditionals</em> and <em>loops</em></li>
 						<li class="fragment">Notation:
 							<ul>
 								<li class="fragment">Objects (boxes across top)</li>
@@ -820,9 +810,9 @@
 					</aside>
 					<h3>State Diagrams</h3>
 					<ul>
-						<li class="fragment">Models behavior of a <em>single object</em>.</li>
-						<li class="fragment">Models <em>one part</em> of the system.</li>
-						<li class="fragment">Similar to state machine diagrams (from Theory).</li>
+						<li class="fragment">Models behavior of a <em>single object</em></li>
+						<li class="fragment">Models <em>one part</em> of the system</li>
+						<li class="fragment">Similar to state machine diagrams (from Theory)</li>
 						<li class="fragment">Notation:
 							<ul>
 								<li class="fragment">Start (solid circle) required</li>
