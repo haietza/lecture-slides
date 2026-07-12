@@ -35,14 +35,14 @@
 							<li>In enterprise software, we don't compile files one by one using javac in the terminal. We automate the build process.</li>
 							<li>Today we're looking at GNU Make, a classic tool that builds executables from source files.</li>
 							<li>You define 'targets', like compile or clean, and the dependencies required to build them.</li>
-							<li>We also define macros for things like our JUnit library paths to keep our scripts clean and reusable</li>
+							<li>We also define macros for things like our JUnit library paths to keep our scripts clean and reusable.</li>
 						</ul>
 					</aside>
 					<h3>Build Automation: Make & Makefiles</h3>
 					<ul>
-						<li class="fragment">GNU Make is a tool which controls the <em>generation</em> of executables and other non-source files of a program from the program's source files.</li>
+						<li class="fragment">GNU Make is a tool which controls the <em>generation of executables</em> and other non-source files of a program from the program's <em>source files</em>.</li>
 						<li class="fragment">It is especially useful in C and C++ which have complex builds, but we will use it for <em>Java</em>.</li>
-						<li class="fragment">We will use Make to <em>compile</em> our Java projects, <em>run</em> Checkstyle, tests, and demos.</li>
+						<li class="fragment">We will use Make to <em>compile</em> our Java projects, and to <em>run</em> Checkstyle, tests, and demos.</li>
 					</ul>
 				</section>
 
@@ -63,7 +63,7 @@
 							<li>The remainder of line 8 is the path to the java file(s) that we want to compile (Demo.java in the src/mypackage directory).</li>
 							<li>Line 10 is the dependency that is not a macro. We need the .class file to run our Java program.</li>
 							<li>Line 11 is the command to run the Demo program.</li>
-							<li>(Line 2) We want the jar on our class path, but we also need bin (where our .class files are) on it. These multiple locations are separated by a colon.</li>
+							<li>(Line 1) We want the jar on our class path, but we also need bin (where our .class files are) on it. These multiple locations are separated by a colon.</li>
 							<li>mypackage/Demo is the file we are running. If it is in a package, we need to put the package name/the file name. We do not put bin since bin is not a package.</li>
 							<li>Line 13 is the clean target that removes compiled files.</li>
 							<li>Line 14 removes class files from directories in the bin directory. ** refers to any directory and *.class refers to any file with the .class extension.</li>
@@ -91,9 +91,9 @@
 				<section class="left">
 					<aside class="notes">
 						<ul>
-							<li>Reference the previous slide as a template</li>
-							<li>Try using the JFLAGS macro</li>
-							<li>Note that we are not running JUnit tests, so we don't need that macro or lib</li>
+							<li>Reference the previous slide as a template.</li>
+							<li>Try using the JFLAGS macro.</li>
+							<li>Note that we are not running JUnit tests, so we don't need that macro or lib.</li>
 							<li>Solution in /Users/michellemelton/development/cs3667/cs3667-materials/mcj/active-learning/make</li>
 						</ul>
 					</aside>
@@ -117,14 +117,20 @@
 							<li>Code is read far more often than it is written. In a team of 30 developers, if everyone formats code differently, it becomes unreadable.</li>
 							<li>Checkstyle is an automated tool that enforces a coding standard, like the Google Java Style Guide.</li>
 							<li>It runs via the command line using a JAR file and an XML configuration file.</li>
-							<li>See https://checkstyle.sourceforge.io/checks.html for more info</li>
+							<li>See https://checkstyle.sourceforge.io/checks.html for more info (linked in Resources in Canvas course).</li>
 						</ul>
 					</aside>
 					<h3>What is Checkstyle?</h3>
 					<ul>
-						<li class="fragment">Checkstyle is a development tool to help programmers write Java code that adheres to a coding <em>standard</em>.</li>
+						<li class="fragment">Checkstyle is a development tool to help programmers write Java code that adheres to a <em>coding standard</em>.</li>
 						<li class="fragment">It <em>automates</em> the process of checking Java code.</li>
-						<li class="fragment">To run Checkstyle, you need Java, a checkstyle jar file, an xml file describing the styles, and Java files to check.</li>
+						<li class="fragment">To run Checkstyle, you need
+							<ul>
+								<li class="fragment">Java</li>
+								<li class="fragment">A checkstyle jar file</li>
+								<li class="fragment">An xml file describing the styles</li>
+								<li class="fragment">Java files to check</li>
+							</ul></li>
 					</ul>
 				</section>
 
@@ -140,9 +146,9 @@
 					<h3>Running Checkstyle</h3>
 					<pre><code class="language-bash" data-trim>java -jar ./checkstyle-13.2.0-all.jar -c ./styles.xml src/*.java</code></pre>
 					<ul>
-						<li class="fragment">checkstyle-13.2.0-all.jar is in the current directory and is a valid checkstyle jar file</li>
-						<li class="fragment">styles.xml is in the current directory and is a valid checkstyle xml file</li>
-						<li class="fragment">There is a src folder with java files in it to check</li>
+						<li class="fragment">checkstyle-13.2.0-all.jar is in the <em>current directory</em> and is a valid <em>checkstyle jar file</em>.</li>
+						<li class="fragment">styles.xml is in the <em>current directory</em> and is a valid <em>checkstyle xml file</em>.</li>
+						<li class="fragment">There is a <em>src folder</em> with <em>.java files</em> in it to check.</li>
 					</ul>
 				</section>
 
@@ -159,7 +165,7 @@
 							<li>Line 9 is a property of its containing module; it is self-closed</li>
 							<li>The property name must be one checkstyle recognizes; it gives some extra information to the module</li>
 							<li>Properties also have values; this value tells checkstyle that the tabs should be 4 spaces long</li>
-							<li>Modules that are not self-closed must have a corresponding closing tag</li>
+							<li>Lines 10-12: Modules that are not self-closed must have a corresponding closing tag</li>
 						</ul>
 					</aside>
 					<h3>Configuring Checkstyle</h3>
@@ -182,9 +188,10 @@
 				<section class="left">
 					<aside class="notes">
 						<ul>
+							<li>Student repos based on https://github.com/appstate-cs-classroom-3667/mm-mcj-active-learning</li>
 							<li>java -jar checkstyle-13.2.0-all.jar -c styles.xml CheckstyleDemo.java</li>
-							<li>Students manually fix indentation, naming conventions, and missing Javadocs based on terminal output.</li>
 							<li>In modern enterprise environments, code with Checkstyle violations is automatically rejected by the version control system during a pull request.</li>
+							<li>Solution in /Users/michellemelton/development/cs3667/cs3667-materials/mcj/active-learning/checkstyle</li>
 						</ul>
 					</aside>
 					<h3><i class="fa-solid fa-pencil"></i> Checkstyle Practice (10 mins)</h3>
@@ -232,19 +239,19 @@
 					<aside class="notes">
 						<ul>
 							<li>If you are testing a class that saves to a database, you don't want your unit test actually writing to a real database.</li>
-							<li>We isolate the component using a Test Doubles, in place of the dependency.</li>
+							<li>We isolate the component using a Test Doubles (stand-ins), in place of the dependency.</li>
 							<li>Fakes: For example, instead of calling a database API to get a value, an in-memory database is used.</li>
 						</ul>
 					</aside>
 					<h3>Isolating from the System</h3>
 					<ul class="dense-slide">
-						<li class="fragment">For integration / unit testing, tests need to <em>isolate</em> from parts of the system not being tested.</li>
+						<li class="fragment">For integration / unit testing, tests need to <em>isolate</em> from parts of the system <em>not being tested</em>.</li>
 						<li class="fragment">These parts of the system need to be <em>"faked"</em>:
 						<ul>
 							<li class="fragment">Stubs: Extremely simple, use <em>hard-coded values</em>, with all logic removed.</li>
 							<li class="fragment">Spies: <em>"Watch"</em> method calls to get information (how often called or arguments passed).</li>
-							<li class="fragment">Mocks: A cross between a stub and a spy; can <em>dynamically</em> change behavior and asserts <em>validity</em> of method calls.</li>
-							<li class="fragment">Fakes: Have a full implementation of the dependency, a <em>simplified</em> version of production code.</li>
+							<li class="fragment">Mocks: A cross between a stub and a spy; can <em>dynamically change behavior</em> and <em>asserts validity</em> of method calls.</li>
+							<li class="fragment">Fakes: Have a full implementation of the dependency, a <em>simplified version</em> of production code.</li>
 						</ul>
 						</li>
 					</ul>
@@ -270,21 +277,21 @@
 					</aside>
 					<h3>Unit Testing Parts</h3>
 					<ul>
-						<li class="fragment">Test Suite: A <em>collection</em> of related tests</li>
-						<li class="fragment">Test: Determines whether or not the code is working properly; contains one or more <em>assertions</em></li>
+						<li class="fragment">Test Suite: A <em>collection</em> of <em>related tests</em></li>
+						<li class="fragment">Test: Determines whether or not the code is <em>working properly</em>; contains one or more <em>assertions</em></li>
 						<li class="fragment">Assertion: A statement that should return <code>true</code> if the code is working properly and <code>false</code> otherwise</li>
-						<li class="fragment">Lifecycle Hooks: Special points in the testing cycle during which we can <em>insert</em> code to run</li>
+						<li class="fragment">Lifecycle Hooks: Special points in the testing cycle during which we can <em>insert code to run</em></li>
 					</ul>
 				</section>
 
 				<section class="left">
 					<h3>JUnit Test Files</h3>
 					<ul>
-						<li class="fragment">Regular <em>Java</em> classes</li>
+						<li class="fragment">Regular Java<em> classes</em></li>
 						<li class="fragment">Regular <em>fields</em> and <em>methods</em></li>
-						<li class="fragment">Addition of some imported decorators and methods from <em>JUnit</em></li>
-						<li class="fragment">Class name does not matter</li>
-						<li class="fragment">Method and field names do not matter</li>
+						<li class="fragment">Addition of some <em>imported decorators</em> and <em>methods</em> from JUnit</li>
+						<li class="fragment"><em>Class name</em> does not matter</li>
+						<li class="fragment"><em>Method</em> and <em>field names</em> do not matter</li>
 					</ul>
 				</section>
 
@@ -292,7 +299,7 @@
 					<aside class="notes">
 						<ul>
 							<li>Line 1 is the import for the assertEquals function; all assert functions are static.</li>
-							<li>Line 2 is the import for the Test decorator; decoratoes are not static.</li>
+							<li>Line 2 is the import for the Test decorator; decorators are not static.</li>
 							<li>Line 3 is the import for the BeforeEach decorator used to make a lifecycle hook; BeforeEach run before every test.</li>
 							<li>Line 5 is our test suite (name of class is irrelevant).</li>
 							<li>Line 6: It is good practice to use constants for values in tests.</li>
@@ -331,7 +338,7 @@
 
 				<section class="left">
 					<aside class="notes">
-						Full list of assertions: https://junit.org/junit5/docs/current/api/org.junit.jupiter.api/org/junit/jupiter/api/Assertions.html
+						Full list of assertions: https://junit.org/junit5/docs/current/api/org.junit.jupiter.api/org/junit/jupiter/api/Assertions.html (MCJ Resources in Canvas course)
 					</aside>
 					<h3>Common Assert Functions</h3>
 					<ul>
@@ -355,14 +362,14 @@
 					<ul>
 						<li class="fragment"><code>BeforeEach</code> Runs before each test
 							<ul>
-								<li class="fragment">Use to set up the testing environment</li>
-								<li class="fragment">Ensures a <em>clean</em> environment from test-to-test</li>
-								<li class="fragment">Tests should not interfere with each other</li>
+								<li class="fragment">Use to <em>set up</em> the testing environment</li>
+								<li class="fragment">Ensures a <em>clean environment</em> from test to test</li>
+								<li class="fragment">Tests should <em>not interfere with each other</em></li>
 							</ul>
 						</li>
 						<li class="fragment"><code>AfterEach</code> Runs after each test
 							<ul>
-								<li class="fragment">Use to <em>reset</em> changes a test may have made</li>
+								<li class="fragment">Use to <em>reset changes</em> a test may have made</li>
 								<li class="fragment">Can be done in BeforeEach, the choice of where to put code is semantic</li>
 							</ul>
 						</li>
@@ -373,19 +380,19 @@
 					<aside class="notes">
 						<ul>
 							<li>BeforeAll (e.g. setting up database connection)</li>
-							<li>AFterAll (e.g. closing database connection)</li>
+							<li>AfterAll (e.g. closing database connection)</li>
 						</ul>
 					</aside>
 					<h3>Lifecycle Hooks</h3>
 					<ul>
 						<li class="fragment"><code>BeforeAll</code> Runs once, before any test
 							<ul>
-								<li class="fragment">Use to set things needed by <em>all</em> tests, but cannot change from test-to-test</li>
+								<li class="fragment">Use to set things needed by <em>all tests</em>, but cannot change from test to test</li>
 							</ul>
 						</li>
 						<li class="fragment"><code>AfterAll</code> Runs once, after all tests
 							<ul>
-								<li class="fragment">Run to <em>clean up</em> the environment when testing is over</li>
+								<li class="fragment">Run to clean up the environment when <em>testing is over</em></li>
 							</ul>
 						</li>
 					</ul>
@@ -393,24 +400,28 @@
 
 				<section class="left">
 					<h3>Running JUnit</h3>
-					<pre><code class="language-bash" data-trim>java -jar ./junit-platform-console-standalone-6.0.2.jar execute -cp . --scan-classpath</code></pre>
-					<ul>
-						<li class="fragment">junit-platform-console-standalone-6.0.2.jar is in the current directory and is a valid junit jar file</li>
-						<li class="fragment"><code>execute</code> is the command to find and execute tests (@Test decorator)</li>
-						<li class="fragment"><code>-cp</code> declares the class path as the current directory (where test classes are)</li>
-						<li class="fragment"><code>--scan-classpath</code> is a flag to scan through class path and look for all tests to run</li>
+					<pre><code class="language-bash fragment" data-trim>javac -cp junit-platform-console-standalone-6.0.2.jar *.java</code></pre>
+					<pre><code class="language-bash fragment" data-trim>java -jar ./junit-platform-console-standalone-6.0.2.jar execute -cp . --scan-classpath</code></pre>
+					<ul class="dense-slide">
+						<li class="fragment">junit-platform-console-standalone-6.0.2.jar is in the <em>current directory</em> and is a valid <em>junit jar file</em></li>
+						<li class="fragment"><code>execute</code> is the command to <em>find and execute tests</em> (@Test decorator)</li>
+						<li class="fragment"><code>-cp</code> declares the class path as the <em>current directory</em> (where test classes are)</li>
+						<li class="fragment"><code>--scan-classpath</code> is a flag to scan through class path and look for <em>all tests to run</em></li>
 					</ul>
+					
 				</section>
 
 				<section class="left">
 					<aside class="notes">
 						<ul>
 							<li>Use previous slides for examples and command for running the test.</li>
+							<li>Compile with junit: javac -cp junit-platform-console-standalone-6.0.2.jar *.java</li>
 							<li>java -jar junit-platform-console-standalone-6.0.2.jar execute -cp . --scan-classpath</li>
+							<li>Solution in /Users/michellemelton/development/cs3667/cs3667-materials/mcj/active-learning/junit</li>
 						</ul>
 					</aside>
 					<h3><i class="fa-solid fa-pencil"></i> JUnit Practice (10 mins)</h3>
-					<ul>
+					<ul class="dense-slide">
 						<li>On the course VM, create a junit directory.</li>
 						<li>Create a simple Calculator.java class with an <code>add(int a, int b)</code> method.</li>
 						<li>Write a JUnit 5 test class named CalculatorTest.java.</li>
@@ -431,17 +442,17 @@
 					<ul>
 						<li class="fragment"><code>out</code> is a static PrintStream field in the System class.</li>
 						<li class="fragment">It can be changed using the static <code>setOut</code> method of System.</li>
-						<li class="fragment">For some tests, we want to check that the program prints something to the terminal (System.out).</li>
-						<li class="fragment">Tests do not have access to the terminal window.</li>
-						<li class="fragment">Need to redirect System.out so that print statements send the data elsewhere.</li>
+						<li class="fragment">For some tests, we want to check that the program <em>prints something to the terminal</em> (System.out).</li>
+						<li class="fragment">Tests <em>do not have access</em> to the terminal window.</li>
+						<li class="fragment">Need to redirect System.out so that print statements <em>send the data elsewhere</em>.</li>
 					</ul>
 				</section>
 
 				<section class="left">
 					<h3>Redirecting System.out Steps</h3>
 					<ul class="dense-slide">
-						<li>Create a PrintStream field to store the original System.out</li>
-						<li>Create a ByteArrayOutputStream field to store the new location to receive the output</li>
+						<li>Create a PrintStream field to <em>store the original</em> System.out</li>
+						<li>Create a ByteArrayOutputStream field to store the new location to <em>receive the output</em></li>
 						<li>In BeforeEach
 							<ul>
 								<li>Set the PrintStream field to System.out</li>
@@ -568,17 +579,17 @@
 					<ul>
 						<li class="fragment"><code>in</code> is a static InputStream field in the System class.</li>
 						<li class="fragment">It can be changed using the static <code>setIn</code> method of System.</li>
-						<li class="fragment">For some tests, we need to provide input from the keyboard.</li>
-						<li class="fragment">Tests do not have access to the keyboard.</li>
-						<li class="fragment">Need to redirect System.in so that when the program tries to read from the keyboard, it reads from something we provide instead.</li>
+						<li class="fragment">For some tests, we need to provide <em>input from the keyboard</em>.</li>
+						<li class="fragment">Tests <em>do not have access</em> to the keyboard.</li>
+						<li class="fragment">Need to redirect System.in so that when the program tries to <em>read from the keyboard</em>, it reads from something <em>we provide</em> instead.</li>
 					</ul>
 				</section>
 
 				<section class="left">
 					<h3>Redirecting System.in Steps</h3>
 					<ul class="dense-slide">
-						<li>Create an InputStream field to store the original System.in</li>
-						<li>Create a ByteArrayInputStream field to use for new input</li>
+						<li>Create an InputStream field to <em>store the original</em> System.in</li>
+						<li>Create a ByteArrayInputStream field to use for <em>new input</em></li>
 						<li>In BeforeEach: Set the InputStream field to System.in</li>
 						<li>In Tests
 							<ul>
@@ -697,9 +708,9 @@
 					<h3>The Evolution of Build Tools</h3>
 					<ul>
 						<li class="fragment">While Make is powerful, Java enterprise applications require <em>dependency resolution</em> and <em>convention-over-configuration</em>.</li>
-						<li class="fragment">Gradle is a <em>modern</em> build automation tool that uses a Groovy or Kotlin Domain Specific Language (DSL).</li>
-						<li class="fragment">A build.gradle file <em>defines</em> the project's plugins, repositories, dependencies, and custom tasks.</li>
-						<li class="fragment">Gradle uses a <em>Directed Acyclic Graph (DAG)</em> to determine the exact order tasks must execute.</li>
+						<li class="fragment">Gradle is a <em>modern build automation tool</em> that uses a Groovy or Kotlin Domain Specific Language (DSL).</li>
+						<li class="fragment">A build.gradle file defines the project's <em>plugins</em>, <em>repositories</em>, <em>dependencies</em>, and custom <em>tasks</em>.</li>
+						<li class="fragment">Gradle uses a Directed Acyclic Graph (DAG) to determine the <em>exact order tasks must execute</em>.</li>
 					</ul>
 				</section>
 
@@ -712,20 +723,20 @@
 					</aside>
 					<h3>Project Structure</h3>
 					<ul>
-						<li class="fragment"><code>build.gradle.kts</code> Build script for the project.</li>
-						<li class="fragment"><code>settings.gradle.kts</code> Sets the project name.</li>
-						<li class="fragment"><code>gradlew / gradlew.bat</code> Gradle Wrapper scripts (run as <code>./gradlew</code>, not <code>gradle</code>).</li>
-						<li class="fragment"><code>gradle/wrapper/gradle-wrapper.jar</code> Executable that powers <code>./gradlew</code>.</li>
-						<li class="fragment"><code>gradle/wrapper/gradle-wrapper.properties</code> Specifies Gradle version the wrapper downloads and uses.</li>
+						<li class="fragment"><code>build.gradle.kts</code> Build script for the project</li>
+						<li class="fragment"><code>settings.gradle.kts</code> Sets the project name</li>
+						<li class="fragment"><code>gradlew / gradlew.bat</code> Gradle Wrapper scripts (run as <code>./gradlew</code>, not <code>gradle</code>)</li>
+						<li class="fragment"><code>gradle/wrapper/gradle-wrapper.jar</code> Executable that powers <code>./gradlew</code></li>
+						<li class="fragment"><code>gradle/wrapper/gradle-wrapper.properties</code> Specifies Gradle version the wrapper downloads and uses</li>
 					</ul>
 				</section>
 
 				<section class="left">
 					<h3>Project Structure</h3>
 					<ul>
-						<li class="fragment"><code>config/checkstyle/styles.xml</code> Checkstyle rule configuration.</li>
-						<li class="fragment"><code>src/main/java/calculator/Calculator.java</code> Production source code.</li>
-						<li class="fragment"><code>src/test/java/calculator/CalculatorTest.java</code> JUnit 5 test suite.</li>
+						<li class="fragment"><code>config/checkstyle/styles.xml</code> Checkstyle rule configuration</li>
+						<li class="fragment"><code>src/main/java/calculator/Calculator.java</code> Production source code</li>
+						<li class="fragment"><code>src/test/java/calculator/CalculatorTest.java</code> JUnit 5 test suite</li>
 					</ul>
 				</section>
 
@@ -824,10 +835,10 @@
 				<section class="left">
 					<h3>Gradle Commands</h3>
 					<ul class="dense-slide">
-						<li class="fragment"><code>./gradlew help</code> Confirms the Gradle wrapper is working and shows basic usage.</li>
-						<li class="fragment"><code>./gradlew tasks</code> Lists every task available in the project, grouped by category.</li>
-						<li class="fragment"><code>./gradlew classes</code> Compiles only the production source code in src/main/java/.</li>
-						<li class="fragment"><code>./gradlew testClasses</code> Compiles both production code and test code in src/test/java/.</li>
+						<li class="fragment"><code>./gradlew help</code> Confirms the Gradle wrapper is working and shows basic usage</li>
+						<li class="fragment"><code>./gradlew tasks</code> Lists every task available in the project, grouped by category</li>
+						<li class="fragment"><code>./gradlew classes</code> Compiles only the production source code in src/main/java/</li>
+						<li class="fragment"><code>./gradlew testClasses</code> Compiles both production code and test code in src/test/java/</li>
 					</ul>
 				</section>
 
@@ -844,10 +855,10 @@
 					</aside>
 					<h3>Gradle Commands</h3>
 					<ul class="dense-slide">
-						<li class="fragment"><code>./gradlew check</code> Runs all verification tasks, including Checkstyle.</li>
-						<li class="fragment"><code>./gradlew test</code> Compiles everything and runs the full JUnit test suite.</li>
-						<li class="fragment"><code>./gradlew clean</code> Deletes the entire build/ directory.</li>
-						<li class="fragment"><code>./gradlew build</code> Runs the complete build pipeline in one command.</li>
+						<li class="fragment"><code>./gradlew check</code> Runs all verification tasks, including Checkstyle</li>
+						<li class="fragment"><code>./gradlew test</code> Compiles everything and runs the full JUnit test suite</li>
+						<li class="fragment"><code>./gradlew clean</code> Deletes the entire build/ directory</li>
+						<li class="fragment"><code>./gradlew build</code> Runs the complete build pipeline in one command</li>
 					</ul>
 				</section>
 
