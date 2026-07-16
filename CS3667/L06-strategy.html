@@ -40,9 +40,9 @@
 					<h3>The Strategy Design Pattern</h3>
 					<blockquote class="fragment"><em>Strategy defines a family of algorithms, encapsulates each one, and makes them interchangeable. Strategy lets the algorithm vary independently from clients that use it.</em> — Gang of Four, Design Patterns (1994)</blockquote>
 					<ul class="dense-slide">
-						<li class="fragment"><em>Encapsulate</em> what varies</li>
-						<li class="fragment">Favor <em>composition</em> over inheritance</li>
-						<li class="fragment">Program to <em>interfaces</em> (abstractions), not implementations</li>
+						<li class="fragment"><em>Encapsulate</em> what varies.</li>
+						<li class="fragment">Favor <em>composition</em> over inheritance.</li>
+						<li class="fragment">Program to <em>interfaces</em> (abstractions), not implementations.</li>
 					</ul>
 				</section>
 
@@ -97,11 +97,11 @@
 					</aside>
 					<h3>We Embrace Change</h3>
 					<ul>
-						<li class="fragment">We should try to make our designs <em>“goof proof”</em></li>
+						<li class="fragment">We should try to make our designs <em>“goof proof”</em>.</li>
 						<li class="fragment">But...
 							<ul>
-								<li class="fragment">We can’t anticipate every possible thing</li>
-								<li class="fragment">We shouldn’t add <em>unneeded complexity</em>
+								<li class="fragment">We can’t anticipate <em>every</em> possible thing.</li>
+								<li class="fragment">We shouldn’t add <em>unneeded complexity.</em>
 									<ul>
 										<li class="fragment">YAGNI: You Aren’t Gonna Need It</li>
 									</ul>
@@ -120,8 +120,8 @@
 					</aside>
 					<h3>We Embrace Change</h3>
 					<ul>
-						<li class="fragment"><code>RubberDuck</code> subclass wants to <code>fly()</code> in a different way</li>
-						<li class="fragment">The “fix” must <em>minimize changes needed</em> as other new Duck subclasses want to <code>fly()</code> in different ways</li>
+						<li class="fragment"><code>RubberDuck</code> subclass wants to <code>fly()</code> in a different way.</li>
+						<li class="fragment">The “fix” must <em>minimize changes needed</em> as other new Duck subclasses want to <code>fly()</code> in different ways.</li>
 						<li class="fragment">What are the design options?</li>
 					</ul>
 				</section>
@@ -145,7 +145,7 @@
 					</pre>
 					<ul>
 						<li class="fragment">Empty methods are a <em>code smell</em>; they make a promise they don't keep.</li>
-						<li class="fragment">Every new non-flying subclass must remember to override. You will miss one.</li>
+						<li class="fragment"><em>Every</em> new non-flying subclass must remember to override. You will miss one.</li>
 					</ul>
 				</section>
 
@@ -196,7 +196,7 @@
 					</pre>
 					<ul>
 						<li class="fragment">Duck.java <em>changes every time</em> any new flying style is needed. Violates OCP.</li>
-						<li class="fragment">Every subclass still overrides just to pass the parameter. Nothing is solved.</li>
+						<li class="fragment"><em>Every</em> subclass still overrides just to pass the parameter. Nothing is solved.</li>
 					</ul>
 				</section>
 
@@ -211,7 +211,7 @@
 						</ul>
 					</aside>
 					<h3>Design Principle 1: Encapsulate What Varies</h3>
-					<blockquote class="fragment">Identify the aspects of your application that vary and separate them from what stays the same.</blockquote>
+					<blockquote class="fragment">Identify the aspects of your application that <em>vary</em> and <em>separate</em> them from what stays the same.</blockquote>
 					<ul class="dense-slide">
 						<li class="fragment"><strong>What stays the same:</strong> A Duck is a Duck. It quacks, swims, displays. That's <em>stable</em>.</li>
 						<li class="fragment"><strong>What varies:</strong> How a duck flies. Multiple implementations needed, <em>more will come</em>.</li>
@@ -244,7 +244,7 @@
 						</ul>
 					</aside>
 					<h3>Design Principle 2: Favor Composition Over Inheritance</h3>
-					<blockquote class="fragment">HAS-A can be better than IS-A.</blockquote>
+					<blockquote class="fragment"><em>HAS-A</em> can be better than IS-A.</blockquote>
 					<ul>
 						<li class="fragment">Inheritance → IS-A relationship → tight coupling, <em>fixed</em> at compile time</li>
 						<li class="fragment">Composition → HAS-A relationship → loose coupling, can <em>change</em> at runtime</li>
@@ -261,9 +261,6 @@
 						</ul>
 					</aside>
 					<h3>Design Principle 2: Favor Composition Over Inheritance</h3>
-					<ul>
-						<li class="fragment">Duck doesn't know how flying works. It <em>delegates</em> to whatever <code>myWayToFly</code> is holding.</li>
-					</ul>
 					<pre class="java fragment">
 						<code data-trim data-id="code" data-line-numbers>
 							// Duck is no longer implementing fly(), it HAS a flying behavior
@@ -276,6 +273,9 @@
 							}
 						</code>
 					</pre>
+					<ul>
+						<li class="fragment">Duck doesn't know how flying works. It <em>delegates</em> to whatever <code>myWayToFly</code> is holding.</li>
+					</ul>
 				</section>
 
 				<section class="left">
@@ -291,7 +291,7 @@
 					</aside>
 					<h3>Design Principle 3: Program to Interfaces, Not Implementations</h3>
 					<ul>
-						<li class="fragment">Duck is no longer calling a concrete <code>fly()</code>, it's using the <code>FlyBehavior</code> abstraction.</li>
+						<li class="fragment">Duck is no longer calling a concrete <code>fly()</code>, it's using the <code>FlyBehavior</code> <em>abstraction</em>.</li>
 						<li class="fragment">Declaring the field type as <code>FlyBehavior</code> (not FlyWithWings) means <em>any concrete implementation</em> can be swapped in, now or in the future.</li>
 					</ul>
 				</section>
@@ -416,7 +416,7 @@
 						<ul>
 							<li>fly() is now decoupled from Duck. Duck is loosely coupled with its FlyBehaviors.</li>
 							<li>One note from the textbook worth calling out explicitly: Head First names the Context method performFly() rather than fly().</li>
-							<li>That's deliberate — performFly() is Duck's public API; fly() is the Strategy contract on FlyBehavior.</li>
+							<li>That's deliberate; performFly() is Duck's public API; fly() is the Strategy contract on FlyBehavior.</li>
 							<li>Two layers, two names, so you can always tell which object you're looking at.</li>
 							<li>In StreamNet, our Context method and Strategy method will have matching names but different signatures, which serves the same purpose.</li>
 						</ul>
@@ -464,7 +464,7 @@
 							<li>A sharp student might ask — doesn't that violate "program to abstractions"?</li>
 							<li>It does, a little. We've pushed that concrete coupling out to the constructor, and further out to Main.</li>
 							<li>Head First acknowledges this tension directly: "Good catch — that's exactly what we're doing... for now."</li>
-							<li>Later in the book, the Factory pattern is covered and shows how to solve this properly.</li>
+							<li>Later in the book, the Factory pattern is covered and shows how to solve this aspect properly.</li>
 							<li>For now, understand the tradeoff: concrete instantiation confined to one place is far better than scattered through every method that needs a behavior.</li>
 						</ul>
 					</aside>
@@ -585,9 +585,9 @@
 						<ul>
 							<li>This recap slide is worth pausing on because it corrects a misconception students often have: that applying a design pattern means writing a lot more code.</li>
 							<li>It doesn't. The actual structural change to the existing Duck class was two lines.</li>
-							<li>The flying implementations had to be written either way — they just moved from scattered override methods into named classes.</li>
+							<li>The flying implementations had to be written either way; they just moved from scattered override methods into named classes.</li>
 							<li>The investment in the pattern is in the structure, not the line count.</li>
-							<li>What you're buying is the ability to add FlyRocketPowered — or FlyRocketPowered_v2 — without opening any existing file.</li>
+							<li>What you're buying is the ability to add FlyRocketPowered (or FlyRocketPowered_v2) without opening any existing file.</li>
 							<li>That payoff compounds over the lifetime of a codebase.</li>
 						</ul>
 					</aside>
@@ -637,23 +637,23 @@
 						<tbody>
 							<tr class="fragment">
 								<td>(S)ingle Responsibility</td>
-								<td>Each Concrete Strategy has one job: <em>implement one algorithm</em></td>
+								<td>Each Concrete Strategy has one job: <em>Implement one algorithm</em>.</td>
 							</tr>
 							<tr class="fragment">
 								<td>(O)pen/Closed</td>
-								<td>New strategies = new files, <em>zero changes to Context or existing strategies</em></td>
+								<td>New strategies = new files, <em>zero changes to Context or existing strategies</em>.</td>
 							</tr>
 							<tr class="fragment">
 								<td>(L)iskov Substitution</td>
-								<td>Any Concrete Strategy <em>can replace any other</em>, same interface contract</td>
+								<td>Any Concrete Strategy <em>can replace any other</em>, same interface contract.</td>
 							</tr>
 							<tr class="fragment">
 								<td>(I)nterface Segregation</td>
-								<td>Strategy interfaces are <em>narrow</em> (1–2 methods), no forced dependencies</td>
+								<td>Strategy interfaces are <em>narrow</em> (1–2 methods), no forced dependencies.</td>
 							</tr>
 							<tr class="fragment">
 								<td>(D)ependency Inversion</td>
-								<td>Context <em>depends on the abstraction</em> (<code>FlyBehavior</code>), not any concrete class</td>
+								<td>Context <em>depends on the abstraction</em> (<code>FlyBehavior</code>), not any concrete class.</td>
 							</tr>
 						</tbody>
 					</table>
@@ -668,10 +668,10 @@
 					<h3>Design Tradeoffs: When Strategy Is Right...</h3>
 					<p class="fragment">Use Strategy when:</p>
 					<ul>
-						<li class="fragment">You have a <em>family</em> of algorithms that need to be interchangeable</li>
-						<li class="fragment">The behavior varies per <em>instance</em>, not just per class</li>
-						<li class="fragment">You want <em>runtime</em> swapping without subclassing</li>
-						<li class="fragment">You see if/else or switch chains selecting between <em>algorithm variants</em></li>
+						<li class="fragment">You have a <em>family</em> of algorithms that need to be interchangeable.</li>
+						<li class="fragment">The behavior varies per <em>instance</em>, not just per class.</li>
+						<li class="fragment">You want <em>runtime</em> swapping without subclassing.</li>
+						<li class="fragment">You see if/else or switch chains selecting between <em>algorithm variants</em>.</li>
 					</ul>
 				</section>
 
@@ -682,7 +682,7 @@
 							<li>YAGNI — You Aren't Gonna Need It — is a real principle that pushes back against premature abstraction.</li>
 							<li>When the pattern fit feels like you're twisting your domain to fit the pattern's shape, that's a signal worth heeding.</li>
 							<li>Sometimes it means the pattern is wrong for this situation.</li>
-							<li>Sometimes it means there's a missing abstraction — like a base class with a delegate method — that would make the fit clean.</li>
+							<li>Sometimes it means there's a missing abstraction (like a base class with a delegate method) that would make the fit clean.</li>
 							<li>Always ask yourself: is my use of this pattern clarifying the design or complicating it?</li>
 							<li>If a thoughtful developer reading your code would be confused, you may be over-engineering.</li>
 						</ul>
@@ -690,8 +690,8 @@
 					<h3>...and When It Isn't</h3>
 					<p class="fragment">Be cautious when:</p>
 					<ul>
-						<li class="fragment">You have only <em>one algorithm now</em> with no real anticipation of more (YAGNI)</li>
-						<li class="fragment">The "squeezing and bending" to make the pattern fit feels <em>forced</em></li>
+						<li class="fragment">You have only <em>one algorithm now</em> with no real anticipation of more (YAGNI).</li>
+						<li class="fragment">The "squeezing and bending" to make the pattern fit feels <em>forced</em>.</li>
 					</ul>
 					<blockquote class="fragment">Design is an <em>art</em>. Patterns are <em>tools</em>, not mandates.</blockquote>
 				</section>
