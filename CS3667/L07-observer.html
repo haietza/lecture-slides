@@ -60,7 +60,7 @@
 				<section class="left">
 					<aside class="notes">
 						<ul>
-							<li>Tightly coupled, WeatherData knows every display by name</li>
+							<li>Tightly coupled, WeatherData knows every display by name.</li>
 							<li>Look at this method — measurementsChanged().</li>
 							<li>Every time the product team wants a new display, a developer has to open this file, add a new variable reference, and add another line.</li>
 							<li>That's a modification to tested, working code every single time.</li>
@@ -98,28 +98,20 @@
 					<p class="fragment"><em>Coding to implementations, not interfaces</em></p>
 					<ul>
 						<li class="fragment"><code>WeatherData</code> references <em>concrete</em> display classes directly. It cannot be compiled without them.</li>
-						<li class="fragment">Any structural change to a display class (a renamed method, a moved package) breaks <code>WeatherData</code> without touching it.</li>
+						<li class="fragment">Any structural change to a display class (a renamed method, a moved package) <em>breaks</em> <code>WeatherData</code> without touching it.</li>
 					</ul>
 				</section>
 
 				<section class="left">
-					<aside class="notes">
-						<ul>
-						</ul>
-					</aside>
 					<h3>Violation 2</h3>
 					<p class="fragment"><em>Open/Closed Principle broken</em></p>
 					<ul>
-						<li class="fragment"><code>measurementsChanged()</code> must be modified every time a display is added or removed.</li>
+						<li class="fragment"><code>measurementsChanged()</code> must be modified <em>every</em> time a display is added or removed.</li>
 						<li class="fragment">The class is not <em>closed for modification</em>. Every new feature is an edit to working, tested code.</li>
 					</ul>
 				</section>
 
 				<section class="left">
-					<aside class="notes">
-						<ul>
-						</ul>
-					</aside>
 					<h3>Violation 3</h3>
 					<p class="fragment"><em>No runtime extensibility</em></p>
 					<ul>
@@ -130,10 +122,6 @@
 				</section>
 
 				<section class="left">
-					<aside class="notes">
-						<ul>
-						</ul>
-					</aside>
 					<h3>Violation 4</h3>
 					<p class="fragment"><em>Failure to encapsulate what varies</em></p>
 					<ul>
@@ -313,7 +301,7 @@
 					</aside>
 					<h3>WeatherData + Observer</h3>
 					<pre class="java">
-						<code data-trim data-id="code" data-line-numbers="21-25|27-29">
+						<code class="dense-code" data-trim data-id="code" data-line-numbers="21-25|27-29">
 							import java.util.ArrayList;
 							import java.util.List;
 
@@ -468,8 +456,8 @@
 						<li class="fragment">Problem: The Subject <em>sends the same data to all Observers</em>. When WeatherData adds <code>windSpeed</code>:
 							<ul>
 								<li class="fragment">Every Observer implementation must <em>update</em> its <code>update()</code> signature.</li>
-								<li class="fragment">Every concrete class must add the parameter even if it <em>never</em> uses it.</li>
-								<li class="fragment">That is a cascading edit across every Observer in the codebase.</li>
+								<li class="fragment">Every concrete class must add the parameter even if it <em>never uses it</em>.</li>
+								<li class="fragment">That is a <em>cascading edit</em> across every Observer in the codebase.</li>
 							</ul>
 						</li>
 						<li class="fragment">Best When: All observers need the <em>same</em> small data set.</li>
@@ -560,7 +548,7 @@
 						<li class="fragment"><code>Observable</code> was a <em>class</em>, not an interface.</li>
 						<li class="fragment">Java permits only <em>single inheritance</em> of classes.</li>
 						<li class="fragment">Any class wanting to be a Subject had to extend Observable, consuming its <em>one inheritance slot</em>.</li>
-						<li class="fragment">If your domain model already needed to extend something else, <em>you were stuck</em>.</li>
+						<li class="fragment">If your domain model <em>already needed to extend</em> something else, you were stuck.</li>
 						<li class="fragment">You will encounter <code>java.util.Observable</code> in legacy codebases. Know what it is and why it was replaced.</li>
 					</ul>
 				</section>
@@ -580,13 +568,13 @@
 							<li>Solution in /Users/michellemelton/development/cs3667/cs3667-materials/observer/active-learning/streamnet-observer-2.md</li>
 						</ul>
 					</aside>
-					<h3><i class="fa-solid fa-pencil"></i> NowPlaying for StreamNet (20)</h3>
+					<h3><i class="fa-solid fa-pencil"></i> NowPlaying (20 minutes)</h3>
 					<ul class="dense-slide">
 						<li>Several parts of the platform need to react when the <em>playing clip changes</em>:
 							<ul>
-								<li><code>ProgressBarDisplay</code> shows the current clip's title and a progress bar; resets when the clip changes</li>
-								<li><code>UpNextPanel</code> shows the next recommended clip; recomputes when the current clip changes</li>
-								<li><code>PlaybackAnalyticsTracker</code> logs when each clip starts playing; only active for authenticated users (may need to be added/removed at login/logout)</li>
+								<li><code>ProgressBarDisplay</code> shows the current clip's title and a progress bar; resets when the clip changes.</li>
+								<li><code>UpNextPanel</code> shows the next recommended clip; recomputes when the current clip changes.</li>
+								<li><code>PlaybackAnalyticsTracker</code> logs when each clip starts playing; only active for authenticated users (may need to be added/removed at login/logout).</li>
 							</ul>
 						</li>
 						<li>Work in groups of 3-4 to answer the following design questions.</li>
@@ -594,31 +582,31 @@
 				</section>
 
 				<section class="left">
-					<h3><i class="fa-solid fa-pencil"></i> NowPlaying for StreamNet (20 minutes)</h3>
+					<h3><i class="fa-solid fa-pencil"></i> NowPlaying (20 minutes)</h3>
 					<p>Question 1: <em>Subject identification</em></p>
 					<p>What class is the Subject? What is the state field (or fields) that changes? Write a one-sentence description of the Subject's responsibility in this system.</p>
 				</section>
 
 				<section class="left">
-					<h3><i class="fa-solid fa-pencil"></i> NowPlaying for StreamNet (20 minutes)</h3>
+					<h3><i class="fa-solid fa-pencil"></i> NowPlaying (20 minutes)</h3>
 					<p>Question 2: <em>Observer identification</em></p>
 					<p>For each of the three consumers listed, confirm or deny that it is a good Observer. For any you deny, explain why. For those you confirm, describe in one sentence what it does in <code>update()</code>.</p>
 				</section>
 
 				<section class="left">
-					<h3><i class="fa-solid fa-pencil"></i> NowPlaying for StreamNet (20 minutes)</h3>
+					<h3><i class="fa-solid fa-pencil"></i> NowPlaying (20 minutes)</h3>
 					<p>Question 3: <em>Push or pull?</em></p>
 					<p>The three Observers have different data needs:</p>
 					<ul class="dense-slide">
-						<li><code>ProgressBarDisplay</code> needs the clip's <em>title</em> and <em>duration</em></li>
-						<li><code>UpNextPanel</code> needs the clip's <em>genre</em> to compute recommendations</li>
-						<li><code>PlaybackAnalyticsTracker</code> needs the clip's <em>ID</em> and a <em>timestamp</em></li>
+						<li><code>ProgressBarDisplay</code> needs the clip's <em>title</em> and <em>duration.</em></li>
+						<li><code>UpNextPanel</code> needs the clip's <em>genre</em> to compute recommendations.</li>
+						<li><code>PlaybackAnalyticsTracker</code> needs the clip's <em>ID</em> and a <em>timestamp.</em></li>
 					</ul>
 					<p>Given that diversity of needs, should this system use <em>push</em> or <em>pull</em>? Justify your answer in two sentences.</p>
 				</section>
 
 				<section class="left">
-					<h3><i class="fa-solid fa-pencil"></i> NowPlaying for StreamNet (20 minutes)</h3>
+					<h3><i class="fa-solid fa-pencil"></i> NowPlaying (20 minutes)</h3>
 					<p>Question 4: <em>Stability check</em></p>
 					<p>Next quarter, the product team wants to add a <code>SubtitleLoader</code> that fetches subtitles whenever the playing clip changes.</p>
 					<ul class="dense-slide">
