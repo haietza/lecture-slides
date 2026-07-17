@@ -30,7 +30,7 @@
 				</section>
 
 				<section class="left">
-					<aside class="notes">a
+					<aside class="notes">
 						<ul>
 							<li>Raise your hand if you've ever seen a NullPointerException.</li>
 							<li>It happens frequently: Some reference that was supposed to point to a real object is instead pointing at nothing, and the first line of code that tries to use it blows up.</li>
@@ -52,7 +52,7 @@
 				</section>
 
 				<section class="left">
-					<aside class="notes">a
+					<aside class="notes">
 						<ul>
 							<li>The obvious fix is the null guard; check before you call.</li>
 							<li>And it works, but the problem is scale.</li>
@@ -73,14 +73,14 @@
 					</pre>
 					<p class="fragment">Guard clauses work, but:</p>
 					<ul class="dense-slide">
-						<li class="fragment"><em>Every</em> caller has to remember to write the guard</li>
-						<li class="fragment">One missed guard anywhere in the codebase <em>reintroduces the crash</em></li>
-						<li class="fragment">Linked structures (lists, trees) end up <em>covered</em> in these checks</li>
+						<li class="fragment"><em>Every</em> caller has to remember to write the guard.</li>
+						<li class="fragment">One missed guard anywhere in the codebase <em>reintroduces the crash</em>.</li>
+						<li class="fragment">Linked structures (lists, trees) end up <em>covered</em> in these checks.</li>
 					</ul>
 				</section>
 
 				<section class="left">
-					<aside class="notes">a
+					<aside class="notes">
 						<ul>
 							<li>If we can guarantee that Blah b is an object, we can eliminate the guard.</li>
 						</ul>
@@ -102,7 +102,7 @@
 				</section>
 
 				<section class="left">
-					<aside class="notes">a
+					<aside class="notes">
 						<ul>
 							<li>Head First doesn't give the Null Object a full chapter (it's an 'honorable mention' tucked into the Command chapter).</li>
 						</ul>
@@ -112,7 +112,7 @@
 				</section>
 
 				<section class="left">
-					<aside class="notes">a
+					<aside class="notes">
 						<ul>
 							<li>It can be built on an abstract class or an interface.</li>
 							<li>The Null Object implementation overrides the methods in "safe" and "nullish" ways.</li>
@@ -145,25 +145,28 @@
 				</section>
 
 				<section class="left">
-					<aside class="notes">a
+					<aside class="notes">
 						<ul>
 							<li>Three classic uses, plus a fourth one that should look very familiar: any time you've got a Strategy-style field that might not be set yet — like a VideoRenderBehavior before a VideoClip knows how it should render — a Null Object is a natural default.</li>
 						</ul>
 					</aside>
 					<h3>In Practice</h3>
 					<ul class="dense-slide">
-						<li class="fragment">Placeholders in collections: Loop through an array calling methods on every element, with <em>no "is this slot empty" check</em></li>
-						<li class="fragment">Terminators in linked structures: A list or tree's null object <em>safely ends recursion</em> instead of crashing on it</li>
-						<li class="fragment">Borders in 2-D grids: Image-processing or cellular-automata code that needs "virtual" neighbor cells at the <em>edges of a grid</em></li>
-						<li class="fragment">Default strategies: A Strategy field (sound familiar?) that <em>hasn't been assigned a real behavior yet</em> can default to a do-nothing strategy instead of null</li>
+						<li class="fragment">Placeholders in collections: Loop through an array calling methods on every element, with <em>no "is this slot empty" check</em>.</li>
+						<li class="fragment">Terminators in linked structures: A list or tree's null object <em>safely ends recursion</em> instead of crashing on it.</li>
+						<li class="fragment">Borders in 2-D grids: Image-processing or cellular-automata code that needs "virtual" neighbor cells at the <em>edges of a grid</em>.</li>
+						<li class="fragment">Default strategies: A Strategy field (sound familiar?) that <em>hasn't been assigned a real behavior yet</em> can default to a do-nothing strategy instead of null.</li>
 					</ul>
 				</section>
 
 				<section class="left">
-					<aside class="notes">a
+					<aside class="notes">
 						<ul>
 							<li>Null Object is elegant when the 'do nothing' behavior is obvious and safe.</li>
 							<li>It gets shaky when there's no honest neutral value.</li>
+							<li>area() returns a value, not a void</li>
+							<li>Java forces us to commit to some double, so unlike NullBlah.operation(), there is no "do nothing" option; we're always choosing a stand-in value, and that choice carries risk the void case doesn't have.</li>
+							<li>0.0 looks safe because it's neutral for addition (sum()), but it's not neutral for comparison (min()/max() logic); so "safe" for a query-returning null object is context-dependent, not guaranteed the way it is for a no-op command.
 							<li>Don't force the pattern where a real null check, or a different design entirely, is actually the clearer answer.</li>
 						</ul>
 					</aside>
