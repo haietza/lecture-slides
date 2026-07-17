@@ -206,7 +206,6 @@
 				</section>
 
 				<section class="left dense-slide">
-
 					<aside class="notes">
 						<ul>
 							<li>This activity diagram models the Withdraw Cash use case.</li>
@@ -769,6 +768,7 @@
 							<li>So, this model affects ONE use case and MANY/ALL classes (just the ones we actually need, but there's no limit).</li>
 							<li>This sequence diagram is for the Authentiate use case.</li>
 							<li>Notice that we are identifying some class/object methods that will become part of our solution! We can continue to refine our class diagram by adding this new information.</li>
+							<li>If finish lecture on time, allow students to begin work on Sequence Diagram assignment in Canvas course.</li>
 						</ul>
 					</aside>
 					<h3>Sequence Diagrams</h3>
@@ -779,19 +779,6 @@
 						alt="Sequence diagram example"
 						aria-describedby="sequencediagram-caption">
 					<div id="sequencediagram-caption" class="sr-only">The diagram is a UML sequence diagram for the Authenticate use case that shows seven participants arranged left to right across the top of the diagram. The participants in order from left to right are Customer, which is gray and carries no stereotype; CardReader, which is blue and labeled boundary; IO, which is blue and labeled boundary; Bank, which is blue and labeled boundary; ATMController, which is purple and labeled control; AuthController, which is purple and labeled control; and Account, which is amber and labeled entity. Each participant box has a dashed vertical lifeline extending downward from it for the full height of the diagram. Thin solid rectangles called activation bars appear on each lifeline to indicate when that participant holds an active execution context. The sequence begins with the Customer sending a solid arrow labeled insert card to CardReader. At this moment a short activation bar appears on the Customer lifeline and a longer activation bar appears on the CardReader lifeline. CardReader then sends a solid arrow labeled onCardInserted with a cardData parameter to ATMController, crossing over all the lifelines between them. When this message arrives, a long activation bar begins on ATMController that extends nearly to the bottom of the diagram. ATMController then sends a solid arrow labeled startAuthentication with a cardData parameter to AuthController, which starts a long activation bar on AuthController. AuthController then sends a solid arrow labeled displayMessage with the string Enter PIN back to the left, crossing over Bank and ATMController to reach IO. This causes an activation bar to begin on the IO lifeline. The Customer then sends a dashed arrow labeled enters PIN to IO, which causes a brief second activation bar on the Customer lifeline. IO responds by sending a solid arrow labeled onPinEntered with a pin parameter back to the right to AuthController. AuthController then sends a solid arrow labeled validateCredentials with cardData and pin parameters to the left, reaching Bank. An activation bar appears on the Bank lifeline. Bank sends a dashed return arrow labeled AccountData back to AuthController, after which the Bank activation bar ends. AuthController then sends a short dashed arrow labeled create to Account on the right, which starts the activation bar on the Account lifeline. An activation bar appears on Account and remains active through the end of the diagram. AuthController then sends a short dashed return arrow labeled account back to the left to ATMController. The AuthController activation bar ends at this point. Finally, ATMController sends a solid arrow labeled displayMainMenu to the left to IO, where a second brief activation bar appears. The ATMController activation bar ends after this final message. A vertical arrow indicates that time is depicted going down and a horizontal arrow indicates that sequence order goes horizontally from left to right.</div>
-				</section>
-
-				<section class="left">
-					<aside class="notes">
-						<ul>
-							<li>Solution in /Users/michellemelton/development/cs3667/cs3667-materials/uml/assignment-solutions/atm_sequence_activity.html (for instructor reference while grading)</li>
-						</ul>
-					</aside>
-					<h3><i class="fa-solid fa-pencil"></i> Sequence Diagrams (25 minutes)</h3>
-					<ul>
-						<li>Organize into small groups (3-4).</li>
-						<li>Begin work on the Sequence Diagram Assignment in the Canvas course.</li>
-					</ul>
 				</section>
 
 				<section class="left">
@@ -878,6 +865,7 @@
 							<li>Using your knowledge of how an ATM works, draw all transitions between states.</li>
 							<li>Label each arrow with the event or condition that triggers it. Include the starting point and any valid ending points.</li>
 							<li>Solution in /Users/michellemelton/development/cs3667/cs3667-materials/uml/active-learning/state-diagram.png</li>
+							<li>If finish lecture on time, allow students to begin work on UML assignment in Canvas course.</li>
 						</ul>
 					</aside>
 					<h3><i class="fa-solid fa-pencil"></i> State Diagram (10 minutes)</h3>
@@ -887,19 +875,6 @@
 						alt="State diagram activity"
 						aria-describedby="statediagramactivity-caption">
 					<div id="statediagramactivity-caption" class="sr-only">This is a partially completed UML state diagram for an ATM system. The diagram contains five states and two pseudostate markers. No transitions between states are shown. Students are expected to draw and label all transitions as part of a class activity. The two pseudostate markers appear on the left side of the diagram. One represents the initial pseudostate, indicating where the system begins. The other represents the final pseudostate, indicating where the system ends. The five states are as follows. The Idle state has three internal actions: on entry the system displays a welcome screen, while active the system waits for a card to be inserted, and on exit the system clears the welcome screen. The Authenticating state has three internal actions: on entry the system reads the card data and displays a PIN prompt, while active the system validates the card and PIN, and on exit the system clears all data from the display. The Session Active state has three internal actions: on entry the system displays the transaction menu, while active the system waits for a user selection and processes the transaction, and on exit the system logs the transaction result. The Dispensing state has three internal actions: on entry the system activates the cash mechanism and printer, while active the system dispenses cash and prints a receipt, and on exit the system confirms that the cash and receipt have been taken. The Ejecting Card state has three internal actions: on entry the system activates the card motor, while active the system waits for the customer to remove the card, and on exit the system confirms the card has been removed.</div>
-				</section>
-
-				<section class="left">
-					<aside class="notes">
-						<ul>
-							<li>Solution in /Users/michellemelton/development/cs3667/cs3667-materials/uml/assignment-solutions/uml_capstone_activity.html (for instructor reference while grading)</li>
-						</ul>
-					</aside>
-					<h3><i class="fa-solid fa-pencil"></i> Modeling Assignment (35 minutes)</h3>
-					<ul>
-						<li>Organize into small groups (3-4).</li>
-						<li>Begin work on the UML Assignment in the Canvas course.</li>
-					</ul>
 				</section>
 
 			</div>

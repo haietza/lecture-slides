@@ -291,11 +291,11 @@
 				<section class="left">
 					<aside class="notes">
 						<ul>
-							<li>Look at notifyObservers(). It loops over a List&lt;Observer&gt;.</li>
+							<li>Line 21: Look at notifyObservers(). It loops over a List&lt;Observer&gt;.</li>
 							<li>It does not call currentConditionsDisplay.update(), it calls o.update().</li>
 							<li>The concrete type behind that reference could be a CurrentConditionsDisplay, a StatisticsDisplay, a HeatIndexDisplay we haven't written yet, or a test spy we only use in unit tests.</li>
 							<li>The Subject has no idea and doesn't need to. That's polymorphism doing exactly its job.</li>
-							<li>Now look at measurementsChanged(). It went from three hardwired display calls to one call to notifyObservers().</li>
+							<li>Line 27: Now look at measurementsChanged(). It went from three hardwired display calls to one call to notifyObservers().</li>
 							<li>WeatherData no longer names a single display class.</li>
 						</ul>
 					</aside>

@@ -408,12 +408,12 @@
 						<li class="fragment"><code>-cp</code> declares the class path as the <em>current directory</em> (where test classes are)</li>
 						<li class="fragment"><code>--scan-classpath</code> is a flag to scan through class path and look for <em>all tests to run</em></li>
 					</ul>
-					
 				</section>
 
 				<section class="left">
 					<aside class="notes">
 						<ul>
+							<li>Clone https://github.com/appstate-cs-classroom-3667/mm-mcj-assignment and copy junit jar out of lib.</li>
 							<li>Use previous slides for examples and command for running the test.</li>
 							<li>Compile with junit: javac -cp junit-platform-console-standalone-6.0.2.jar *.java</li>
 							<li>java -jar junit-platform-console-standalone-6.0.2.jar execute -cp . --scan-classpath</li>
@@ -851,6 +851,7 @@
 							<li>clean: Gradle is aggressive about caching — if nothing has changed, it skips tasks entirely and reports UP-TO-DATE</li>
 							<li>Occasionally the cache gets stale, or you want to verify a completely fresh build</li>
 							<li>build: Compiles production code and test code, runs Checkstyle, runs all tests, fails if any step fails</li>
+							<li>If finish lecture on time, allow students to begin work on the Gradle assignment in the Canvas course.</li>
 						</ul>
 					</aside>
 					<h3>Gradle Commands</h3>
@@ -859,13 +860,6 @@
 						<li class="fragment"><code>./gradlew test</code> Compiles everything and runs the full JUnit test suite</li>
 						<li class="fragment"><code>./gradlew clean</code> Deletes the entire build/ directory</li>
 						<li class="fragment"><code>./gradlew build</code> Runs the complete build pipeline in one command</li>
-					</ul>
-				</section>
-
-				<section class="left">
-					<h3><i class="fa-solid fa-pencil"></i> Replace Make with Gradle</h3>
-					<ul class="dense-slide">
-						<li>Begin work on the Gradle Assignment in the Canvas course.</li>
 					</ul>
 				</section>
 
