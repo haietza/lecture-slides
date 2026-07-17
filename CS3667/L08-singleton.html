@@ -36,7 +36,7 @@
 						</ul>
 					</aside>
 					<h3>The Singleton Design Pattern</h3>
-					<blockquote class="fragment">Ensures a class has only <em>one instance</em>, and provides a global point of access to it.</blockquote>
+					<blockquote class="fragment">Ensures a class has only <em>one instance</em>, and provides a <em>global point of access</em> to it.</blockquote>
 				</section>
 
 				<section class="left">
@@ -104,13 +104,13 @@
 					<aside class="notes">
 						<ul>
 							<li>The answer is the second constraint: a method inside the class can call a private constructor, because access modifiers are about what's visible from outside the class, not inside.</li>
-							<li>So we write a public method, conventionally named getInstance(), that lives inside ChocolateBoiler and is the only code path that can ever call new ChocolateBoiler().</li>
+							<li>Line 14: So we write a public method, conventionally named getInstance(), that lives inside ChocolateBoiler and is the only code path that can ever call new ChocolateBoiler().</li>
 							<li>Why must getInstance() be static?</li>
 							<li>Because to call a normal instance method, you need an object reference to call it on — someBoiler.getInstance().</li>
 							<li>But we don't have a ChocolateBoiler object yet; that's the whole problem we're solving.</li>
 							<li>static lets us call it directly on the class: ChocolateBoiler.getInstance(), with zero objects required up front.</li>
 							<li>The if-check inside getInstance() is what makes this lazy. The object is only created when it is needed.</li>
-							<li>And the field uniqueInstance — that has to be static too, for a related reason.</li>
+							<li>Line 4: And the field uniqueInstance — that has to be static too, for a related reason.</li>
 							<li>getInstance() is a static method, and static methods cannot reference instance-level fields.</li>
 							<li>The book makes an important comparison I want you to hold onto: this is similar to a global variable, but better, because we additionally get to choose when the object gets created.</li>
 							<li>We'll discuss lazy-versus-eager initialization soon.</li>
@@ -275,8 +275,8 @@
 							<li>Two threads now hold two different boiler objects, each independently tracking its own empty/boiled flags for the same physical hardware.</li>
 							<li>The single-threaded version of this code implicitly assumes that nothing else can run between the null-check and the assignment.</li>
 							<li>That assumption is false the moment you have more than one thread.</li>
-							<li>And notice — from either thread's own point of view, nothing went wrong. The bug only exists in the interleaving between the two.</li>
-							<li>Any application server handling concurrent requests is exactly this situation, at scale, constantly. We need to fix it — and the book gives us three different ways to do it.</li>
+							<li>And notice, from either thread's own point of view, nothing went wrong. The bug only exists in the interleaving between the two.</li>
+							<li>Any application server handling concurrent requests is exactly this situation, at scale, constantly. We need to fix it, and the book gives us three different ways to do it.</li>
 						</ul>
 					</aside>
 					<h3>The Multithreading Problem</h3>
@@ -313,9 +313,9 @@
 				<section class="left">
 					<aside class="notes">
 						<ul>
-							<li>Adding the synchronized keyword to the method signature guarantees mutual exclusion — only one thread can be executing inside getInstance() at any moment.</li>
+							<li>Adding the synchronized keyword to the method signature guarantees mutual exclusion; only one thread can be executing inside getInstance() at any moment.</li>
 							<li>Go back to the race condition we just walked through: Thread One enters, the lock is acquired, and even if Thread One gets paused mid-method, it still holds the lock.</li>
-							<li>Thread Two tries to enter and simply cannot — it's blocked until Thread One finishes and releases the lock.</li>
+							<li>Thread Two tries to enter and simply cannot; it's blocked until Thread One finishes and releases the lock.</li>
 							<li>Synchronization is expensive (it can decrease performance by a factor of 100) and we only needed the protection during the very first call.</li>
 							<li>Every call after that, uniqueInstance is already set, the null-check will always be false, and yet we're still paying the synchronization tax on every single call forever.</li>
 							<li>That's the motivation for Fix 2 and Fix 3.</li>
@@ -323,7 +323,7 @@
 					</aside>
 					<h3>Fix 1: Synchronize getInstsance()</h3>
 					<pre class="java">
-						<code data-trim data-id="code" data-line-numbers="11-13">
+						<code class="dense-code" data-trim data-id="code" data-line-numbers="11-13">
 							public class ChocolateBoiler {
 								private static ChocolateBoiler uniqueInstance;
 								private boolean empty;
@@ -353,10 +353,10 @@
 						<ul>
 							<li>Fix number two sidesteps the whole problem differently: don't wait for the first call at all.</li>
 							<li>Construct the object the moment the class is loaded, as part of the field declaration itself.</li>
-							<li>The JVM's class-loading mechanism is single-threaded and happens before any of your application's own threads start running — so this is automatically thread-safe with zero synchronization code written by you.</li>
-							<li>getInstance() shrinks down to a one-line return. No null check needed, because the field is never null after class loading completes.</li>
+							<li>The JVM's class-loading mechanism is single-threaded and happens before any of your application's own threads start running, so this is automatically thread-safe with zero synchronization code written by you.</li>
+							<li>Line 14: getInstance() shrinks down to a one-line return. No null check needed, because the field is never null after class loading completes.</li>
 							<li>The trade-off: This only makes sense if your application is always going to need the Singleton anyway, or if constructing it is cheap.</li>
-							<li>If construction is expensive — say it opens a file, allocates a large buffer, or sets up an expensive resource — and your application might never actually need it, you've just spent that cost for nothing.</li>
+							<li>If construction is expensive (say it opens a file, allocates a large buffer, or sets up an expensive resource) and your application might never actually need it, you've just spent that cost for nothing.</li>
 							<li>For our chocolate boiler, this is a completely reasonable choice; the book confirms the factory always uses exactly one boiler regardless.</li>
 						</ul>
 					</aside>
@@ -388,8 +388,8 @@
 					<aside class="notes">
 						<ul>
 							<li>Fix number three: Only pay the synchronization cost during the narrow window where the object might not exist yet, and skip it entirely afterward.</li>
-							<li>The outer if is the fast path. Once uniqueInstance is set, every future call short-circuits past the synchronized block entirely — zero lock overhead, after the first successful construction.</li>
-							<li>The inner if, inside the synchronized block, is the double-check that givese.</li>
+							<li>Line 14: The outer if is the fast path. Once uniqueInstance is set, every future call short-circuits past the synchronized block entirely — zero lock overhead, after the first successful construction.</li>
+							<li>Line 16: The inner if, inside the synchronized block, is the double-check that givese.</li>
 							<li>If two threads both pass the outer check before either one has constructed the object, only one of them will actually get the lock first.</li>
 							<li>That thread does the inner check, sees null, and constructs.</li>
 							<li>The second thread then enters the block, does its own inner check, sees the object is no longer null, and skips construction entirely.</li>
@@ -453,6 +453,7 @@
 				<section class="left">
 					<aside class="notes">
 						<ul>
+							<li>Starter code in https://github.com/appstate-cs-classroom-3667/mm-singleton-active-learning</li>
 							<li>Solution in /Users/michellemelton/development/cs3667/cs3667-materials/singleton/active-learning/ChocolateBoilderVariants.java</li>
 							<li>You just practiced all three fixes on the book's own example. Your assignment applies these same three strategies to real classes in your StreamNet project.</li>
 						</ul>
