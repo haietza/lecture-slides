@@ -35,7 +35,7 @@
 				</section>
 
 				<section class="left">
-					<aside class="notes">a
+					<aside class="notes">
 						<ul>
 							<li>These interfaces have almost nothing in common.</li>
 							<li>There's no shared activate()/deactivate() you can lean on.</li>
@@ -163,10 +163,6 @@
 				</section>
 
 				<section class="left">
-					<aside class="notes">
-						<ul>
-						</ul>
-					</aside>
 					<h3>The Order Object</h3>
 					<ul>
 						<li class="fragment">The order has exactly <em>one relevant method</em> from the waitress's point of view: <code>orderUp()</code>.</li>
@@ -176,11 +172,6 @@
 				</section>
 
 				<section class="left">
-					<aside class="notes">
-						<ul>
-					
-						</ul>
-					</aside>
 					<h3>The Command Pattern</h3>
 					<!-- Clicking this image opens it in a fullscreen overlay -->
 					 <figure>
@@ -194,10 +185,6 @@
 				</section>
 
 				<section class="left">
-					<aside class="notes">
-						<ul>
-						</ul>
-					</aside>
 					<h3>Command Pattern Roles</h3>
 					<ul>
 						<li class="fragment">The <em>Client</em> decides what Command to create.</li>
@@ -253,7 +240,7 @@
 					<aside class="notes">
 						<ul>
 							<li>Let's use exactly the roles from the diner to build it the remote control, starting with one button, one device.</li>
-							<li>This is the diner's orderUp(), generalized. Every Command, no matter what it does, exposes exactly this.</li>
+							<li>execute() is the diner's orderUp(), generalized. Every Command, no matter what it does, exposes exactly this method.</li>
 						</ul>
 					</aside>
 					<h3>The Command Interface</h3>
@@ -270,8 +257,8 @@
 					<aside class="notes">
 						<ul>
 							<li>This is a specific Order (Command)</li>
-							<li>It knows which Receiver (Light) it's bound to (passed in the constructor)</li>
-							<li>And it knows what to tell it to do (turn on the light in the light instance variable).</li>
+							<li>Line 4: It knows which Receiver (Light) it's bound to (passed in the constructor)</li>
+							<li>Line 9: And it knows what to tell it to do (turn on the light in the light instance variable).</li>
 						</ul>
 					</aside>
 					<h3>A Concrete Command</h3>
@@ -296,9 +283,9 @@
 					<aside class="notes">
 						<ul>
 							<li>This is the Waitress. There is no Light anywhere in this class. It cannot see the vendor classes at all.</li>
-							<li>We have one slot to hold our command, which controls one device.</li>
-							<li>We have a method for setting the command the slot is going to control.</li>
-							<li>We have a method that is called when the button is pressed; it just takes the current command bound to the slot and calls its execute() method.</li>
+							<li>Line 2: We have one slot to hold our command, which controls one device.</li>
+							<li>Line 6: We have a method for setting the command the slot is going to control.</li>
+							<li>Line 10: We have a method that is called when the button is pressed; it just takes the current command bound to the slot and calls its execute() method.</li>
 						</ul>
 					</aside>
 					<h3>The Invoker</h3>
@@ -325,11 +312,11 @@
 					<aside class="notes">
 						<ul>
 							<li>This is the Customer: The only piece of code that knows about both the Command and the Receiver at once.</li>
-							<li>The remote is our Invoker, it will be passed a command object that can be used to make requests.</li>
-							<li>We create a light object, which will be the Receiver of the request.</li>
-							<li>We create a LightOnCommand and pass the Receiver to it.</li>
-							<li>We pass the command to the Invoker in setCommand.</li>
-							<li>And then we simulate the button being pressed.</li>
+							<li>Line 3: The remote is our Invoker, it will be passed a command object that can be used to make requests.</li>
+							<li>Line 4: We create a light object, which will be the Receiver of the request.</li>
+							<li>Line 5: We create a LightOnCommand and pass the Receiver to it.</li>
+							<li>Line 7: We pass the command to the Invoker in setCommand.</li>
+							<li>Line 8: And then we simulate the button being pressed.</li>
 							<li>If Vendor #8 ships SecurityControl with arm()/disarm(), what has to change?</li>
 							<li>Command — no. SimpleRemoteControl — no.</li>
 							<li>You write one new class, SecurityArmCommand implements Command, and you're done.</li>
@@ -454,7 +441,7 @@
 				</section>
 
 				<section class="left">
-					<aside class="notes">a
+					<aside class="notes">
 						<ul>
 							<li>Commands can pile up faster than the system processes them.</li>
 							<li>Queue them and work through the backlog when it can.</li>

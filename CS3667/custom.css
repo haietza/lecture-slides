@@ -51,7 +51,7 @@ pre code {
 }
 
 pre code.dense-code {
-  max-height: 500px !important;
+  max-height: 475px !important;
   overflow-y: scroll !important;
 }
 
