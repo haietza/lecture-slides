@@ -165,7 +165,7 @@
 					<ul class="dense-slide">
 						<li>In the existing repo, create and checkout a new branch: <code>git checkout -b feature-auth</code>.</li>
 						<li>Add an Auth.java file. Commit it.</li>
-						<li>Run <code>git checkout main</code>. Observe that Auth.java disappears from the file explorer in VS Code!</li>
+						<li>Run <code>git checkout master</code>. Observe that Auth.java disappears from the file explorer in VS Code!</li>
 						<li>Checkout feature-auth again to see it reappear.</li>
 						<li>Run <code>git branch -a</code>. Observe local and remote branches.</li>
 					</ul>
@@ -243,9 +243,9 @@
 					</aside>
 					<h3><i class="fa-solid fa-pencil"></i> Engineering a Conflict (15 mins)</h3>
 					<ul>
-						<li>On main, edit User.java (e.g., add age field). Commit.</li>
+						<li>On master, edit User.java (e.g., add age field). Commit.</li>
 						<li>Checkout feature-auth. Edit the exact same line in User.java (e.g., add email field). Commit.</li>
-						<li>Checkout main and run <code>git merge feature-auth</code>.</li>
+						<li>Checkout master and run <code>git merge feature-auth</code>.</li>
 						<li>Open User.java in VS Code. Use the UI to resolve the conflict (keep both).</li>
 						<li>Add and commit the resolved file to finalize the merge.</li>
 					</ul>
@@ -291,7 +291,7 @@
 					<ul>
 						<li>Create an empty repository on GitHub.</li>
 						<li>In your terminal, add the remote: <code>git remote add origin [your-url]</code>.</li>
-						<li>Push the code: <code class="language-bash">git push -u origin main</code>.</li>
+						<li>Push the code: <code class="language-bash">git push -u origin master</code>.</li>
 						<li>Verify the code appears on the GitHub website.</li>
 					</ul>
 				</section>
@@ -299,7 +299,7 @@
 				<section class="left">
 					<aside class="notes">
 						<ul>
-							<li>In professional software engineering, you rarely push directly to main.</li>
+							<li>In professional software engineering, you rarely push directly to main/master.</li>
 							<li>You push a feature branch and open a Pull Request.</li>
 							<li>A PR is a request for your peers to review your code before it merges into the production branch.</li>
 							<li>This is where automated tests run and code reviews happen.</li>
@@ -345,7 +345,7 @@
 						<li>In new directory on course VM, partner clones the repo, creates a branch feature-logger, adds a System.out.println to a method, commits, and pushes the branch to your repo.</li>
 						<li>Partner opens a Pull Request on GitHub.</li>
 						<li>You review the PR on GitHub, leave a comment, and click "Merge pull request".</li>
-						<li>Pull the merged changes locally: <code>git checkout main</code>, <code>git fetch origin</code>, <code>git merge origin/main</code>.</li>
+						<li>Pull the merged changes locally: <code>git checkout master</code>, <code>git fetch origin</code>, <code>git merge origin/master</code>.</li>
 					</ul>
 				</section>
 
