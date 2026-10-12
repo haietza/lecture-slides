@@ -184,16 +184,16 @@
 						<ul>
 							<li>When I make a variable private, I am ensuring no other class can change it unexpectedly.</li>
 							<li>Think about a Point class with private x and y. Can a distance(Point p2) method inside the Point class directly access p2.x?</li>
-							<li>Yes! Because private means private to the class definition, not the specific object instance.</li>
+							<li>Yes! Because private means private to the class definition, not the specific object instance. (Make sure students understand class, not just object).</li>
 						</ul>
 					</aside>
 					<h3>Encapsulation & Information Hiding</h3>
 					<ul>
 						<li>Access Modifiers:
 							<ul>
-								<li class="fragment"><code>private</code>: Only elements in the same class have access.</li>
-								<li class="fragment"><code>protected</code>: Same class, subclasses, and package access.</li>
-								<li class="fragment"><code>package</code> (default): Any class in the same package has access.</li>
+								<li class="fragment"><code>private</code>: Only elements in the same <em>class</em> have access.</li>
+								<li class="fragment"><code>protected</code>: Same <em>class</em>, <em>subclasses</em>, and <em>package</em> access.</li>
+								<li class="fragment"><code>package</code> (default): Any class in the same <em>package</em> has access.</li>
 								<li class="fragment"><code>public</code>: Accessible by any class.</li>
 							</ul>
 						</li>
