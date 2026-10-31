@@ -201,9 +201,6 @@
 						<ul>
 							<li>This is the foundational insight: find what varies, pull it out, give it its own home.</li>
 							<li>For us: fly() implementations are the thing that varies. So we're going to extract them.</li>
-							<li>We define a FlyBehavior interface.</li>
-							<li>We create separate classes — FlyWithWings, NoFly, FlySlow, FlyRocketPowered — each implementing that interface in its own way.</li>
-							<li>Now Duck doesn't own the flying algorithm at all. It just references something that knows how to fly.</li>
 						</ul>
 					</aside>
 					<h3>Design Principle 1: Encapsulate What Varies</h3>
@@ -216,6 +213,13 @@
 				</section>
 
 				<section class="left">
+					<aside class="notes">
+						<ul>
+							<li>We define a FlyBehavior interface.</li>
+							<li>We create separate classes — FlyWithWings, NoFly, FlySlow, FlyRocketPowered — each implementing that interface in its own way.</li>
+							<li>Now Duck doesn't own the flying algorithm at all. It just references something that knows how to fly.</li>
+						</ul>
+					</aside>
 					<h3>Design Principle 1: Encapsulate What Varies</h3>
 					<!-- Clicking this image opens it in a fullscreen overlay -->
 					 <figure>
