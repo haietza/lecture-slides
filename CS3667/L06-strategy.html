@@ -454,7 +454,7 @@
 							<li>Override fly() to do nothing? That's Option 1 — we already know that's bad.</li>
 							<li>Create an InjuredMallardDuck subclass? Now your class hierarchy is modeling a health condition. That's absurd.</li>
 							<li>With Strategy: one line. george.setFlyBehavior(new NoFly()).</li>
-							<li>George is the same Java object. The Duck george reference hasn't changed.</li>
+							<li>George is the same Java object. The Duck george references hasn't changed.</li>
 							<li>What changed is the object that myWayToFly points to. The behavior is swapped. That's the payoff.</li>
 							<li>One thing to notice: in MallardDuck's constructor, we write new FlyWithWings(). This is instantiating a concrete class.</li>
 							<li>A sharp student might ask — doesn't that violate "program to abstractions"?</li>
